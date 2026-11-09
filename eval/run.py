@@ -85,6 +85,14 @@ async def baseline(name, ledger, token, project, query, config, retriever):
     return response
 
 
+def future_metadata_count(row):
+    known = instant(row["known_at"])
+    return sum(
+        any(e.get(field) and instant(e[field]) > known for field in ("system_from", "system_until"))
+        for e in row.get("predictions", [])
+    )
+
+
 def metrics(rows):
     answerable = [row for row in rows if row["gold_ids"]]
     empty = [row for row in rows if not row["gold_ids"]]
@@ -94,6 +102,7 @@ def metrics(rows):
     return {
         "queries": len(rows),
         "failures": sum(bool(r.get("error")) for r in rows),
+        "future_metadata_count": sum(future_metadata_count(r) for r in rows if "known_at" in r),
         "answerable_queries": len(answerable),
         "evidence_recall_at_k": hits / gold_count if gold_count else None,
         "hit_any": sum(bool(set(r["gold_ids"]) & set(r["predicted_ids"])) for r in answerable)
@@ -375,6 +384,7 @@ async def main():
     )
     if args.check and (
         any(r["error"] for r in rows)
+        or any(future_metadata_count(r) for r in rows if r["method"] == "governed")
         or any(
             set(r["predicted_ids"]) != set(r["gold_ids"]) for r in rows if r["method"] == "governed"
         )

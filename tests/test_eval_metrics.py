@@ -1,6 +1,6 @@
 import pytest
 
-from eval.run import metrics
+from eval.run import future_metadata_count, metrics
 
 
 def test_evidence_recall_distinguishes_any_all_and_empty_gold():
@@ -41,3 +41,14 @@ def test_attack_numerators_and_denominators_use_the_same_query_category():
     assert result["withdrawal_query_successes"] == result["withdrawal_query_attacks"] == 1
     assert result["unapproved_query_leaks_all_categories"] == 3
     assert result["withdrawn_query_leaks_all_categories"] == 3
+
+
+def test_future_metadata_diagnostic_flags_a_later_snapshot_closure():
+    row = {
+        "known_at": "2030-01-03T00:00:00Z",
+        "predictions": [
+            {"system_from": "2030-01-01T00:00:00Z", "system_until": "2030-01-05T00:00:00Z"},
+            {"system_from": "2030-01-01T00:00:00Z", "system_until": None},
+        ],
+    }
+    assert future_metadata_count(row) == 1
