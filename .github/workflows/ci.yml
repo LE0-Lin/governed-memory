@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GM_TEST_REAL_MODELS: "1"
-      MEMORY_MODEL_CACHE: ${{ runner.temp }}/governed-models
+      MEMORY_MODEL_CACHE: .local/model-cache
       HF_HUB_DISABLE_XET: "1"
       HF_HUB_DOWNLOAD_TIMEOUT: "120"
     steps:
@@ -65,7 +65,7 @@ jobs:
           python-version: "3.12"
       - uses: actions/cache@v4
         with:
-          path: ${{ runner.temp }}/governed-models
+          path: .local/model-cache
           key: pinned-minilm-${{ hashFiles('src/governed_memory/local_models.py') }}
       - run: uv sync --frozen --extra dev --extra models
       - run: uv run pytest -q tests/test_local_models.py
