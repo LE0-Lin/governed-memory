@@ -25,6 +25,8 @@ Every approved fact snapshot has UTC half-open intervals `[valid_from, valid_unt
 
 On an overlapping approval, the transaction closes the previous system-time snapshot, preserves any left/right valid-time slices, and inserts the newly approved snapshot. A correction received on November 12 but effective on November 10 therefore cannot change a query with `known_at=November 11`. Finite corrections restore the previous value outside the corrected interval. Original payloads and historical snapshots cannot be silently rewritten through normal SQL updates; database triggers also preserve the audit log and legal state transitions.
 
+Search metadata follows the same knowledge boundary: a snapshot closure recorded after `known_at` is returned as unknown (`system_until: null`), rather than exposing the date of a later correction. `explain_memory` is a separate current-audit view; it is not an as-of query.
+
 Candidate states are `proposed → active/rejected`, `active → superseded/revoked`, and `superseded → revoked`. Superseded candidates can support historical or retained interval slices. Retrieval uses the two interval predicates rather than current `state == active`. Re-enabling a rejected or revoked assertion requires a distinct candidate/version; reimporting the same source does not resurrect it.
 
 Current source withdrawal, credential/project access and source audiences override historical visibility. An old `known_at` cannot restore access. This intentionally means that an audit view reconstructed today can omit evidence that has since been withdrawn; it is not an immutable snapshot of a past user's authorization.

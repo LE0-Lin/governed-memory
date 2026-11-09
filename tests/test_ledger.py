@@ -103,6 +103,27 @@ def test_late_correction_preserves_prior_knowledge(context):
     assert values(context, known_at="2029-12-31T00:00:00Z") == []
 
 
+def test_prior_knowledge_does_not_expose_a_future_correction_timestamp(context):
+    ledger, clock, tokens = context
+    approve(context, propose(context))
+    clock.advance(9)
+    correction = ledger.propose(
+        tokens["agent"],
+        "demo",
+        subject="storage",
+        predicate="database",
+        value="PostgreSQL",
+        valid_from="2030-01-10T00:00:00Z",
+    )
+    approve(context, correction)
+    prior = ledger.visible(
+        tokens["agent"], "demo", valid_at="2030-01-11T00:00:00Z", known_at="2030-01-11T00:00:00Z"
+    )[0]
+    assert prior.value == "SQLite"
+    assert prior.system_until is None
+    assert prior.valid_until is None
+
+
 def test_finite_correction_splits_both_sides(context):
     ledger, clock, tokens = context
     approve(context, propose(context))

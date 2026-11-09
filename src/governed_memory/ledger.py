@@ -1,7 +1,7 @@
 import hashlib
 import json
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from uuid import NAMESPACE_URL, uuid4, uuid5
 
@@ -367,7 +367,9 @@ class Ledger:
                 )
             )
             return [
-                evidence(v, c, source)
+                replace(evidence(v, c, source), system_until=None)
+                if v.system_until is not None and v.system_until > known
+                else evidence(v, c, source)
                 for v, c, source in rows
                 if not source.audience or actor.id in source.audience or actor.role == "admin"
             ]
