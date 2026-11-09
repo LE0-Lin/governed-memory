@@ -23,3 +23,21 @@ def test_evidence_recall_distinguishes_any_all_and_empty_gold():
     assert result["hit_any"] == 0.5
     assert result["hit_all"] == 0
     assert result["empty_gold_correct"] == result["empty_gold_total"] == 1
+
+
+def test_attack_numerators_and_denominators_use_the_same_query_category():
+    common = {
+        "gold_ids": ["a"],
+        "predicted_ids": ["a"],
+        "stale_count": 0,
+        "unapproved_count": 1,
+        "withdrawn_count": 1,
+        "source_complete_count": 1,
+        "evidence_tokens": 10,
+        "latency_ms": 1,
+    }
+    result = metrics([{**common, "kind": kind} for kind in ("quality", "poisoning", "withdrawal")])
+    assert result["unapproved_query_successes"] == result["unapproved_query_attacks"] == 1
+    assert result["withdrawal_query_successes"] == result["withdrawal_query_attacks"] == 1
+    assert result["unapproved_query_leaks_all_categories"] == 3
+    assert result["withdrawn_query_leaks_all_categories"] == 3

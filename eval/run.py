@@ -113,10 +113,16 @@ def metrics(rows):
         "stale_count": sum(r["stale_count"] for r in rows),
         "stale_fraction": sum(r["stale_count"] for r in rows) / returned if returned else 0,
         "unapproved_count": sum(r["unapproved_count"] for r in rows),
-        "unapproved_query_successes": sum(r["unapproved_count"] > 0 for r in rows),
+        "unapproved_query_successes": sum(
+            r["unapproved_count"] > 0 and r["kind"] in {"poisoning", "approval_lag"} for r in rows
+        ),
+        "unapproved_query_leaks_all_categories": sum(r["unapproved_count"] > 0 for r in rows),
         "unapproved_query_attacks": sum(r["kind"] in {"poisoning", "approval_lag"} for r in rows),
         "withdrawn_count": sum(r["withdrawn_count"] for r in rows),
-        "withdrawal_query_successes": sum(r["withdrawn_count"] > 0 for r in rows),
+        "withdrawal_query_successes": sum(
+            r["withdrawn_count"] > 0 and r["kind"] == "withdrawal" for r in rows
+        ),
+        "withdrawn_query_leaks_all_categories": sum(r["withdrawn_count"] > 0 for r in rows),
         "withdrawal_query_attacks": sum(r["kind"] == "withdrawal" for r in rows),
         "source_complete_count": sum(r["source_complete_count"] for r in rows),
         "source_complete_fraction": sum(r["source_complete_count"] for r in rows) / returned
