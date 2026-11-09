@@ -1,0 +1,50 @@
+name: checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  core:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - run: uv sync --frozen --extra dev
+      - run: uv run ruff check src tests examples scripts eval
+      - run: uv run ruff format --check src tests examples scripts eval
+      - run: uv run pytest -q -m "not integration"
+      - run: uv run python examples/demo.py
+      - run: uv build
+  storage-and-evaluation:
+    runs-on: ubuntu-latest
+    env:
+      GM_TEST_DATABASE_URL: postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory?connect_timeout=5
+      GM_TEST_NEO4J_URI: bolt://127.0.0.1:57687
+      GM_TEST_NEO4J_PASSWORD: local-graph-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - run: uv sync --frozen --extra dev
+      - run: docker compose up -d --wait
+      - run: uv run pytest -q
+      - run: uv run python -m eval.run --output .local/ci-evaluation --check
+      - if: always()
+        run: docker compose logs --tail 100
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation
+          path: .local/ci-evaluation
+      - if: always()
+        run: docker compose down
