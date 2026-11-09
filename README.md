@@ -63,6 +63,8 @@ For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, 
 
 [Evaluation protocol and recorded results](eval/README.md) include a frozen synthetic corpus, four methods, equal evidence budgets, raw predictions and run provenance. These measure retrieval and governance behavior; they do not measure generated-answer accuracy or performance on real conversations. The offline vector channel uses deterministic lexical hashing, **not a learned semantic model**. External embedding configuration is separate and has not been benchmarked here.
 
+In the [recorded synthetic run](eval/RESULTS.md), the governed service and the strong temporal baseline both recalled all required evidence in heldout time-query controls. The governed service additionally enforced the supplied approval/withdrawal signals, at higher local retrieval latency. The report includes the denominators, baseline failures and limits of that result.
+
 ## Scope
 
 The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints and the experiment harness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. See [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).

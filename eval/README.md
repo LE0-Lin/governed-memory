@@ -45,4 +45,8 @@ Metrics distinguish evidence Recall@k, hit-any and hit-all. Empty-gold cases are
 
 Latency includes source loading/filtering, query and document hashing/embedding, ranking, tokenization and response serialization. It excludes ingestion, process startup, answer generation, transport and initial tokenizer loading. There is one sequential caller and no embedding-result cache. UUIDs and latency vary between runs; evidence outcomes are reproducible. No neural reranker, external embedding provider, LongMemEval subset or production workload has been evaluated.
 
-Recorded results are added after the frozen run, along with their raw predictions and provenance.
+See [the recorded run and error analysis](RESULTS.md). Its raw predictions and original run provenance are retained. A category-denominator aggregation correction is documented with separate scoring provenance. To reaggregate a saved run without retrieving again:
+
+```sh
+uv run python -m eval.summarize .local/eval-all --reason "Recompute using the current metric definitions"
+```
