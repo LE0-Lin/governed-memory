@@ -3,11 +3,10 @@ import asyncio
 import json
 from pathlib import Path
 
-from governed_memory.db import create_db, initialize
+from governed_memory.db import create_db, initialize, require_current_schema
 from governed_memory.identity import bootstrap, create_project, issue_credential, revoke_access
 from governed_memory.ingest import import_file
 from governed_memory.ledger import Ledger
-from governed_memory.retrieval import Retriever
 from governed_memory.settings import Settings
 
 
@@ -23,6 +22,8 @@ def parser():
     )
     p.add_argument("--project", required=True)
     p.add_argument("--principal", default="operator")
+    p = commands.add_parser("upgrade", help="add current ledger tables to an existing installation")
+    p.add_argument("--project", required=True)
     p = commands.add_parser("credential")
     p.add_argument("--project", required=True)
     p.add_argument("--principal", required=True)
@@ -49,6 +50,16 @@ def parser():
     p = commands.add_parser("withdraw-source")
     p.add_argument("--project", required=True)
     p.add_argument("id")
+    p = commands.add_parser(
+        "approve-support", help="approve a second source for an existing assertion"
+    )
+    p.add_argument("--project", required=True)
+    p.add_argument("id", help="staged evidence candidate ID")
+    p.add_argument("--target", required=True)
+    p.add_argument("--expected-revision", type=int, required=True)
+    p.add_argument("--expected-target-revision", type=int, required=True)
+    p.add_argument("--expected-head", type=int, required=True)
+    p.add_argument("--reason", required=True)
     p = commands.add_parser("search")
     p.add_argument("--project", required=True)
     p.add_argument("query")
@@ -85,7 +96,7 @@ async def graph_operation(settings, ledger, args):
             result = await project_pending(ledger, graph, project=args.project)
             output(result)
             return 1 if result["failed"] else 0
-        result = await Retriever(ledger, graph).search(
+        result = await settings.retriever(ledger, graph).search(
             settings.token,
             args.project,
             args.query,
@@ -112,7 +123,9 @@ def main():
     if settings.database_url == "sqlite:///.local/memory.db":
         Path(".local").mkdir(exist_ok=True)
     engine = create_db(settings.database_url)
-    ledger = Ledger(engine)
+    if args.command not in {"init", "upgrade"}:
+        require_current_schema(engine)
+    ledger = Ledger(engine, policy=settings.policy())
     try:
         if args.command == "init":
             initialize(engine)
@@ -129,6 +142,28 @@ def main():
                         engine, settings.token, args.principal, args.project, args.role
                     )
                 }
+            )
+        elif args.command == "upgrade":
+            from sqlalchemy.orm import Session
+
+            from governed_memory.identity import authenticate
+
+            with Session(engine) as session:
+                authenticate(session, settings.token, args.project, ("admin",))
+            initialize(engine)
+            output({"schema": "current", "project": args.project})
+        elif args.command == "approve-support":
+            output(
+                ledger.approve_support(
+                    settings.token,
+                    args.project,
+                    args.id,
+                    args.target,
+                    expected_revision=args.expected_revision,
+                    expected_target_revision=args.expected_target_revision,
+                    expected_head=args.expected_head,
+                    reason=args.reason,
+                )
             )
         elif args.command == "create-project":
             create_project(engine, settings.token, args.from_project, args.project)

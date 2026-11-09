@@ -6,11 +6,8 @@ from dataclasses import dataclass
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from governed_memory.errors import Denied as Denied
 from governed_memory.models import Grant, Principal
-
-
-class Denied(PermissionError):
-    pass
 
 
 def token_hash(token: str) -> str:

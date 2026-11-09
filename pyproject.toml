@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "governed-memory"
-version = "0.1.0"
+version = "0.2.0"
 description = "Approval-gated, bitemporal evidence memory for coding agents"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -19,7 +19,17 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1"]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1", "ijson>=3.3,<4"]
+models = ["sentence-transformers>=5.1,<6", "ijson>=3.3,<4"]
+
+# The optional local models use CPU wheels. Core installs do not install PyTorch.
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
 
 [project.scripts]
 governed-memory = "governed_memory.cli:main"
@@ -27,7 +37,7 @@ governed-memory = "governed_memory.cli:main"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
-markers = ["integration: requires PostgreSQL and Neo4j"]
+markers = ["integration: requires external storage or OPA", "models: requires downloaded local models"]
 
 [tool.ruff]
 line-length = 100

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, event, text
+from sqlalchemy import create_engine, event, inspect, text
 from sqlalchemy.pool import StaticPool
 
 from governed_memory.constraints import protect_history
@@ -28,6 +28,13 @@ TRANSITIONS = """
 """
 
 
+def require_current_schema(engine):
+    if not inspect(engine).has_table("source_supports"):
+        raise RuntimeError(
+            "initialize an empty ledger with init, or run operator upgrade for v0.1 data"
+        )
+
+
 def initialize(engine):
     Base.metadata.create_all(engine)
     with engine.begin() as conn:
@@ -41,7 +48,7 @@ def initialize(engine):
                 BEGIN SELECT RAISE(ABORT, 'illegal lifecycle transition'); END
             """)
             )
-            for table in ("governance_events", "source_events"):
+            for table in ("governance_events", "source_events", "source_supports"):
                 for operation in ("UPDATE", "DELETE"):
                     conn.execute(
                         text(f"""
@@ -75,7 +82,7 @@ def initialize(engine):
                 BEGIN RAISE EXCEPTION 'append-only audit log'; END; $$ LANGUAGE plpgsql
             """)
             )
-            for table in ("governance_events", "source_events"):
+            for table in ("governance_events", "source_events", "source_supports"):
                 conn.execute(text(f"DROP TRIGGER IF EXISTS immutable_audit ON {table}"))
                 conn.execute(
                     text(f"""

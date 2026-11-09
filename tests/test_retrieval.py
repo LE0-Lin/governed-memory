@@ -97,6 +97,35 @@ async def test_revoked_projection_miss_never_reaches_external_fallback_embedder(
     assert embedded == []
 
 
+async def test_reranker_receives_only_currently_authorized_evidence(context):
+    ledger, _, tokens = context
+    private = ledger.propose(
+        tokens["admin"],
+        "demo",
+        subject="storage",
+        predicate="endpoint",
+        value="placeholder-private",
+        valid_from="2030-01-01T00:00:00Z",
+        audience=["reader"],
+    )
+    approve(context, private)
+    public = approve(context, propose(context))
+    received = []
+
+    class CapturingReranker:
+        metadata = {"test_double": True}
+
+        async def rerank(self, query, documents):
+            received.extend(documents)
+            return list(reversed(documents))
+
+    result = await Retriever(ledger, reranker=CapturingReranker()).search(
+        tokens["agent"], "demo", "storage"
+    )
+    assert [e.candidate_id for e in received] == [public["id"]]
+    assert "placeholder-private" not in serialize(result)
+
+
 @pytest.mark.parametrize("budget,k", [(0, 5), (32769, 5), (100, 0), (100, 51)])
 async def test_invalid_budgets(context, budget, k):
     ledger, _, tokens = context

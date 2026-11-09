@@ -20,13 +20,14 @@ class Settings:
             os.environ.get("MEMORY_NEO4J_PASSWORD", ""),
         )
 
-    def graph(self):
-        if not self.neo4j_uri:
-            return None
-        from governed_memory.graph_adapter import GraphProjection
-
-        embedder = None
+    def embedder(self):
         model = os.environ.get("MEMORY_EMBEDDING_MODEL")
+        if os.environ.get("MEMORY_LOCAL_EMBEDDING") == "1":
+            if model:
+                raise ValueError("select either local or external embeddings")
+            from governed_memory.local_models import MiniLMEmbedder
+
+            return MiniLMEmbedder(os.environ.get("MEMORY_MODEL_CACHE"))
         if model:
             from graphiti_core.embedder.openai import OpenAIEmbedder, OpenAIEmbedderConfig
 
@@ -35,7 +36,7 @@ class Settings:
                 raise ValueError(
                     "MEMORY_EMBEDDING_API_KEY required for an external embedding model"
                 )
-            embedder = OpenAIEmbedder(
+            return OpenAIEmbedder(
                 OpenAIEmbedderConfig(
                     embedding_model=model,
                     api_key=key,
@@ -43,4 +44,31 @@ class Settings:
                     embedding_dim=1024,
                 )
             )
+        from governed_memory.embedding import HashEmbedder
+
+        return HashEmbedder()
+
+    def graph(self):
+        if not self.neo4j_uri:
+            return None
+        from governed_memory.graph_adapter import GraphProjection
+
+        embedder = self.embedder()
         return GraphProjection(self.neo4j_uri, self.neo4j_user, self.neo4j_password, embedder)
+
+    def retriever(self, ledger, graph=None):
+        from governed_memory.retrieval import Retriever
+
+        reranker = None
+        if os.environ.get("MEMORY_LOCAL_RERANKER") == "1":
+            from governed_memory.local_models import MiniLMReranker
+
+            reranker = MiniLMReranker(os.environ.get("MEMORY_MODEL_CACHE"))
+        embedder = graph.embedder if graph else self.embedder()
+        return Retriever(ledger, graph, embedder=embedder, reranker=reranker)
+
+    def policy(self):
+        from governed_memory.policy import BuiltinPolicy, OpaPolicy
+
+        url = os.environ.get("MEMORY_OPA_URL")
+        return OpaPolicy(url) if url else BuiltinPolicy()

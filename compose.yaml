@@ -31,6 +31,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 40
+  opa:
+    image: openpolicyagent/opa:1.22.2-static@sha256:805656c845fb626b856fb4b4799d6c91e053a41eecc48537f4f1c2fd6974fbdd
+    profiles: [policy]
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "/policies"]
+    ports:
+      - "127.0.0.1:58181:8181"
+    volumes:
+      - ./src/governed_memory/policies:/policies:ro
+      - ./tests/policy:/policy-tests:ro
+    read_only: true
+    cap_drop: [ALL]
+    healthcheck:
+      test: ["CMD", "/opa", "eval", "--fail", "--data", "/policies", "true"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
 volumes:
   ledger:
   graph:

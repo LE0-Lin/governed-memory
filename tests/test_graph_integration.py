@@ -9,6 +9,7 @@ from governed_memory.ledger import Conflict
 from governed_memory.retrieval import Retriever
 
 from .conftest import approve, propose
+from .test_source_support import add_support
 
 
 @pytest.mark.integration
@@ -54,6 +55,12 @@ async def test_real_graph_stable_ids_hybrid_history_and_stale_source(context):
         response = await Retriever(ledger, graph).search(tokens["agent"], "demo", "database")
         assert response["backend"] == "graphiti-hybrid-rrf"
         assert response["evidence"][0]["candidate_id"] == second["id"]
+        await graph.graph.driver.execute_query(
+            "MATCH ()-[e:RELATES_TO]->() WHERE e.uuid IN $ids "
+            "SET e.embedding_profile='different-model'",
+            ids=ids,
+        )
+        assert await graph.rank("database PostgreSQL", group, ids, 5) == []
         # Replaying a job uses MERGE on the same relationship UUID.
         current = ledger.visible(tokens["agent"], "demo")[0]
         await graph.upsert(current)
@@ -100,3 +107,46 @@ def test_postgres_concurrent_approval_only_records_one_decision(context):
         results = list(pool.map(lambda _: decide(), range(2)))
     assert sorted(results) == ["approved", "conflict"]
     assert len(ledger.visible(tokens["agent"], "demo")) == 1
+
+
+@pytest.mark.integration
+async def test_real_graph_retains_remaining_support_and_deletes_after_the_last_withdrawal(context):
+    uri = os.environ.get("GM_TEST_NEO4J_URI")
+    if not uri:
+        pytest.skip("set GM_TEST_NEO4J_URI for real source-withdrawal propagation")
+    from dataclasses import replace
+    from uuid import uuid4
+
+    ledger, _, tokens = context
+    target = approve(context, propose(context))
+    support = add_support(context, target)
+    group = "support-test-" + uuid4().hex
+    graph = GraphProjection(uri, "neo4j", os.environ["GM_TEST_NEO4J_PASSWORD"])
+    upsert = graph.upsert
+
+    async def isolated(item):
+        await upsert(replace(item, project=group))
+
+    graph.upsert = isolated
+    try:
+        await graph.initialize()
+        assert (await project_pending(ledger, graph))["failed"] == 0
+        ledger.withdraw_source(tokens["admin"], "demo", target["source_id"])
+        assert (await project_pending(ledger, graph))["failed"] == 0
+        records, _, _ = await graph.graph.driver.execute_query(
+            "MATCH ()-[e:RELATES_TO]->() WHERE e.group_id=$group "
+            "RETURN e.support_source_ids AS sources",
+            group=group,
+        )
+        assert [record["sources"] for record in records] == [[support["source_id"]]]
+        ledger.withdraw_source(tokens["admin"], "demo", support["source_id"])
+        assert (await project_pending(ledger, graph))["failed"] == 0
+        records, _, _ = await graph.graph.driver.execute_query(
+            "MATCH ()-[e:RELATES_TO]->() WHERE e.group_id=$group RETURN count(e) AS n", group=group
+        )
+        assert records[0]["n"] == 0
+    finally:
+        await graph.graph.driver.execute_query(
+            "MATCH (n:Entity {group_id:$group}) DETACH DELETE n", group=group
+        )
+        await graph.close()

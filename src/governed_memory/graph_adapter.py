@@ -13,7 +13,7 @@ from graphiti_core.nodes import EntityNode
 from graphiti_core.search.search_config_recipes import EDGE_HYBRID_SEARCH_RRF
 from graphiti_core.search.search_filters import SearchFilters
 
-from governed_memory.embedding import HashEmbedder
+from governed_memory.embedding import HashEmbedder, embedding_profile
 from governed_memory.ledger import Evidence, stable_id
 
 
@@ -34,6 +34,7 @@ class GraphProjection:
     def __init__(self, uri: str, user: str, password: str, embedder=None):
         os.environ.setdefault("GRAPHITI_TELEMETRY_ENABLED", "false")
         self.embedder = embedder or HashEmbedder()
+        self.embedding_profile = embedding_profile(self.embedder)
         self.graph = Graphiti(
             uri,
             user,
@@ -50,6 +51,12 @@ class GraphProjection:
         await self.graph.close()
 
     async def upsert(self, item: Evidence):
+        if item.withdrawn:
+            await self.graph.driver.execute_query(
+                "MATCH ()-[e:RELATES_TO {uuid: $uuid}]->() DELETE e",
+                uuid=item.id,
+            )
+            return
         subject_id = stable_id(item.project, "subject", item.subject)
         # One target per snapshot prevents summaries from merging unrelated evidence.
         target_id = stable_id(item.id, "value")
@@ -81,12 +88,28 @@ class GraphProjection:
                 "candidate_id": item.candidate_id,
                 "content_hash": item.content_hash,
                 "locator": item.locator,
+                "embedding_profile": self.embedding_profile,
+                "support_source_ids": [
+                    item.source_id,
+                    *[ref.id for ref in item.additional_sources],
+                ],
             },
         )
         await edge.save(self.graph.driver)
 
     async def rank(self, query: str, project: str, allowed_ids: list[str], limit: int) -> list[str]:
         if not allowed_ids:
+            return []
+        # Check the stored model profile explicitly before querying the shared vector index.
+        records, _, _ = await self.graph.driver.execute_query(
+            "MATCH ()-[e:RELATES_TO]->() WHERE e.uuid IN $ids AND e.group_id=$project "
+            "AND e.embedding_profile=$profile RETURN e.uuid AS uuid",
+            ids=allowed_ids,
+            project=project,
+            profile=self.embedding_profile,
+        )
+        permitted = {record["uuid"] for record in records}
+        if not permitted:
             return []
         # Push down authority-derived permissions AND bitemporal eligibility before retrieval.
         config = EDGE_HYBRID_SEARCH_RRF.model_copy(deep=True)
@@ -95,9 +118,9 @@ class GraphProjection:
             query,
             config=config,
             group_ids=[project],
-            search_filter=SearchFilters(edge_uuids=allowed_ids),
+            search_filter=SearchFilters(edge_uuids=sorted(permitted)),
         )
-        return [edge.uuid for edge in result.edges]
+        return [edge.uuid for edge in result.edges if edge.uuid in permitted]
 
 
 async def project_pending(ledger, graph, limit: int = 100, project: str | None = None) -> dict:

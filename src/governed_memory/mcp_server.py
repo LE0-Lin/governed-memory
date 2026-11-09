@@ -2,17 +2,19 @@
 
 from mcp.server.fastmcp import FastMCP
 
-from governed_memory.db import create_db
+from governed_memory.db import create_db, require_current_schema
 from governed_memory.ledger import Ledger
-from governed_memory.retrieval import Retriever
 from governed_memory.settings import Settings
 
 
 def build_server(settings: Settings, ledger=None, graph=None):
     if not settings.token:
         raise ValueError("MEMORY_TOKEN must bind this server process to an issued credential")
-    ledger = ledger or Ledger(create_db(settings.database_url))
-    retriever = Retriever(ledger, graph)
+    if ledger is None:
+        engine = create_db(settings.database_url)
+        require_current_schema(engine)
+        ledger = Ledger(engine, policy=settings.policy())
+    retriever = settings.retriever(ledger, graph)
     server = FastMCP(
         "governed-memory",
         instructions=(

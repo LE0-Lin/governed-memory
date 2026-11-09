@@ -1,22 +1,22 @@
-import json
-from dataclasses import asdict
 from time import perf_counter
 
 import numpy as np
 from rank_bm25 import BM25Okapi
 
-from governed_memory.embedding import HashEmbedder, words
-from governed_memory.tokenizer import encoding
+from governed_memory.budget import EvidenceBudget
+from governed_memory.budget import serialize as serialize
+from governed_memory.embedding import HashEmbedder, embed_many, words
 
 
-def serialize(value) -> str:
-    return json.dumps(
-        value,
-        default=lambda obj: obj.isoformat(),
-        ensure_ascii=False,
-        separators=(",", ":"),
-        sort_keys=True,
-    )
+def fusion_order(lexical, cosine, ids):
+    """Reciprocal rank fusion with stable ID tie breaking, shared with external evaluation."""
+    lexical_order = sorted(range(len(ids)), key=lambda i: (-lexical[i], ids[i]))
+    vector_order = sorted(range(len(ids)), key=lambda i: (-cosine[i], ids[i]))
+    scores = np.zeros(len(ids))
+    for order in (lexical_order, vector_order):
+        for rank, i in enumerate(order):
+            scores[i] += 1 / (60 + rank + 1)
+    return sorted(range(len(ids)), key=lambda i: (-scores[i], ids[i]))
 
 
 async def hybrid_rank(query: str, evidence, embedder=None):
@@ -33,35 +33,22 @@ async def hybrid_rank(query: str, evidence, embedder=None):
     lexical = BM25Okapi(corpus).get_scores(words(query))
     query_vector = np.array(await embedder.create(query))
     # Deliberately no embedding cache: evaluation includes document and query computation.
-    vectors = np.array([await embedder.create(item.text) for item in evidence])
+    vectors = np.array(await embed_many(embedder, [item.text for item in evidence]))
     norms = np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vector)
     cosine = (vectors @ query_vector) / np.maximum(norms, 1e-12)
-    lexical_order = sorted(range(len(evidence)), key=lambda i: (-lexical[i], evidence[i].id))
-    vector_order = sorted(range(len(evidence)), key=lambda i: (-cosine[i], evidence[i].id))
-    scores = np.zeros(len(evidence))
-    for order in (lexical_order, vector_order):
-        for rank, i in enumerate(order):
-            scores[i] += 1 / (60 + rank + 1)
-    return [
-        evidence[i]
-        for i in sorted(range(len(evidence)), key=lambda i: (-scores[i], evidence[i].id))
-    ]
+    return [evidence[i] for i in fusion_order(lexical, cosine, [e.id for e in evidence])]
 
 
 class Retriever:
-    def __init__(self, ledger, graph=None):
+    def __init__(self, ledger, graph=None, *, embedder=None, reranker=None):
         self.ledger, self.graph = ledger, graph
-        self.encoding = encoding()
+        self.embedder = embedder or getattr(graph, "embedder", None) or HashEmbedder()
+        self.reranker = reranker
+        self.budget = EvidenceBudget()
+        self.encoding = self.budget.encoding
 
     def pack(self, ranked, budget: int, k: int) -> tuple[list[dict], int]:
-        result = []
-        for item in ranked:
-            trial = [*result, asdict(item)]
-            if len(self.encoding.encode(serialize(trial), disallowed_special=())) <= budget:
-                result = trial
-            if len(result) >= k:
-                break
-        return result, len(self.encoding.encode(serialize(result), disallowed_special=()))
+        return self.budget.pack(ranked, budget, k)
 
     async def search(
         self,
@@ -82,11 +69,15 @@ class Retriever:
         query_now = self.ledger.clock()
         valid_at, known_at = valid_at or query_now, known_at or query_now
         eligible = self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
-        embedder = getattr(self.graph, "embedder", None)
-        if embedder is None or isinstance(embedder, HashEmbedder):
+        embedder = self.embedder
+        if isinstance(embedder, HashEmbedder):
             terms = set(words(query))
             eligible = [e for e in eligible if terms.intersection(words(e.text))]
-        backend = "local-bm25+hash-rrf"
+        backend = (
+            "local-bm25+hash-rrf"
+            if isinstance(embedder, HashEmbedder)
+            else "local-bm25+embedding-rrf"
+        )
         ranked = []
         if self.graph and eligible:
             try:
@@ -117,6 +108,14 @@ class Retriever:
                 else "ledger-fallback:projection-missing"
             )
         ranked += fill
+        if self.reranker and ranked:
+            # Revalidate after candidate generation, before sending text to any reranker.
+            current = {
+                e.id: e
+                for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
+            }
+            ranked = [current[e.id] for e in ranked if e.id in current]
+            ranked = await self.reranker.rerank(query, ranked[:50])
         # Recheck current ACL/revocation after retrieval, before serializing any text.
         refreshed = {
             e.id: e
@@ -139,6 +138,7 @@ class Retriever:
             "token_budget": token_budget,
             "tokenizer": "cl100k_base",
             "backend": backend,
+            "reranker": self.reranker.metadata if self.reranker else None,
             "reason": reason,
         }
         # Force serialization into the measured interval (transport/answer generation excluded).

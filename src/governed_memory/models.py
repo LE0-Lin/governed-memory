@@ -142,3 +142,20 @@ class SourceEvent(Base):
     actor: Mapped[str] = mapped_column(ForeignKey("principals.id"))
     action: Mapped[str] = mapped_column(String(30))
     occurred_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class SourceSupport(Base):
+    """An operator-approved independent source for an existing assertion."""
+
+    __tablename__ = "source_supports"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    candidate_id: Mapped[str] = mapped_column(ForeignKey("candidates.id"), index=True)
+    evidence_candidate_id: Mapped[str] = mapped_column(ForeignKey("candidates.id"), unique=True)
+    source_id: Mapped[str] = mapped_column(ForeignKey("sources.id"))
+    approved_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    target_revision: Mapped[int] = mapped_column(Integer)
+    actor: Mapped[str] = mapped_column(ForeignKey("principals.id"))
+    __table_args__ = (
+        UniqueConstraint("candidate_id", "source_id"),
+        CheckConstraint("candidate_id <> evidence_candidate_id"),
+    )
