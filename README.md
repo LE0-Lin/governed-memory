@@ -2,7 +2,7 @@
 
 Evidence memory for coding agents, with explicit approval and two time axes. A proposed architecture decision stays outside the trusted graph until an operator approves its structured facts. Retrieval checks current access, withdrawal, effective time and what was known at the requested time.
 
-PostgreSQL holds the authoritative ledger. Graphiti 0.31.2 and Neo4j provide a rebuildable hybrid-search projection. SQLite and lexical hash embeddings support a small, network-free demonstration after installing dependencies.
+PostgreSQL holds the authoritative ledger. Graphiti 0.31.2 and Neo4j provide a rebuildable hybrid-search projection. SQLite and lexical hash embeddings support a small, network-free demonstration after installing dependencies. Optional integrations add OPA decisions, pinned local neural retrieval and explicitly approved corroborating sources.
 
 ## Run the example
 
@@ -52,6 +52,8 @@ Use the candidate and head revisions actually returned by `preview`; stale appro
 
 Issue a separate agent credential with `credential --project demo --principal coding-agent --role agent`. The agent's stdio MCP process receives that token as `MEMORY_TOKEN` and runs `uv run governed-memory serve`. It exposes only `propose_memory`, `search_memory` and `explain_memory`. Approval, rejection, withdrawal, credential issuance and project management stay in the operator CLI. See [configuration](docs/usage.md).
 
+For a v0.1 ledger, back it up and run `upgrade --project demo` with its existing admin credential before starting v0.2. Rebuild an existing graph once to attach embedding-profile metadata. [Operator instructions](docs/usage.md) cover this upgrade, OPA, local models and adding a second source without replacing a fact's timeline.
+
 ## Verify and reproduce
 
 ```sh
@@ -59,14 +61,16 @@ uv run pytest -q
 uv run python -m eval.run --output .local/evaluation --check
 ```
 
-For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, `GM_TEST_NEO4J_URI=bolt://127.0.0.1:57687`, and `GM_TEST_NEO4J_PASSWORD=local-graph-only` before running pytest. PostgreSQL tests create and remove isolated schemas. Without those variables the corresponding tests skip. The CI workflow is configured to run deterministic checks and real storage tests.
+For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, `GM_TEST_NEO4J_URI=bolt://127.0.0.1:57687`, and `GM_TEST_NEO4J_PASSWORD=local-graph-only` before running pytest. PostgreSQL tests create and remove isolated schemas. OPA tests use `GM_TEST_OPA_URL`; downloaded-model tests use `GM_TEST_REAL_MODELS=1`. Without the corresponding configuration those tests skip. CI runs Windows/Ubuntu core checks, real storage/OPA tests and a separate local-model job.
 
-[Evaluation protocol and recorded results](eval/README.md) include a frozen synthetic corpus, four methods, equal evidence budgets, raw predictions and run provenance. These measure retrieval and governance behavior; they do not measure generated-answer accuracy or performance on real conversations. The offline vector channel uses deterministic lexical hashing, **not a learned semantic model**. External embedding configuration is separate and has not been benchmarked here.
+[Evaluation protocols](eval/README.md) separate the frozen synthetic governance suite from a fixed 14-question LongMemEval S retrieval comparison. Both retain raw predictions and run provenance. Neither measures generated-answer accuracy. The default offline vector channel uses deterministic lexical hashing; optional learned retrieval uses standard Sentence Transformers models. Paid external embedding providers have not been benchmarked.
 
 In the [recorded synthetic run](eval/RESULTS.md), the governed service and the strong temporal baseline both recalled all required evidence in heldout time-query controls. The governed service additionally enforced the supplied approval/withdrawal signals, at higher local retrieval latency. The report includes the denominators, baseline failures and limits of that result.
 
+The [v0.2 verification record](eval/RESULTS-v0.2.md) includes the unchanged frozen-suite rerun, real policy/model checks and an installed-wheel upgrade from v0.1. The [14-question external comparison](eval/LONGMEMEVAL.md) found no recall gain from reranking over BM25 and records the extra CPU cost.
+
 ## Scope
 
-The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints and the experiment harness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. See [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).
+The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints and the experiment harness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).
 
-This is a small experimental service: it scans authorized ledger rows before retrieval, supports one controlled projection worker, and has no distributed deployment, schema upgrade tooling, OPA policy, neural reranker or production security guarantee. Withdrawal hides evidence from normal APIs while retaining audit history. The permission boundary assumes that the server's database credentials, operator token and host are trusted.
+This is a small experimental service: it scans authorized ledger rows before retrieval and supports one controlled projection worker. The upgrade command supports the additive v0.1 → v0.2 change; distributed deployment, general migration/rollback tooling and production security guarantees remain outside its scope. Source withdrawal preserves a fact only when another approved source is currently usable by the caller. Audit history remains stored. The permission boundary assumes that the server's database credentials, operator token and host are trusted.

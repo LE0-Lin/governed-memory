@@ -1,4 +1,10 @@
-# Synthetic evaluation protocol
+# Evaluation protocols
+
+The synthetic suite below tests governance and two-time behavior. The separate
+[LongMemEval protocol and results](LONGMEMEVAL.md) test learned retrieval on a
+small frozen public subset. They answer different questions.
+
+## Synthetic governance suite
 
 This is a small behavior suite for governance and temporal retrieval, not a conversational-memory benchmark or an LLM answer-accuracy evaluation. It contains 24 fictional project timelines from **8 template families**, with 192 evidence queries and 48 operation checks. Three variants of a family are correlated; counts are not independent scientific samples and no significance claim is made.
 
@@ -43,9 +49,9 @@ Each run writes:
 
 Metrics distinguish evidence Recall@k, hit-any and hit-all. Empty-gold cases are scored as abstention controls and excluded from recall denominators. Stale evidence is judged against the specified valid/known times; historical facts are valid in historical questions. Unapproved and withdrawn evidence are counted separately. Normal-query coverage and legitimate-operation success accompany attack counts so that rejecting everything cannot appear successful. A diagnostic added after an as-of metadata bug was found also checks for system-time fields later than `known_at`; its discovery and both runs are documented in the report.
 
-Latency includes source loading/filtering, query and document hashing/embedding, ranking, tokenization and response serialization. It excludes ingestion, process startup, answer generation, transport and initial tokenizer loading. There is one sequential caller and no embedding-result cache. UUIDs and latency vary between runs; evidence outcomes are reproducible. No neural reranker, external embedding provider, LongMemEval subset or production workload has been evaluated.
+Latency includes source loading/filtering, query and document hashing/embedding, ranking, tokenization and response serialization. It excludes ingestion, process startup, answer generation, transport and initial tokenizer loading. There is one sequential caller and no embedding-result cache. UUIDs and latency vary between runs; evidence outcomes are reproducible. This suite uses lexical hash vectors, without a neural reranker or paid embedding provider. The separate LongMemEval run measures the optional local models; neither is a production workload.
 
-See [the recorded run and error analysis](RESULTS.md). Its raw predictions and original run provenance are retained. A category-denominator aggregation correction is documented with separate scoring provenance. To reaggregate a saved run without retrieving again:
+See [the original run and error analysis](RESULTS.md) and the [v0.2 regression run](RESULTS-v0.2.md). Their raw predictions and original run provenance are retained. A category-denominator aggregation correction is documented with separate scoring provenance. To reaggregate a saved run without retrieving again:
 
 ```sh
 uv run python -m eval.summarize .local/eval-all --reason "Recompute using the current metric definitions"

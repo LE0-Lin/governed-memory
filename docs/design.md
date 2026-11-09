@@ -37,15 +37,27 @@ The MCP process's credential is bound by server environment. Tool arguments cann
 
 An approver sees structured values and overlapping versions with their sources. Approval requires both the candidate revision and logical fact-head revision returned by `preview`. PostgreSQL advisory locks serialize competing decisions for the same fact, and stale heads fail. Protected fact changes and protected-source withdrawal require an administrator. This is a service policy, not protection against the database owner.
 
+The built-in policy is always enforced. When `MEMORY_OPA_URL` is configured, the service also asks the bundled Rego policy to allow the decision. The server constructs policy input from authenticated roles and stored state. An unavailable OPA service or a response other than boolean `true` prevents the transaction from committing; there is no permissive fallback. OPA can restrict the built-in rules, but cannot relax them.
+
 Candidates never call Graphiti `add_episode` or `add_triplet`: extraction, resolution and contradiction handling could otherwise alter trusted relationships before review. Only committed approved snapshots are projected, using stable snapshot UUIDs and explicit node/edge saves. Graphiti does not decide approval or authoritative temporal history. Nodes have no synthesized cross-source summaries, and retrieval returns ledger text rather than graph text.
+
+## Corroborating sources
+
+`approve-support` links a staged candidate to an already approved assertion. Subject, predicate, value and the entire original valid interval must match exactly. The operator supplies both candidate revisions and the shared fact-head revision. Approval appends an immutable support link and audit events without creating a second timeline. It does not infer that two documents are independent or that a claim is true. Support chains are rejected.
+
+Every returned source must independently satisfy current withdrawal and audience restrictions. Its receipt and support approval must also be no later than `known_at`. Sources are loaded in batches. A withdrawn or inaccessible primary source is replaced in response provenance by an eligible supporting source; the excluded source's locator, hash and fragment are not returned. Later support cannot make an assertion visible in an earlier knowledge view.
+
+Withdrawing one source suppresses only that source. The assertion remains visible while another approved source passes the caller's checks. Revoking the root assertion suppresses the assertion and all its support; revoking a supporting candidate removes only that support. These actions queue affected historical snapshots for reprojection. When the last usable source disappears, projection processing removes the edge. Authoritative reads enforce withdrawal before the worker catches up.
 
 ## Projection and retrieval
 
 Approval and outbox jobs commit in one SQL transaction. Jobs keep attempts, generation and completion state. Failed graph operations retain pending work. Old worker completion cannot acknowledge a newer generation. Replays upsert the same edge UUID; `--rebuild` can repopulate a fresh graph. One controlled worker per graph is supported; concurrent graph writers are outside this version's contract.
 
-Before query embeddings or graph search, the ledger filters project, source audience, withdrawal, approval and both time intervals. Graphiti receives only eligible edge UUIDs and a project group. Hybrid RRF is used; no cross-encoder or extraction LLM is invoked. Returned UUIDs are joined back to the authorized ledger set, rechecked before serialization, and missing/stale projection candidates can be supplemented from the ledger. A graph outage is reported as a fallback backend, rather than reported as successful graph search.
+Before query embeddings or graph search, the ledger filters project, source audience, withdrawal, approval and both time intervals. Graphiti receives only eligible edge UUIDs and a project group. Hybrid RRF is used. An optional local cross-encoder reranks at most 50 candidates, after another authority check. Returned UUIDs are joined back to the authorized ledger set, rechecked before serialization, and missing/stale projection candidates can be supplemented from the ledger. A graph outage is reported as a fallback backend, rather than reported as successful graph search.
 
-Offline retrieval uses real BM25 (`rank-bm25`) plus cosine similarity of 1,024-dimensional lexical hash vectors and RRF. Because those vectors have no semantic meaning, queries with no lexical overlap can abstain. Optional external embeddings can be injected separately. This is not a general natural-language relevance or prompt-injection defense.
+Default offline retrieval uses real BM25 (`rank-bm25`) plus cosine similarity of 1,024-dimensional lexical hash vectors and RRF. Because those vectors have no semantic meaning, queries with no lexical overlap can abstain. The optional MiniLM embedder produces normalized 384-dimensional vectors, padded with zeros to the existing graph width; this preserves cosine similarity. The optional cross-encoder returns actual learned relevance logits. Neither learned channel has a calibrated abstention threshold. External embeddings can be injected separately. These options do not establish general relevance or prompt-injection defense.
+
+Each graph edge records an embedding-profile fingerprint. Before vector search, an explicit query restricts eligible UUIDs to the configured profile. An older or differently embedded edge is filled from the ledger instead of compared in the wrong vector space. Rebuild the projection after switching models. Model revisions and inference limits are in `local_models.py`; downloads are optional and remote model code is disabled.
 
 The budget covers the complete serialized `evidence` array, including IDs, text and source metadata, using the vendored `cl100k_base` vocabulary. Facts are included whole or omitted; text and provenance are not truncated apart. Response envelope, MCP framing, the query and any downstream answer are outside that evidence budget. Special-token spellings in source text are counted as ordinary untrusted text.
 
@@ -54,6 +66,6 @@ The budget covers the complete serialized `evidence` array, including IDs, text 
 - PostgreSQL is the persistent/concurrent backend. SQLite is for single-writer demos and deterministic checks.
 - Project filtering currently loads eligible evidence before ranking; this is not a large-scale retrieval architecture.
 - Stdio is a local transport. An agent with access to the server's host, SQL credentials or operator token is outside the credential-bound tool threat model. Operator credentials must not be put in agent configuration.
-- Withdrawal is logical suppression. Audit rows and stale graph copies may remain; physical/backup erasure and cross-source support propagation are not implemented.
-- External embedding models can receive approved text through an explicitly configured provider. No external-model quality or latency result is included in the offline evaluation.
-- This first schema supports fresh initialization; migration and disaster-recovery tooling are not supplied.
+- Withdrawal is logical suppression. Audit rows and stale graph copies may remain until the controlled worker runs; physical/backup erasure is not implemented.
+- External embedding models can receive approved text through an explicitly configured provider. No paid-provider quality or latency result is supplied. Local model inference stays on the host after downloading weights.
+- `upgrade` adds the v0.2 support table and triggers while preserving v0.1 rows. General schema migration, rollback and disaster-recovery tooling are not supplied.

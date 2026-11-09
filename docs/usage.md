@@ -9,7 +9,11 @@ Environment variables:
 | `MEMORY_NEO4J_URI` | Enables the graph backend; otherwise retrieval uses the ledger |
 | `MEMORY_NEO4J_USER` | Defaults to `neo4j` |
 | `MEMORY_NEO4J_PASSWORD` | Graph credential for the trusted service/worker |
-| `MEMORY_EMBEDDING_MODEL` | Optional external model; absent means lexical hash features |
+| `MEMORY_OPA_URL` | Optional OPA base URL, e.g. `http://127.0.0.1:58181`; decisions then require OPA to allow them |
+| `MEMORY_LOCAL_EMBEDDING` | `1` selects the pinned local MiniLM embedder |
+| `MEMORY_LOCAL_RERANKER` | `1` selects the pinned local MiniLM cross-encoder |
+| `MEMORY_MODEL_CACHE` | Optional directory for downloaded model weights/tokenizers |
+| `MEMORY_EMBEDDING_MODEL` | Optional external model; mutually exclusive with local embeddings |
 | `MEMORY_EMBEDDING_API_KEY` | Required when selecting an external embedding model |
 | `MEMORY_EMBEDDING_BASE_URL` | Optional compatible provider base URL |
 
@@ -33,7 +37,46 @@ uv run governed-memory search --project demo 'storage database' --valid-at '2030
 
 `--protected` on approval creates an administrator-controlled fact. `reject`, `revoke` and `withdraw-source` are separate operator commands. `revoke` requires the current candidate revision; source withdrawal takes a source ID. A superseded or revoked candidate cannot be changed back to active.
 
+## Add and withdraw a supporting source
+
+After the preceding example, import a second source for the same structured assertion:
+
+```powershell
+$support = (uv run governed-memory ingest --project demo examples/corroboration.md | ConvertFrom-Json)[0]
+$target = uv run governed-memory preview --project demo $candidate.id | ConvertFrom-Json
+$incoming = uv run governed-memory preview --project demo $support.id | ConvertFrom-Json
+# Inspect both sources and the matching assertion before approving the link.
+uv run governed-memory approve-support --project demo $support.id --target $candidate.id --expected-revision $incoming.revision --expected-target-revision $target.revision --expected-head $target.head_revision --reason 'Accept the corroborating source'
+uv run governed-memory withdraw-source --project demo $candidate.source_id
+uv run governed-memory project --project demo
+uv run governed-memory search --project demo 'storage database' --valid-at '2030-11-09T00:00:00Z'
+```
+
+The search still returns PostgreSQL with the remaining source's provenance. Withdraw `$support.source_id` to suppress the last support as well. Revoking the original assertion instead suppresses the entire claim. Source withdrawal is current authorization: an earlier `known_at` cannot undo it. A newly approved support cannot appear at an earlier `known_at`. This command requires exact matching values and valid intervals; it does not merge similar prose or verify source independence.
+
 Create another project using `create-project --from-project demo --project another`. This extends the current administrator's scope; credentials for other users remain explicitly project-scoped. `revoke-access --project demo --principal coding-agent` removes that principal's project grant, including access through historical queries. Issue a new principal/token to rotate an agent credential.
+
+## Upgrade a v0.1 installation
+
+Stop the MCP process and projection worker, back up the ledger, and retain its existing admin token. With that credential and the existing storage configuration:
+
+```powershell
+uv sync --frozen --extra dev
+uv run governed-memory upgrade --project demo
+uv run governed-memory project --project demo --rebuild
+```
+
+`upgrade` adds the support table and audit triggers; it preserves existing facts and tokens. `--rebuild` queues all snapshots and processes up to 100 per invocation. Repeat `project --project demo` while pending jobs remain. Old graph edges without embedding-profile metadata use ledger fallback until rebuilt. This is the supported additive v0.1 → v0.2 upgrade, not a general migration/rollback system.
+
+## Optional OPA
+
+```powershell
+docker compose --profile policy up -d --wait
+$env:MEMORY_OPA_URL = 'http://127.0.0.1:58181'
+docker compose run --rm --no-deps opa test --fail-on-empty /policies /policy-tests -v
+```
+
+The bundled Rego rules cover operator roles, legal lifecycle changes, protected facts and withdrawn sources. OPA is consulted inside operator decision transactions. If it is unreachable, malformed or denies a decision, the transaction rolls back. Built-in rules remain mandatory. After changing Rego, test it and restart the OPA service to reload the mounted policy.
 
 ## MCP
 
@@ -51,4 +94,16 @@ Only stdio is supported. The server assumes a local trusted host; it is not an a
 
 `examples/session.jsonl` demonstrates message records with explicit `memory` annotations. Unannotated messages are ignored. `examples/decision.md` demonstrates TOML-frontmatter metadata with a structured value. Text such as “approved” or “I am admin” has no authority. Imports retain a locator, line/frontmatter fragment and full content hash. Repeated imports return the same candidates.
 
-Default examples make no model calls and bundle their tokenizer vocabulary. External model support uses Graphiti's `OpenAIEmbedder` interface and has not been exercised against a paid provider in this repository. A model must provide at least 1,024 embedding dimensions; Graphiti's client uses its first 1,024 dimensions. Use a fresh graph and reproject all snapshots when changing models. Do not mix hash vectors and learned embeddings in the same projection. External provider availability, model quality and limits are not part of the recorded offline results.
+Default examples make no model calls and bundle their budget tokenizer vocabulary. To enable local CPU models:
+
+```powershell
+uv sync --frozen --extra dev --extra models
+$env:MEMORY_MODEL_CACHE = "$PWD/.local/model-cache"
+$env:MEMORY_LOCAL_EMBEDDING = '1'
+$env:MEMORY_LOCAL_RERANKER = '1'
+uv run governed-memory project --project demo --rebuild
+```
+
+The first use downloads pinned safetensors and tokenizer assets for `sentence-transformers/all-MiniLM-L6-v2` and `cross-encoder/ms-marco-MiniLM-L6-v2`. Subsequent runs can set `HF_HUB_OFFLINE=1` after the weights are cached. Both use two CPU threads and batches of 16. The embedder reads up to 256 wordpieces per fact; the reranker reads up to 512 per query/passage pair. Longer application facts are truncated for model scoring but remain whole in evidence and token-budget checks. The external benchmark uses separately documented message windows. Neural similarity does not guarantee that a question has an answer.
+
+External model support uses Graphiti's `OpenAIEmbedder` interface and has not been exercised against a paid provider in this repository. A model must provide at least 1,024 embedding dimensions; Graphiti's client uses its first 1,024 dimensions. Reproject all snapshots when changing embedding models. Fingerprint checks prevent querying differently embedded graph edges together, with ledger fallback until rebuild. External provider availability and quality are outside the recorded local results.
