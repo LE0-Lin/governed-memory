@@ -1,0 +1,17 @@
+{
+  "version": "minilm-relevance-v1",
+  "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+  "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+  "score_type": "raw logits",
+  "minimum_score": 1.4,
+  "calibration_data_sha256": "072105e9ae0acb1a054d620700bd97254e027b40205e29ae980fe91fdcc21e5c",
+  "selection": {
+    "split": "dev",
+    "positive_pair_retention": 0.95,
+    "score_grid": 0.1,
+    "selection": "highest 0.1-grid raw-logit cutoff retaining at least 95% of labeled positive dev pairs",
+    "heldout_reselection": false
+  },
+  "positive_pairs": 48,
+  "positive_pairs_retained": 46
+}
