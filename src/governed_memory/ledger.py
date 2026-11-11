@@ -64,12 +64,59 @@ class Ledger:
         fragment: str = "proposal",
         audience: list[str] | None = None,
     ) -> dict:
+        return self.propose_many(
+            token,
+            project,
+            [
+                {
+                    "subject": subject,
+                    "predicate": predicate,
+                    "value": value,
+                    "valid_from": valid_from,
+                    "valid_until": valid_until,
+                    "locator": locator,
+                    "body": body,
+                    "fragment": fragment,
+                    "audience": audience,
+                }
+            ],
+        )[0]
+
+    def propose_many(self, token: str, project: str, proposals: list[dict]) -> list[dict]:
+        """Stage all proposals in one transaction; any failure rolls back the batch."""
+        with Session(self.engine) as session, session.begin():
+            actor = authenticate(session, token, project, ("agent", "approver", "admin"))
+            return [
+                self._stage_proposal(session, actor, project, **proposal) for proposal in proposals
+            ]
+
+    def _stage_proposal(
+        self,
+        session: Session,
+        actor,
+        project: str,
+        *,
+        subject: str,
+        predicate: str,
+        value: str,
+        valid_from: str | datetime,
+        valid_until: str | datetime | None = None,
+        locator: str = "mcp:proposal",
+        body: str | None = None,
+        fragment: str = "proposal",
+        audience: list[str] | None = None,
+    ) -> dict:
         start = instant(valid_from)
         end = instant(valid_until) if valid_until else None
         if end is not None and end <= start:
             raise ValueError("valid interval must be nonempty and left closed, right open")
-        if not all(x.strip() for x in (subject, predicate, value, locator, fragment)):
-            raise ValueError("fact and source fields cannot be empty")
+        if not all(
+            isinstance(field, str) and field.strip()
+            for field in (subject, predicate, value, locator, fragment)
+        ):
+            raise ValueError("fact and source fields must be nonempty text")
+        if body is not None and not isinstance(body, str):
+            raise ValueError("source body must be text")
         if sum(map(len, (subject, predicate, value, body or ""))) > 100_000:
             raise ValueError("proposal exceeds 100000 characters")
         payload = json.dumps([subject, predicate, value, start.isoformat(), str(end)])
@@ -78,53 +125,51 @@ class Ledger:
         source_id = stable_id(project, locator, digest)
         fact_id = stable_id(project, subject.strip().casefold(), predicate.strip().casefold())
         candidate_id = stable_id(source_id, payload, fragment)
-        with Session(self.engine) as s, s.begin():
-            actor = authenticate(s, token, project, ("agent", "approver", "admin"))
-            if audience and actor.role != "admin":
-                raise Denied("only administrators may set source audience")
-            source = s.get(Source, source_id)
-            if source is not None:
-                self._source_access(source, actor)
-                if source.revoked_at:
-                    raise Conflict("source has been withdrawn; use a new source revision")
-                if audience is not None and audience != source.audience:
-                    raise Conflict("idempotent import cannot change a source audience")
-            else:
-                s.add(
-                    Source(
-                        id=source_id,
-                        project=project,
-                        locator=locator,
-                        content_hash=digest,
-                        body=body,
-                        audience=audience or [],
-                        created_at=instant(self.clock()),
-                    )
-                )
-                s.flush()
-            candidate = s.get(Candidate, candidate_id)
-            if candidate is None:
-                candidate = Candidate(
-                    id=candidate_id,
-                    fact_id=fact_id,
+        if audience and actor.role != "admin":
+            raise Denied("only administrators may set source audience")
+        source = session.get(Source, source_id)
+        if source is not None:
+            self._source_access(source, actor)
+            if source.revoked_at:
+                raise Conflict("source has been withdrawn; use a new source revision")
+            if audience is not None and audience != source.audience:
+                raise Conflict("idempotent import cannot change a source audience")
+        else:
+            session.add(
+                Source(
+                    id=source_id,
                     project=project,
-                    source_id=source_id,
-                    proposer=actor.id,
-                    subject=subject.strip(),
-                    predicate=predicate.strip(),
-                    value=value.strip(),
-                    fragment=fragment,
-                    valid_from=start,
-                    valid_until=end,
-                    proposed_at=instant(self.clock()),
-                    state="proposed",
-                    revision=0,
-                    protected=False,
+                    locator=locator,
+                    content_hash=digest,
+                    body=body,
+                    audience=audience or [],
+                    created_at=instant(self.clock()),
                 )
-                s.add(candidate)
-                s.flush()
-                self._event(s, candidate, actor.id, "proposed", "staged; no trusted projection")
-            return self._candidate(candidate)
+            )
+            session.flush()
+        candidate = session.get(Candidate, candidate_id)
+        if candidate is None:
+            candidate = Candidate(
+                id=candidate_id,
+                fact_id=fact_id,
+                project=project,
+                source_id=source_id,
+                proposer=actor.id,
+                subject=subject.strip(),
+                predicate=predicate.strip(),
+                value=value.strip(),
+                fragment=fragment,
+                valid_from=start,
+                valid_until=end,
+                proposed_at=instant(self.clock()),
+                state="proposed",
+                revision=0,
+                protected=False,
+            )
+            session.add(candidate)
+            session.flush()
+            self._event(session, candidate, actor.id, "proposed", "staged; no trusted projection")
+        return self._candidate(candidate)
 
     @staticmethod
     def _source_access(source, actor):

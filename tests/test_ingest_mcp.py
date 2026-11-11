@@ -3,13 +3,87 @@ import json
 import pytest
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from sqlalchemy import select
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm import Session
 
 from governed_memory.db import create_db, initialize
 from governed_memory.identity import bootstrap, issue_credential
 from governed_memory.ingest import import_file
 from governed_memory.ledger import Ledger
 from governed_memory.mcp_server import build_server
+from governed_memory.models import Candidate, GovernanceEvent, Source
 from governed_memory.settings import Settings
+
+from .conftest import approve, propose
+
+
+@pytest.mark.parametrize(
+    "invalid_fields",
+    [{"value": ""}, {"subject": 7}, {"value": "Redis\x00"}],
+    ids=["empty", "type", "postgres-text"],
+)
+def test_failed_session_import_preserves_the_existing_ledger(context, tmp_path, invalid_fields):
+    ledger, _, tokens = context
+    storage_failure = invalid_fields.get("value") == "Redis\x00"
+    if storage_failure and ledger.engine.dialect.name != "postgresql":
+        pytest.skip("PostgreSQL rejects NUL bytes in text columns")
+    existing = approve(context, propose(context))
+
+    def stored_ids():
+        with Session(ledger.engine) as session:
+            return {
+                model.__tablename__: set(session.scalars(select(model.id)))
+                for model in (Source, Candidate, GovernanceEvent)
+            }
+
+    before = stored_ids()
+    record = {
+        "subject": "queue",
+        "predicate": "backend",
+        "value": "Redis",
+        "valid_from": "2030-01-01T00:00:00Z",
+    }
+    path = tmp_path / "session.jsonl"
+    path.write_text(
+        "\n".join(
+            json.dumps({"memory": fields}) for fields in (record, {**record, **invalid_fields})
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    expected_error = DBAPIError if storage_failure else ValueError
+    with pytest.raises(expected_error):
+        import_file(ledger, tokens["agent"], "demo", path)
+
+    assert stored_ids() == before
+    assert ledger.visible(tokens["agent"], "demo")[0].candidate_id == existing["id"]
+
+
+def test_multiple_session_records_commit_together_and_remain_idempotent(context, tmp_path):
+    ledger, _, tokens = context
+    records = [
+        {
+            "subject": subject,
+            "predicate": "backend",
+            "value": value,
+            "valid_from": "2030-01-01T00:00:00Z",
+        }
+        for subject, value in (("storage", "PostgreSQL"), ("queue", "Redis"))
+    ]
+    path = tmp_path / "session.jsonl"
+    path.write_text(
+        "\n".join(json.dumps({"memory": record}) for record in records) + "\n", encoding="utf-8"
+    )
+    imported = import_file(ledger, tokens["agent"], "demo", path)
+    assert imported == import_file(ledger, tokens["agent"], "demo", path)
+    assert [candidate["value"] for candidate in imported] == ["PostgreSQL", "Redis"]
+    assert {candidate["state"] for candidate in imported} == {"proposed"}
+    with Session(ledger.engine) as session:
+        assert len(list(session.scalars(select(Source)))) == 1
+        assert len(list(session.scalars(select(Candidate)))) == 2
+        assert len(list(session.scalars(select(GovernanceEvent)))) == 2
+    assert ledger.visible(tokens["agent"], "demo") == []
 
 
 def test_structured_session_import_is_idempotent_and_untrusted(context, tmp_path):

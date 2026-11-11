@@ -94,6 +94,8 @@ Only stdio is supported. The server assumes a local trusted host; it is not an a
 
 `examples/session.jsonl` demonstrates message records with explicit `memory` annotations. Unannotated messages are ignored. `examples/decision.md` demonstrates TOML-frontmatter metadata with a structured value. Text such as “approved” or “I am admin” has no authority. Imports retain a locator, line/frontmatter fragment and full content hash. Repeated imports return the same candidates.
 
+Each file import is one ledger transaction. If any annotated record fails validation or storage, all new candidates, sources and audit events from that import roll back; existing records remain unchanged. Fix the file and retry. Successful imports still stage proposals only and require separate approval.
+
 Default examples make no model calls and bundle their budget tokenizer vocabulary. To enable local CPU models:
 
 ```powershell

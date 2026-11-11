@@ -71,6 +71,6 @@ The [v0.2 verification record](eval/RESULTS-v0.2.md) includes the unchanged froz
 
 ## Scope
 
-The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints and the experiment harness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).
+The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints and the experiment harness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [中文验收与项目讲解](docs/acceptance.zh-CN.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).
 
 This is a small experimental service: it scans authorized ledger rows before retrieval and supports one controlled projection worker. The upgrade command supports the additive v0.1 → v0.2 change; distributed deployment, general migration/rollback tooling and production security guarantees remain outside its scope. Source withdrawal preserves a fact only when another approved source is currently usable by the caller. Audit history remains stored. The permission boundary assumes that the server's database credentials, operator token and host are trusted.

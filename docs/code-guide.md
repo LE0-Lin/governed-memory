@@ -7,6 +7,7 @@ or model orchestration layers to learn.
 | Question | Read | Useful regression |
 | --- | --- | --- |
 | Who can propose or approve? | `identity.py`, then `policy.py` and `policies/governance.rego` | `test_identity.py`, `test_policy.py`, `policy/governance_test.rego` |
+| What happens when one imported record fails? | `ingest.import_file`, `Ledger.propose_many`, `_stage_proposal` | `test_ingest_mcp.py` |
 | How does an approval change history? | `Ledger.decide`, `_advance_head`, `_set_state`, `_activate` in `ledger.py` | `test_ledger.py`, `test_history_constraints.py` |
 | How can a second source preserve a fact? | `Ledger.approve_support`, `evidence.approved_source_map`, `Ledger.withdraw_source` | `test_source_support.py` |
 | Can a stale graph expose withdrawn evidence? | `Ledger.visible`, `Retriever.search`, then `GraphProjection` | `test_retrieval.py`, `test_graph_integration.py` |
@@ -19,6 +20,10 @@ check revisions and policy, update lifecycle/history, and queue projection in on
 SQL transaction. The small private methods name those steps; they do not commit
 independently. `models.py` declares stored records, while `constraints.py` and
 `db.py` install database protections.
+
+File imports parse the records, then stage the entire group in one transaction.
+Single proposals use the same staging function. A failure in any record rolls
+back the group's new sources, candidates and audit events.
 
 `SourceSupport` links one reviewed source candidate to a root assertion. It does
 not duplicate `FactVersion`. `approved_source_map` applies each source's current
