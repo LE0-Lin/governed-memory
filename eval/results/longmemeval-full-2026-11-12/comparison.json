@@ -1,0 +1,49 @@
+{
+  "v1": {
+    "outputs": 1500,
+    "status": {
+      "invalid_model_response": 1298,
+      "ok": 78,
+      "model_abstained": 121,
+      "no_eligible_evidence": 3,
+      "model_outputs": 1497,
+      "parseable_json": 405,
+      "output_token_limit": 0
+    },
+    "answer_validation_errors": {
+      "ValueError: invalid answer field types": 145,
+      "JSONDecodeError: Expecting value": 1091,
+      "ValueError: an answer requires text and supporting citations": 60,
+      "JSONDecodeError: Expecting ',' delimiter": 1,
+      "ValueError: invalid answer fields": 1
+    },
+    "retrieval_id_rescore_matches": true,
+    "scoring_calibration": [
+      20,
+      20
+    ]
+  },
+  "v2": {
+    "outputs": 1500,
+    "status": {
+      "model_abstained": 174,
+      "invalid_model_response": 398,
+      "ok": 925,
+      "no_eligible_evidence": 3,
+      "model_outputs": 1497,
+      "parseable_json": 1470,
+      "output_token_limit": 26
+    },
+    "answer_validation_errors": {
+      "ValueError: an answer requires text and supporting citations": 356,
+      "JSONDecodeError: Unterminated string starting at": 27,
+      "ValueError: abstention cannot cite evidence": 15
+    },
+    "retrieval_id_rescore_matches": true,
+    "scoring_calibration": [
+      20,
+      20
+    ]
+  },
+  "retrieval_context_mismatches": []
+}

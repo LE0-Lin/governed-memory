@@ -1,0 +1,45 @@
+{
+  "run": "full-structured-s-20261112",
+  "question_id": "4d6b87c8",
+  "logged_case_elapsed_seconds": 18432.5,
+  "observation": "Monitoring connection was lost and the case timer recorded a multi-hour gap. The underlying process and saved outputs survived. The cause was not established.",
+  "policy": "Retain every original output and timing, including the outlier; do not treat total wall-clock duration as continuous GPU work.",
+  "metrics": [
+    {
+      "method": "bm25",
+      "latency_ms": 5.360500072129071,
+      "answer_latency_ms": 2317.643100162968,
+      "index": {
+        "chunks": 936,
+        "embedding_ms": 800.6972000002861,
+        "excluded_future_sessions": [],
+        "lexical_ms": 265.7605001004413,
+        "sessions": 52
+      }
+    },
+    {
+      "method": "learned_hybrid",
+      "latency_ms": 16.31079998333007,
+      "answer_latency_ms": 1771.9308999367058,
+      "index": {
+        "chunks": 936,
+        "embedding_ms": 800.6972000002861,
+        "excluded_future_sessions": [],
+        "lexical_ms": 265.7605001004413,
+        "sessions": 52
+      }
+    },
+    {
+      "method": "learned_hybrid_cross_encoder",
+      "latency_ms": 68.50940000731498,
+      "answer_latency_ms": 18427368.166800003,
+      "index": {
+        "chunks": 936,
+        "embedding_ms": 800.6972000002861,
+        "excluded_future_sessions": [],
+        "lexical_ms": 265.7605001004413,
+        "sessions": 52
+      }
+    }
+  ]
+}

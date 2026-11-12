@@ -4,6 +4,7 @@ This extension uses all 500 questions from the same pinned LongMemEval cleaned-S
 file as the earlier 14-question comparison. It evaluates retrieval followed by
 generated, cited answers. The earlier subset results were already known; this
 is an expanded public-data evaluation, not a previously unseen heldout set.
+The [complete results](RESULTS-v0.3.md) retain both runs and their failures.
 
 `full_manifest.json` freezes the original unconstrained run's question IDs, dataset revision/checksum,
 models and generation limits before inference. All three methods use the same

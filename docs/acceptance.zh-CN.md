@@ -1,8 +1,8 @@
 # 项目验收与讲解
 
-验收范围是原计划的 **P0 九项 + P1 四项，共 13 项**。下表给出实现和验证入口，
-用于核对进度。这里的完成状态指代码、测试、实验记录和仓库交付，不代表用户已
-亲自审阅代码或理解全部实现。
+原计划的 **P0 九项 + P1 四项，共 13 项**已交付。2026-11-12，用户另行选择
+“先完成回答、全量评估和部署验证”，新增三项验收，见下方 P2 表。
+这里的完成状态指实现与验证证据，不代表用户已亲自审阅、运行或理解全部代码。
 
 ## P0：9/9
 
@@ -26,6 +26,32 @@
 | 固定版本的神经 cross-encoder | [标准模型接口](../src/governed_memory/local_models.py) | [真实模型测试](../tests/test_local_models.py)、[成本记录](../eval/LONGMEMEVAL.md) |
 | 预先固定的 LongMemEval 子集 | [固定协议](../eval/longmemeval_manifest.json)、[检索器](../eval/longmemeval_run.py) | [标签隔离测试](../tests/test_longmemeval.py)、[结果](../eval/LONGMEMEVAL.md) |
 | 多来源佐证及撤回传播 | [来源筛选](../src/governed_memory/evidence.py)、账本的 `approve_support` | [来源回归](../tests/test_source_support.py)、[图存储回归](../tests/test_graph_integration.py) |
+
+## P2：本轮选定的三项已通过本地验收
+
+| 项目 | 实现入口 | 实际验证 |
+| --- | --- | --- |
+| 带引用的回答、CLI 与可选 MCP 工具 | [回答服务](../src/governed_memory/answering.py)、[模型接口](../src/governed_memory/generation.py)、[操作说明](usage.md#cited-answers) | 真实 CPU/CUDA 模型生成；权限、撤回、异常与引用回归；生成内容不写入事实账本 |
+| 全 500 题评估与单独评分 | [固定协议](../eval/FULL_PROTOCOL.md)、[完整报告](../eval/RESULTS-v0.3.md) | 两轮各 1,500 条输出；所有失败保留；独立复算会话召回一致；本地评分器各 20/20 简单校准 |
+| 容器、进程重启、备份恢复与模型回答 | [部署说明](deployment.md)、[容器回归](../tests/test_container_deployment.py) | 非 root/只读容器；真实 PG/Neo4j/OPA；二进制备份恢复与重建投影；Agent 回答及撤回传播；CPU 镜像确认没有 CUDA 构建 |
+
+本轮完整本地测试 **171 项通过、5 项跳过**，真实存储、神经模型和两种容器镜像
+均已启用。五个跳过都是 SQLite 不适用项：两个 PostgreSQL 并发检查、一个 NUL
+文本拒绝检查、两个 PostgreSQL 容器用例。原生 Rego 测试 **10/10** 通过。
+
+终验另外修正了两个有实际后果的问题：CPU 包源只声明在传递依赖上，Linux 会
+下载 CUDA 库；现在直接声明可选 PyTorch 依赖并验证实际 CPU 运行时。Windows
+旧编码管道还会在合法的中文/emoji 记录入库后输出失败；CLI 现在明确输出 UTF-8，
+真实子进程回归覆盖初始化、导入和预览。
+
+全量报告的最高本地模型评分为 **169/500（33.8%）**。格式合法率提高不等于事实
+正确率；仍有 398 条输出没有通过格式或引用规则。报告保留这些失败和一次主机
+长中断造成的计时异常，不把结果写成官方成绩或生产效果。代码路径可以从
+`AnswerService.answer` 的前后权限复核，读到 `generate_answer`、`parse_answer`，
+再看标准 Transformers 模型封装；[阅读指南](code-guide.md) 给出对应测试。
+
+Rust、OpenFGA/OpenLineage、Kubernetes 和完整前端没有纳入用户本轮选择的范围。
+本表没有把这些扩展项标成已实现。
 
 ## 用三个情境理解项目
 
@@ -64,9 +90,10 @@ PostgreSQL 并发检查和一个 NUL 文本拒绝检查。实际 PostgreSQL、Ne
 合成集验证审批、撤回、时间和权限的预期行为。普通时间查询中，完整治理与正确
 处理时间的强基线均召回全部必要证据；治理层增加了权限和审批检查的成本。
 
-公开数据实验只用了固定的 14/500 题，并且只评估来源会话召回。BM25 为 18/18，
+早期 v0.2 公开数据实验用了固定的 14/500 题，只评估来源会话召回。BM25 为 18/18，
 神经混合检索为 17/18，加入 cross-encoder 后为 18/18；重排没有显示优于 BM25，
 CPU 查询中位耗时约 1.515 秒。两个无答案问题仍返回上下文，不能称为正确拒答。
-这些数值都不能写成问答准确率或全量基准成绩。
+这些旧数值不能写成问答准确率或全量基准成绩。新增 v0.3 的全 500 题回答评估
+及其局限见 [完整报告](../eval/RESULTS-v0.3.md)，与旧记录分别保留。
 
 继续阅读：[代码路径](code-guide.md)、[操作与升级](usage.md)、[设计边界](design.md)。

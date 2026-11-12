@@ -5,6 +5,8 @@ The synthetic suite below tests governance and two-time behavior. The separate
 small frozen public subset. The [full cleaned-S protocol](FULL_PROTOCOL.md)
 extends this to all 500 questions with cited generation and a separate pinned
 local model judge. Each report retains its original scope and raw failures.
+The [v0.3 full-set results](RESULTS-v0.3.md) include both format variants and the
+recorded interruption affecting one answer timer.
 
 ## Synthetic governance suite
 

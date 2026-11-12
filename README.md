@@ -61,13 +61,15 @@ uv run pytest -q
 uv run python -m eval.run --output .local/evaluation --check
 ```
 
-For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, `GM_TEST_NEO4J_URI=bolt://127.0.0.1:57687`, and `GM_TEST_NEO4J_PASSWORD=local-graph-only` before running pytest. PostgreSQL tests create and remove isolated schemas. OPA tests use `GM_TEST_OPA_URL`; downloaded-model tests use `GM_TEST_REAL_MODELS=1`. Without the corresponding configuration those tests skip. CI runs Windows/Ubuntu core checks, real storage/OPA tests and a separate local-model job.
+For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, `GM_TEST_NEO4J_URI=bolt://127.0.0.1:57687`, and `GM_TEST_NEO4J_PASSWORD=local-graph-only` before running pytest. PostgreSQL tests create and remove isolated schemas. OPA tests use `GM_TEST_OPA_URL`; downloaded retrieval-model tests use `GM_TEST_REAL_MODELS=1` and generator tests use `GM_TEST_REAL_GENERATION=1`. Container recovery/model-image checks are configured in [deployment.md](docs/deployment.md). Without the corresponding configuration those tests skip. CI runs Windows/Ubuntu core checks, real storage/OPA/container tests and a separate local-model job that verifies CPU wheels and actual generation.
 
 [Evaluation protocols](eval/README.md) separate the frozen synthetic governance suite from a fixed 14-question LongMemEval S retrieval comparison and the [full 500-question answer protocol](eval/FULL_PROTOCOL.md). The earlier reports measure governance and retrieval; the full protocol adds cited generation, format-failure accounting and a separate local model judge. The default offline vector channel uses deterministic lexical hashing; optional learned retrieval uses standard Sentence Transformers models. Paid external embedding providers have not been benchmarked.
 
 In the [recorded synthetic run](eval/RESULTS.md), the governed service and the strong temporal baseline both recalled all required evidence in heldout time-query controls. The governed service additionally enforced the supplied approval/withdrawal signals, at higher local retrieval latency. The report includes the denominators, baseline failures and limits of that result.
 
 The [v0.2 verification record](eval/RESULTS-v0.2.md) includes the unchanged frozen-suite rerun, real policy/model checks and an installed-wheel upgrade from v0.1. The [14-question external comparison](eval/LONGMEMEVAL.md) found no recall gain from reranking over BM25 and records the extra CPU cost.
+
+The [v0.3 full-set report](eval/RESULTS-v0.3.md) retains two complete runs of 500 questions × three methods. Schema constraints reduced answer-validation failures from 1,298 to 398 of 1,500 outputs. The best local judge estimate was 169/500 (33.8%); this does not establish official benchmark accuracy or production answer quality. Raw failures, model judgments and a long host-interruption timing outlier are all retained.
 
 ## Scope
 
