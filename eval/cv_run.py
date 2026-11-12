@@ -28,6 +28,15 @@ from governed_memory.retrieval import Retriever, hybrid_rank, serialize
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def processor_name():
+    name = platform.processor()
+    if not name and Path("/proc/cpuinfo").exists():
+        for line in Path("/proc/cpuinfo").read_text().splitlines():
+            if line.startswith("model name"):
+                return line.partition(":")[2].strip()
+    return name
+
+
 def snapshot():
     files = sorted((ROOT / "src").rglob("*.py")) + sorted((ROOT / "native/src").glob("*.rs"))
     files += sorted((ROOT / "eval").glob("cv*"))
@@ -258,7 +267,7 @@ async def run(args):
             "protocol": protocol,
             "python": platform.python_version(),
             "os": platform.platform(),
-            "cpu": platform.processor(),
+            "cpu": processor_name(),
             "logical_cpus": os.cpu_count(),
             "storage": engine.dialect.name,
             "embedding": embedder.metadata,
