@@ -30,6 +30,7 @@ jobs:
       GM_TEST_NEO4J_URI: bolt://127.0.0.1:57687
       GM_TEST_NEO4J_PASSWORD: local-graph-only
       GM_TEST_OPA_URL: http://127.0.0.1:58181
+      GM_TEST_CONTAINER_IMAGE: governed-memory:local
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -39,6 +40,7 @@ jobs:
       - run: uv sync --frozen --extra dev
       - run: docker compose --profile policy up -d --wait
       - run: docker compose run --rm --no-deps opa test --fail-on-empty /policies /policy-tests -v
+      - run: docker compose --profile app build memory
       - run: uv run pytest -q
       - run: uv run python -m eval.run --output .local/ci-evaluation --check
       - if: always()
@@ -54,7 +56,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GM_TEST_REAL_MODELS: "1"
+      GM_TEST_REAL_GENERATION: "1"
       MEMORY_MODEL_CACHE: .local/model-cache
+      MEMORY_GENERATION_CACHE: .local/generation-cache
       HF_HUB_DISABLE_XET: "1"
       HF_HUB_DOWNLOAD_TIMEOUT: "120"
     steps:
@@ -67,5 +71,9 @@ jobs:
         with:
           path: .local/model-cache
           key: pinned-minilm-${{ hashFiles('src/governed_memory/local_models.py') }}
+      - uses: actions/cache@v4
+        with:
+          path: .local/generation-cache
+          key: qwen-small-7ae557604adf67be50417f59c2c2f167def9a775
       - run: uv sync --frozen --extra dev --extra models
-      - run: uv run pytest -q tests/test_local_models.py
+      - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py

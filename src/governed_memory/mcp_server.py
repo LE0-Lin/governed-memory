@@ -7,7 +7,7 @@ from governed_memory.ledger import Ledger
 from governed_memory.settings import Settings
 
 
-def build_server(settings: Settings, ledger=None, graph=None):
+def build_server(settings: Settings, ledger=None, graph=None, generator=None):
     if not settings.token:
         raise ValueError("MEMORY_TOKEN must bind this server process to an issued credential")
     if ledger is None:
@@ -67,6 +67,32 @@ def build_server(settings: Settings, ledger=None, graph=None):
     def explain_memory(project: str, memory_id: str) -> dict:
         """Return structured provenance and the recorded approval trail for accessible memory."""
         return ledger.explain(settings.token, project, memory_id)
+
+    generator = generator or settings.generator()
+    if generator:
+        from governed_memory.answering import AnswerService
+
+        answers = AnswerService(retriever, generator)
+
+        @server.tool()
+        async def answer_memory(
+            project: str,
+            query: str,
+            valid_at: str | None = None,
+            known_at: str | None = None,
+            token_budget: int = 2048,
+            k: int = 5,
+        ) -> dict:
+            """Generate a cited answer from current authorized evidence, or abstain."""
+            return await answers.answer(
+                settings.token,
+                project,
+                query,
+                valid_at=valid_at,
+                known_at=known_at,
+                token_budget=token_budget,
+                k=k,
+            )
 
     return server
 

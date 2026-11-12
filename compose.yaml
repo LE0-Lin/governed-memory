@@ -1,5 +1,29 @@
 name: governed-memory
 services:
+  memory:
+    profiles: [app]
+    image: governed-memory:local
+    build:
+      context: .
+      args:
+        INSTALL_MODELS: ${INSTALL_MODELS:-false}
+    environment:
+      MEMORY_DATABASE_URL: postgresql+psycopg://memory:${POSTGRES_PASSWORD:-local-memory-only}@postgres:5432/memory
+      MEMORY_NEO4J_URI: bolt://neo4j:7687
+      MEMORY_NEO4J_PASSWORD: ${NEO4J_PASSWORD:-local-graph-only}
+      MEMORY_TOKEN: ${MEMORY_AGENT_TOKEN:-}
+    stdin_open: true
+    tty: false
+    read_only: true
+    tmpfs: ["/tmp:noexec,nosuid,size=128m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
   postgres:
     image: postgres:17.6
     environment:

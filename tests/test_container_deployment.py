@@ -1,0 +1,250 @@
+"""Opt-in deployment checks against a real PostgreSQL/Neo4j/OPA test stack."""
+
+import asyncio
+import json
+import os
+import re
+import subprocess
+from dataclasses import dataclass, replace
+from uuid import uuid4
+
+import pytest
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+from sqlalchemy import text
+
+from governed_memory.graph_adapter import GraphProjection
+
+pytestmark = pytest.mark.integration
+
+
+@dataclass
+class Container:
+    docker: list[str]
+    image: str
+    environment: dict[str, str]
+
+    def process_env(self, token=""):
+        environment = {**os.environ, **self.environment, "MEMORY_TOKEN": token}
+        if self.docker[0].lower() in {"wsl", "wsl.exe"}:
+            names = [*self.environment, "MEMORY_TOKEN"]
+            environment["WSLENV"] = ":".join(filter(None, [environment.get("WSLENV", ""), *names]))
+        return environment
+
+    def arguments(self, *arguments, interactive=False, entrypoint=None, image=None):
+        command = [
+            *self.docker,
+            "run",
+            "--rm",
+            "--network=host",
+            "--read-only",
+            "--cap-drop=ALL",
+            "--security-opt=no-new-privileges:true",
+            "--tmpfs=/tmp:noexec,nosuid,size=128m",
+        ]
+        if interactive:
+            command.append("-i")
+        for key in [*self.environment, "MEMORY_TOKEN"]:
+            command.extend(["--env", key])
+        if entrypoint:
+            command.extend(["--entrypoint", entrypoint])
+        return [*command, image or self.image, *arguments]
+
+    def invoke(self, *arguments, token="", input_data=None, **options):
+        return subprocess.run(
+            self.arguments(*arguments, interactive=input_data is not None, **options),
+            env=self.process_env(token),
+            input=input_data,
+            capture_output=True,
+            check=False,
+        )
+
+    def cli(self, *arguments, token=""):
+        response = self.invoke(*arguments, token=token)
+        assert response.returncode == 0, response.stderr.decode(errors="replace")
+        return json.loads(response.stdout)
+
+    def server(self, token):
+        command = self.arguments("serve", interactive=True)
+        return StdioServerParameters(
+            command=command[0], args=command[1:], env=self.process_env(token)
+        )
+
+
+async def clear_project(graph, project):
+    await graph.graph.driver.execute_query(
+        "MATCH (n:Entity) WHERE n.group_id=$project DETACH DELETE n", project=project
+    )
+
+
+async def test_container_permissions_persistence_backup_and_withdrawal(engine):
+    image = os.environ.get("GM_TEST_CONTAINER_IMAGE")
+    if not image:
+        pytest.skip("set GM_TEST_CONTAINER_IMAGE after building the runtime image")
+    if engine.dialect.name != "postgresql":
+        pytest.skip("the deployment/backup check requires the real PostgreSQL test stack")
+    with engine.connect() as connection:
+        schema = connection.scalar(text("SELECT current_schema()"))
+    assert re.fullmatch(r"gm_test_[0-9a-f]{32}", schema)
+    url = engine.url.update_query_dict({"options": f"-csearch_path={schema}"})
+    project = "deployment-" + uuid4().hex
+    recovery_database = "gm_recovery_" + uuid4().hex
+    docker = json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]'))
+    container = Container(
+        docker,
+        image,
+        {
+            "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
+            "MEMORY_NEO4J_URI": os.environ["GM_TEST_NEO4J_URI"],
+            "MEMORY_NEO4J_PASSWORD": os.environ["GM_TEST_NEO4J_PASSWORD"],
+            "MEMORY_OPA_URL": os.environ.get("GM_TEST_OPA_URL", ""),
+            "PGPASSWORD": url.password,
+        },
+    )
+    graph = GraphProjection(
+        os.environ["GM_TEST_NEO4J_URI"], "neo4j", os.environ["GM_TEST_NEO4J_PASSWORD"]
+    )
+    created_database = False
+    try:
+        probe = container.invoke(
+            "-c",
+            "import json,os; print(json.dumps({'uid':os.getuid(), "
+            "'readonly':bool(os.statvfs('/').f_flag & os.ST_RDONLY)}))",
+            entrypoint="python",
+        )
+        assert probe.returncode == 0, probe.stderr.decode(errors="replace")
+        assert json.loads(probe.stdout) == {"uid": 10001, "readonly": True}
+        admin = container.cli("init", "--project", project)["admin_token"]
+        agent = container.cli(
+            "credential",
+            "--project",
+            project,
+            "--principal",
+            "agent",
+            "--role",
+            "agent",
+            token=admin,
+        )["token"]
+        async with (
+            stdio_client(container.server(agent)) as streams,
+            ClientSession(*streams) as session,
+        ):
+            await session.initialize()
+            tools = await session.list_tools()
+            assert {tool.name for tool in tools.tools} == {
+                "propose_memory",
+                "search_memory",
+                "explain_memory",
+            }
+            response = await session.call_tool(
+                "propose_memory",
+                {
+                    "project": project,
+                    "subject": "storage",
+                    "predicate": "database",
+                    "value": "SQLite",
+                    "valid_from": "2020-01-01T00:00:00Z",
+                },
+            )
+            assert not response.isError
+            candidate = json.loads(response.content[0].text)
+        preview = container.cli("preview", "--project", project, candidate["id"], token=admin)
+        arguments = (
+            "approve",
+            "--project",
+            project,
+            candidate["id"],
+            "--expected-revision",
+            str(preview["revision"]),
+            "--expected-head",
+            str(preview["head_revision"]),
+            "--reason",
+            "deployment fixture",
+        )
+        assert container.invoke(*arguments, token=agent).returncode != 0
+        container.cli(*arguments, token=admin)
+        assert container.cli("project", "--project", project, token=admin)["failed"] == 0
+
+        # Export this isolated schema only; never dump other projects in the test server.
+        dump = container.invoke(
+            "pg_dump",
+            "--host",
+            url.host,
+            "--port",
+            str(url.port or 5432),
+            "--username",
+            url.username,
+            "--dbname",
+            url.database,
+            "--format=custom",
+            "--schema",
+            schema,
+            image="postgres:17.6",
+        )
+        assert dump.returncode == 0, dump.stderr.decode(errors="replace")
+        with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
+            connection.execute(text(f'CREATE DATABASE "{recovery_database}"'))
+            created_database = True
+        restored = container.invoke(
+            "pg_restore",
+            "--host",
+            url.host,
+            "--port",
+            str(url.port or 5432),
+            "--username",
+            url.username,
+            "--dbname",
+            recovery_database,
+            "--no-owner",
+            "--no-acl",
+            image="postgres:17.6",
+            input_data=dump.stdout,
+        )
+        assert restored.returncode == 0, restored.stderr.decode(errors="replace")
+        recovered = replace(
+            container,
+            environment={
+                **container.environment,
+                "MEMORY_DATABASE_URL": url.set(database=recovery_database).render_as_string(
+                    hide_password=False
+                ),
+            },
+        )
+        await clear_project(graph, project)
+        assert (
+            recovered.cli("project", "--project", project, "--rebuild", token=admin)["failed"] == 0
+        )
+        async with (
+            stdio_client(recovered.server(agent)) as streams,
+            ClientSession(*streams) as session,
+        ):
+            await session.initialize()
+            for _attempt in range(20):
+                response = await session.call_tool(
+                    "search_memory", {"project": project, "query": "database"}
+                )
+                assert not response.isError
+                result = json.loads(response.content[0].text)
+                if result["backend"].startswith("graphiti"):
+                    break
+                await asyncio.sleep(0.5)
+            assert result["backend"].startswith("graphiti")
+            assert result["evidence"][0]["value"] == "SQLite"
+            await asyncio.to_thread(
+                recovered.cli,
+                "withdraw-source",
+                "--project",
+                project,
+                candidate["source_id"],
+                token=admin,
+            )
+            response = await session.call_tool(
+                "search_memory", {"project": project, "query": "database"}
+            )
+            assert not json.loads(response.content[0].text)["evidence"]
+    finally:
+        await clear_project(graph, project)
+        await graph.close()
+        if created_database:
+            with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
+                connection.execute(text(f'DROP DATABASE "{recovery_database}"'))

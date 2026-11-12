@@ -37,12 +37,12 @@ class MiniLMEmbedder(EmbedderClient):
     dimensions = 1024
     native_dimensions = 384
 
-    def __init__(self, cache_dir: str | Path | None = None):
+    def __init__(self, cache_dir: str | Path | None = None, device="cpu"):
         _, library = runtime()
         self.model = library.SentenceTransformer(
             EMBEDDING_MODEL,
             revision=EMBEDDING_REVISION,
-            device="cpu",
+            device=device,
             cache_folder=str(cache_dir) if cache_dir else None,
             token=False,
             trust_remote_code=False,
@@ -52,7 +52,7 @@ class MiniLMEmbedder(EmbedderClient):
         self.metadata = {
             "model": EMBEDDING_MODEL,
             "revision": EMBEDDING_REVISION,
-            "device": "cpu",
+            "device": device,
             "threads": CPU_THREADS,
             "max_tokens": 256,
             "native_dimensions": 384,
@@ -84,12 +84,12 @@ class MiniLMEmbedder(EmbedderClient):
 
 
 class MiniLMReranker:
-    def __init__(self, cache_dir: str | Path | None = None):
+    def __init__(self, cache_dir: str | Path | None = None, device="cpu"):
         torch, library = runtime()
         self.model = library.CrossEncoder(
             RERANKING_MODEL,
             revision=RERANKING_REVISION,
-            device="cpu",
+            device=device,
             max_length=512,
             cache_folder=str(cache_dir) if cache_dir else None,
             token=False,
@@ -100,7 +100,7 @@ class MiniLMReranker:
         self.metadata = {
             "model": RERANKING_MODEL,
             "revision": RERANKING_REVISION,
-            "device": "cpu",
+            "device": device,
             "threads": CPU_THREADS,
             "max_tokens": 512,
             "scores": "raw logits",

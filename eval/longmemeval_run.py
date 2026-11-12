@@ -16,6 +16,7 @@ from rank_bm25 import BM25Okapi
 
 from eval.longmemeval_data import MANIFEST, MODEL_PROFILES, chunks, selected_cases, verify_dataset
 from eval.longmemeval_score import score
+from governed_memory.answering import generate_answer
 from governed_memory.budget import EvidenceBudget, serialize
 from governed_memory.embedding import words
 from governed_memory.local_models import MiniLMEmbedder, MiniLMReranker
@@ -71,11 +72,18 @@ def empty_predictions(case, config, *, error=None, excluded=()):
     ]
 
 
-async def retrieve_case(case, config, embedder, reranker, budget):
+async def retrieve_case(case, config, embedder, reranker, budget, generator=None):
     started = perf_counter()
     documents, excluded = chunks(case, embedder.model.tokenizer, config)
     if not documents:
-        return empty_predictions(case, config, excluded=excluded)
+        rows = empty_predictions(case, config, excluded=excluded)
+        if generator is not None:
+            for row in rows:
+                row["response"] = await generate_answer(
+                    generator, case.question, [], retain_raw=True
+                )
+                row["answer_latency_ms"] = 0
+        return rows
     corpus = [words(document.text) or [""] for document in documents]
     lexical_index = BM25Okapi(corpus)
     lexical_index_ms = (perf_counter() - started) * 1000
@@ -117,26 +125,39 @@ async def retrieve_case(case, config, embedder, reranker, budget):
             evidence, tokens = [], 1
         # Serialization is included. Public output stores IDs rather than copying conversations.
         serialize(evidence)
-        rows.append(
-            {
-                "question_id": case.id,
-                "category": case.category,
-                "method": method,
-                "chunk_ids": [item["id"] for item in evidence],
-                "session_ids": list(dict.fromkeys(item["session_id"] for item in evidence)),
-                "evidence_tokens": tokens,
-                "latency_ms": (perf_counter() - started) * 1000,
-                "candidate_scores": candidate_scores,
-                "error": error,
-                "index": {
-                    "chunks": len(documents),
-                    "sessions": len(case.sessions) - len(excluded),
-                    "excluded_future_sessions": excluded,
-                    "lexical_ms": lexical_index_ms,
-                    "embedding_ms": embedding_index_ms,
-                },
-            }
-        )
+        row = {
+            "question_id": case.id,
+            "category": case.category,
+            "method": method,
+            "chunk_ids": [item["id"] for item in evidence],
+            "session_ids": list(dict.fromkeys(item["session_id"] for item in evidence)),
+            "evidence_tokens": tokens,
+            "latency_ms": (perf_counter() - started) * 1000,
+            "candidate_scores": candidate_scores,
+            "error": error,
+            "index": {
+                "chunks": len(documents),
+                "sessions": len(case.sessions) - len(excluded),
+                "excluded_future_sessions": excluded,
+                "lexical_ms": lexical_index_ms,
+                "embedding_ms": embedding_index_ms,
+            },
+        }
+        if generator is not None:
+            generation_start = perf_counter()
+            row["response"] = await generate_answer(
+                generator,
+                case.question,
+                evidence,
+                case.question_date,
+                max_new_tokens=config["generation_max_tokens"],
+                retain_raw=True,
+            )
+            serialize(row["response"])
+            row["answer_latency_ms"] = (
+                row["latency_ms"] + (perf_counter() - generation_start) * 1000
+            )
+        rows.append(row)
     return rows
 
 

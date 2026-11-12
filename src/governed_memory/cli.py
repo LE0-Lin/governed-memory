@@ -60,13 +60,14 @@ def parser():
     p.add_argument("--expected-target-revision", type=int, required=True)
     p.add_argument("--expected-head", type=int, required=True)
     p.add_argument("--reason", required=True)
-    p = commands.add_parser("search")
-    p.add_argument("--project", required=True)
-    p.add_argument("query")
-    p.add_argument("--valid-at")
-    p.add_argument("--known-at")
-    p.add_argument("--token-budget", type=int, default=2048)
-    p.add_argument("--k", type=int, default=5)
+    for name in ("search", "answer"):
+        p = commands.add_parser(name)
+        p.add_argument("--project", required=True)
+        p.add_argument("query")
+        p.add_argument("--valid-at")
+        p.add_argument("--known-at")
+        p.add_argument("--token-budget", type=int, default=2048)
+        p.add_argument("--k", type=int, default=5)
     p = commands.add_parser("project", help="retry the durable projection queue")
     p.add_argument("--project", required=True)
     p.add_argument(
@@ -96,7 +97,16 @@ async def graph_operation(settings, ledger, args):
             result = await project_pending(ledger, graph, project=args.project)
             output(result)
             return 1 if result["failed"] else 0
-        result = await settings.retriever(ledger, graph).search(
+        retriever = settings.retriever(ledger, graph)
+        operation = retriever.search
+        if args.command == "answer":
+            from governed_memory.answering import AnswerService
+
+            generator = settings.generator()
+            if generator is None:
+                raise ValueError("set MEMORY_GENERATION_PROFILE to enable answers")
+            operation = AnswerService(retriever, generator).answer
+        result = await operation(
             settings.token,
             args.project,
             args.query,

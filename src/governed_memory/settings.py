@@ -72,3 +72,15 @@ class Settings:
 
         url = os.environ.get("MEMORY_OPA_URL")
         return OpaPolicy(url) if url else BuiltinPolicy()
+
+    def generator(self):
+        profile = os.environ.get("MEMORY_GENERATION_PROFILE")
+        if not profile:
+            return None
+        from governed_memory.generation import TransformersGenerator
+
+        return TransformersGenerator(
+            profile,
+            os.environ.get("MEMORY_GENERATION_CACHE"),
+            os.environ.get("MEMORY_GENERATION_DEVICE", "cpu"),
+        )
