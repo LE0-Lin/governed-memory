@@ -13,6 +13,9 @@ Environment variables:
 | `MEMORY_LOCAL_EMBEDDING` | `1` selects the pinned local MiniLM embedder |
 | `MEMORY_LOCAL_RERANKER` | `1` selects the pinned local MiniLM cross-encoder |
 | `MEMORY_MODEL_CACHE` | Optional directory for downloaded model weights/tokenizers |
+| `MEMORY_GENERATION_PROFILE` | Enables cited answers: `small` (0.5B) or `standard` (1.5B); unset disables generation |
+| `MEMORY_GENERATION_CACHE` | Optional directory for downloaded generator weights/tokenizers |
+| `MEMORY_GENERATION_DEVICE` | `cpu` (default) or `cuda`, with a compatible PyTorch installation |
 | `MEMORY_EMBEDDING_MODEL` | Optional external model; mutually exclusive with local embeddings |
 | `MEMORY_EMBEDDING_API_KEY` | Required when selecting an external embedding model |
 | `MEMORY_EMBEDDING_BASE_URL` | Optional compatible provider base URL |
@@ -89,6 +92,23 @@ explain_memory(project, memory_id)
 ```
 
 Only stdio is supported. The server assumes a local trusted host; it is not an authenticated public HTTP endpoint. Two independent stdio server processes and persisted retrieval are exercised by `test_stdio_mcp_persists_between_independent_sessions`.
+
+Setting `MEMORY_GENERATION_PROFILE` adds `answer_memory(project, query, valid_at?, known_at?, token_budget?, k?)`. It receives the same bound agent credential and has no approval or identity arguments. Container launch and recovery instructions are in [deployment.md](deployment.md).
+
+## Cited answers
+
+```powershell
+uv sync --frozen --extra dev --extra models
+$env:MEMORY_GENERATION_PROFILE = 'small'
+$env:MEMORY_GENERATION_CACHE = "$PWD/.local/generation-cache"
+uv run governed-memory answer --project demo 'Which database does storage use?' --valid-at '2030-11-09T00:00:00Z'
+```
+
+The first call downloads the pinned Qwen model and tokenizer. `small` is the 0.5B CPU smoke profile; `standard` is the 1.5B evaluation profile. Greedy decoding allows at most 384 output tokens and a 4,096-token complete prompt. An overlong prompt fails closed rather than silently dropping evidence. `HF_HUB_OFFLINE=1` uses previously cached assets. The optional dependencies include LM Format Enforcer at a fixed upstream revision containing its Transformers 5 import fix.
+
+The response includes `answer`, resolved `evidence_ids`, authorized `evidence`, `abstain`, `reason`, generation token counts and model revision. JSON Schema constrains field types and available citation aliases; a separate parser checks whether an answer has citations and abstention has none. Missing evidence, invalid output or generation failure returns a fixed abstention with a reason. Citation presence does not prove that the claim is supported.
+
+The service rechecks all supplied evidence after generation. A withdrawal or changed source discards the answer and context; revoked project access denies the request. It never writes generated text into the ledger, and it does not return malformed raw model output. Evidence remains untrusted data in the prompt. These controls do not establish general prompt-injection resistance or factual correctness.
 
 ## Imports and embeddings
 

@@ -20,7 +20,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1", "ijson>=3.3,<4"]
-models = ["sentence-transformers>=5.1,<6", "ijson>=3.3,<4", "accelerate>=1.14,<2"]
+models = [
+  "sentence-transformers>=5.1,<6",
+  "ijson>=3.3,<4",
+  "accelerate>=1.14,<2",
+  # Includes upstream's Transformers 5 tokenizer import fix, not yet on PyPI.
+  "lm-format-enforcer @ https://github.com/noamgat/lm-format-enforcer/archive/2597936f55da0e3cab8a6047eba91b2ecdfe888a.tar.gz",
+]
 
 # The optional local models use CPU wheels. Core installs do not install PyTorch.
 [[tool.uv.index]]
@@ -48,3 +54,6 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "third_party/tiktoken-LICENSE" = "governed_memory/data/tiktoken-LICENSE"
+
+[tool.hatch.metadata]
+allow-direct-references = true

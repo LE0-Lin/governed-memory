@@ -335,6 +335,7 @@ dev = [
 models = [
     { name = "accelerate" },
     { name = "ijson" },
+    { name = "lm-format-enforcer" },
     { name = "sentence-transformers" },
 ]
 
@@ -344,6 +345,7 @@ requires-dist = [
     { name = "graphiti-core", specifier = "==0.31.2" },
     { name = "ijson", marker = "extra == 'dev'", specifier = ">=3.3,<4" },
     { name = "ijson", marker = "extra == 'models'", specifier = ">=3.3,<4" },
+    { name = "lm-format-enforcer", marker = "extra == 'models'", url = "https://github.com/noamgat/lm-format-enforcer/archive/2597936f55da0e3cab8a6047eba91b2ecdfe888a.tar.gz" },
     { name = "mcp", specifier = ">=1.20,<2" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8,<9" },
@@ -551,6 +553,15 @@ wheels = [
 ]
 
 [[package]]
+name = "interegular"
+version = "0.3.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/dc/9d/8b6dde58a028a3962ce17e84d5fe73758df61378e00ef8ac3d85da34b0ff/interegular-0.3.3.tar.gz", hash = "sha256:d9b697b21b34884711399ba0f0376914b81899ce670032486d0d048344a76600", size = 24705, upload-time = "2024-01-06T23:01:22.372Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c4/01/72d6472f80651673716d1deda2a5bbb633e563ecf94f4479da5519d69d25/interegular-0.3.3-py37-none-any.whl", hash = "sha256:b0c07007d48c89d6d19f7204972d369b2a77222722e126b6aa63aa721dc3b19c", size = 23635, upload-time = "2024-01-06T23:01:20.829Z" },
+]
+
+[[package]]
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -625,6 +636,26 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz", hash = "sha256:b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d", size = 32855, upload-time = "2025-09-08T01:34:59.186Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl", hash = "sha256:98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe", size = 18437, upload-time = "2025-09-08T01:34:57.871Z" },
+]
+
+[[package]]
+name = "lm-format-enforcer"
+version = "0.11.3"
+source = { url = "https://github.com/noamgat/lm-format-enforcer/archive/2597936f55da0e3cab8a6047eba91b2ecdfe888a.tar.gz" }
+dependencies = [
+    { name = "interegular" },
+    { name = "packaging" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+]
+sdist = { hash = "sha256:d0f30e4c7b83841b0b8037664e007776a3827981f17e86f88e6bfac172c5179f" }
+
+[package.metadata]
+requires-dist = [
+    { name = "interegular", specifier = ">=0.3.2" },
+    { name = "packaging" },
+    { name = "pydantic", specifier = ">=1.10.8" },
+    { name = "pyyaml" },
 ]
 
 [[package]]

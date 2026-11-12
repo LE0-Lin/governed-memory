@@ -12,6 +12,15 @@ services:
       MEMORY_NEO4J_URI: bolt://neo4j:7687
       MEMORY_NEO4J_PASSWORD: ${NEO4J_PASSWORD:-local-graph-only}
       MEMORY_TOKEN: ${MEMORY_AGENT_TOKEN:-}
+      MEMORY_OPA_URL: ${MEMORY_CONTAINER_OPA_URL:-}
+      MEMORY_GENERATION_PROFILE: ${MEMORY_GENERATION_PROFILE:-}
+      MEMORY_GENERATION_CACHE: /models/generation
+      MEMORY_MODEL_CACHE: /models/retrieval
+      MEMORY_LOCAL_EMBEDDING: ${MEMORY_LOCAL_EMBEDDING:-0}
+      MEMORY_LOCAL_RERANKER: ${MEMORY_LOCAL_RERANKER:-0}
+      HF_HUB_OFFLINE: ${HF_HUB_OFFLINE:-0}
+    volumes:
+      - models:/models
     stdin_open: true
     tty: false
     read_only: true
@@ -72,5 +81,6 @@ services:
       timeout: 3s
       retries: 20
 volumes:
+  models:
   ledger:
   graph:

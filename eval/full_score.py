@@ -11,7 +11,7 @@ from pathlib import Path
 
 import numpy as np
 
-from eval.full_run import MANIFEST, hardware, read_json, versions, write_json
+from eval.full_run import STRUCTURED_MANIFEST, hardware, read_json, versions, write_json
 from eval.longmemeval_data import category, records, verify_dataset
 from eval.longmemeval_run import source_snapshot
 from governed_memory.budget import serialize
@@ -178,7 +178,7 @@ async def score_prediction(prediction, reference, judge, config):
 async def run(args):
     verify_dataset(args.dataset)
     initial = source_snapshot()
-    config = read_json(MANIFEST)
+    config = read_json(args.manifest)
     predictions = [
         json.loads(line) for line in args.predictions.read_text(encoding="utf-8").splitlines()
     ]
@@ -188,7 +188,7 @@ async def run(args):
         "predictions_sha256": digest,
         "code_sha256": initial["code_sha256"],
         "manifest_sha256": hashlib.sha256(
-            MANIFEST.read_bytes().replace(b"\r\n", b"\n")
+            args.manifest.read_bytes().replace(b"\r\n", b"\n")
         ).hexdigest(),
         "versions": versions(),
         "device": args.device,
@@ -295,6 +295,7 @@ async def run(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path, default=STRUCTURED_MANIFEST)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--generation-cache", type=Path)

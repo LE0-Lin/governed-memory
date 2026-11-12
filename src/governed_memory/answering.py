@@ -36,6 +36,23 @@ def answer_messages(query, evidence, question_date=None):
     ]
 
 
+def answer_schema(evidence):
+    return {
+        "type": "object",
+        "properties": {
+            "answer": {"type": "string"},
+            "evidence_ids": {
+                "type": "array",
+                "items": {"type": "string", "enum": [f"E{i}" for i in range(1, len(evidence) + 1)]},
+                "maxItems": len(evidence),
+            },
+            "abstain": {"type": "boolean"},
+        },
+        "required": ["answer", "evidence_ids", "abstain"],
+        "additionalProperties": False,
+    }
+
+
 def parse_answer(text, evidence):
     text = text.strip()
     if text.startswith("```json\n") and text.endswith("\n```"):
@@ -82,12 +99,15 @@ async def generate_answer(
         return result
     try:
         completion = await generator.generate(
-            answer_messages(query, evidence, question_date), max_new_tokens=max_new_tokens
+            answer_messages(query, evidence, question_date),
+            max_new_tokens=max_new_tokens,
+            json_schema=answer_schema(evidence),
         )
         result["generation"] = {
             "prompt_tokens": completion.prompt_tokens,
             "completion_tokens": completion.completion_tokens,
             "finish_reason": completion.finish_reason,
+            "format": "json_schema",
         }
     except Exception as exc:
         result.update(

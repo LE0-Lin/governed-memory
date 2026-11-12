@@ -2,7 +2,9 @@
 
 The synthetic suite below tests governance and two-time behavior. The separate
 [LongMemEval protocol and results](LONGMEMEVAL.md) test learned retrieval on a
-small frozen public subset. They answer different questions.
+small frozen public subset. The [full cleaned-S protocol](FULL_PROTOCOL.md)
+extends this to all 500 questions with cited generation and a separate pinned
+local model judge. Each report retains its original scope and raw failures.
 
 ## Synthetic governance suite
 

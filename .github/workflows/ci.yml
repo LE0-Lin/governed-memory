@@ -76,4 +76,4 @@ jobs:
           path: .local/generation-cache
           key: qwen-small-7ae557604adf67be50417f59c2c2f167def9a775
       - run: uv sync --frozen --extra dev --extra models
-      - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py
+      - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py tests/test_answer_format.py

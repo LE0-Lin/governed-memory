@@ -42,6 +42,7 @@ class TransformersGenerator:
         self.cache_dir, self.device = cache_dir, device
         self.max_input_tokens = max_input_tokens
         self.model = self.tokenizer = None
+        self._tokenizer_data = None
         self.lock = Lock()
         self.metadata = {
             "profile": profile,
@@ -83,7 +84,21 @@ class TransformersGenerator:
             attn_implementation="sdpa",
         ).eval()
 
-    def _generate(self, messages, max_new_tokens):
+    def _json_constraint(self, schema):
+        from lmformatenforcer import JsonSchemaParser
+        from lmformatenforcer.integrations.transformers import (
+            build_token_enforcer_tokenizer_data,
+            build_transformers_prefix_allowed_tokens_fn,
+        )
+
+        if self._tokenizer_data is None:
+            self._tokenizer_data = build_token_enforcer_tokenizer_data(self.tokenizer)
+        # Tokenizer data is reusable; parser/decoding state belongs to this request only.
+        return build_transformers_prefix_allowed_tokens_fn(
+            self._tokenizer_data, JsonSchemaParser(schema)
+        )
+
+    def _generate(self, messages, max_new_tokens, json_schema):
         # One model instance serves requests sequentially; concurrent decoding is unsupported.
         with self.lock:
             if self.model is None:
@@ -100,12 +115,18 @@ class TransformersGenerator:
             prompt_tokens = inputs["input_ids"].shape[-1]
             if prompt_tokens > self.max_input_tokens:
                 raise ValueError("generation prompt exceeds the configured input limit")
+            constraints = (
+                {"prefix_allowed_tokens_fn": self._json_constraint(json_schema)}
+                if json_schema is not None
+                else {}
+            )
             with torch.inference_mode():
                 outputs = self.model.generate(
                     **inputs,
                     do_sample=False,
                     max_new_tokens=max_new_tokens,
                     pad_token_id=self.tokenizer.eos_token_id,
+                    **constraints,
                 )
             tokens = outputs[0, prompt_tokens:].tolist()
             eos = self.model.generation_config.eos_token_id
@@ -117,7 +138,7 @@ class TransformersGenerator:
                 "stop" if tokens and tokens[-1] in eos else "length",
             )
 
-    async def generate(self, messages, max_new_tokens=384):
+    async def generate(self, messages, max_new_tokens=384, *, json_schema=None):
         if not 1 <= max_new_tokens <= 1024:
             raise ValueError("max_new_tokens must be 1..1024")
-        return await asyncio.to_thread(self._generate, messages, max_new_tokens)
+        return await asyncio.to_thread(self._generate, messages, max_new_tokens, json_schema)

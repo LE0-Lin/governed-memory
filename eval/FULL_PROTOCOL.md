@@ -5,7 +5,7 @@ file as the earlier 14-question comparison. It evaluates retrieval followed by
 generated, cited answers. The earlier subset results were already known; this
 is an expanded public-data evaluation, not a previously unseen heldout set.
 
-`full_manifest.json` freezes all question IDs, the dataset revision/checksum,
+`full_manifest.json` freezes the original unconstrained run's question IDs, dataset revision/checksum,
 models and generation limits before inference. All three methods use the same
 complete input histories, future-session exclusion, 200-wordpiece windows with
 40 overlap, k=8 and a 2,048-token evidence budget. Methods remain BM25, learned
@@ -18,6 +18,27 @@ and retrieved evidence only. Short citation aliases (`E1`, `E2`, ...) map back
 to actual evidence IDs; unknown citations or malformed JSON fail closed.
 Reference answers, answer-session labels and message answer flags never enter
 retrieval or generation. Predictions are finalized and hashed before scoring.
+
+## Format-constraint comparison
+
+During v1 inference, shape-only diagnostics found frequent malformed JSON and
+wrong field types. The complete v1 run is retained, including these failures.
+Before inspecting reference answers or semantic scores, a second protocol was
+frozen as `full_structured_manifest.json`. It keeps all question IDs, model
+revisions, retrieval settings, prompts and token limits unchanged, and adds
+JSON Schema token constraints using LM Format Enforcer. Field types, required
+keys and citation aliases are constrained; `parse_answer` still checks answer
+and abstention invariants. Token exhaustion and semantic mistakes can still
+fail. The library is pinned to the upstream revision with its Transformers 5
+import fix.
+
+This is an engineering comparison motivated by observed format failures on the
+same public data. It is not blind validation, a new heldout set or evidence of
+semantic-answer tuning. Both complete prediction sets are finalized before
+running the same local judge. The unconstrained protocol is reproduced at
+commit `54b2593`; the current runner defaults to the structured protocol.
+
+## Scoring and reproducibility
 
 The separate scorer reports exact match and token F1 on answerable questions
 other than preference rubrics. A distinct, pinned Qwen3-4B model also judges the
@@ -48,8 +69,9 @@ uv run python -m eval.full_score --dataset .local/longmemeval/longmemeval_s_clea
 ```
 
 For CUDA, use a matching CUDA PyTorch installation and pass `--device cuda`.
-The application lock selects CPU wheels by default; the recorded GPU environment
-is documented separately. Generation uses bfloat16 on supported Ampere-or-newer
+The application lock selects CPU wheels by default; see [the recorded GPU environment](GPU_ENVIRONMENT.md).
+Use `--manifest eval/full_manifest.json` when scoring the preserved v1 predictions.
+Generation uses bfloat16 on supported Ampere-or-newer
 GPUs, float16 on older CUDA GPUs, and float32 on CPU.
 
 Sources: [LongMemEval](https://github.com/xiaowu0162/LongMemEval),

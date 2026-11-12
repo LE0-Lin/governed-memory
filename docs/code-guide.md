@@ -12,6 +12,7 @@ or model orchestration layers to learn.
 | How can a second source preserve a fact? | `Ledger.approve_support`, `evidence.approved_source_map`, `Ledger.withdraw_source` | `test_source_support.py` |
 | Can a stale graph expose withdrawn evidence? | `Ledger.visible`, `Retriever.search`, then `GraphProjection` | `test_retrieval.py`, `test_graph_integration.py` |
 | What really invokes the models? | `local_models.py`, `embedding.py`, `Settings.retriever` | `test_local_models.py` |
+| How are answers constrained and rechecked? | `AnswerService.answer`, `generate_answer`, `parse_answer` in `answering.py`, then `generation.py` | `test_answering.py`, `test_answer_format.py` |
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |
 
@@ -34,7 +35,15 @@ IDs back to ledger evidence, checks authority before reranking and serialization
 then packs whole evidence items. Graph failures are visible in the response's
 `backend` field. `budget.py` owns the one evidence serializer/token counter.
 
+`generation.py` wraps the standard Transformers chat/generation API. It loads one
+pinned model lazily and serializes calls. The format library's tokenizer data is
+cached, while each request gets a fresh schema parser. `answering.py` handles
+evidence aliases, parsing and the authority checks around generation. Generated
+text never enters the approval path.
+
 For evaluation, read `eval/README.md` before the runners. The synthetic suite
-tests governance with structured fixtures. LongMemEval keeps input preparation,
-retrieval and label scoring in three files; the retrieval case contains no answer
-labels. Neither report is a claim about generated-answer accuracy.
+tests governance with structured fixtures. The original LongMemEval comparison
+tests retrieval only. `eval/full_run.py` adds resumable answers for all 500
+questions; `eval/full_score.py` opens reference answers only after predictions
+are finalized. The local model judge is an estimate, distinct from the official
+GPT evaluator. See [the full protocol](../eval/FULL_PROTOCOL.md).

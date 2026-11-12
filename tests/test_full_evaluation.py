@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from eval.full_run import MANIFEST, read_json, write_json
+from eval.full_run import MANIFEST, STRUCTURED_MANIFEST, read_json, write_json
 from eval.full_score import judge_label, lexical_scores, summarize, verify_prediction_ids
 from eval.longmemeval_data import retrieval_case
 from eval.longmemeval_run import retrieve_case
@@ -21,6 +21,16 @@ def test_full_manifest_keeps_all_questions_and_the_original_subset():
     assert len(original["cases"]) == 14
     assert full["sha256"] == original["sha256"]
     assert full["k"] == original["k"] and full["token_budget"] == original["token_budget"]
+
+
+def test_structured_protocol_changes_decoding_without_changing_the_questions_or_models():
+    original = read_json(MANIFEST)
+    structured = read_json(STRUCTURED_MANIFEST)
+    changes = {"protocol", "answer_format", "format_enforcer_revision"}
+    original_settings = {key: value for key, value in original.items() if key not in changes}
+    structured_settings = {key: value for key, value in structured.items() if key not in changes}
+    assert structured_settings == original_settings
+    assert structured["answer_format"] == "json_schema"
 
 
 def test_checkpoint_json_round_trips_unicode_text(tmp_path):
@@ -107,7 +117,7 @@ async def test_labels_never_enter_the_generation_prompt():
     class Generator:
         metadata = {"test_double": True}
 
-        async def generate(self, messages, max_new_tokens):
+        async def generate(self, messages, max_new_tokens, *, json_schema=None):
             prompts.append(json.dumps(messages))
             source = json.loads(messages[-1]["content"])["evidence"][0]["id"]
             return GeneratedText(

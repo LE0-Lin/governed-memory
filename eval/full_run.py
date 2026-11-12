@@ -24,11 +24,13 @@ from eval.longmemeval_data import (
 )
 from eval.longmemeval_run import empty_predictions, retrieve_case, source_snapshot
 from eval.longmemeval_score import score
+from governed_memory.answering import generate_answer
 from governed_memory.budget import EvidenceBudget, serialize
 from governed_memory.generation import GENERATION_PROFILES, TransformersGenerator
 from governed_memory.local_models import MiniLMEmbedder, MiniLMReranker
 
 MANIFEST = Path(__file__).with_name("full_manifest.json")
+STRUCTURED_MANIFEST = Path(__file__).with_name("full_structured_manifest.json")
 
 
 def versions():
@@ -42,6 +44,7 @@ def versions():
             "numpy",
             "rank-bm25",
             "accelerate",
+            "lm-format-enforcer",
         )
     }
 
@@ -66,7 +69,7 @@ def hardware(device):
     }
 
 
-def freeze(path, destination=MANIFEST):
+def freeze(path, destination=STRUCTURED_MANIFEST):
     if destination.exists():
         raise FileExistsError("the full protocol is already frozen")
     verify_dataset(path)
@@ -75,7 +78,9 @@ def freeze(path, destination=MANIFEST):
         raise ValueError("expected all 500 unique cleaned-S questions")
     generation, judge = GENERATION_PROFILES["standard"], GENERATION_PROFILES["judge"]
     config = {
-        "protocol": "full-cleaned-s-v1",
+        "protocol": "full-cleaned-s-v2-structured",
+        "answer_format": "json_schema",
+        "format_enforcer_revision": "2597936f55da0e3cab8a6047eba91b2ecdfe888a",
         "dataset": DATASET,
         "revision": REVISION,
         "file": FILENAME,
@@ -118,8 +123,10 @@ def read_json(path):
 
 async def run(args):
     verify_dataset(args.dataset)
-    config = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    manifest_hash = hashlib.sha256(MANIFEST.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+    config = read_json(args.manifest)
+    if config.get("answer_format") != "json_schema":
+        raise ValueError("use commit 54b2593 to reproduce the unconstrained v1 protocol")
+    manifest_hash = hashlib.sha256(args.manifest.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     initial = source_snapshot()
     if initial["dirty_source"]:
         raise ValueError("commit inference sources before starting or resuming the frozen run")
@@ -161,7 +168,11 @@ async def run(args):
     # Synthetic warmup only; no selected question, history or score label is inspected.
     await embedder.create("A fictional example warms the encoder.")
     await reranker.scores("database", ["The fictional service uses SQLite."])
-    await generator.generate([{"role": "user", "content": "Return only the word blue."}], 16)
+    await generate_answer(
+        generator,
+        "Which database?",
+        [{"id": "warmup", "text": "The fictional service uses SQLite."}],
+    )
     for number, case in enumerate(selected_cases(args.dataset, config), 1):
         path = cases_folder / (case.id + ".json")
         if path.exists():
@@ -216,17 +227,7 @@ async def run(args):
         "python": platform.python_version(),
         "concurrency": 1,
         "timing": "warm kernels; per-history indexing separate; no query/answer cache",
-        "versions": {
-            name: importlib.metadata.version(name)
-            for name in (
-                "torch",
-                "transformers",
-                "sentence-transformers",
-                "numpy",
-                "rank-bm25",
-                "accelerate",
-            )
-        },
+        "versions": versions(),
     }
     if args.device == "cuda":
         import torch
@@ -253,6 +254,7 @@ async def run(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path, default=STRUCTURED_MANIFEST)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--model-cache", type=Path)
     parser.add_argument("--generation-cache", type=Path)
@@ -261,7 +263,7 @@ def main():
     parser.add_argument("--freeze-manifest", action="store_true")
     args = parser.parse_args()
     if args.freeze_manifest:
-        print(f"Frozen {len(freeze(args.dataset)['cases'])} cases")
+        print(f"Frozen {len(freeze(args.dataset, args.manifest)['cases'])} cases")
     elif args.output is None:
         parser.error("--output is required for inference")
     else:

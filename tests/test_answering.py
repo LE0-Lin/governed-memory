@@ -24,7 +24,7 @@ class TestGenerator:
         self.callback = callback
         self.contexts = []
 
-    async def generate(self, messages, max_new_tokens):
+    async def generate(self, messages, max_new_tokens, *, json_schema=None):
         context = json.loads(messages[-1]["content"])["evidence"]
         self.contexts.append(context)
         if self.callback:
@@ -149,3 +149,11 @@ async def test_actual_small_generator_uses_the_pinned_local_model():
     )
     assert reply.text.strip().lower() == "blue"
     assert reply.prompt_tokens > 0 and 0 < reply.completion_tokens <= 16
+
+    from governed_memory.answering import generate_answer
+
+    evidence = [{"id": "database-source", "text": "The project uses SQLite as its database."}]
+    response = await generate_answer(generator, "Which database does the project use?", evidence)
+    assert response["reason"] == "ok"
+    assert "sqlite" in response["answer"].lower()
+    assert response["evidence_ids"] == ["database-source"]
