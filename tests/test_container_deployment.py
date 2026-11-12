@@ -318,6 +318,11 @@ def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(eng
     assert response["evidence_ids"] == [response["evidence"][0]["id"]]
     assert response["evidence"][0]["candidate_id"] == candidate["id"]
     assert response["generator"]["device"] == "cpu"
+    container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
+    withdrawn = container.cli(*arguments, token=agent)
+    assert withdrawn["reason"] == "no_eligible_evidence" and withdrawn["abstain"]
+    assert withdrawn["evidence"] == withdrawn["evidence_ids"] == []
+    assert withdrawn["generation"] is None
 
 
 def test_container_semantic_operator_workflow_preserves_approval_boundary(engine):
@@ -358,9 +363,11 @@ def test_container_semantic_operator_workflow_preserves_approval_boundary(engine
     # The source is written inside the permitted tmpfs, then consumed by the real CLI.
     program = (
         "import pathlib,subprocess,sys; "
-        "pathlib.Path('/tmp/session.txt').write_text('Atlas uses PostgreSQL for persistent storage.'); "
+        "pathlib.Path('/tmp/session.txt').write_text("
+        "'Atlas uses PostgreSQL for persistent storage.'); "
         "sys.stdout.write(subprocess.check_output(['governed-memory','ingest-document',"
-        f"'--project','{project}','/tmp/session.txt','--valid-from','2030-01-01T00:00:00Z'],text=True))"
+        f"'--project','{project}','/tmp/session.txt',"
+        "'--valid-from','2030-01-01T00:00:00Z'],text=True))"
     )
     staged = container.cli("-c", program, entrypoint="python", token=agent)["candidates"]
     assert staged
@@ -421,8 +428,3 @@ def test_container_semantic_operator_workflow_preserves_approval_boundary(engine
     assert resolved["replacement"]["subject"] == candidate["subject"]
     container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
     assert not container.cli(*search, token=agent)["evidence"]
-    container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
-    withdrawn = container.cli(*arguments, token=agent)
-    assert withdrawn["reason"] == "no_eligible_evidence" and withdrawn["abstain"]
-    assert withdrawn["evidence"] == withdrawn["evidence_ids"] == []
-    assert withdrawn["generation"] is None
