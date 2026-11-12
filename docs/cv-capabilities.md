@@ -43,3 +43,12 @@ will be reported as observed, with their workload, baseline and hardware. Neithe
 the v0.3 83.3% session recall nor its 33.8% local QA score establishes these claims.
 The February–May 2025 project dates need contemporaneous records; coding now does
 not establish those dates. Kubernetes and a full frontend are outside this CV entry.
+
+## Verified outcome
+
+All engineering paths above are now exercised; see
+[v0.4 verification](verification-v0.4.md) and the
+[controlled results](../eval/RESULTS-v0.4.md). The measured warm P95 is 1.264 s;
+controlled recall is 100% for both methods and stale-rate reduction is 100% for
+this corpus. Negative-query relevance remains limited. These observations do not
+retroactively establish the original three CV numbers or the 2025 dates.

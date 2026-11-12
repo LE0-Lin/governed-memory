@@ -1,0 +1,32 @@
+{
+  "session_baseline": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 951,
+    "stale_count": 597,
+    "stale_rate": 0.6277602523659306,
+    "negative_stale_failures": 72,
+    "negative_unrelated_results": 9,
+    "latency_ms_p50": 836.6891719997511,
+    "latency_ms_p95": 3019.5193142011676
+  },
+  "governed": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 1008,
+    "stale_count": 0,
+    "stale_rate": 0.0,
+    "negative_stale_failures": 0,
+    "negative_unrelated_results": 288,
+    "latency_ms_p50": 377.5014154998644,
+    "latency_ms_p95": 1263.5334706494177
+  },
+  "stale_rate_reduction": 1.0,
+  "completed_at": "2026-11-12T18:58:16.791545+00:00"
+}
