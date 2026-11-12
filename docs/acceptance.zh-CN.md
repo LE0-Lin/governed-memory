@@ -52,8 +52,24 @@
 `AnswerService.answer` 的前后权限复核，读到 `generate_answer`、`parse_answer`，
 再看标准 Transformers 模型封装；[阅读指南](code-guide.md) 给出对应测试。
 
-Rust、OpenFGA/OpenLineage、Kubernetes 和完整前端没有纳入用户本轮选择的范围。
-本表没有把这些扩展项标成已实现。
+以上是 v0.3 的交付记录；随后用户要求补齐 CV 对照中的工程缺口，新增内容见下表。
+Kubernetes 和完整前端不在这份 CV 的项目条目中，本次不将它们计入缺口。
+
+## v0.4：CV 功能补齐
+
+| 能力 | 实现与边界 | 验证入口 |
+| --- | --- | --- |
+| Rust + Python | 自有 Rust 代码实际计算 BM25、余弦/RRF 和语义边界；数据库与审批仍由 Python 管理 | [Rust 代码](../native/src/lib.rs)、[跨语言回归](../tests/test_native.py) |
+| 语义分块、文档摄入 | 固定 MiniLM 决定边界；保留原文字符范围；生成的主体和值须能在原文中找到，只能进入待审批状态 | [摄入](../src/governed_memory/semantic_ingest.py)、[真实模型测试](../tests/test_semantic_memory.py) |
+| 实体解析、语义矛盾检测 | 只比较调用者可见的已批准实体和重叠时间段；NLI 仅供审查；实体合并保留原候选和替代候选，另行审批 | [语义审查](../src/governed_memory/semantic_review.py)、[操作说明](operators-v0.4.md) |
+| OpenFGA 与 OPA | 固定关系模型、即时检查；本地与外部角色取交集，私有来源和 OPA 也使用交集后的角色 | [权限客户端](../src/governed_memory/authorization.py)、[真实服务测试](../tests/test_external_governance.py) |
+| 依赖与失效传播 | 绑定具体快照和来源；替换、撤销、删除来源后，在同一事务中使下游失效并更新图队列 | [依赖检查](../src/governed_memory/dependencies.py)、[并发与传播测试](../tests/test_dependencies.py) |
+| OpenLineage | 同事务写入不可改写的事件，再由可重试队列发送；不导出原文或密钥；按 runId 去重 | [血缘实现](../src/governed_memory/lineage.py)、[官方 Schema 与真实 HTTP 校验](../tests/test_external_governance.py) |
+| 安装、升级、部署与评估 | v0.3 加表升级、Windows/Linux 原生构建、实际模型和容器操作；统一协议预先冻结 | [验收矩阵](cv-capabilities.md)、[固定协议](../eval/cv-protocol.json) |
+
+这些功能的实现与验证，不构成 2025 年项目时间的历史证据，也不能直接证明 CV 中
+预写的 83.2%、26.4% 和 1.12 秒。新实验必须按实际结果和受控数据范围描述；
+原有 500 题回答评估的失败和 33.8% 本地评分继续保留。
 
 ## 用三个情境理解项目
 

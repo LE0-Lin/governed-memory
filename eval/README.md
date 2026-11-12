@@ -60,3 +60,23 @@ See [the original run and error analysis](RESULTS.md) and the [v0.2 regression r
 ```sh
 uv run python -m eval.summarize .local/eval-all --reason "Recompute using the current metric definitions"
 ```
+
+## Controlled CV comparison
+
+`cv-protocol.json` and `cv-timelines.json` freeze a separate 84-query controlled
+workload before results. It measures temporal recall, stale retrieval and latency
+with the same actual MiniLM/reranker, Rust kernels, k and evidence budget for both
+methods. Three repetitions alternate method order. Gold is independent of ledger
+queries and validated against all 84 fixture cases in `test_cv_evaluation.py`.
+This does not replace the original synthetic suite or the 500-question QA study.
+
+```sh
+uv sync --frozen --extra dev --extra models --extra native
+uv run python -m eval.cv_run --output .local/cv-evaluation
+```
+
+Set `MEMORY_MODEL_CACHE` and optionally `GM_EVAL_DATABASE_URL` for PostgreSQL. The
+runner creates and removes its own isolated PostgreSQL schema, records the clean
+source commit/hash and hardware, and refuses to overwrite results. Without that
+URL it uses SQLite and records that choice. All errors and negative-query results
+remain in `observations.jsonl`; `candidate-ids.json` maps outputs to frozen aliases.

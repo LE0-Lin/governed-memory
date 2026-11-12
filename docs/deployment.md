@@ -4,6 +4,9 @@ The runtime image runs the installed package as UID/GID 10001. It uses stdio
 MCP and opens no application HTTP port. Compose supplies a read-only root,
 temporary `/tmp`, no Linux capabilities and persistent PostgreSQL, Neo4j and
 model-cache volumes. The core image has no PyTorch or model weights.
+Both runtime variants include compiled Rust kernels. The optional OpenFGA
+database, semantic operator commands and OpenLineage delivery are described in
+[the v0.4 workflow](operators-v0.4.md).
 
 ## Start a local stack
 
