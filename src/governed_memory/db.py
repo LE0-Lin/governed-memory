@@ -27,11 +27,26 @@ TRANSITIONS = """
     (OLD.state = 'superseded' AND NEW.state = 'revoked')
 """
 
+AUDIT_TABLES = (
+    "governance_events",
+    "source_events",
+    "source_supports",
+    "memory_dependencies",
+    "entity_resolutions",
+    "lineage_events",
+)
+
 
 def require_current_schema(engine):
-    if not inspect(engine).has_table("source_supports"):
+    if not {
+        "source_supports",
+        "memory_dependencies",
+        "entity_resolutions",
+        "lineage_events",
+        "lineage_deliveries",
+    }.issubset(inspect(engine).get_table_names()):
         raise RuntimeError(
-            "initialize an empty ledger with init, or run operator upgrade for v0.1 data"
+            "initialize an empty ledger with init, or run operator upgrade for existing data"
         )
 
 
@@ -48,7 +63,7 @@ def initialize(engine):
                 BEGIN SELECT RAISE(ABORT, 'illegal lifecycle transition'); END
             """)
             )
-            for table in ("governance_events", "source_events", "source_supports"):
+            for table in AUDIT_TABLES:
                 for operation in ("UPDATE", "DELETE"):
                     conn.execute(
                         text(f"""
@@ -82,7 +97,7 @@ def initialize(engine):
                 BEGIN RAISE EXCEPTION 'append-only audit log'; END; $$ LANGUAGE plpgsql
             """)
             )
-            for table in ("governance_events", "source_events", "source_supports"):
+            for table in AUDIT_TABLES:
                 conn.execute(text(f"DROP TRIGGER IF EXISTS immutable_audit ON {table}"))
                 conn.execute(
                     text(f"""

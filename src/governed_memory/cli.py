@@ -8,6 +8,7 @@ from governed_memory.db import create_db, initialize, require_current_schema
 from governed_memory.identity import bootstrap, create_project, issue_credential, revoke_access
 from governed_memory.ingest import import_file
 from governed_memory.ledger import Ledger
+from governed_memory.operators import COMMANDS, add_commands, run_command
 from governed_memory.settings import Settings
 
 
@@ -75,6 +76,7 @@ def parser():
         "--rebuild", action="store_true", help="requeue every stored historical snapshot"
     )
     commands.add_parser("serve", help="run the agent-only stdio MCP tools")
+    add_commands(commands)
     return root
 
 
@@ -84,10 +86,8 @@ async def graph_operation(settings, ledger, args):
         if args.command == "project":
             from sqlalchemy.orm import Session
 
-            from governed_memory.identity import authenticate
-
             with Session(ledger.engine) as session:
-                authenticate(session, settings.token, args.project, ("admin",))
+                ledger.authenticate(session, settings.token, args.project, ("admin",))
             if graph is None:
                 raise ValueError("MEMORY_NEO4J_URI is required for graph projection")
             from governed_memory.graph_adapter import project_pending
@@ -140,9 +140,15 @@ def main():
     engine = create_db(settings.database_url)
     if args.command not in {"init", "upgrade"}:
         require_current_schema(engine)
-    ledger = Ledger(engine, policy=settings.policy())
+    ledger = Ledger(
+        engine,
+        policy=settings.policy(),
+        authorizer=None if args.command == "fga-setup" else settings.authorizer(),
+    )
     try:
-        if args.command == "init":
+        if args.command in COMMANDS:
+            output(run_command(args, settings, ledger))
+        elif args.command == "init":
             initialize(engine)
             output(
                 {
@@ -154,7 +160,12 @@ def main():
             output(
                 {
                     "token": issue_credential(
-                        engine, settings.token, args.principal, args.project, args.role
+                        engine,
+                        settings.token,
+                        args.principal,
+                        args.project,
+                        args.role,
+                        authorizer=ledger.authorizer,
                     )
                 }
             )
@@ -164,7 +175,9 @@ def main():
             from governed_memory.identity import authenticate
 
             with Session(engine) as session:
-                authenticate(session, settings.token, args.project, ("admin",))
+                authenticate(
+                    session, settings.token, args.project, ("admin",), authorizer=ledger.authorizer
+                )
             initialize(engine)
             output({"schema": "current", "project": args.project})
         elif args.command == "approve-support":
@@ -181,10 +194,18 @@ def main():
                 )
             )
         elif args.command == "create-project":
-            create_project(engine, settings.token, args.from_project, args.project)
+            create_project(
+                engine,
+                settings.token,
+                args.from_project,
+                args.project,
+                authorizer=ledger.authorizer,
+            )
             output({"created": args.project})
         elif args.command == "revoke-access":
-            revoke_access(engine, settings.token, args.project, args.principal)
+            revoke_access(
+                engine, settings.token, args.project, args.principal, authorizer=ledger.authorizer
+            )
             output({"revoked": args.principal, "project": args.project})
         elif args.command == "ingest":
             output(import_file(ledger, settings.token, args.project, args.file))

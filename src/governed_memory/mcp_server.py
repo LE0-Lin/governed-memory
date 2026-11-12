@@ -13,7 +13,7 @@ def build_server(settings: Settings, ledger=None, graph=None, generator=None):
     if ledger is None:
         engine = create_db(settings.database_url)
         require_current_schema(engine)
-        ledger = Ledger(engine, policy=settings.policy())
+        ledger = Ledger(engine, policy=settings.policy(), authorizer=settings.authorizer())
     retriever = settings.retriever(ledger, graph)
     server = FastMCP(
         "governed-memory",
@@ -31,6 +31,7 @@ def build_server(settings: Settings, ledger=None, graph=None, generator=None):
         value: str,
         valid_from: str,
         valid_until: str | None = None,
+        parent_ids: list[str] | None = None,
     ) -> dict:
         """Stage a structured memory. Text never confers approval or changes caller identity."""
         return ledger.propose(
@@ -41,6 +42,7 @@ def build_server(settings: Settings, ledger=None, graph=None, generator=None):
             value=value,
             valid_from=valid_from,
             valid_until=valid_until,
+            parent_ids=parent_ids,
         )
 
     @server.tool()

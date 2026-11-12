@@ -30,6 +30,7 @@ jobs:
       GM_TEST_NEO4J_URI: bolt://127.0.0.1:57687
       GM_TEST_NEO4J_PASSWORD: local-graph-only
       GM_TEST_OPA_URL: http://127.0.0.1:58181
+      GM_TEST_FGA_URL: http://127.0.0.1:58080
       GM_TEST_CONTAINER_IMAGE: governed-memory:local
     steps:
       - uses: actions/checkout@v4
@@ -38,25 +39,47 @@ jobs:
           version: "0.12.5"
           python-version: "3.12"
       - run: uv sync --frozen --extra dev
-      - run: docker compose --profile policy up -d --wait
+      - run: docker compose --profile policy --profile governance up -d --wait
       - run: docker compose run --rm --no-deps opa test --fail-on-empty /policies /policy-tests -v
       - run: docker compose --profile app build memory
       - run: uv run pytest -q
       - run: uv run python -m eval.run --output .local/ci-evaluation --check
       - if: always()
-        run: docker compose --profile policy logs --tail 100
+        run: docker compose --profile policy --profile governance logs --tail 100
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: evaluation
           path: .local/ci-evaluation
       - if: always()
-        run: docker compose --profile policy down
+        run: docker compose --profile policy --profile governance down
+  native:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      GM_TEST_NATIVE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.90.0
+        with:
+          components: rustfmt, clippy
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - run: cargo fmt --manifest-path native/Cargo.toml --check
+      - run: cargo clippy --manifest-path native/Cargo.toml --locked -- -D warnings
+      - run: cargo test --manifest-path native/Cargo.toml --locked
+      - run: uv sync --frozen --extra dev --extra native
+      - run: uv run pytest -q tests/test_native.py tests/test_semantic_memory.py -m "not models"
   local-models:
     runs-on: ubuntu-latest
     env:
       GM_TEST_REAL_MODELS: "1"
       GM_TEST_REAL_GENERATION: "1"
+      GM_TEST_REAL_NLI: "1"
       MEMORY_MODEL_CACHE: .local/model-cache
       MEMORY_GENERATION_CACHE: .local/generation-cache
       HF_HUB_DISABLE_XET: "1"
@@ -71,11 +94,11 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: .local/model-cache
-          key: pinned-minilm-${{ hashFiles('src/governed_memory/local_models.py') }}
+          key: pinned-models-${{ hashFiles('src/governed_memory/local_models.py', 'src/governed_memory/semantic_review.py') }}
       - uses: actions/cache@v4
         with:
           path: .local/generation-cache
           key: qwen-small-7ae557604adf67be50417f59c2c2f167def9a775
       - run: uv sync --frozen --extra dev --extra models
       - run: uv run python -c "import torch; assert torch.version.cuda is None, torch.version.cuda; print(torch.__version__)"
-      - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py tests/test_answer_format.py
+      - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py tests/test_answer_format.py tests/test_semantic_memory.py

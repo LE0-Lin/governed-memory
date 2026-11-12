@@ -253,10 +253,11 @@ wheels = [
 
 [[package]]
 name = "governed-memory"
-version = "0.3.0"
+version = "0.4.0"
 source = { editable = "." }
 dependencies = [
     { name = "graphiti-core" },
+    { name = "httpx" },
     { name = "mcp" },
     { name = "psycopg", extra = ["binary"] },
     { name = "rank-bm25" },
@@ -267,6 +268,7 @@ dependencies = [
 [package.optional-dependencies]
 dev = [
     { name = "ijson" },
+    { name = "jsonschema" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "ruff" },
@@ -279,13 +281,19 @@ models = [
     { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torch", version = "2.15.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
 ]
+native = [
+    { name = "governed-memory-native" },
+]
 
 [package.metadata]
 requires-dist = [
     { name = "accelerate", marker = "extra == 'models'", specifier = ">=1.14,<2" },
+    { name = "governed-memory-native", marker = "extra == 'native'", directory = "native" },
     { name = "graphiti-core", specifier = "==0.31.2" },
+    { name = "httpx", specifier = ">=0.28,<1" },
     { name = "ijson", marker = "extra == 'dev'", specifier = ">=3.3,<4" },
     { name = "ijson", marker = "extra == 'models'", specifier = ">=3.3,<4" },
+    { name = "jsonschema", marker = "extra == 'dev'", specifier = ">=4.23,<5" },
     { name = "lm-format-enforcer", marker = "extra == 'models'", url = "https://github.com/noamgat/lm-format-enforcer/archive/2597936f55da0e3cab8a6047eba91b2ecdfe888a.tar.gz" },
     { name = "mcp", specifier = ">=1.20,<2" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
@@ -299,7 +307,12 @@ requires-dist = [
     { name = "torch", marker = "(sys_platform == 'linux' and extra == 'models') or (sys_platform == 'win32' and extra == 'models')", specifier = ">=2.6,<3", index = "https://download.pytorch.org/whl/cpu" },
     { name = "torch", marker = "sys_platform != 'linux' and sys_platform != 'win32' and extra == 'models'", specifier = ">=2.6,<3" },
 ]
-provides-extras = ["dev", "models"]
+provides-extras = ["native", "dev", "models"]
+
+[[package]]
+name = "governed-memory-native"
+version = "0.4.0"
+source = { directory = "native" }
 
 [[package]]
 name = "graphiti-core"

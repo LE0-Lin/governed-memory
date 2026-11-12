@@ -16,6 +16,12 @@ or model orchestration layers to learn.
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |
 | Does command JSON survive a legacy Windows pipe? | UTF-8 stream setup in `cli.main` | `test_cli.py` |
+| What code is actually Rust? | `native/src/lib.rs`, `native.py`, `hybrid_rank` | `test_native.py`, Cargo tests |
+| How does raw text become a proposal? | `chunking.py`, `semantic_ingest.py`, `operators.py` | `test_semantic_memory.py` |
+| How are aliases and contradictions reviewed? | `semantic_review.py`, `Ledger.review_context`, `resolve_entity` | `test_semantic_memory.py` |
+| How does an upstream change invalidate descendants? | `dependencies.py`, `Ledger._invalidate_dependents` | `test_dependencies.py` |
+| Does external authorization affect private source access? | `authorization.py`, `identity.authenticate` | `test_external_governance.py` |
+| How does lineage survive collector outage? | `lineage.py`, `LineageEvent`, `LineageDelivery` | `test_external_governance.py` |
 
 The approval path is intentionally explicit: authenticate, lock the logical fact,
 check revisions and policy, update lifecycle/history, and queue projection in one

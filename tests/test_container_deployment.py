@@ -111,7 +111,7 @@ async def test_container_permissions_persistence_backup_and_withdrawal(engine):
     try:
         probe = container.invoke(
             "-c",
-            "import json,os; print(json.dumps({'uid':os.getuid(), "
+            "import json,os,governed_memory_native; print(json.dumps({'uid':os.getuid(), "
             "'readonly':bool(os.statvfs('/').f_flag & os.ST_RDONLY)}))",
             entrypoint="python",
         )

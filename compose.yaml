@@ -18,6 +18,13 @@ services:
       MEMORY_MODEL_CACHE: /models/retrieval
       MEMORY_LOCAL_EMBEDDING: ${MEMORY_LOCAL_EMBEDDING:-0}
       MEMORY_LOCAL_RERANKER: ${MEMORY_LOCAL_RERANKER:-0}
+      MEMORY_RANKING_BACKEND: ${MEMORY_RANKING_BACKEND:-rust}
+      MEMORY_FGA_URL: ${MEMORY_CONTAINER_FGA_URL:-}
+      MEMORY_FGA_STORE_ID: ${MEMORY_FGA_STORE_ID:-}
+      MEMORY_FGA_MODEL_ID: ${MEMORY_FGA_MODEL_ID:-}
+      MEMORY_FGA_API_KEY: ${MEMORY_FGA_API_KEY:-}
+      MEMORY_LINEAGE_ENDPOINT: ${MEMORY_LINEAGE_ENDPOINT:-}
+      MEMORY_LINEAGE_API_KEY: ${MEMORY_LINEAGE_API_KEY:-}
       HF_HUB_OFFLINE: ${HF_HUB_OFFLINE:-0}
     volumes:
       - models:/models
@@ -80,7 +87,47 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+  fga-postgres:
+    profiles: [governance]
+    image: postgres:17.6
+    environment:
+      POSTGRES_USER: fga
+      POSTGRES_DB: fga
+      POSTGRES_PASSWORD: ${FGA_POSTGRES_PASSWORD:-local-fga-only}
+    volumes:
+      - fga:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fga -d fga"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  fga-migrate:
+    profiles: [governance]
+    image: openfga/openfga:v1.10.3@sha256:79df38493e1c7bfa3b23a63df96fc6e630922e5c9dc63ad3052eddcaf4da1761
+    command: ["migrate"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://fga:${FGA_POSTGRES_PASSWORD:-local-fga-only}@fga-postgres:5432/fga?sslmode=disable
+    depends_on:
+      fga-postgres:
+        condition: service_healthy
+  openfga:
+    profiles: [governance]
+    image: openfga/openfga:v1.10.3@sha256:79df38493e1c7bfa3b23a63df96fc6e630922e5c9dc63ad3052eddcaf4da1761
+    command: ["run", "--playground-enabled=false"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://fga:${FGA_POSTGRES_PASSWORD:-local-fga-only}@fga-postgres:5432/fga?sslmode=disable
+    ports:
+      - "127.0.0.1:58080:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    depends_on:
+      fga-migrate:
+        condition: service_completed_successfully
 volumes:
   models:
   ledger:
   graph:
+  fga:

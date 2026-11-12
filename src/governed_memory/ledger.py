@@ -8,6 +8,7 @@ from uuid import NAMESPACE_URL, uuid4, uuid5
 from sqlalchemy import or_, select, text, update
 from sqlalchemy.orm import Session
 
+from governed_memory import dependencies, lineage
 from governed_memory.errors import Conflict as Conflict
 from governed_memory.evidence import Evidence as Evidence
 from governed_memory.evidence import (
@@ -19,9 +20,11 @@ from governed_memory.evidence import (
 from governed_memory.identity import Denied, authenticate
 from governed_memory.models import (
     Candidate,
+    EntityResolution,
     FactHead,
     FactVersion,
     GovernanceEvent,
+    MemoryDependency,
     ProjectionJob,
     Source,
     SourceEvent,
@@ -44,10 +47,24 @@ def stable_id(*parts: str) -> str:
 
 
 class Ledger:
-    def __init__(self, engine, clock: Callable[[], datetime] | None = None, policy=None):
+    def __init__(
+        self, engine, clock: Callable[[], datetime] | None = None, policy=None, authorizer=None
+    ):
         self.engine = engine
         self.clock = clock or (lambda: datetime.now(UTC))
         self.policy = policy or BuiltinPolicy()
+        self.authorizer = authorizer
+
+    def authenticate(self, session, token, project, roles=()):
+        return authenticate(session, token, project, roles, authorizer=self.authorizer)
+
+    def _lock_project(self, session, project):
+        # One project lock orders DAG edits, approvals and cascades before fact/outbox locks.
+        if self.engine.dialect.name == "postgresql":
+            key = int.from_bytes(
+                hashlib.sha256(f"project:{project}".encode()).digest()[:8], "big", signed=True
+            )
+            session.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": key})
 
     def propose(
         self,
@@ -63,6 +80,7 @@ class Ledger:
         body: str | None = None,
         fragment: str = "proposal",
         audience: list[str] | None = None,
+        parent_ids: list[str] | None = None,
     ) -> dict:
         return self.propose_many(
             token,
@@ -78,6 +96,7 @@ class Ledger:
                     "body": body,
                     "fragment": fragment,
                     "audience": audience,
+                    "parent_ids": parent_ids,
                 }
             ],
         )[0]
@@ -85,7 +104,8 @@ class Ledger:
     def propose_many(self, token: str, project: str, proposals: list[dict]) -> list[dict]:
         """Stage all proposals in one transaction; any failure rolls back the batch."""
         with Session(self.engine) as session, session.begin():
-            actor = authenticate(session, token, project, ("agent", "approver", "admin"))
+            actor = self.authenticate(session, token, project, ("agent", "approver", "admin"))
+            self._lock_project(session, project)
             return [
                 self._stage_proposal(session, actor, project, **proposal) for proposal in proposals
             ]
@@ -105,6 +125,7 @@ class Ledger:
         body: str | None = None,
         fragment: str = "proposal",
         audience: list[str] | None = None,
+        parent_ids: list[str] | None = None,
     ) -> dict:
         start = instant(valid_from)
         end = instant(valid_until) if valid_until else None
@@ -125,6 +146,8 @@ class Ledger:
         source_id = stable_id(project, locator, digest)
         fact_id = stable_id(project, subject.strip().casefold(), predicate.strip().casefold())
         candidate_id = stable_id(source_id, payload, fragment)
+        if parent_ids:
+            candidate_id = stable_id(candidate_id, json.dumps(sorted(parent_ids)))
         if audience and actor.role != "admin":
             raise Denied("only administrators may set source audience")
         source = session.get(Source, source_id)
@@ -168,6 +191,8 @@ class Ledger:
             )
             session.add(candidate)
             session.flush()
+            dependencies.stage(session, candidate, parent_ids or [], actor, instant(self.clock()))
+            session.flush()
             self._event(session, candidate, actor.id, "proposed", "staged; no trusted projection")
         return self._candidate(candidate)
 
@@ -197,17 +222,19 @@ class Ledger:
         }
 
     def _event(self, s, candidate, actor, action, reason):
+        event_id, now = str(uuid4()), instant(self.clock())
         s.add(
             GovernanceEvent(
-                id=str(uuid4()),
+                id=event_id,
                 candidate_id=candidate.id,
                 actor=actor,
                 action=action,
                 revision=candidate.revision,
-                occurred_at=instant(self.clock()),
+                occurred_at=now,
                 reason=reason,
             )
         )
+        lineage.record(s, candidate, action, event_id, now)
 
     @staticmethod
     def _queue(s, version):
@@ -234,6 +261,7 @@ class Ledger:
         )
         s.add(v)
         self._queue(s, v)
+        lineage.record(s, c, "snapshot_created", str(uuid4()), now, version=v)
         return v
 
     def decide(
@@ -253,7 +281,8 @@ class Ledger:
         if not reason.strip():
             raise ValueError("a decision reason is required")
         with Session(self.engine) as s, s.begin():
-            actor = authenticate(s, token, project, ("approver", "admin"))
+            actor = self.authenticate(s, token, project, ("approver", "admin"))
+            self._lock_project(s, project)
             c = s.get(Candidate, candidate_id)
             if c is None or c.project != project:
                 raise Denied("memory not accessible")
@@ -275,6 +304,7 @@ class Ledger:
             )
             now = instant(self.clock())
             if action == "approve":
+                dependencies.check_approval(s, c, actor, now)
                 self._advance_head(s, c.fact_id, expected_head)
             self._set_state(s, c, target, expected_revision, protected or protected_fact)
             self._event(s, c, actor.id, target, reason)
@@ -289,6 +319,7 @@ class Ledger:
                     )
                 )
                 self._queue_candidates(s, [c.id, *targets], bump_heads=True)
+                self._invalidate_dependents(s, [c.id], actor, now)
             return self._candidate(c)
 
     def approve_support(
@@ -307,7 +338,8 @@ class Ledger:
         if not reason.strip():
             raise ValueError("a decision reason is required")
         with Session(self.engine) as session, session.begin():
-            actor = authenticate(session, token, project, ("admin", "approver"))
+            actor = self.authenticate(session, token, project, ("admin", "approver"))
+            self._lock_project(session, project)
             incoming = session.get(Candidate, candidate_id)
             target = session.get(Candidate, target_id)
             if (
@@ -356,6 +388,8 @@ class Ledger:
                 )
             )
             self._advance_head(session, target.fact_id, expected_head)
+            if dependencies.dependencies(session, incoming.id):
+                raise Conflict("derived evidence cannot be an independent corroborating source")
             self._set_state(session, incoming, "active", expected_revision, protected)
             target.revision += 1
             now = instant(self.clock())
@@ -396,6 +430,49 @@ class Ledger:
         # Reviews also lock the fact head before the outbox. Keep that order on withdrawal.
         for version in versions:
             self._queue(session, version)
+
+    def _invalidate_dependents(self, session, parents, actor, now, *, source_id=None):
+        """Conservative transitive invalidation, in the originating governance transaction."""
+        affected, frontier = set(), set(parents)
+        if source_id:
+            affected.update(
+                session.scalars(
+                    select(MemoryDependency.candidate_id).where(
+                        MemoryDependency.source_id == source_id
+                    )
+                )
+            )
+            frontier.update(affected)
+        while frontier:
+            children = (
+                set(
+                    session.scalars(
+                        select(MemoryDependency.candidate_id)
+                        .join(FactVersion, FactVersion.id == MemoryDependency.parent_version_id)
+                        .where(FactVersion.candidate_id.in_(frontier))
+                    )
+                )
+                - affected
+            )
+            affected.update(children)
+            frontier = children
+        for identifier in sorted(affected):
+            child = session.get(Candidate, identifier)
+            if child.state not in {"proposed", "active", "superseded"}:
+                continue
+            target = "rejected" if child.state == "proposed" else "revoked"
+            self._set_state(session, child, target, child.revision, child.protected)
+            self._event(
+                session, child, actor.id, target, "dependency changed; review a new derivation"
+            )
+            supports = list(
+                session.scalars(
+                    select(SourceSupport.candidate_id).where(
+                        SourceSupport.evidence_candidate_id == child.id
+                    )
+                )
+            )
+            self._queue_candidates(session, [child.id, *supports], bump_heads=True)
 
     def _lock_fact(self, session, candidate):
         """Serialize reviews of different candidates for the same logical fact."""
@@ -472,6 +549,7 @@ class Ledger:
             self._source_access(session.get(Source, old.source_id), actor)
             old.system_until = now
             self._queue(session, old)
+            lineage.record(session, prior, "snapshot_superseded", str(uuid4()), now, version=old)
             if old.valid_from < candidate.valid_from:
                 self._insert_version(
                     session, prior, old.valid_from, candidate.valid_from, now, original=old
@@ -486,6 +564,7 @@ class Ledger:
                 prior.state = "superseded"
                 prior.revision += 1
                 self._event(session, prior, actor.id, "superseded", f"replaced by {candidate.id}")
+            self._invalidate_dependents(session, [prior.id], actor, now)
         self._insert_version(session, candidate, candidate.valid_from, candidate.valid_until, now)
 
     def visible(self, token: str, project: str, *, valid_at=None, known_at=None) -> list[Evidence]:
@@ -495,7 +574,7 @@ class Ledger:
             instant(known_at) if known_at else now,
         )
         with Session(self.engine) as s:
-            actor = authenticate(s, token, project)
+            actor = self.authenticate(s, token, project)
             rows = s.execute(
                 select(FactVersion, Candidate, Source)
                 .join(
@@ -515,10 +594,11 @@ class Ledger:
             )
             rows = rows.all()
             source_map = approved_source_map(s, [c for _, c, _ in rows], known, actor)
+            dependency_map = dependencies.availability(s, [c.id for _, c, _ in rows], known, actor)
             result = []
             for version, candidate, _ in rows:
                 sources = source_map.get(candidate.id, [])
-                if not sources:
+                if not sources or not dependency_map[candidate.id]:
                     continue
                 item = make_evidence(version, candidate, sources)
                 if item.system_until is not None and item.system_until > known:
@@ -528,7 +608,7 @@ class Ledger:
 
     def explain(self, token: str, project: str, memory_id: str) -> dict:
         with Session(self.engine) as s:
-            actor = authenticate(s, token, project)
+            actor = self.authenticate(s, token, project)
             c = s.get(Candidate, memory_id)
             if c is None:
                 version = s.get(FactVersion, memory_id)
@@ -551,7 +631,7 @@ class Ledger:
                 sources = [] if source.revoked_at else [source_reference(c, source)]
             else:
                 sources = approved_sources(s, c, instant(self.clock()), actor)
-            if not sources:
+            if not sources or not dependencies.available(s, c.id, instant(self.clock()), actor):
                 raise Denied("memory withdrawn or no supporting source is accessible")
             primary = sources[0]
             result = self._candidate(c)
@@ -563,6 +643,9 @@ class Ledger:
                 "fragment": primary.fragment,
             }
             result["additional_sources"] = [asdict(ref) for ref in sources[1:]]
+            result["dependencies"] = [
+                edge.parent_version_id for edge in dependencies.dependencies(s, c.id)
+            ]
             visible_support_revisions = set(
                 s.scalars(
                     select(SourceSupport.target_revision).where(
@@ -594,7 +677,8 @@ class Ledger:
 
     def withdraw_source(self, token: str, project: str, source_id: str):
         with Session(self.engine) as s, s.begin():
-            actor = authenticate(s, token, project, ("admin", "approver"))
+            actor = self.authenticate(s, token, project, ("admin", "approver"))
+            self._lock_project(s, project)
             source = s.get(Source, source_id, with_for_update=True)
             if source is None or source.project != project:
                 raise Denied("source not accessible")
@@ -615,15 +699,17 @@ class Ledger:
             )
             if source.revoked_at is None:
                 source.revoked_at = instant(self.clock())
+                event_id = str(uuid4())
                 s.add(
                     SourceEvent(
-                        id=str(uuid4()),
+                        id=event_id,
                         source_id=source_id,
                         actor=actor.id,
                         action="withdrawn",
                         occurred_at=source.revoked_at,
                     )
                 )
+                lineage.record_source_withdrawal(s, source, event_id, source.revoked_at)
                 targets = list(
                     s.scalars(select(Candidate.id).where(Candidate.source_id == source_id))
                 )
@@ -635,6 +721,7 @@ class Ledger:
                     )
                 )
                 self._queue_candidates(s, targets, bump_heads=True)
+                self._invalidate_dependents(s, [], actor, source.revoked_at, source_id=source.id)
 
     def pending(self, limit: int = 100, project: str | None = None):
         with Session(self.engine) as s:
@@ -656,12 +743,15 @@ class Ledger:
             )
             rows = rows.all()
             source_map = approved_source_map(s, [c for _, c, _, _ in rows], instant(self.clock()))
+            dependency_map = dependencies.availability(
+                s, [c.id for _, c, _, _ in rows], instant(self.clock())
+            )
             return [
                 (
                     make_evidence(
                         v,
                         c,
-                        source_map.get(c.id, []),
+                        source_map.get(c.id, []) if dependency_map[c.id] else [],
                         fallback=source_reference(c, source),
                     ),
                     generation,
@@ -678,14 +768,14 @@ class Ledger:
 
     def requeue(self, token: str, project: str):
         with Session(self.engine) as s, s.begin():
-            authenticate(s, token, project, ("admin",))
+            self.authenticate(s, token, project, ("admin",))
             for version in s.scalars(select(FactVersion).where(FactVersion.project == project)):
                 self._queue(s, version)
 
     def preview(self, token: str, project: str, candidate_id: str):
         result = self.explain(token, project, candidate_id)
         with Session(self.engine) as s:
-            actor = authenticate(s, token, project, ("admin", "approver"))
+            actor = self.authenticate(s, token, project, ("admin", "approver"))
             head = s.get(FactHead, result["fact_id"])
             result["head_revision"] = head.revision if head else 0
             rows = s.execute(
@@ -724,3 +814,128 @@ class Ledger:
                 )
             result["overlapping_versions"] = changes
         return result
+
+    def review_context(self, token, project, candidate_id):
+        """All visible current beliefs overlapping a staged fact's valid interval."""
+        candidate = self.explain(token, project, candidate_id)
+        with Session(self.engine) as session:
+            actor = self.authenticate(session, token, project, ("admin", "approver"))
+            rows = session.execute(
+                select(FactVersion, Candidate)
+                .join(Candidate, Candidate.id == FactVersion.candidate_id)
+                .where(
+                    FactVersion.project == project,
+                    FactVersion.system_until.is_(None),
+                    Candidate.state.in_(("active", "superseded")),
+                    or_(
+                        FactVersion.valid_until.is_(None),
+                        FactVersion.valid_until > candidate["valid_from"],
+                    ),
+                    *(
+                        [FactVersion.valid_from < candidate["valid_until"]]
+                        if candidate["valid_until"]
+                        else []
+                    ),
+                )
+            ).all()
+            now = instant(self.clock())
+            source_map = approved_source_map(session, [c for _, c in rows], now, actor)
+            eligible = dependencies.availability(session, [c.id for _, c in rows], now, actor)
+            evidence = [
+                make_evidence(v, c, source_map[c.id])
+                for v, c in rows
+                if source_map.get(c.id) and eligible[c.id]
+            ]
+        return candidate, evidence
+
+    def resolve_entity(
+        self,
+        token,
+        project,
+        candidate_id,
+        target_version_id,
+        *,
+        expected_revision,
+        reason,
+    ):
+        """Stage a canonical subject while preserving the original proposal's history."""
+        if not reason.strip():
+            raise ValueError("an entity resolution reason is required")
+        with Session(self.engine) as session, session.begin():
+            actor = self.authenticate(session, token, project, ("admin", "approver"))
+            self._lock_project(session, project)
+            original = session.get(Candidate, candidate_id)
+            target = session.get(FactVersion, target_version_id)
+            if (
+                original is None
+                or original.project != project
+                or target is None
+                or target.project != project
+            ):
+                raise Denied("entity resolution inputs are not accessible")
+            source = session.get(Source, original.source_id)
+            self._source_access(source, actor)
+            parent = session.get(Candidate, target.candidate_id)
+            now = instant(self.clock())
+            if not approved_sources(session, parent, now, actor) or not dependencies.available(
+                session, parent.id, now, actor
+            ):
+                raise Denied("canonical entity is not accessible")
+            if (
+                original.state != "proposed"
+                or original.revision != expected_revision
+                or source.revoked_at
+                or target.system_until is not None
+            ):
+                raise Conflict("resolution inputs changed; inspect them again")
+            if original.subject == parent.subject:
+                raise Conflict("proposal already uses this canonical subject")
+            self.policy.check(
+                Decision(actor.role, "reject", original.state, original.protected, False)
+            )
+            replacement = self._stage_proposal(
+                session,
+                actor,
+                project,
+                subject=parent.subject,
+                predicate=original.predicate,
+                value=original.value,
+                valid_from=original.valid_from,
+                valid_until=original.valid_until,
+                locator=source.locator,
+                body=source.body,
+                audience=None,
+                fragment=f"{original.fragment};entity:{target.id}",
+                parent_ids=[
+                    edge.parent_version_id
+                    for edge in dependencies.dependencies(session, original.id)
+                ],
+            )
+            self._set_state(session, original, "rejected", expected_revision, original.protected)
+            self._event(session, original, actor.id, "rejected", f"entity resolution: {reason}")
+            session.add(
+                EntityResolution(
+                    original_id=original.id,
+                    replacement_id=replacement["id"],
+                    target_version_id=target.id,
+                    actor=actor.id,
+                    reason=reason,
+                    occurred_at=now,
+                )
+            )
+            lineage.record(
+                session,
+                session.get(Candidate, replacement["id"]),
+                "entity_resolved",
+                str(uuid4()),
+                now,
+                extra_inputs=[
+                    lineage.dataset(project, "candidate", original.id),
+                    lineage.dataset(project, "snapshot", target.id),
+                ],
+            )
+            return {
+                "original_id": original.id,
+                "replacement": replacement,
+                "canonical_subject": parent.subject,
+            }

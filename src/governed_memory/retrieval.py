@@ -6,6 +6,7 @@ from rank_bm25 import BM25Okapi
 from governed_memory.budget import EvidenceBudget
 from governed_memory.budget import serialize as serialize
 from governed_memory.embedding import HashEmbedder, embed_many, words
+from governed_memory.native import kernels
 
 
 def fusion_order(lexical, cosine, ids):
@@ -19,7 +20,7 @@ def fusion_order(lexical, cosine, ids):
     return sorted(range(len(ids)), key=lambda i: (-scores[i], ids[i]))
 
 
-async def hybrid_rank(query: str, evidence, embedder=None):
+async def hybrid_rank(query: str, evidence, embedder=None, *, ranking_backend="python"):
     if not evidence or not query.strip():
         return []
     embedder = embedder or HashEmbedder()
@@ -30,20 +31,29 @@ async def hybrid_rank(query: str, evidence, embedder=None):
         if not evidence:
             return []
     corpus = [words(item.text) or [""] for item in evidence]
-    lexical = BM25Okapi(corpus).get_scores(words(query))
     query_vector = np.array(await embedder.create(query))
     # Deliberately no embedding cache: evaluation includes document and query computation.
     vectors = np.array(await embed_many(embedder, [item.text for item in evidence]))
+    native = kernels(ranking_backend)
+    if native:
+        indices = native.hybrid_order(
+            words(query), corpus, query_vector.tolist(), vectors.tolist(), [e.id for e in evidence]
+        )
+        return [evidence[i] for i in indices]
+    lexical = BM25Okapi(corpus).get_scores(words(query))
     norms = np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vector)
     cosine = (vectors @ query_vector) / np.maximum(norms, 1e-12)
     return [evidence[i] for i in fusion_order(lexical, cosine, [e.id for e in evidence])]
 
 
 class Retriever:
-    def __init__(self, ledger, graph=None, *, embedder=None, reranker=None):
+    def __init__(
+        self, ledger, graph=None, *, embedder=None, reranker=None, ranking_backend="python"
+    ):
         self.ledger, self.graph = ledger, graph
         self.embedder = embedder or getattr(graph, "embedder", None) or HashEmbedder()
         self.reranker = reranker
+        self.ranking_backend = "rust" if kernels(ranking_backend) else "python"
         self.budget = EvidenceBudget()
         self.encoding = self.budget.encoding
 
@@ -100,6 +110,7 @@ class Retriever:
             query,
             [available[e.id] for e in eligible if e.id in available and e.id not in present],
             embedder,
+            ranking_backend=self.ranking_backend,
         )
         if fill and backend == "graphiti-hybrid-rrf":
             backend = (
@@ -138,6 +149,7 @@ class Retriever:
             "token_budget": token_budget,
             "tokenizer": "cl100k_base",
             "backend": backend,
+            "ranking_engine": self.ranking_backend,
             "reranker": self.reranker.metadata if self.reranker else None,
             "reason": reason,
         }

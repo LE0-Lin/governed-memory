@@ -4,13 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "governed-memory"
-version = "0.3.0"
+version = "0.4.0"
 description = "Approval-gated, bitemporal evidence memory for coding agents"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = "MIT"
 dependencies = [
   "graphiti-core==0.31.2",
+  "httpx>=0.28,<1",
   "mcp>=1.20,<2",
   "psycopg[binary]>=3.2,<4",
   "rank-bm25==0.2.2",
@@ -19,7 +20,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1", "ijson>=3.3,<4"]
+native = ["governed-memory-native==0.4.0"]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1", "ijson>=3.3,<4", "jsonschema>=4.23,<5"]
 models = [
   # Source overrides apply to direct dependencies, including optional ones.
   "torch>=2.6,<3",
@@ -37,6 +39,7 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [tool.uv.sources]
+governed-memory-native = { path = "native" }
 torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" }]
 
 [project.scripts]

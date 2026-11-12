@@ -1,0 +1,42 @@
+{
+  "version": "cv-controlled-v1",
+  "frozen_before_results": true,
+  "purpose": "Controlled temporal and governance comparison; not an external benchmark score",
+  "dataset": {
+    "file": "cv-timelines.json",
+    "sha256": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1",
+    "checksum_encoding": "UTF-8 with canonical LF line endings",
+    "entities": 12,
+    "changes_per_entity": 3,
+    "queries_per_entity": 6,
+    "additional_negative_queries": 12,
+    "seed": 20261112,
+    "scenarios": ["valid-time-change", "historical-knowledge", "retroactive-correction", "rejected-poison", "withdrawn-source", "invalidated-derivation"]
+  },
+  "retrieval": {
+    "k": 5,
+    "token_budget": 1024,
+    "ranking": "BM25Okapi + MiniLM cosine RRF + pinned cross-encoder reranker",
+    "backend": "rust",
+    "cache": "No query or document embedding cache",
+    "graph": "disabled in both methods to isolate governance and time filtering"
+  },
+  "baseline": "Session assertions available by known_at, same project and current source audience; no fact approval, valid-time, supersession, source withdrawal or dependency filtering",
+  "governed": "Authoritative ledger eligibility, same semantic models, native kernels, budget, k and final authorization recheck",
+  "metrics": {
+    "temporal_recall": "macro mean of gold candidate IDs retrieved / gold IDs for positive queries; negative queries reported separately",
+    "stale_rate": "returned assertions that are rejected, withdrawn, dependency-invalidated, superseded at query time or outside valid interval / all returned assertions",
+    "stale_reduction": "1 - governed stale rate / baseline stale rate; undefined if baseline has zero stale results",
+    "latency_p95": "numpy percentile(method=linear) of complete retrieval including SQL, embeddings, reranking, budget and serialization; generation and cold model loading excluded",
+    "negative_queries": "any returned stale assertion is a failure; unrelated valid evidence is separately counted"
+  },
+  "execution": {
+    "warmup_queries_per_method": 1,
+    "measured_repetitions": 3,
+    "alternating_method_order": true,
+    "hardware_and_versions": "recorded in run manifest",
+    "raw_results": "all per-query result IDs, gold, stale labels, timings and errors retained",
+    "errors": "retained as failures and not silently retried or dropped",
+    "target_numbers": "83.2%, 26.4% and 1.12s are not pass/fail targets and must not determine tuning"
+  }
+}

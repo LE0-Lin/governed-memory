@@ -159,3 +159,40 @@ class SourceSupport(Base):
         UniqueConstraint("candidate_id", "source_id"),
         CheckConstraint("candidate_id <> evidence_candidate_id"),
     )
+
+
+class MemoryDependency(Base):
+    """A reviewed derivation uses an exact snapshot and one particular source revision."""
+
+    __tablename__ = "memory_dependencies"
+    candidate_id: Mapped[str] = mapped_column(ForeignKey("candidates.id"), primary_key=True)
+    parent_version_id: Mapped[str] = mapped_column(ForeignKey("fact_versions.id"), primary_key=True)
+    source_id: Mapped[str] = mapped_column(ForeignKey("sources.id"))
+    parent_revision: Mapped[int] = mapped_column(Integer)
+
+
+class EntityResolution(Base):
+    __tablename__ = "entity_resolutions"
+    original_id: Mapped[str] = mapped_column(ForeignKey("candidates.id"), primary_key=True)
+    replacement_id: Mapped[str] = mapped_column(ForeignKey("candidates.id"), unique=True)
+    target_version_id: Mapped[str] = mapped_column(ForeignKey("fact_versions.id"))
+    actor: Mapped[str] = mapped_column(ForeignKey("principals.id"))
+    reason: Mapped[str] = mapped_column(Text)
+    occurred_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class LineageEvent(Base):
+    """Immutable OpenLineage payload; delivery bookkeeping lives in a separate row."""
+
+    __tablename__ = "lineage_events"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    project: Mapped[str] = mapped_column(String(100), index=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+
+
+class LineageDelivery(Base):
+    __tablename__ = "lineage_deliveries"
+    id: Mapped[str] = mapped_column(ForeignKey("lineage_events.id"), primary_key=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    completed: Mapped[bool] = mapped_column(Boolean, default=False)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)

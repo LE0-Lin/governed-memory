@@ -8,6 +8,9 @@ The governance, ledger, retrieval constraints, CLI/MCP integration and synthetic
 | rank-bm25 0.2.2 (Apache-2.0) | Local BM25 scoring | [dorianbrown/rank_bm25](https://github.com/dorianbrown/rank_bm25) |
 | tiktoken (MIT) | Evidence token accounting | [openai/tiktoken](https://github.com/openai/tiktoken) |
 | Open Policy Agent (Apache-2.0) | Optional policy decisions, using an official separate container | [open-policy-agent/opa](https://github.com/open-policy-agent/opa) |
+| PyO3 (MIT/Apache-2.0), maturin (MIT/Apache-2.0) | Python bindings and builds for owned Rust ranking/boundary kernels | [PyO3 0.28.2](https://github.com/PyO3/pyo3/tree/v0.28.2), [maturin](https://github.com/PyO3/maturin) |
+| OpenFGA (Apache-2.0) | External role relationships, through its REST API and official image | [OpenFGA](https://github.com/openfga/openfga/tree/v1.10.3) |
+| OpenLineage specification (Apache-2.0) | Standard lineage events and vendored test schemas | [OpenLineage](https://github.com/OpenLineage/OpenLineage), [license](third_party/OpenLineage-LICENSE) |
 | Sentence Transformers (Apache-2.0), Transformers (Apache-2.0), PyTorch (BSD-style) | Optional embedding, cross-encoder and answer inference | [Sentence Transformers](https://github.com/huggingface/sentence-transformers), [Transformers](https://github.com/huggingface/transformers), [PyTorch](https://github.com/pytorch/pytorch) |
 | LM Format Enforcer (MIT), pinned upstream revision | JSON Schema constraints via the standard Transformers prefix-token callback | [noamgat/lm-format-enforcer](https://github.com/noamgat/lm-format-enforcer/tree/2597936f55da0e3cab8a6047eba91b2ecdfe888a) |
 | SQLAlchemy, psycopg, MCP Python SDK and NumPy | Storage, transport and vector arithmetic | Exact versions are in `uv.lock`; distributions retain their own licenses |
@@ -21,6 +24,7 @@ copied into this package. Their model cards identify Apache-2.0 licenses:
 
 - [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/tree/1110a243fdf4706b3f48f1d95db1a4f5529b4d41), revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`.
 - [ms-marco-MiniLM-L6-v2](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2/tree/233902d25c440f23af6f7d6e94d2946bac0bee0a), revision `233902d25c440f23af6f7d6e94d2946bac0bee0a`.
+- [nli-deberta-v3-small](https://huggingface.co/cross-encoder/nli-deberta-v3-small/tree/fa2804872c3b4bd748f38c0185cc85775361e735), revision `fa2804872c3b4bd748f38c0185cc85775361e735`, English advisory NLI.
 - [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/tree/7ae557604adf67be50417f59c2c2f167def9a775), CPU smoke generator.
 - [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/tree/989aa7980e4cf806f80c7fef2b1adb7bc71aa306), full-run generator.
 - [Qwen3-4B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/tree/cdbee75f17c01a7cc42f958dc650907174af0554), separate local answer judge.
@@ -34,3 +38,10 @@ metrics and provenance. The upstream MIT notice is retained in
 [third_party/LongMemEval-LICENSE](third_party/LongMemEval-LICENSE).
 The synthetic evaluation corpus and application examples
 are fictional; no private user documents, conversations or credentials are used.
+
+The unchanged OpenLineage test schemas were obtained from their versioned public
+specification URLs. SHA-256: `OpenLineage.json` (2-0-2)
+`69f68bee00b9beac88a87059c0102410e7bb05f3f43c46d02a0409831eceb0d2`;
+`LifecycleStateChangeDatasetFacet.json` (1-0-1)
+`0a30120210b453b797685c4d25c6d1a944204acadfb3e038b4ff8d0736b227a0`.
+Tests resolve these schemas locally and do not fetch remote references.

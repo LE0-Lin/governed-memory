@@ -1,0 +1,45 @@
+# CV capability acceptance (v0.4)
+
+This is an implementation and evidence checklist, frozen before the new evaluation.
+The existing v0.3 LongMemEval outputs and synthetic results remain unchanged.
+
+| CV capability | Acceptance evidence |
+| --- | --- |
+| Rust and Python memory engine | Owned Rust BM25/vector/RRF kernels called by the Python retriever; native build, parity tests and end-to-end retrieval |
+| Semantic chunking | Pinned sentence embeddings determine boundaries; bounded, exact source spans; raw-document ingestion stages proposals only |
+| Entity resolution | Semantic suggestions restricted to visible approved entities; explicit operator resolution creates a new immutable proposal and audit link |
+| Contradiction detection | Pinned three-way NLI model, interval-aware comparison, actual positive/negative inference; findings do not confer approval |
+| OpenFGA and OPA | Real OpenFGA relationship checks restrict local grants, fail closed, and cannot be set by MCP callers; OPA remains mandatory for governance decisions |
+| OpenLineage | Schema-valid events in a transactional outbox, real HTTP delivery and retry, source and dependency inputs, no raw source text |
+| Supersession/deletion propagation | Immutable dependency DAG binds exact approved snapshots; changes atomically invalidate descendants and queue graph/lineage updates |
+| Upgrade and deployment | Additive upgrade from v0.3, PostgreSQL and graph integration, container smoke, clean install and CI |
+| Quantitative claims | Frozen controlled protocol, session baseline, raw observations, reproducible aggregates and measured limitations |
+
+## Trust and maintenance boundaries
+
+PostgreSQL remains authoritative. Rust computes ranking and segmentation; it does
+not introduce a second persistent store. Native acceleration is optional, and the
+Python path remains available for core installs. Both paths use the same authorized
+evidence and final eligibility recheck.
+
+Model extraction, entity suggestions and NLI findings are advisory. Only the
+existing authenticated operator approval path can create trusted fact snapshots.
+Resolution records preserve both original and replacement proposals. Derivations
+are separate from independent corroborating sources. Each derivation depends on
+specific approved snapshots and source revisions; it must be reviewed again after
+one of these inputs changes. Invalidation is conservative and transitive, including
+historical reads, just as current source withdrawal overrides historical access.
+
+OpenFGA is an additional authorization intersection, never a replacement for local
+ACLs, audience restrictions or OPA. All external configuration belongs to the
+operator environment. OpenLineage delivery is at least once: retries retain the
+same event/run identifiers, and a collector should deduplicate them.
+
+## Evidence that implementation cannot establish
+
+The CV's 83.2% temporal recall, 26.4% stale-retrieval reduction and 1.12 s P95 are
+unverified targets, not acceptance thresholds to tune against. New measurements
+will be reported as observed, with their workload, baseline and hardware. Neither
+the v0.3 83.3% session recall nor its 33.8% local QA score establishes these claims.
+The February–May 2025 project dates need contemporaneous records; coding now does
+not establish those dates. Kubernetes and a full frontend are outside this CV entry.

@@ -110,6 +110,53 @@ def test_postgres_concurrent_approval_only_records_one_decision(context):
 
 
 @pytest.mark.integration
+async def test_dependency_invalidation_hides_stale_graph_then_removes_derived_edges(context):
+    from dataclasses import replace
+    from uuid import uuid4
+
+    from .test_dependencies import derive
+
+    uri = os.environ.get("GM_TEST_NEO4J_URI")
+    if not uri:
+        pytest.skip("set GM_TEST_NEO4J_URI for real dependency projection checks")
+    ledger, _, tokens = context
+    root = approve(context, propose(context))
+    child = approve(context, derive(context, root))
+    graph = GraphProjection(uri, "neo4j", os.environ["GM_TEST_NEO4J_PASSWORD"])
+    group = "dependency-" + uuid4().hex
+    original_upsert, original_rank = graph.upsert, graph.rank
+
+    async def upsert(item):
+        await original_upsert(replace(item, project=group))
+
+    async def rank(query, project, ids, limit):
+        return await original_rank(query, group, ids, limit)
+
+    graph.upsert, graph.rank = upsert, rank
+    try:
+        await graph.initialize()
+        assert (await project_pending(ledger, graph))["failed"] == 0
+        snapshot = next(
+            e.id for e in ledger.visible(tokens["admin"], "demo") if e.candidate_id == child["id"]
+        )
+        ledger.withdraw_source(tokens["admin"], "demo", root["source_id"])
+        # The graph still contains the old edge until outbox delivery, but the service hides it now.
+        assert not (
+            await Retriever(ledger, graph).search(tokens["reader"], "demo", "deployment decision")
+        )["evidence"]
+        assert (await project_pending(ledger, graph))["failed"] == 0
+        records, _, _ = await graph.graph.driver.execute_query(
+            "MATCH ()-[e:RELATES_TO]->() WHERE e.uuid=$id RETURN count(e) AS n", id=snapshot
+        )
+        assert records[0]["n"] == 0
+    finally:
+        await graph.graph.driver.execute_query(
+            "MATCH (n:Entity {group_id:$group}) DETACH DELETE n", group=group
+        )
+        await graph.close()
+
+
+@pytest.mark.integration
 async def test_real_graph_retains_remaining_support_and_deletes_after_the_last_withdrawal(context):
     uri = os.environ.get("GM_TEST_NEO4J_URI")
     if not uri:

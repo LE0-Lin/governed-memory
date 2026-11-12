@@ -1,0 +1,17 @@
+[package]
+name = "governed-memory-native"
+version = "0.4.0"
+edition = "2021"
+rust-version = "1.83"
+license = "MIT"
+description = "Ranking and semantic boundary kernels for governed-memory"
+
+[lib]
+name = "governed_memory_native"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "=0.28.2", features = ["abi3-py312"] }
+
+[features]
+extension-module = ["pyo3/extension-module"]

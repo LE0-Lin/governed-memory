@@ -65,13 +65,31 @@ class Settings:
 
             reranker = MiniLMReranker(os.environ.get("MEMORY_MODEL_CACHE"))
         embedder = graph.embedder if graph else self.embedder()
-        return Retriever(ledger, graph, embedder=embedder, reranker=reranker)
+        return Retriever(
+            ledger,
+            graph,
+            embedder=embedder,
+            reranker=reranker,
+            ranking_backend=os.environ.get("MEMORY_RANKING_BACKEND", "auto"),
+        )
 
     def policy(self):
         from governed_memory.policy import BuiltinPolicy, OpaPolicy
 
         url = os.environ.get("MEMORY_OPA_URL")
         return OpaPolicy(url) if url else BuiltinPolicy()
+
+    def authorizer(self):
+        names = ("MEMORY_FGA_URL", "MEMORY_FGA_STORE_ID", "MEMORY_FGA_MODEL_ID")
+        values = [os.environ.get(name) for name in names]
+        key = os.environ.get("MEMORY_FGA_API_KEY")
+        if not any(values) and not key:
+            return None
+        if not all(values):
+            raise ValueError("OpenFGA requires URL, store ID and pinned model ID together")
+        from governed_memory.authorization import OpenFgaAuthorizer
+
+        return OpenFgaAuthorizer(*values, api_key=key)
 
     def generator(self):
         profile = os.environ.get("MEMORY_GENERATION_PROFILE")
