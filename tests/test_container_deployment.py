@@ -318,6 +318,109 @@ def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(eng
     assert response["evidence_ids"] == [response["evidence"][0]["id"]]
     assert response["evidence"][0]["candidate_id"] == candidate["id"]
     assert response["generator"]["device"] == "cpu"
+
+
+def test_container_semantic_operator_workflow_preserves_approval_boundary(engine):
+    image = os.environ.get("GM_TEST_GENERATION_IMAGE")
+    generation_cache = os.environ.get("GM_TEST_GENERATION_CACHE_MOUNT")
+    model_cache = os.environ.get("GM_TEST_MODEL_CACHE_MOUNT")
+    if not image or not generation_cache or not model_cache:
+        pytest.skip("configure the model image and both model-cache mounts")
+    if engine.dialect.name != "postgresql":
+        pytest.skip("the semantic CLI deployment check requires PostgreSQL")
+    with engine.connect() as connection:
+        schema = connection.scalar(text("SELECT current_schema()"))
+    assert re.fullmatch(r"gm_test_[0-9a-f]{32}", schema)
+    url = engine.url.update_query_dict({"options": f"-csearch_path={schema}"})
+    project = "semantic-" + uuid4().hex
+    container = Container(
+        json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]')),
+        image,
+        {
+            "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
+            "MEMORY_GENERATION_PROFILE": "small",
+            "MEMORY_GENERATION_CACHE": "/generation",
+            "MEMORY_LOCAL_EMBEDDING": "1",
+            "MEMORY_MODEL_CACHE": "/retrieval",
+            "MEMORY_RANKING_BACKEND": "rust",
+            "HF_HUB_OFFLINE": "1",
+            "HF_HUB_DISABLE_PROGRESS_BARS": "1",
+        },
+        mounts=(
+            f"type=bind,source={generation_cache},target=/generation,readonly",
+            f"type=bind,source={model_cache},target=/retrieval,readonly",
+        ),
+    )
+    admin = container.cli("init", "--project", project)["admin_token"]
+    agent = container.cli(
+        "credential", "--project", project, "--principal", "agent", "--role", "agent", token=admin
+    )["token"]
+    # The source is written inside the permitted tmpfs, then consumed by the real CLI.
+    program = (
+        "import pathlib,subprocess,sys; "
+        "pathlib.Path('/tmp/session.txt').write_text('Atlas uses PostgreSQL for persistent storage.'); "
+        "sys.stdout.write(subprocess.check_output(['governed-memory','ingest-document',"
+        f"'--project','{project}','/tmp/session.txt','--valid-from','2030-01-01T00:00:00Z'],text=True))"
+    )
+    staged = container.cli("-c", program, entrypoint="python", token=agent)["candidates"]
+    assert staged
+    candidate = staged[0]
+    search = ("search", "--project", project, "Atlas storage", "--valid-at", "2030-02-01T00:00:00Z")
+    assert not container.cli(*search, token=agent)["evidence"]
+    preview = container.cli("preview", "--project", project, candidate["id"], token=admin)
+    container.cli(
+        "approve",
+        "--project",
+        project,
+        candidate["id"],
+        "--expected-revision",
+        "0",
+        "--expected-head",
+        str(preview["head_revision"]),
+        "--reason",
+        "synthetic source fixture",
+        token=admin,
+    )
+    response = container.cli(*search, token=agent)
+    assert response["ranking_engine"] == "rust"
+    snapshot = response["evidence"][0]["id"]
+    derived = container.cli(
+        "derive",
+        "--project",
+        project,
+        "--subject",
+        "Atlas rollout",
+        "--predicate",
+        "decision",
+        "--value",
+        "Use the approved storage",
+        "--valid-from",
+        "2030-01-01T00:00:00Z",
+        "--parent",
+        snapshot,
+        "--locator",
+        "fixture:rollout",
+        token=agent,
+    )
+    review = container.cli("review", "--project", project, derived["id"], token=admin)
+    assert review["advisory"] and review["nli"]["language"] == "English"
+    resolved = container.cli(
+        "resolve-entity",
+        "--project",
+        project,
+        derived["id"],
+        "--target",
+        snapshot,
+        "--expected-revision",
+        "0",
+        "--reason",
+        "synthetic canonical entity",
+        token=admin,
+    )
+    assert resolved["replacement"]["state"] == "proposed"
+    assert resolved["replacement"]["subject"] == candidate["subject"]
+    container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
+    assert not container.cli(*search, token=agent)["evidence"]
     container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
     withdrawn = container.cli(*arguments, token=agent)
     assert withdrawn["reason"] == "no_eligible_evidence" and withdrawn["abstain"]
