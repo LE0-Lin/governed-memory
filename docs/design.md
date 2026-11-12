@@ -61,6 +61,33 @@ Each graph edge records an embedding-profile fingerprint. Before vector search, 
 
 The budget covers the complete serialized `evidence` array, including IDs, text and source metadata, using the vendored `cl100k_base` vocabulary. Facts are included whole or omitted; text and provenance are not truncated apart. Response envelope, MCP framing, the query and any downstream answer are outside that evidence budget. Special-token spellings in source text are counted as ordinary untrusted text.
 
+## Answer generation
+
+```mermaid
+flowchart LR
+  R[Retrieve authorized evidence] --> C[Recheck complete prompt context]
+  C --> M[Pinned local model with JSON Schema constraints]
+  M --> P[Parse answer and resolve citation aliases]
+  P --> A[Recheck all prompt evidence and current access]
+  A --> O[Return answer and evidence]
+  A --> D[Discard changed evidence and answer]
+```
+
+The optional answer path shares retrieval eligibility and evidence budgeting.
+The complete chat prompt also has a separate model-token limit; an overlong
+prompt fails closed. Only question/date and evidence text/dates enter generation.
+Short aliases map back to returned snapshot IDs. The schema constrains structure
+and possible aliases, and the parser requires citations for an answer and none
+for abstention. These checks do not establish citation entailment or truth.
+
+Before returning text, the service compares the complete supplied context with
+current ledger visibility, including uncited evidence. A source or metadata
+change discards the answer and evidence; revoked project access denies the
+request. Missing evidence, generation exceptions and malformed output produce a
+fixed abstention with a reason. Raw malformed output is retained only in the
+public-data benchmark, not the application response. Generated answers never
+write candidates, facts or approval events.
+
 ## Operational limits
 
 - PostgreSQL is the persistent/concurrent backend. SQLite is for single-writer demos and deterministic checks.
@@ -68,4 +95,4 @@ The budget covers the complete serialized `evidence` array, including IDs, text 
 - Stdio is a local transport. An agent with access to the server's host, SQL credentials or operator token is outside the credential-bound tool threat model. Operator credentials must not be put in agent configuration.
 - Withdrawal is logical suppression. Audit rows and stale graph copies may remain until the controlled worker runs; physical/backup erasure is not implemented.
 - External embedding models can receive approved text through an explicitly configured provider. No paid-provider quality or latency result is supplied. Local model inference stays on the host after downloading weights.
-- `upgrade` adds the v0.2 support table and triggers while preserving v0.1 rows. General schema migration, rollback and disaster-recovery tooling are not supplied.
+- `upgrade` adds the v0.2 support table and triggers while preserving v0.1 rows. Recovery uses PostgreSQL's dump/restore tools and graph reconstruction; [the local container path](deployment.md) is tested. General schema migration, rollback and distributed failover are outside this version's scope.
