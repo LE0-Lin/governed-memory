@@ -4,7 +4,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from governed_memory.answering import ABSTENTION, AnswerService, parse_answer
+from governed_memory.answering import ABSTENTION, AnswerService, generate_answer, parse_answer
 from governed_memory.errors import Denied
 from governed_memory.generation import GeneratedText, TransformersGenerator
 from governed_memory.identity import revoke_access
@@ -93,6 +93,35 @@ async def test_withdrawal_during_generation_discards_the_complete_answer(context
     assert response["evidence"] == response["evidence_ids"] == []
 
 
+async def test_withdrawing_uncited_prompt_evidence_also_discards_the_answer(context):
+    ledger, _, tokens = context
+    approve(context, propose(context))
+    other = ledger.propose(
+        tokens["agent"],
+        "demo",
+        subject="storage",
+        predicate="backup",
+        value="database snapshot",
+        valid_from="2030-01-01T00:00:00Z",
+    )
+    approve(context, other)
+    generator = TestGenerator()
+
+    def withdraw_uncited_source():
+        evidence = ledger.visible(tokens["agent"], "demo")
+        uncited = next(item for item in evidence if item.text == generator.contexts[0][1]["text"])
+        ledger.withdraw_source(tokens["admin"], "demo", uncited.source_id)
+
+    generator.callback = withdraw_uncited_source
+    response = await AnswerService(Retriever(ledger), generator).answer(
+        tokens["agent"], "demo", "storage database"
+    )
+    assert len(generator.contexts[0]) == 2
+    assert response["reason"] == "evidence_changed"
+    assert response["answer"] == ABSTENTION
+    assert response["evidence"] == response["evidence_ids"] == []
+
+
 async def test_access_revoked_during_generation_never_returns_generated_text(context):
     ledger, _, tokens = context
     approve(context, propose(context))
@@ -137,6 +166,26 @@ async def test_answer_tool_is_optional_and_has_no_operator_parameters(context):
     )
 
 
+@pytest.mark.parametrize("raises", [False, True])
+async def test_model_failures_do_not_expose_raw_text_or_exception_details(raises):
+    class FailedGenerator:
+        metadata = {"test_double": True}
+
+        async def generate(self, *args, **kwargs):
+            if raises:
+                raise RuntimeError("private-runtime-detail")
+            return GeneratedText("private-malformed-output", 100, 10, "stop")
+
+    response = await generate_answer(
+        FailedGenerator(), "Which database?", [{"id": "allowed", "text": "SQLite"}]
+    )
+    assert response["answer"] == ABSTENTION and response["abstain"]
+    assert response["evidence_ids"] == []
+    assert response["reason"] == ("generation_error" if raises else "invalid_model_response")
+    assert "private-" not in json.dumps(response)
+    assert "raw_model_text" not in response
+
+
 @pytest.mark.models
 async def test_actual_small_generator_uses_the_pinned_local_model():
     import os
@@ -150,10 +199,12 @@ async def test_actual_small_generator_uses_the_pinned_local_model():
     assert reply.text.strip().lower() == "blue"
     assert reply.prompt_tokens > 0 and 0 < reply.completion_tokens <= 16
 
-    from governed_memory.answering import generate_answer
-
     evidence = [{"id": "database-source", "text": "The project uses SQLite as its database."}]
     response = await generate_answer(generator, "Which database does the project use?", evidence)
     assert response["reason"] == "ok"
     assert "sqlite" in response["answer"].lower()
     assert response["evidence_ids"] == ["database-source"]
+    evidence[0]["id"] = "another-source"
+    repeated = await generate_answer(generator, "Which database does the project use?", evidence)
+    assert repeated["reason"] == "ok"
+    assert repeated["evidence_ids"] == ["another-source"]
