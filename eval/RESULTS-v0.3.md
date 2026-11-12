@@ -152,3 +152,7 @@ The benchmark does not exercise organization approvals, PostgreSQL or Neo4j.
 Those paths have separate application/container tests. Follow
 [FULL_PROTOCOL.md](FULL_PROTOCOL.md) for commands and scope. The public-data
 history excerpts retain the upstream [MIT attribution](../THIRD_PARTY.md).
+
+The [release verification](../docs/verification-v0.3.md) also records 171 passing
+tests/5 SQLite skips and the unchanged frozen synthetic rerun: 768 retrieval
+calls plus 48 operation checks, no failures, at clean commit `fcb9775`.

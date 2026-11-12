@@ -70,6 +70,7 @@ In the [recorded synthetic run](eval/RESULTS.md), the governed service and the s
 The [v0.2 verification record](eval/RESULTS-v0.2.md) includes the unchanged frozen-suite rerun, real policy/model checks and an installed-wheel upgrade from v0.1. The [14-question external comparison](eval/LONGMEMEVAL.md) found no recall gain from reranking over BM25 and records the extra CPU cost.
 
 The [v0.3 full-set report](eval/RESULTS-v0.3.md) retains two complete runs of 500 questions × three methods. Schema constraints reduced answer-validation failures from 1,298 to 398 of 1,500 outputs. The best local judge estimate was 169/500 (33.8%); this does not establish official benchmark accuracy or production answer quality. Raw failures, model judgments and a long host-interruption timing outlier are all retained.
+The [v0.3 verification record](docs/verification-v0.3.md) covers the complete regression, actual CPU model container, recovery path and installed wheel.
 
 ## Scope
 

@@ -32,12 +32,14 @@
 | 项目 | 实现入口 | 实际验证 |
 | --- | --- | --- |
 | 带引用的回答、CLI 与可选 MCP 工具 | [回答服务](../src/governed_memory/answering.py)、[模型接口](../src/governed_memory/generation.py)、[操作说明](usage.md#cited-answers) | 真实 CPU/CUDA 模型生成；权限、撤回、异常与引用回归；生成内容不写入事实账本 |
-| 全 500 题评估与单独评分 | [固定协议](../eval/FULL_PROTOCOL.md)、[完整报告](../eval/RESULTS-v0.3.md) | 两轮各 1,500 条输出；所有失败保留；独立复算会话召回一致；本地评分器各 20/20 简单校准 |
+| 全 500 题评估与单独评分 | [固定协议](../eval/FULL_PROTOCOL.md)、[完整报告](../eval/RESULTS-v0.3.md) | 两轮各 1,500 条输出；所有失败保留；独立复算会话召回一致；两轮评分各 20/20 简单校准 |
 | 容器、进程重启、备份恢复与模型回答 | [部署说明](deployment.md)、[容器回归](../tests/test_container_deployment.py) | 非 root/只读容器；真实 PG/Neo4j/OPA；二进制备份恢复与重建投影；Agent 回答及撤回传播；CPU 镜像确认没有 CUDA 构建 |
 
 本轮完整本地测试 **171 项通过、5 项跳过**，真实存储、神经模型和两种容器镜像
 均已启用。五个跳过都是 SQLite 不适用项：两个 PostgreSQL 并发检查、一个 NUL
 文本拒绝检查、两个 PostgreSQL 容器用例。原生 Rego 测试 **10/10** 通过。
+干净提交上的合成集复验为 **768 次检索 + 48 次操作检查**，无失败；安装后的
+核心 wheel 也通过旧编码管道的 UTF-8 回归和断网示例。详见 [本轮验证记录](verification-v0.3.md)。
 
 终验另外修正了两个有实际后果的问题：CPU 包源只声明在传递依赖上，Linux 会
 下载 CUDA 库；现在直接声明可选 PyTorch 依赖并验证实际 CPU 运行时。Windows

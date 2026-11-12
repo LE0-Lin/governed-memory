@@ -1,0 +1,50 @@
+{
+  "version": "0.3.0",
+  "application_source_commit": "fcb9775c8551184cb8b668feb794502adbc0a68e",
+  "application_code_sha256": "03344d41a45c682d0013457317336706597af76f71b55334543977424c7fbe29",
+  "pytest": {
+    "passed": 171,
+    "skipped": 5,
+    "skip_scope": "SQLite-only: two PostgreSQL concurrency checks, NUL-text rejection, two container/PostgreSQL checks"
+  },
+  "native_rego": {
+    "passed": 10,
+    "total": 10
+  },
+  "container_tests": {
+    "passed": 2,
+    "skipped": 2,
+    "core_image": "sha256:2536d2afd73dc7155c40e870ca4c4cdf5ab6328011adba87d8e85ca0e4d04ccf",
+    "models_image": "sha256:7014c90a922589e891985cc536528f1c03d929602825927fcb689a6fdbee6bf6",
+    "runtime_uid_gid": "10001:10001",
+    "read_only_root": true,
+    "cpu_build_cuda_version": null,
+    "real_model_cli_answer_and_withdrawal": true,
+    "binary_backup_restore_graph_rebuild_fresh_mcp": true
+  },
+  "cpu_test_environment": {
+    "torch": "2.15.0+cpu",
+    "python": "3.12.0"
+  },
+  "installed_core_wheel": {
+    "torch_installed": false,
+    "utf8_cli_subprocess_test_passed": true,
+    "network_blocked_demo_passed": true,
+    "sha256": "49db21c153777a7d50b41b179ad69d0e30e4b7f0ae8c1925915189c830be1dc4"
+  },
+  "synthetic": {
+    "queries": 768,
+    "operations": 48,
+    "failures": 0,
+    "uncommitted_changes": false
+  },
+  "full_longmemeval": {
+    "runs": 2,
+    "questions_per_run": 500,
+    "outputs_per_run": 1500,
+    "judge_is_official": false,
+    "human_review": false,
+    "best_local_judge_correct": 169,
+    "denominator": 500
+  }
+}
