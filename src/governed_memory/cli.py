@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import json
+import sys
 from pathlib import Path
 
 from governed_memory.db import create_db, initialize, require_current_schema
@@ -123,6 +124,10 @@ async def graph_operation(settings, ledger, args):
 
 
 def main():
+    # Native Windows pipes may use a legacy code page; command JSON is always UTF-8.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     args = parser().parse_args()
     settings = Settings.from_env()
     if args.command == "serve":

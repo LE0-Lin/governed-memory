@@ -15,6 +15,7 @@ or model orchestration layers to learn.
 | How are answers constrained and rechecked? | `AnswerService.answer`, `generate_answer`, `parse_answer` in `answering.py`, then `generation.py` | `test_answering.py`, `test_answer_format.py` |
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |
+| Does command JSON survive a legacy Windows pipe? | UTF-8 stream setup in `cli.main` | `test_cli.py` |
 
 The approval path is intentionally explicit: authenticate, lock the logical fact,
 check revisions and policy, update lifecycle/history, and queue projection in one

@@ -23,6 +23,7 @@ class Container:
     docker: list[str]
     image: str
     environment: dict[str, str]
+    mounts: tuple[str, ...] = ()
 
     def process_env(self, token=""):
         environment = {**os.environ, **self.environment, "MEMORY_TOKEN": token}
@@ -44,6 +45,8 @@ class Container:
         ]
         if interactive:
             command.append("-i")
+        for mount in self.mounts:
+            command.extend(["--mount", mount])
         for key in [*self.environment, "MEMORY_TOKEN"]:
             command.extend(["--env", key])
         if entrypoint:
@@ -59,8 +62,8 @@ class Container:
             check=False,
         )
 
-    def cli(self, *arguments, token=""):
-        response = self.invoke(*arguments, token=token)
+    def cli(self, *arguments, token="", **options):
+        response = self.invoke(*arguments, token=token, **options)
         assert response.returncode == 0, response.stderr.decode(errors="replace")
         return json.loads(response.stdout)
 
@@ -248,3 +251,75 @@ async def test_container_permissions_persistence_backup_and_withdrawal(engine):
         if created_database:
             with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
                 connection.execute(text(f'DROP DATABASE "{recovery_database}"'))
+
+
+def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(engine):
+    image = os.environ.get("GM_TEST_GENERATION_IMAGE")
+    cache = os.environ.get("GM_TEST_GENERATION_CACHE_MOUNT")
+    if not image or not cache:
+        pytest.skip("set GM_TEST_GENERATION_IMAGE and GM_TEST_GENERATION_CACHE_MOUNT")
+    if engine.dialect.name != "postgresql":
+        pytest.skip("the container CLI requires the real PostgreSQL test stack")
+    with engine.connect() as connection:
+        schema = connection.scalar(text("SELECT current_schema()"))
+    assert re.fullmatch(r"gm_test_[0-9a-f]{32}", schema)
+    url = engine.url.update_query_dict({"options": f"-csearch_path={schema}"})
+    project = "generation-" + uuid4().hex
+    container = Container(
+        json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]')),
+        image,
+        {
+            "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
+            "MEMORY_GENERATION_PROFILE": "small",
+            "MEMORY_GENERATION_CACHE": "/models",
+            "HF_HUB_OFFLINE": "1",
+            "HF_HUB_DISABLE_PROGRESS_BARS": "1",
+        },
+        mounts=(f"type=bind,source={cache},target=/models,readonly",),
+    )
+    runtime = container.cli(
+        "-c",
+        "import json,torch; print(json.dumps({'cuda': torch.version.cuda}))",
+        entrypoint="python",
+    )
+    assert runtime["cuda"] is None
+    admin = container.cli("init", "--project", project)["admin_token"]
+    agent = container.cli(
+        "credential", "--project", project, "--principal", "agent", "--role", "agent", token=admin
+    )["token"]
+    candidate = container.cli("ingest", "--project", project, "examples/decision.md", token=admin)[
+        0
+    ]
+    preview = container.cli("preview", "--project", project, candidate["id"], token=admin)
+    container.cli(
+        "approve",
+        "--project",
+        project,
+        candidate["id"],
+        "--expected-revision",
+        str(preview["revision"]),
+        "--expected-head",
+        str(preview["head_revision"]),
+        "--reason",
+        "synthetic deployment fixture",
+        token=admin,
+    )
+    arguments = (
+        "answer",
+        "--project",
+        project,
+        "Which database is used for storage?",
+        "--valid-at",
+        "2030-11-09T00:00:00Z",
+    )
+    response = container.cli(*arguments, token=agent)
+    assert response["reason"] == "ok"
+    assert "postgresql" in response["answer"].lower()
+    assert response["evidence_ids"] == [response["evidence"][0]["id"]]
+    assert response["evidence"][0]["candidate_id"] == candidate["id"]
+    assert response["generator"]["device"] == "cpu"
+    container.cli("withdraw-source", "--project", project, candidate["source_id"], token=admin)
+    withdrawn = container.cli(*arguments, token=agent)
+    assert withdrawn["reason"] == "no_eligible_evidence" and withdrawn["abstain"]
+    assert withdrawn["evidence"] == withdrawn["evidence_ids"] == []
+    assert withdrawn["generation"] is None

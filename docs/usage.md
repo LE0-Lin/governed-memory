@@ -21,6 +21,7 @@ Environment variables:
 | `MEMORY_EMBEDDING_BASE_URL` | Optional compatible provider base URL |
 
 The application reads process environment; it does not load `.env` automatically. Shell examples below use PowerShell. `compose.yaml` reads its own `.env` in the usual Docker Compose way.
+CLI JSON is emitted as UTF-8, including when Windows native pipes use a legacy code page.
 
 ```powershell
 $env:MEMORY_DATABASE_URL = 'postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory'

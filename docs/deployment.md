@@ -96,5 +96,14 @@ a fresh MCP process, and withdrawal while that process is running. CI runs it
 with real PostgreSQL/Neo4j/OPA. This verifies this local recovery path, not
 distributed failover, a public endpoint or production capacity.
 
+The additional real-model CLI regression is opt-in: build a separate image with
+`docker build --build-arg INSTALL_MODELS=true -t governed-memory:models .`, set
+`GM_TEST_GENERATION_IMAGE=governed-memory:models` and
+`GM_TEST_GENERATION_CACHE_MOUNT` to the Docker daemon's absolute path to a cache
+containing the pinned small Qwen weights. With `GM_TEST_DATABASE_URL` set, run
+`uv run pytest -q tests/test_container_deployment.py`. The test mounts the cache
+read-only, disables Hugging Face downloads, imports/approves the fictional ADR,
+answers using an agent credential and verifies withdrawal suppresses the answer.
+
 `docker compose down` stops the local stack while retaining its named volumes.
 Removing volumes discards their state, so it is not part of ordinary shutdown.

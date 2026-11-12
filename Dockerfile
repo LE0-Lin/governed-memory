@@ -1,6 +1,7 @@
 FROM python:3.12-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df AS build
 WORKDIR /opt/memory
 RUN pip install --no-cache-dir uv==0.12.5
+ENV UV_HTTP_TIMEOUT=300
 COPY pyproject.toml uv.lock README.md ./
 COPY src ./src
 COPY third_party ./third_party

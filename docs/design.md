@@ -84,8 +84,8 @@ Before returning text, the service compares the complete supplied context with
 current ledger visibility, including uncited evidence. A source or metadata
 change discards the answer and evidence; revoked project access denies the
 request. Missing evidence, generation exceptions and malformed output produce a
-fixed abstention with a reason. Raw malformed output is retained only in the
-public-data benchmark, not the application response. Generated answers never
+fixed abstention with a reason. Application responses omit raw model text; the
+public-data benchmark explicitly retains it. Generated answers never
 write candidates, facts or approval events.
 
 ## Operational limits

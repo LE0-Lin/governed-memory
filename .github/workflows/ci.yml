@@ -61,6 +61,7 @@ jobs:
       MEMORY_GENERATION_CACHE: .local/generation-cache
       HF_HUB_DISABLE_XET: "1"
       HF_HUB_DOWNLOAD_TIMEOUT: "120"
+      UV_HTTP_TIMEOUT: "300"
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -76,4 +77,5 @@ jobs:
           path: .local/generation-cache
           key: qwen-small-7ae557604adf67be50417f59c2c2f167def9a775
       - run: uv sync --frozen --extra dev --extra models
+      - run: uv run python -c "import torch; assert torch.version.cuda is None, torch.version.cuda; print(torch.__version__)"
       - run: uv run pytest -q tests/test_local_models.py tests/test_answering.py tests/test_answer_format.py

@@ -21,6 +21,8 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.12,<1", "ijson>=3.3,<4"]
 models = [
+  # Source overrides apply to direct dependencies, including optional ones.
+  "torch>=2.6,<3",
   "sentence-transformers>=5.1,<6",
   "ijson>=3.3,<4",
   "accelerate>=1.14,<2",
@@ -35,7 +37,7 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [tool.uv.sources]
-torch = { index = "pytorch-cpu" }
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" }]
 
 [project.scripts]
 governed-memory = "governed_memory.cli:main"
