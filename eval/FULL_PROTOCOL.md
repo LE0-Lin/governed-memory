@@ -48,6 +48,10 @@ review. Invalid/failed answers and judgments remain non-passing in the complete
 500-question denominator. Judge outputs, answer errors, calibration and category
 counts are preserved. The scorer also exports one official-format hypothesis
 file per method so another grader can be used without regenerating answers.
+These exports contain the fail-closed answer and a `response_error` field. To
+keep this protocol's failure policy, a grader must count any error row as
+non-passing; an unmodified external evaluator may accept a fallback abstention
+on an unanswerable question instead.
 
 Both stages save per-case files and support `--resume` only with matching code,
 protocol, inputs, package versions and device/hardware. Completed cases are not
