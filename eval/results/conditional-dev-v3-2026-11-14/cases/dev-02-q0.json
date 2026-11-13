@@ -1,0 +1,84 @@
+[
+  {
+    "question_id": "dev-02-q0",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "Oslo",
+      "evidence_ids": [
+        "dev-02-d1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 196,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"Oslo\",\n  \"evidence_ids\": [ \"E2\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 2030.0059000728652,
+    "answer_latency_ms": 2030.0059000728652
+  },
+  {
+    "question_id": "dev-02-q0",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "Oslo",
+      "evidence_ids": [
+        "dev-02-d1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 165,
+        "completion_tokens": 17,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Oslo\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 827.3902999935672,
+    "answer_latency_ms": 827.3902999935672
+  }
+]
