@@ -1,0 +1,80 @@
+[
+  {
+    "question_id": "dev-02-q6",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 198,
+        "completion_tokens": 63,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The information provided in the evidence is outdated as it refers to a Solstice workshop that took place at Harbor Hall in Oslo for thirty hours with a capacity of forty participants. The specific details about costs are not mentioned in this context.\" , \"evidence_ids\":[],\"abstain\":true}"
+    },
+    "error": null,
+    "latency_ms": 3774.338999995962,
+    "answer_latency_ms": 3774.338999995962
+  },
+  {
+    "question_id": "dev-02-q6",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 191,
+        "completion_tokens": 9,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"insufficient_evidence\"}"
+    },
+    "error": null,
+    "latency_ms": 359.5276999985799,
+    "answer_latency_ms": 359.5276999985799
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "question": "Who is the owner of the project?",
+  "evidence": "The project uses SQLite as its database.",
+  "generator": {
+    "profile": "small",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "device": "cpu",
+    "dtype": "float32",
+    "max_input_tokens": 4096,
+    "decoding": "greedy",
+    "concurrency": 1
+  },
+  "responses": {
+    "json_schema": {
+      "answer": "The owner of the project is unknown",
+      "evidence_ids": [
+        "another-source"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "small",
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "device": "cpu",
+        "dtype": "float32",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 150,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"The owner of the project is unknown\",\n  \"evidence_ids\": [\"E1\"],\n  \"abstain\": false\n}"
+    },
+    "conditional": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "small",
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "device": "cpu",
+        "dtype": "float32",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 143,
+        "completion_tokens": 9,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"insufficient_evidence\"}"
+    }
+  }
+}

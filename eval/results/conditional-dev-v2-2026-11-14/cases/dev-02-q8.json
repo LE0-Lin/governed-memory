@@ -1,0 +1,80 @@
+[
+  {
+    "question_id": "dev-02-q8",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 196,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Not applicable as there is no information about copper melting point in the provided evidence.\" , \"evidence_ids\":[], \"abstain\":true}"
+    },
+    "error": null,
+    "latency_ms": 2222.4571999395266,
+    "answer_latency_ms": 2222.4571999395266
+  },
+  {
+    "question_id": "dev-02-q8",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-02-d0",
+      "dev-02-d1",
+      "dev-02-d2",
+      "dev-02-d3"
+    ],
+    "context_sha256": "868e4a97b612f6abe619322a7212113edf405afeaa63720f8484d1e9ce5da4ed",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 189,
+        "completion_tokens": 9,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"insufficient_evidence\"}"
+    },
+    "error": null,
+    "latency_ms": 421.57590005081147,
+    "answer_latency_ms": 421.57590005081147
+  }
+]

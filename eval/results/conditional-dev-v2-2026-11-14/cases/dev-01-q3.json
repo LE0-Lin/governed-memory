@@ -1,0 +1,84 @@
+[
+  {
+    "question_id": "dev-01-q3",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-01-d0",
+      "dev-01-d1",
+      "dev-01-d2",
+      "dev-01-d3"
+    ],
+    "context_sha256": "76eb6ad53213836a044afb1d0b2b736f4e23de939a4bbd93a12bb81c99490876",
+    "response": {
+      "answer": "ThinkPad",
+      "evidence_ids": [
+        "dev-01-d3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 203,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"ThinkPad\",\n  \"evidence_ids\": [ \"E4\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 1906.7804999649525,
+    "answer_latency_ms": 1906.7804999649525
+  },
+  {
+    "question_id": "dev-01-q3",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-01-d0",
+      "dev-01-d1",
+      "dev-01-d2",
+      "dev-01-d3"
+    ],
+    "context_sha256": "76eb6ad53213836a044afb1d0b2b736f4e23de939a4bbd93a12bb81c99490876",
+    "response": {
+      "answer": "A ThinkPad laptop is provided for Mira onboarding.",
+      "evidence_ids": [
+        "dev-01-d3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 196,
+        "completion_tokens": 30,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"answered\",\"answer\":\"A ThinkPad laptop is provided for Mira onboarding.\" , \"evidence_ids\":[ \"E4\"]}"
+    },
+    "error": null,
+    "latency_ms": 1675.8719999343157,
+    "answer_latency_ms": 1675.8719999343157
+  }
+]

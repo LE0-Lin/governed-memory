@@ -1,0 +1,85 @@
+[
+  {
+    "question_id": "dev-00-q7",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "The Polaris service uses PostgreSQL as its database, which is covered by the PostgreSQL license. The service is deployed in Frankfurt and logs are retained for fourteen days. A nightly backup schedule is implemented to ensure data integrity and availability. No additional licenses beyond those required for PostgreSQL are needed for this service. However, please note that these details may be subject to change based on future updates or changes in the Polaris service's licensing model. Please refer to the most recent documentation or contact support for the latest information. Abstaining from any specific version control due to potential updates.",
+      "evidence_ids": [
+        "dev-00-d0",
+        "dev-00-d1",
+        "dev-00-d2",
+        "dev-00-d3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 201,
+        "completion_tokens": 153,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"The Polaris service uses PostgreSQL as its database, which is covered by the PostgreSQL license. The service is deployed in Frankfurt and logs are retained for fourteen days. A nightly backup schedule is implemented to ensure data integrity and availability. No additional licenses beyond those required for PostgreSQL are needed for this service. However, please note that these details may be subject to change based on future updates or changes in the Polaris service's licensing model. Please refer to the most recent documentation or contact support for the latest information. Abstaining from any specific version control due to potential updates.\" ,\n  \"evidence_ids\": [\"E1\", \"E2\", \"E3\", \"E4\"],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 14207.499400014058,
+    "answer_latency_ms": 14207.499400014058
+  },
+  {
+    "question_id": "dev-00-q7",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 194,
+        "completion_tokens": 9,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"insufficient_evidence\"}"
+    },
+    "error": null,
+    "latency_ms": 673.115500016138,
+    "answer_latency_ms": 673.115500016138
+  }
+]
