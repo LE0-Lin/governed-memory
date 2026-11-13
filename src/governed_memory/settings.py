@@ -59,7 +59,7 @@ class Settings:
     def retriever(self, ledger, graph=None):
         from governed_memory.retrieval import Retriever
 
-        relevance = os.environ.get("MEMORY_RELEVANCE_FILTER", "1")
+        relevance = os.environ.get("MEMORY_RELEVANCE_FILTER", "0")
         if relevance not in {"0", "1"}:
             raise ValueError("MEMORY_RELEVANCE_FILTER must be 0 or 1")
         try:

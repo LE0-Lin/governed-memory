@@ -12,6 +12,8 @@ Environment variables:
 | `MEMORY_OPA_URL` | Optional OPA base URL, e.g. `http://127.0.0.1:58181`; decisions then require OPA to allow them |
 | `MEMORY_LOCAL_EMBEDDING` | `1` selects the pinned local MiniLM embedder |
 | `MEMORY_LOCAL_RERANKER` | `1` selects the pinned local MiniLM cross-encoder |
+| `MEMORY_RELEVANCE_FILTER` | `1` opts into the frozen relevance cutoff with the local reranker; `0` (default) keeps all ranked candidates |
+| `MEMORY_DOCUMENT_CACHE_SIZE` | Maximum document vectors per server process, default `2048`, range `0..10000`; `0` disables reuse |
 | `MEMORY_MODEL_CACHE` | Optional directory for downloaded model weights/tokenizers |
 | `MEMORY_GENERATION_PROFILE` | Enables cited answers: `small` (0.5B) or `standard` (1.5B); unset disables generation |
 | `MEMORY_GENERATION_CACHE` | Optional directory for downloaded generator weights/tokenizers |
@@ -110,6 +112,37 @@ The first call downloads the pinned Qwen model and tokenizer. `small` is the 0.5
 The response includes `answer`, resolved `evidence_ids`, authorized `evidence`, `abstain`, `reason`, generation token counts and model revision. JSON Schema constrains field types and available citation aliases; a separate parser checks whether an answer has citations and abstention has none. Missing evidence, invalid output or generation failure returns a fixed abstention with a reason. Citation presence does not prove that the claim is supported.
 
 The service rechecks all supplied evidence after generation. A withdrawal or changed source discards the answer and context; revoked project access denies the request. It never writes generated text into the ledger, and it does not return malformed raw model output. Evidence remains untrusted data in the prompt. These controls do not establish general prompt-injection resistance or factual correctness.
+
+## Relevance filtering and vector reuse
+
+With `MEMORY_LOCAL_RERANKER=1` and `MEMORY_RELEVANCE_FILTER=1`, filtering keeps candidates
+whose raw MiniLM logit is at least `1.4`. That cutoff was selected on a separate
+synthetic development split; its model revision and selection rule are shipped
+in `data/minilm-relevance-v1.json`. Scores are not answerability probabilities.
+A relevant passage can still lack the answer, and the filter can reject useful
+evidence. In the full500 archived long-conversation replay, it rejected 19/30
+unanswerable contexts but left 206/470 answerable questions empty; gold-session
+recall fell from 741/890 to 341/890. It is therefore disabled by default. Evaluate
+the intended short-fact workload before opting in. The
+[frozen protocol](../eval/RETRIEVAL_QUALITY_PROTOCOL.md) defines these checks.
+The library's `Retriever` requires an explicit
+`min_relevance_score`; environment configuration applies through `Settings`.
+
+When every eligible candidate is filtered out, search returns
+`no_relevant_evidence`. Answering then abstains without loading or calling the
+generator. `no_eligible_evidence` means the authorized, current temporal view
+itself is empty. Neither reason establishes that the answer does not exist
+elsewhere. Without a reranker, the neural cutoff is inactive; the hash fallback
+only checks lexical overlap.
+
+Learned document embeddings use a bounded in-memory LRU cache. Keys include the
+project, embedding profile and exact text hash. Entries contain vectors, not
+queries, credentials, answers or authorization decisions. Every search still
+reads current permissions and source status before ranking and returning text.
+Withdrawal suppresses evidence even when its vector remains cached. Restarting
+the process clears the cache. Reuse benefits repeated calls to one MCP server;
+separate CLI invocations start with empty caches. Graphiti may supply candidates
+without using this ledger-fallback cache.
 
 ## Imports and embeddings
 

@@ -67,6 +67,15 @@ image. The application supports CUDA on the host; this Compose file does not
 configure a container GPU runtime. See [answer behavior](usage.md#cited-answers)
 and [the recorded GPU environment](../eval/GPU_ENVIRONMENT.md).
 
+For learned retrieval, enable `MEMORY_LOCAL_EMBEDDING=1` and
+`MEMORY_LOCAL_RERANKER=1` in the same model-enabled server. Compose forwards
+`MEMORY_RELEVANCE_FILTER` (default `0`) and `MEMORY_DOCUMENT_CACHE_SIZE` (default
+`2048`). The former opts into a development-calibrated MiniLM cutoff; the latter
+bounds document vectors within each process. An empty filtered answer does not
+load the generator. Reuse requires repeated calls to the same MCP process;
+restarting a process or launching another CLI command starts an empty cache.
+See [the behavior and limitations](usage.md#relevance-filtering-and-vector-reuse).
+
 ## Back up the ledger and verify recovery
 
 Stop application/projection processes during the recovery exercise. Keep a copy

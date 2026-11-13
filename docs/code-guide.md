@@ -12,6 +12,8 @@ or model orchestration layers to learn.
 | How can a second source preserve a fact? | `Ledger.approve_support`, `evidence.approved_source_map`, `Ledger.withdraw_source` | `test_source_support.py` |
 | Can a stale graph expose withdrawn evidence? | `Ledger.visible`, `Retriever.search`, then `GraphProjection` | `test_retrieval.py`, `test_graph_integration.py` |
 | What really invokes the models? | `local_models.py`, `embedding.py`, `Settings.retriever` | `test_local_models.py` |
+| When does retrieval reject unrelated evidence? | `relevance.py`, `Retriever.search`, `data/minilm-relevance-v1.json` | `test_relevance_cache.py`, `test_retrieval_evidence.py` |
+| What can the document cache reuse? | `embedding_cache.py`, `hybrid_rank` | `test_relevance_cache.py` |
 | How are answers constrained and rechecked? | `AnswerService.answer`, `generate_answer`, `parse_answer` in `answering.py`, then `generation.py` | `test_answering.py`, `test_answer_format.py` |
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |
@@ -41,6 +43,13 @@ The graph adapter returns IDs, not trusted text. `Retriever.search` joins those
 IDs back to ledger evidence, checks authority before reranking and serialization,
 then packs whole evidence items. Graph failures are visible in the response's
 `backend` field. `budget.py` owns the one evidence serializer/token counter.
+
+The optional relevance cutoff filters raw reranker scores before packing. The
+cutoff artifact is tied to a model revision; `Settings` applies it only to the
+local MiniLM reranker. Empty filtered contexts carry `no_relevant_evidence` into
+the answer service, which returns before generation. The document cache stores
+only bounded vectors keyed by project, model profile and exact text. It receives
+the already authorized candidate set, and does not replace any ledger recheck.
 
 `generation.py` wraps the standard Transformers chat/generation API. It loads one
 pinned model lazily and serializes calls. The format library's tokenizer data is
