@@ -74,6 +74,14 @@ The [v0.3 verification record](docs/verification-v0.3.md) covers the complete re
 
 The [v0.4 verification](docs/verification-v0.4.md) covers native Rust, semantic ingestion/review, OpenFGA, transitive dependencies and OpenLineage. Its [frozen controlled comparison](eval/RESULTS-v0.4.md) retains all 504 observations: both methods recalled all positive gold facts; governed retrieval reduced stale results from 597/951 to 0/1,008, with 1.264 s warm P95. Negative queries still returned unrelated eligible evidence. These are controlled-corpus results, not general benchmark accuracy or the CV's prewritten metrics.
 
+The [v0.5 retrieval report](eval/RESULTS-v0.5.md) adds 1,476 paired service observations
+and a replay of all 500 archived external retrievals. Bounded document-vector reuse
+reduced P95 by 14–22% against the same-run filtered, uncached configuration, with
+identical retrieved IDs. An opt-in relevance cutoff rejected 28/32 heldout negative
+queries but left 3/48 positive queries empty. Its poor long-conversation transfer
+is recorded, so relevance rejection is disabled by default. See
+[configuration and limitations](docs/usage.md#relevance-filtering-and-vector-reuse).
+
 ## Scope
 
 The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints, optional cited answers and the experiment harness. Answers use JSON Schema constraints and authority checks before and after generation; citations do not establish factual correctness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [中文验收与项目讲解](docs/acceptance.zh-CN.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).

@@ -9,6 +9,7 @@ from dataclasses import dataclass, replace
 from uuid import uuid4
 
 import pytest
+from conftest import approve
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from sqlalchemy import text
@@ -251,6 +252,77 @@ async def test_container_permissions_persistence_backup_and_withdrawal(engine):
         if created_database:
             with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
                 connection.execute(text(f'DROP DATABASE "{recovery_database}"'))
+
+
+async def test_model_container_filters_empty_answers_and_rechecks_a_warm_mcp_session(context):
+    image = os.environ.get("GM_TEST_GENERATION_IMAGE")
+    cache = os.environ.get("GM_TEST_MODEL_CACHE_MOUNT")
+    if not image or not cache:
+        pytest.skip("configure the model image and retrieval-model cache mount")
+    ledger, _, tokens = context
+    engine = ledger.engine
+    if engine.dialect.name != "postgresql":
+        pytest.skip("the deployed MCP process requires the PostgreSQL test stack")
+    with engine.connect() as connection:
+        schema = connection.scalar(text("SELECT current_schema()"))
+    assert re.fullmatch(r"gm_test_[0-9a-f]{32}", schema)
+    url = engine.url.update_query_dict({"options": f"-csearch_path={schema}"})
+    candidate = approve(
+        context,
+        ledger.propose(
+            tokens["agent"],
+            "demo",
+            subject="Berlin",
+            predicate="museums",
+            value="Berlin is well known for its museums.",
+            valid_from="2030-01-01T00:00:00Z",
+        ),
+    )
+    container = Container(
+        json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]')),
+        image,
+        {
+            "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
+            "MEMORY_LOCAL_EMBEDDING": "1",
+            "MEMORY_LOCAL_RERANKER": "1",
+            "MEMORY_RELEVANCE_FILTER": "1",
+            "MEMORY_DOCUMENT_CACHE_SIZE": "8",
+            "MEMORY_MODEL_CACHE": "/retrieval",
+            "MEMORY_GENERATION_PROFILE": "small",
+            "MEMORY_GENERATION_CACHE": "/intentionally-missing-generator",
+            "HF_HUB_OFFLINE": "1",
+            "HF_HUB_DISABLE_PROGRESS_BARS": "1",
+        },
+        mounts=(f"type=bind,source={cache},target=/retrieval,readonly",),
+    )
+    arguments = dict(project="demo", valid_at="2030-02-01T00:00:00Z")
+    async with (
+        stdio_client(container.server(tokens["agent"])) as streams,
+        ClientSession(*streams) as session,
+    ):
+        await session.initialize()
+        response = await session.call_tool(
+            "answer_memory", {**arguments, "query": "How many people live in Berlin?"}
+        )
+        assert not response.isError
+        empty = json.loads(response.content[0].text)
+        assert empty["abstain"] and empty["reason"] == "no_relevant_evidence"
+        assert empty["generation"] is None and empty["evidence"] == []
+        for _ in range(2):
+            response = await session.call_tool(
+                "search_memory", {**arguments, "query": "What is Berlin well known for?"}
+            )
+            assert not response.isError
+            result = json.loads(response.content[0].text)
+            assert result["minimum_relevance_score"] == 1.4 and result["document_cache"]
+            assert [item["candidate_id"] for item in result["evidence"]] == [candidate["id"]]
+        ledger.withdraw_source(tokens["admin"], "demo", candidate["source_id"])
+        response = await session.call_tool(
+            "search_memory", {**arguments, "query": "What is Berlin well known for?"}
+        )
+        assert not response.isError
+        result = json.loads(response.content[0].text)
+        assert result["reason"] == "no_eligible_evidence" and result["evidence"] == []
 
 
 def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(engine):

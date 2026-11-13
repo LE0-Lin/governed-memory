@@ -80,3 +80,10 @@ runner creates and removes its own isolated PostgreSQL schema, records the clean
 source commit/hash and hardware, and refuses to overwrite results. Without that
 URL it uses SQLite and records that choice. All errors and negative-query results
 remain in `observations.jsonl`; `candidate-ids.json` maps outputs to frozen aliases.
+
+## Retrieval relevance and latency
+
+The [v0.5 report](RESULTS-v0.5.md) records a development-only cutoff, independent
+heldout checks, paired cache timing and a counterfactual full500 archived-score
+replay. The [protocol](RETRIEVAL_QUALITY_PROTOCOL.md) was frozen before results.
+Poor long-conversation transfer is retained; relevance rejection is opt-in.
