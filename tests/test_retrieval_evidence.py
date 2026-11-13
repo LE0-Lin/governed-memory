@@ -78,3 +78,21 @@ def test_external_summary_distinguishes_empty_answers_from_gold_session_recall()
     summary = score_predictions(rows, {"positive": {"s1", "s2"}, "negative": set()})["gated"]
     assert summary["session_recall"] == 0.5
     assert summary["unanswerable_empty"] == 1 and summary["answerable_empty"] == 0
+
+
+def test_replay_preserves_actual_repeated_chunks_but_rejects_excess_or_ambiguous_ids():
+    document = Chunk("a", "s1", "2030", 0, 0, 5, "Database is PostgreSQL.")
+    budget, config = EvidenceBudget(), {"k": 8, "token_budget": 2048}
+    original, tokens = budget.pack([document, document], 2048, 8)
+    row = dict(
+        candidate_scores=[dict(chunk_id="a", score=3.0), dict(chunk_id="a", score=1.0)],
+        chunk_ids=[item["id"] for item in original],
+        evidence_tokens=tokens,
+    )
+    result = contexts(row, [document, document], budget, config, 1.4)
+    assert len(result[0][1]) == 2 and len(result[1][1]) == 1
+    with pytest.raises(ValueError, match="multiplicity"):
+        contexts(row, [document], budget, config, 1.4)
+    different = Chunk("a", "s1", "2030", 0, 0, 5, "A conflicting body.")
+    with pytest.raises(ValueError, match="ambiguous"):
+        contexts(row, [document, different], budget, config, 1.4)

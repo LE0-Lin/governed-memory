@@ -1,0 +1,9 @@
+{
+  "status": "incomplete",
+  "source_commit": "bd9889d",
+  "completed_cases": 3,
+  "error": "ValueError: invalid archived candidate scores",
+  "diagnosis": "Two public histories contain repeated identical chunks. The replay incorrectly required unique candidate IDs instead of preserving the archived occurrences and validating them against corpus multiplicity.",
+  "threshold_changed": false,
+  "original_predictions_modified": false
+}

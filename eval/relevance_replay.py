@@ -4,7 +4,7 @@ import argparse
 import json
 import math
 import os
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
@@ -23,25 +23,30 @@ from governed_memory.relevance import calibrated_cutoff
 
 
 def contexts(row, documents, budget, config, cutoff):
-    lookup = {document.id: document for document in documents}
-    scores = {item["chunk_id"]: item["score"] for item in row["candidate_scores"]}
-    if len(scores) != len(row["candidate_scores"]) or not all(
-        math.isfinite(value) for value in scores.values()
-    ):
+    lookup = {}
+    for document in documents:
+        if document.id in lookup and document != lookup[document.id]:
+            raise ValueError("ambiguous reconstructed chunk ID")
+        lookup[document.id] = document
+    scores = row["candidate_scores"]
+    if not all(math.isfinite(item["score"]) for item in scores):
         raise ValueError("invalid archived candidate scores")
-    if not scores.keys() <= lookup.keys():
+    counts = Counter(item["chunk_id"] for item in scores)
+    if not counts.keys() <= lookup.keys():
         raise ValueError("archived chunks cannot be reconstructed")
-    ranked = [
-        lookup[identifier]
-        for identifier in sorted(scores, key=lambda identifier: (-scores[identifier], identifier))
-    ]
+    if counts - Counter(document.id for document in documents):
+        raise ValueError("archived chunk multiplicity exceeds the reconstructed corpus")
+    # Some public histories repeat an identical session. Preserve its archived
+    # occurrences and individual logits rather than silently deduplicating them.
+    ordered = sorted(scores, key=lambda item: (-item["score"], item["chunk_id"]))
+    ranked = [lookup[item["chunk_id"]] for item in ordered]
     original, tokens = budget.pack(ranked, config["token_budget"], config["k"])
     if [item["id"] for item in original] != row["chunk_ids"]:
         raise ValueError("archived context packing could not be reproduced")
     if ranked and tokens != row["evidence_tokens"]:
         raise ValueError("archived context token count changed")
     filtered, filtered_tokens = budget.pack(
-        [document for document in ranked if scores[document.id] >= cutoff],
+        [lookup[item["chunk_id"]] for item in ordered if item["score"] >= cutoff],
         config["token_budget"],
         config["k"],
     )
@@ -141,6 +146,12 @@ def replay(dataset, output):
     }
     summary = score_predictions(predictions, labels)
     final = source_snapshot()
+    duplicates = {}
+    for identifier, row in originals.items():
+        counts = Counter(item["chunk_id"] for item in row["candidate_scores"])
+        repeated = {key: count for key, count in counts.items() if count > 1}
+        if repeated:
+            duplicates[identifier] = repeated
     write_json(output / "summary.json", summary)
     write_json(
         output / "provenance.json",
@@ -156,6 +167,7 @@ def replay(dataset, output):
             "new_generation": False,
             "new_latency_measurement": False,
             "external_data_previously_evaluated": True,
+            "repeated_candidate_ids": duplicates,
         },
     )
     print(serialize(summary))
