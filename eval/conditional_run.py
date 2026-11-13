@@ -30,8 +30,8 @@ from governed_memory.answering import generate_answer
 from governed_memory.budget import EvidenceBudget, serialize
 from governed_memory.generation import TransformersGenerator
 
-MANIFEST = ROOT / "eval/conditional_manifest.json"
-PROTOCOL = ROOT / "eval/CONDITIONAL_ANSWER_PROTOCOL.md"
+MANIFEST = ROOT / "eval/conditional_v2_manifest.json"
+PROTOCOL = ROOT / "eval/CONDITIONAL_ANSWER_V2_PROTOCOL.md"
 
 
 def archived_contexts(dataset, model_cache):
