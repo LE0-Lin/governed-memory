@@ -1,0 +1,16 @@
+{
+  "commit": "21d1d1bae11a82bdf9aee326a0b0ba78533ce1de",
+  "dirty_source": false,
+  "code_sha256": "baff501ccbed560cb17d228eb4b04b11e37fae71180e04d43c0e2569d47d3c01",
+  "protocol_sha256": "e92b777710426651c7d87414a855973b81cb4e9bd7dd636995c31631a18ff7cc",
+  "model": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "calibrated_at": "2026-11-13T13:16:28.383225+00:00",
+  "heldout_used": false
+}
