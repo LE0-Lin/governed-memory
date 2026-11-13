@@ -11,13 +11,13 @@ from .test_answer_format import accepts
 @pytest.mark.parametrize(
     "reply,valid",
     [
-        ({"status": "insufficient_evidence"}, True),
-        ({"status": "answered", "answer": "SQLite", "evidence_ids": ["E1"]}, True),
-        ({"status": "answered", "answer": "SQLite", "evidence_ids": []}, False),
-        ({"status": "answered", "answer": "SQLite", "evidence_ids": ["E2"]}, False),
-        ({"status": "answered", "answer": "", "evidence_ids": ["E1"]}, False),
-        ({"status": "insufficient_evidence", "evidence_ids": ["E1"]}, False),
-        ({"status": "other"}, False),
+        ({"answer": None}, True),
+        ({"answer": "SQLite", "evidence_ids": ["E1"]}, True),
+        ({"answer": "SQLite", "evidence_ids": []}, False),
+        ({"answer": "SQLite", "evidence_ids": ["E2"]}, False),
+        ({"answer": "", "evidence_ids": ["E1"]}, False),
+        ({"answer": None, "evidence_ids": ["E1"]}, False),
+        ({"answer": False}, False),
     ],
 )
 def test_conditional_schema_enforces_branch_invariants_with_the_actual_decoder(reply, valid):
@@ -27,7 +27,7 @@ def test_conditional_schema_enforces_branch_invariants_with_the_actual_decoder(r
     assert accepts(parser, json.dumps(reply)) is valid
     if valid:
         response = parse_answer(json.dumps(reply), [{"id": "actual"}], answer_format="conditional")
-        assert response["abstain"] is (reply["status"] == "insufficient_evidence")
+        assert response["abstain"] is (reply["answer"] is None)
         assert response["evidence_ids"] == ([] if response["abstain"] else ["actual"])
     else:
         with pytest.raises(ValueError):
@@ -50,7 +50,7 @@ async def test_conditional_wire_format_preserves_public_response_and_empty_conte
         async def generate(self, messages, max_new_tokens, *, json_schema):
             self.calls += 1
             assert "anyOf" in json_schema
-            return GeneratedText('{"status":"insufficient_evidence"}', 100, 10, "stop")
+            return GeneratedText('{"answer":null}', 100, 10, "stop")
 
     generator = Generator()
     response = await generate_answer(

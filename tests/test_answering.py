@@ -32,7 +32,6 @@ class TestGenerator:
         reply = {"answer": "SQLite", "evidence_ids": [context[0]["id"]], "abstain": False}
         if "anyOf" in (json_schema or {}):
             reply.pop("abstain")
-            reply["status"] = "answered"
         return GeneratedText(
             json.dumps(reply),
             100,
@@ -214,3 +213,13 @@ async def test_actual_small_generator_uses_the_pinned_local_model():
     repeated = await generate_answer(generator, "Which database does the project use?", evidence)
     assert repeated["reason"] == "ok"
     assert repeated["evidence_ids"] == ["another-source"]
+    conditional = await generate_answer(
+        generator, "Which database does the project use?", evidence, answer_format="conditional"
+    )
+    assert conditional["reason"] == "ok" and "sqlite" in conditional["answer"].lower()
+    assert conditional["evidence_ids"] == ["another-source"]
+    missing = await generate_answer(
+        generator, "Who is the owner of the project?", evidence, answer_format="conditional"
+    )
+    assert missing["reason"] == "model_abstained" and missing["abstain"]
+    assert missing["evidence_ids"] == [] and missing["error"] is None
