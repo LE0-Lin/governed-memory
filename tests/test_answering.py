@@ -29,15 +29,20 @@ class TestGenerator:
         self.contexts.append(context)
         if self.callback:
             self.callback()
+        reply = {"answer": "SQLite", "evidence_ids": [context[0]["id"]], "abstain": False}
+        if "anyOf" in (json_schema or {}):
+            reply.pop("abstain")
+            reply["status"] = "answered"
         return GeneratedText(
-            json.dumps({"answer": "SQLite", "evidence_ids": [context[0]["id"]], "abstain": False}),
+            json.dumps(reply),
             100,
             30,
             "stop",
         )
 
 
-async def test_answer_receives_authorized_evidence_and_never_writes_a_fact(context):
+@pytest.mark.parametrize("answer_format", ["json_schema", "conditional"])
+async def test_answer_receives_authorized_evidence_and_never_writes_a_fact(context, answer_format):
     ledger, _, tokens = context
     public = approve(context, propose(context))
     private = ledger.propose(
@@ -53,9 +58,9 @@ async def test_answer_receives_authorized_evidence_and_never_writes_a_fact(conte
     with Session(ledger.engine) as session:
         before = [set(session.scalars(select(model.id))) for model in (Candidate, GovernanceEvent)]
     generator = TestGenerator()
-    response = await AnswerService(Retriever(ledger), generator).answer(
-        tokens["agent"], "demo", "storage database"
-    )
+    response = await AnswerService(
+        Retriever(ledger), generator, answer_format=answer_format
+    ).answer(tokens["agent"], "demo", "storage database")
     assert response["reason"] == "ok"
     assert response["answer"] == "SQLite"
     assert [item["id"] for item in generator.contexts[0]] == ["E1"]
@@ -78,15 +83,16 @@ async def test_no_evidence_abstains_without_loading_a_model(context):
     assert generator.contexts == []
 
 
-async def test_withdrawal_during_generation_discards_the_complete_answer(context):
+@pytest.mark.parametrize("answer_format", ["json_schema", "conditional"])
+async def test_withdrawal_during_generation_discards_the_complete_answer(context, answer_format):
     ledger, _, tokens = context
     candidate = approve(context, propose(context))
     generator = TestGenerator(
         lambda: ledger.withdraw_source(tokens["admin"], "demo", candidate["source_id"])
     )
-    response = await AnswerService(Retriever(ledger), generator).answer(
-        tokens["agent"], "demo", "database"
-    )
+    response = await AnswerService(
+        Retriever(ledger), generator, answer_format=answer_format
+    ).answer(tokens["agent"], "demo", "database")
     assert len(generator.contexts[0]) == 1
     assert response["reason"] == "evidence_changed"
     assert response["answer"] == ABSTENTION
