@@ -203,3 +203,21 @@ def test_invalid_operator_configuration_fails_before_loading_any_model(
     monkeypatch.setenv("MEMORY_LOCAL_RERANKER", "1")
     with pytest.raises(ValueError, match="must be"):
         Settings.from_env().retriever(context[0])
+
+
+def test_settings_requires_explicit_opt_in_before_rejecting_low_relevance(context, monkeypatch):
+    from governed_memory import local_models
+
+    scorer = Scorer()
+    scorer.metadata = {
+        "model": local_models.RERANKING_MODEL,
+        "revision": local_models.RERANKING_REVISION,
+        "scores": "raw logits",
+    }
+    monkeypatch.setattr(local_models, "MiniLMReranker", lambda *_: scorer)
+    monkeypatch.setenv("MEMORY_LOCAL_RERANKER", "1")
+    monkeypatch.delenv("MEMORY_RELEVANCE_FILTER", raising=False)
+    settings = Settings.from_env()
+    assert settings.retriever(context[0]).min_relevance_score is None
+    monkeypatch.setenv("MEMORY_RELEVANCE_FILTER", "1")
+    assert settings.retriever(context[0]).min_relevance_score == 1.4

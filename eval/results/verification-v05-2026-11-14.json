@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-14 Asia/Shanghai",
+  "runtime_source_sha256": "9a6b2db838035416816e88186d9b2c275b10986c8714a230078b9c9c00299db3",
+  "ci_runtime_commit": "aa7f917a95cb37d256b2f761f75f02f655752247",
+  "ci_url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43471343399",
+  "ci_jobs_successful": 6,
+  "local_acceptance": {
+    "passed": 258,
+    "skipped": 13,
+    "configurations": 271,
+    "execution": "non-overlapping segmented runs",
+    "core": {
+      "passed": 242,
+      "skipped": 9
+    },
+    "explicit_opt_in": {
+      "passed": 2,
+      "skipped": 0
+    },
+    "actual_models": {
+      "passed": 10,
+      "skipped": 0
+    },
+    "core_container": {
+      "passed": 1,
+      "skipped": 1
+    },
+    "model_container": {
+      "passed": 3,
+      "skipped": 3
+    }
+  },
+  "rego": {
+    "passed": 10,
+    "failed": 0
+  },
+  "frozen_governance": {
+    "retrievals": 768,
+    "operation_checks": 48,
+    "execution_failures": 0
+  },
+  "offline_demo_network_denied": true,
+  "wheel_sdist_built": true,
+  "wheel_sha256": "01dc1971a2a8338d2a64f733864a9743fbde8f2c6cfbef0937f8bf076035c22d",
+  "images": {
+    "core": "sha256:bd2c8c836a484332fe4807311e0d6df3e1bc5ef18519de52896028473e5a64f4",
+    "models": "sha256:5dcc098a1a05eaa6f9d6cb2eb8f3106499864d4ef0efcda86425193ffcb19a95"
+  },
+  "default_relevance_rejection": false,
+  "default_document_cache_capacity": 2048,
+  "new_full500_generation": false,
+  "original_v03_v04_results_modified": false
+}

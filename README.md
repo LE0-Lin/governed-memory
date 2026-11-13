@@ -81,6 +81,8 @@ identical retrieved IDs. An opt-in relevance cutoff rejected 28/32 heldout negat
 queries but left 3/48 positive queries empty. Its poor long-conversation transfer
 is recorded, so relevance rejection is disabled by default. See
 [configuration and limitations](docs/usage.md#relevance-filtering-and-vector-reuse).
+The [v0.5 verification record](docs/verification-v0.5.md) covers regression,
+actual models, installed containers and the unchanged runtime source fingerprint.
 
 ## Scope
 

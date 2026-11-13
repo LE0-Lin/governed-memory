@@ -296,7 +296,9 @@ async def test_model_container_filters_empty_answers_and_rechecks_a_warm_mcp_ses
         },
         mounts=(f"type=bind,source={cache},target=/retrieval,readonly",),
     )
-    arguments = dict(project="demo", valid_at="2030-02-01T00:00:00Z")
+    arguments = dict(
+        project="demo", valid_at="2030-02-01T00:00:00Z", known_at="2030-02-01T00:00:00Z"
+    )
     async with (
         stdio_client(container.server(tokens["agent"])) as streams,
         ClientSession(*streams) as session,
