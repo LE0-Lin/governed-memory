@@ -1,0 +1,84 @@
+[
+  {
+    "question_id": "dev-06-q3",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-06-d0",
+      "dev-06-d1",
+      "dev-06-d2",
+      "dev-06-d3"
+    ],
+    "context_sha256": "80034e04db0f9e348ed335910b10da90149c0119bde1e66ef64f3d62a4af3cb4",
+    "response": {
+      "answer": "Eight hours",
+      "evidence_ids": [
+        "dev-06-d2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 209,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"Eight hours\",\n  \"evidence_ids\": [ \"E3\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 2164.887599996291,
+    "answer_latency_ms": 2164.887599996291
+  },
+  {
+    "question_id": "dev-06-q3",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-06-d0",
+      "dev-06-d1",
+      "dev-06-d2",
+      "dev-06-d3"
+    ],
+    "context_sha256": "80034e04db0f9e348ed335910b10da90149c0119bde1e66ef64f3d62a4af3cb4",
+    "response": {
+      "answer": "eight hours",
+      "evidence_ids": [
+        "dev-06-d3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 213,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"answered\",\"answer\":\"eight hours\",\"evidence_ids\":[\"E4\"]}"
+    },
+    "error": null,
+    "latency_ms": 1112.497100024484,
+    "answer_latency_ms": 1112.497100024484
+  }
+]

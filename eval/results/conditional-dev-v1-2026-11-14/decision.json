@@ -1,0 +1,9 @@
+{
+  "candidate": "conditional-v1",
+  "promoted": false,
+  "external_inference_started": false,
+  "reason": "Development positive gold inclusion fell from 46/48 to 42/48, failing the preregistered non-regression gate.",
+  "valid_negative_abstentions": {"legacy": 17, "candidate": 32, "total": 32},
+  "answer_errors": {"legacy": 5, "candidate": 0},
+  "followup": "Any further prompt development uses development data only and a separately frozen protocol. The failed candidate and all raw outputs remain unchanged."
+}
