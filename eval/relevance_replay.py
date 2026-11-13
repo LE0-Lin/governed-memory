@@ -23,10 +23,10 @@ from governed_memory.relevance import calibrated_cutoff
 
 
 def contexts(row, documents, budget, config, cutoff):
-    lookup = {}
+    lookup, ambiguous = {}, set()
     for document in documents:
         if document.id in lookup and document != lookup[document.id]:
-            raise ValueError("ambiguous reconstructed chunk ID")
+            ambiguous.add(document.id)
         lookup[document.id] = document
     scores = row["candidate_scores"]
     if not all(math.isfinite(item["score"]) for item in scores):
@@ -36,17 +36,23 @@ def contexts(row, documents, budget, config, cutoff):
         raise ValueError("archived chunks cannot be reconstructed")
     if counts - Counter(document.id for document in documents):
         raise ValueError("archived chunk multiplicity exceeds the reconstructed corpus")
-    # Some public histories repeat an identical session. Preserve its archived
-    # occurrences and individual logits rather than silently deduplicating them.
+    # Histories can reuse a session ID at different dates. Preserve occurrences;
+    # reject ambiguity if packing actually consumes it, including budget skips.
     ordered = sorted(scores, key=lambda item: (-item["score"], item["chunk_id"]))
-    ranked = [lookup[item["chunk_id"]] for item in ordered]
-    original, tokens = budget.pack(ranked, config["token_budget"], config["k"])
+
+    def resolve(items):
+        for item in items:
+            if item["chunk_id"] in ambiguous:
+                raise ValueError("ambiguous reconstructed chunk ID")
+            yield lookup[item["chunk_id"]]
+
+    original, tokens = budget.pack(resolve(ordered), config["token_budget"], config["k"])
     if [item["id"] for item in original] != row["chunk_ids"]:
         raise ValueError("archived context packing could not be reproduced")
-    if ranked and tokens != row["evidence_tokens"]:
+    if ordered and tokens != row["evidence_tokens"]:
         raise ValueError("archived context token count changed")
     filtered, filtered_tokens = budget.pack(
-        [lookup[item["chunk_id"]] for item in ordered if item["score"] >= cutoff],
+        resolve(item for item in ordered if item["score"] >= cutoff),
         config["token_budget"],
         config["k"],
     )

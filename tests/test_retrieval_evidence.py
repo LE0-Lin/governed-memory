@@ -96,3 +96,23 @@ def test_replay_preserves_actual_repeated_chunks_but_rejects_excess_or_ambiguous
     different = Chunk("a", "s1", "2030", 0, 0, 5, "A conflicting body.")
     with pytest.raises(ValueError, match="ambiguous"):
         contexts(row, [document, different], budget, config, 1.4)
+
+
+def test_replay_does_not_resolve_ambiguous_candidates_outside_the_packed_prefix():
+    documents = [
+        Chunk("a", "s1", "2030", 0, 0, 5, "Database is PostgreSQL."),
+        Chunk("b", "s2", "2030", 0, 0, 5, "One dated occurrence."),
+        Chunk("b", "s2", "2031", 0, 0, 5, "Another dated occurrence."),
+    ]
+    budget, config = EvidenceBudget(), {"k": 1, "token_budget": 2048}
+    _, tokens = budget.pack(documents[:1], 2048, 1)
+    row = dict(
+        candidate_scores=[dict(chunk_id="a", score=3.0), dict(chunk_id="b", score=-4.0)],
+        chunk_ids=["a"],
+        evidence_tokens=tokens,
+    )
+    result = contexts(row, documents, budget, config, 1.4)
+    assert [item["id"] for item in result[0][1]] == ["a"]
+    config["k"] = 2
+    with pytest.raises(ValueError, match="ambiguous"):
+        contexts(row, documents, budget, config, 1.4)
