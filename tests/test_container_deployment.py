@@ -9,12 +9,13 @@ from dataclasses import dataclass, replace
 from uuid import uuid4
 
 import pytest
-from conftest import approve
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from sqlalchemy import text
 
 from governed_memory.graph_adapter import GraphProjection
+
+from .conftest import approve
 
 pytestmark = pytest.mark.integration
 
