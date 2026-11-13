@@ -1,0 +1,830 @@
+{
+  "version": "relevance-contract-v1",
+  "split": "dev",
+  "groups": [
+    {
+      "id": "dev-00",
+      "documents": [
+        {
+          "id": "dev-00-d0",
+          "subject": "Polaris service",
+          "predicate": "database",
+          "value": "PostgreSQL"
+        },
+        {
+          "id": "dev-00-d1",
+          "subject": "Polaris service",
+          "predicate": "deployment region",
+          "value": "Frankfurt"
+        },
+        {
+          "id": "dev-00-d2",
+          "subject": "Polaris service",
+          "predicate": "log retention",
+          "value": "fourteen days"
+        },
+        {
+          "id": "dev-00-d3",
+          "subject": "Polaris service",
+          "predicate": "backup schedule",
+          "value": "nightly"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-00-q0",
+          "query": "Which database does Polaris service use?",
+          "gold": [
+            "dev-00-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-00-q1",
+          "query": "Where is Polaris service deployed?",
+          "gold": [
+            "dev-00-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-00-q2",
+          "query": "How long does Polaris service retain logs?",
+          "gold": [
+            "dev-00-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-00-q3",
+          "query": "How often does Polaris service run backups?",
+          "gold": [
+            "dev-00-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-00-q4",
+          "query": "What stores persistent records for Polaris service?",
+          "gold": [
+            "dev-00-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-00-q5",
+          "query": "Polaris service database",
+          "gold": [
+            "dev-00-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-00-q6",
+          "query": "What is the monthly budget for Polaris service?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-00-q7",
+          "query": "What license covers Polaris service?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-00-q8",
+          "query": "What is the longest river in Brazil?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-00-q9",
+          "query": "What is the database for Rigel service?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-01",
+      "documents": [
+        {
+          "id": "dev-01-d0",
+          "subject": "Mira onboarding",
+          "predicate": "mentor",
+          "value": "Leah"
+        },
+        {
+          "id": "dev-01-d1",
+          "subject": "Mira onboarding",
+          "predicate": "office",
+          "value": "Bristol"
+        },
+        {
+          "id": "dev-01-d2",
+          "subject": "Mira onboarding",
+          "predicate": "training duration",
+          "value": "two weeks"
+        },
+        {
+          "id": "dev-01-d3",
+          "subject": "Mira onboarding",
+          "predicate": "laptop",
+          "value": "ThinkPad"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-01-q0",
+          "query": "Who mentors Mira during onboarding?",
+          "gold": [
+            "dev-01-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-01-q1",
+          "query": "Which office hosts Mira onboarding?",
+          "gold": [
+            "dev-01-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-01-q2",
+          "query": "How long does Mira onboarding training last?",
+          "gold": [
+            "dev-01-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-01-q3",
+          "query": "What laptop is provided for Mira onboarding?",
+          "gold": [
+            "dev-01-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-01-q4",
+          "query": "Who guides the new starter in Mira onboarding?",
+          "gold": [
+            "dev-01-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-01-q5",
+          "query": "Mira onboarding mentor",
+          "gold": [
+            "dev-01-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-01-q6",
+          "query": "What university did Mira attend?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-01-q7",
+          "query": "What salary is offered in Mira onboarding?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-01-q8",
+          "query": "How many moons does Neptune have?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-01-q9",
+          "query": "What is the mentor for Mina onboarding?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-02",
+      "documents": [
+        {
+          "id": "dev-02-d0",
+          "subject": "Solstice workshop",
+          "predicate": "venue",
+          "value": "Harbor Hall"
+        },
+        {
+          "id": "dev-02-d1",
+          "subject": "Solstice workshop",
+          "predicate": "city",
+          "value": "Oslo"
+        },
+        {
+          "id": "dev-02-d2",
+          "subject": "Solstice workshop",
+          "predicate": "duration",
+          "value": "three hours"
+        },
+        {
+          "id": "dev-02-d3",
+          "subject": "Solstice workshop",
+          "predicate": "capacity",
+          "value": "forty participants"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-02-q0",
+          "query": "Where is Solstice workshop held?",
+          "gold": [
+            "dev-02-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-02-q1",
+          "query": "Which city hosts Solstice workshop?",
+          "gold": [
+            "dev-02-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-02-q2",
+          "query": "How long does Solstice workshop last?",
+          "gold": [
+            "dev-02-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-02-q3",
+          "query": "How many participants can attend Solstice workshop?",
+          "gold": [
+            "dev-02-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-02-q4",
+          "query": "What building will host Solstice workshop?",
+          "gold": [
+            "dev-02-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-02-q5",
+          "query": "Solstice workshop venue",
+          "gold": [
+            "dev-02-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-02-q6",
+          "query": "What does admission to Solstice workshop cost?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-02-q7",
+          "query": "Who sponsors Solstice workshop?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-02-q8",
+          "query": "What temperature does copper melt at?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-02-q9",
+          "query": "What is the venue for Arbor workshop?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-03",
+      "documents": [
+        {
+          "id": "dev-03-d0",
+          "subject": "Nimbus documentation",
+          "predicate": "format",
+          "value": "Markdown"
+        },
+        {
+          "id": "dev-03-d1",
+          "subject": "Nimbus documentation",
+          "predicate": "language",
+          "value": "English"
+        },
+        {
+          "id": "dev-03-d2",
+          "subject": "Nimbus documentation",
+          "predicate": "owner",
+          "value": "developer experience team"
+        },
+        {
+          "id": "dev-03-d3",
+          "subject": "Nimbus documentation",
+          "predicate": "review cadence",
+          "value": "every month"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-03-q0",
+          "query": "What format does Nimbus documentation use?",
+          "gold": [
+            "dev-03-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-03-q1",
+          "query": "What language is Nimbus documentation written in?",
+          "gold": [
+            "dev-03-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-03-q2",
+          "query": "Who owns Nimbus documentation?",
+          "gold": [
+            "dev-03-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-03-q3",
+          "query": "How often is Nimbus documentation reviewed?",
+          "gold": [
+            "dev-03-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-03-q4",
+          "query": "How are the Nimbus documentation files formatted?",
+          "gold": [
+            "dev-03-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-03-q5",
+          "query": "Nimbus documentation format",
+          "gold": [
+            "dev-03-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-03-q6",
+          "query": "What is the license for Nimbus documentation?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-03-q7",
+          "query": "How many pages are in Nimbus documentation?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-03-q8",
+          "query": "Who discovered penicillin?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-03-q9",
+          "query": "What is the format for Fable documentation?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-04",
+      "documents": [
+        {
+          "id": "dev-04-d0",
+          "subject": "Saffron analytics",
+          "predicate": "warehouse",
+          "value": "BigQuery"
+        },
+        {
+          "id": "dev-04-d1",
+          "subject": "Saffron analytics",
+          "predicate": "refresh interval",
+          "value": "six hours"
+        },
+        {
+          "id": "dev-04-d2",
+          "subject": "Saffron analytics",
+          "predicate": "timezone",
+          "value": "UTC"
+        },
+        {
+          "id": "dev-04-d3",
+          "subject": "Saffron analytics",
+          "predicate": "owner",
+          "value": "business intelligence team"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-04-q0",
+          "query": "Which warehouse does Saffron analytics use?",
+          "gold": [
+            "dev-04-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-04-q1",
+          "query": "How often is Saffron analytics refreshed?",
+          "gold": [
+            "dev-04-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-04-q2",
+          "query": "Which timezone does Saffron analytics use?",
+          "gold": [
+            "dev-04-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-04-q3",
+          "query": "Who maintains Saffron analytics?",
+          "gold": [
+            "dev-04-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-04-q4",
+          "query": "Where does Saffron analytics keep its analytical tables?",
+          "gold": [
+            "dev-04-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-04-q5",
+          "query": "Saffron analytics warehouse",
+          "gold": [
+            "dev-04-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-04-q6",
+          "query": "What is the annual cost of Saffron analytics?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-04-q7",
+          "query": "How many customers use Saffron analytics?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-04-q8",
+          "query": "How far is Venus from the Sun?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-04-q9",
+          "query": "What is the warehouse for Citrine analytics?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-05",
+      "documents": [
+        {
+          "id": "dev-05-d0",
+          "subject": "Maple expense policy",
+          "predicate": "currency",
+          "value": "EUR"
+        },
+        {
+          "id": "dev-05-d1",
+          "subject": "Maple expense policy",
+          "predicate": "meal allowance",
+          "value": "thirty euros"
+        },
+        {
+          "id": "dev-05-d2",
+          "subject": "Maple expense policy",
+          "predicate": "submission deadline",
+          "value": "ten days"
+        },
+        {
+          "id": "dev-05-d3",
+          "subject": "Maple expense policy",
+          "predicate": "approver",
+          "value": "finance manager"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-05-q0",
+          "query": "Which currency does Maple expense policy use?",
+          "gold": [
+            "dev-05-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-05-q1",
+          "query": "What meal allowance does Maple expense policy permit?",
+          "gold": [
+            "dev-05-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-05-q2",
+          "query": "What is the submission deadline in Maple expense policy?",
+          "gold": [
+            "dev-05-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-05-q3",
+          "query": "Who approves claims under Maple expense policy?",
+          "gold": [
+            "dev-05-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-05-q4",
+          "query": "In what money unit are Maple expense policy amounts stated?",
+          "gold": [
+            "dev-05-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-05-q5",
+          "query": "Maple expense policy currency",
+          "gold": [
+            "dev-05-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-05-q6",
+          "query": "What is the mileage rate under Maple expense policy?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-05-q7",
+          "query": "What hotel limit does Maple expense policy set?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-05-q8",
+          "query": "What causes a lunar eclipse?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-05-q9",
+          "query": "What is the currency for Pine expense policy?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-06",
+      "documents": [
+        {
+          "id": "dev-06-d0",
+          "subject": "Coral access policy",
+          "predicate": "authentication",
+          "value": "hardware security keys"
+        },
+        {
+          "id": "dev-06-d1",
+          "subject": "Coral access policy",
+          "predicate": "review interval",
+          "value": "ninety days"
+        },
+        {
+          "id": "dev-06-d2",
+          "subject": "Coral access policy",
+          "predicate": "owner",
+          "value": "security operations team"
+        },
+        {
+          "id": "dev-06-d3",
+          "subject": "Coral access policy",
+          "predicate": "session duration",
+          "value": "eight hours"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-06-q0",
+          "query": "How do users authenticate under Coral access policy?",
+          "gold": [
+            "dev-06-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-06-q1",
+          "query": "How often is access reviewed under Coral access policy?",
+          "gold": [
+            "dev-06-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-06-q2",
+          "query": "Who owns Coral access policy?",
+          "gold": [
+            "dev-06-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-06-q3",
+          "query": "How long can a session last under Coral access policy?",
+          "gold": [
+            "dev-06-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-06-q4",
+          "query": "What login credential does Coral access policy require?",
+          "gold": [
+            "dev-06-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-06-q5",
+          "query": "Coral access policy authentication",
+          "gold": [
+            "dev-06-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-06-q6",
+          "query": "What password length does Coral access policy require?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-06-q7",
+          "query": "What encryption algorithm does Coral access policy specify?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-06-q8",
+          "query": "When was the first steam locomotive built?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-06-q9",
+          "query": "What is the authentication for Indigo access policy?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "dev-07",
+      "documents": [
+        {
+          "id": "dev-07-d0",
+          "subject": "Willow release",
+          "predicate": "version",
+          "value": "3.4.1"
+        },
+        {
+          "id": "dev-07-d1",
+          "subject": "Willow release",
+          "predicate": "channel",
+          "value": "stable"
+        },
+        {
+          "id": "dev-07-d2",
+          "subject": "Willow release",
+          "predicate": "supported platform",
+          "value": "Linux"
+        },
+        {
+          "id": "dev-07-d3",
+          "subject": "Willow release",
+          "predicate": "maintainer",
+          "value": "runtime team"
+        }
+      ],
+      "queries": [
+        {
+          "id": "dev-07-q0",
+          "query": "What version is Willow release?",
+          "gold": [
+            "dev-07-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-07-q1",
+          "query": "Which channel carries Willow release?",
+          "gold": [
+            "dev-07-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-07-q2",
+          "query": "What platform supports Willow release?",
+          "gold": [
+            "dev-07-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-07-q3",
+          "query": "Who maintains Willow release?",
+          "gold": [
+            "dev-07-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "dev-07-q4",
+          "query": "What version number identifies Willow release?",
+          "gold": [
+            "dev-07-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "dev-07-q5",
+          "query": "Willow release version",
+          "gold": [
+            "dev-07-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "dev-07-q6",
+          "query": "When did Willow release ship?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-07-q7",
+          "query": "How large is the download for Willow release?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "dev-07-q8",
+          "query": "How many bones are in an adult human hand?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "dev-07-q9",
+          "query": "What is the version for Aspen release?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    }
+  ]
+}

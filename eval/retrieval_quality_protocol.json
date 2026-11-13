@@ -1,0 +1,36 @@
+{
+  "version": "retrieval-quality-v1",
+  "datasets": {
+    "dev": {"file": "relevance-dev.json", "sha256": "072105e9ae0acb1a054d620700bd97254e027b40205e29ae980fe91fdcc21e5c"},
+    "heldout": {"file": "relevance-heldout.json", "sha256": "5ff65d647993cf40029b0c53c5c6d4ed8da1c86f0123cf8abcd2bfea111fe74f"},
+    "legacy_cv": {"file": "cv-timelines.json", "sha256": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1"}
+  },
+  "calibration": {
+    "split": "dev",
+    "positive_pair_retention": 0.95,
+    "score_grid": 0.1,
+    "selection": "highest 0.1-grid raw-logit cutoff retaining at least 95% of labeled positive dev pairs",
+    "heldout_reselection": false
+  },
+  "service": {
+    "methods": ["ungated_uncached", "gated_uncached", "gated_cached"],
+    "k": 5,
+    "token_budget": 1024,
+    "cache_entries": 2048,
+    "repetitions": 3,
+    "model_device": "cpu",
+    "inference_threads": 2,
+    "ranking_backend": "rust",
+    "warmup": "one unrelated synthetic query per method; no corpus pre-encoding",
+    "order": "rotate method order by query index plus repetition",
+    "timing": "include live SQL checks, embedding, reranking, packing and serialization; exclude loading/ingestion/transport/generation"
+  },
+  "external_replay": {
+    "predictions": "results/longmemeval-full-2026-11-12/v2/predictions.jsonl",
+    "predictions_sha256": "6f2d609e91d6791b839b49c89e9d530491ec9e2c0918cfec5aa02008b21985f6",
+    "method": "learned_hybrid_cross_encoder",
+    "cases": 500,
+    "new_generation": false,
+    "new_latency_claim": false
+  }
+}
