@@ -20,7 +20,9 @@ def fusion_order(lexical, cosine, ids):
     return sorted(range(len(ids)), key=lambda i: (-scores[i], ids[i]))
 
 
-async def hybrid_rank(query: str, evidence, embedder=None, *, ranking_backend="python"):
+async def hybrid_rank(
+    query: str, evidence, embedder=None, *, ranking_backend="python", document_cache=None
+):
     if not evidence or not query.strip():
         return []
     embedder = embedder or HashEmbedder()
@@ -31,9 +33,17 @@ async def hybrid_rank(query: str, evidence, embedder=None, *, ranking_backend="p
         if not evidence:
             return []
     corpus = [words(item.text) or [""] for item in evidence]
+    texts = [item.text for item in evidence]
+    if document_cache is None:
+        vectors = np.array(await embed_many(embedder, texts))
+    else:
+        projects = {item.project for item in evidence}
+        if len(projects) != 1:
+            raise ValueError("cached ranking must contain one project")
+        vectors = np.array(await document_cache.embed(embedder, projects.pop(), texts))
+    # Send approved document text before awaiting unrelated query encoding. A withdrawal
+    # during query encoding must not trigger a later outbound request with stale text.
     query_vector = np.array(await embedder.create(query))
-    # Deliberately no embedding cache: evaluation includes document and query computation.
-    vectors = np.array(await embed_many(embedder, [item.text for item in evidence]))
     native = kernels(ranking_backend)
     if native:
         indices = native.hybrid_order(
@@ -48,11 +58,30 @@ async def hybrid_rank(query: str, evidence, embedder=None, *, ranking_backend="p
 
 class Retriever:
     def __init__(
-        self, ledger, graph=None, *, embedder=None, reranker=None, ranking_backend="python"
+        self,
+        ledger,
+        graph=None,
+        *,
+        embedder=None,
+        reranker=None,
+        ranking_backend="python",
+        document_cache=None,
+        min_relevance_score=None,
     ):
         self.ledger, self.graph = ledger, graph
         self.embedder = embedder or getattr(graph, "embedder", None) or HashEmbedder()
         self.reranker = reranker
+        if min_relevance_score is not None:
+            if (
+                isinstance(min_relevance_score, bool)
+                or not isinstance(min_relevance_score, (int, float))
+                or not np.isfinite(min_relevance_score)
+            ):
+                raise ValueError("minimum relevance score must be finite")
+            if reranker is None or not callable(getattr(reranker, "scores", None)):
+                raise ValueError("a relevance cutoff requires a scored reranker")
+        self.document_cache = document_cache
+        self.min_relevance_score = min_relevance_score
         self.ranking_backend = "rust" if kernels(ranking_backend) else "python"
         self.budget = EvidenceBudget()
         self.encoding = self.budget.encoding
@@ -111,6 +140,7 @@ class Retriever:
             [available[e.id] for e in eligible if e.id in available and e.id not in present],
             embedder,
             ranking_backend=self.ranking_backend,
+            document_cache=self.document_cache,
         )
         if fill and backend == "graphiti-hybrid-rrf":
             backend = (
@@ -126,7 +156,22 @@ class Retriever:
                 for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
             }
             ranked = [current[e.id] for e in ranked if e.id in current]
-            ranked = await self.reranker.rerank(query, ranked[:50])
+            if self.min_relevance_score is None:
+                ranked = await self.reranker.rerank(query, ranked[:50])
+            else:
+                candidates = ranked[:50]
+                try:
+                    scores = np.asarray(
+                        await self.reranker.scores(query, [e.text for e in candidates]), dtype=float
+                    )
+                except (ValueError, TypeError):
+                    raise RuntimeError("reranker returned invalid relevance scores") from None
+                if scores.shape != (len(candidates),) or not np.isfinite(scores).all():
+                    raise RuntimeError("reranker returned invalid relevance scores")
+                ordered = sorted(
+                    zip(candidates, scores, strict=True), key=lambda pair: (-pair[1], pair[0].id)
+                )
+                ranked = [item for item, score in ordered if score >= self.min_relevance_score]
         # Recheck current ACL/revocation after retrieval, before serializing any text.
         refreshed = {
             e.id: e
@@ -151,6 +196,8 @@ class Retriever:
             "backend": backend,
             "ranking_engine": self.ranking_backend,
             "reranker": self.reranker.metadata if self.reranker else None,
+            "minimum_relevance_score": self.min_relevance_score,
+            "document_cache": self.document_cache is not None,
             "reason": reason,
         }
         # Force serialization into the measured interval (transport/answer generation excluded).

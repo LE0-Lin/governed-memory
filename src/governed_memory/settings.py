@@ -59,18 +59,41 @@ class Settings:
     def retriever(self, ledger, graph=None):
         from governed_memory.retrieval import Retriever
 
+        relevance = os.environ.get("MEMORY_RELEVANCE_FILTER", "1")
+        if relevance not in {"0", "1"}:
+            raise ValueError("MEMORY_RELEVANCE_FILTER must be 0 or 1")
+        try:
+            capacity = int(os.environ.get("MEMORY_DOCUMENT_CACHE_SIZE", "2048"))
+        except ValueError:
+            raise ValueError("MEMORY_DOCUMENT_CACHE_SIZE must be 0..10000") from None
+        if not 0 <= capacity <= 10000:
+            raise ValueError("MEMORY_DOCUMENT_CACHE_SIZE must be 0..10000")
         reranker = None
         if os.environ.get("MEMORY_LOCAL_RERANKER") == "1":
             from governed_memory.local_models import MiniLMReranker
 
             reranker = MiniLMReranker(os.environ.get("MEMORY_MODEL_CACHE"))
         embedder = graph.embedder if graph else self.embedder()
+        cutoff = None
+        if reranker and relevance == "1":
+            from governed_memory.relevance import calibrated_cutoff
+
+            cutoff = calibrated_cutoff(reranker)
+        cache = None
+        from governed_memory.embedding import HashEmbedder
+
+        if capacity and not isinstance(embedder, HashEmbedder):
+            from governed_memory.embedding_cache import DocumentEmbeddingCache
+
+            cache = DocumentEmbeddingCache(capacity)
         return Retriever(
             ledger,
             graph,
             embedder=embedder,
             reranker=reranker,
             ranking_backend=os.environ.get("MEMORY_RANKING_BACKEND", "auto"),
+            min_relevance_score=cutoff,
+            document_cache=cache,
         )
 
     def policy(self):

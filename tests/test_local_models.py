@@ -50,6 +50,52 @@ async def test_real_cross_encoder_matches_the_published_reference_example(local_
 
 
 @pytest.mark.models
+async def test_real_relevance_gate_abstains_without_loading_generation_then_keeps_support(
+    context, local_models
+):
+    from governed_memory.answering import AnswerService
+    from governed_memory.embedding_cache import DocumentEmbeddingCache
+    from governed_memory.generation import TransformersGenerator
+    from governed_memory.relevance import calibrated_cutoff
+
+    ledger, _, tokens = context
+    embedder, reranker = local_models
+    candidate = ledger.propose(
+        tokens["agent"],
+        "demo",
+        subject="Berlin",
+        predicate="museums",
+        value="Berlin is well known for its museums.",
+        valid_from="2030-01-01T00:00:00Z",
+    )
+    approve(context, candidate)
+    retriever = Retriever(
+        ledger,
+        embedder=embedder,
+        reranker=reranker,
+        document_cache=DocumentEmbeddingCache(8),
+        min_relevance_score=calibrated_cutoff(reranker),
+    )
+    generator = TransformersGenerator("small", "this-cache-must-never-be-read")
+    response = await AnswerService(retriever, generator).answer(
+        tokens["agent"], "demo", "How many people live in Berlin?"
+    )
+    assert response["abstain"] and response["reason"] == "no_relevant_evidence"
+    assert generator.model is None and response["generation"] is None
+    supported = ledger.propose(
+        tokens["agent"],
+        "demo",
+        subject="Berlin",
+        predicate="population",
+        value="Berlin had a population of 3,520,031 registered inhabitants.",
+        valid_from="2030-01-01T00:00:00Z",
+    )
+    approve(context, supported)
+    result = await retriever.search(tokens["agent"], "demo", "How many people live in Berlin?")
+    assert [item["candidate_id"] for item in result["evidence"]] == [supported["id"]]
+
+
+@pytest.mark.models
 async def test_real_models_work_through_the_authorized_service_pipeline(context, local_models):
     ledger, _, tokens = context
     embedder, reranker = local_models

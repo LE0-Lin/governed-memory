@@ -153,6 +153,8 @@ class AnswerService:
             context = []
         else:
             result = await generate_answer(self.generator, query, context, str(valid_at))
+            if not context:
+                result["reason"] = retrieval["reason"]
             # All prompt evidence must remain unchanged, including uncited sources/metadata.
             if serialize(current_context()) != serialize(context):
                 result.update(
