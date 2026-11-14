@@ -21,7 +21,8 @@ or model orchestration layers to learn.
 | What code is actually Rust? | `native/src/lib.rs`, `native.py`, `hybrid_rank` | `test_native.py`, Cargo tests |
 | How does raw text become a proposal? | `chunking.py`, `semantic_ingest.py`, `operators.py` | `test_semantic_memory.py` |
 | How are aliases and contradictions reviewed? | `semantic_review.py`, `Ledger.review_context`, `resolve_entity` | `test_semantic_memory.py` |
-| How does an upstream change invalidate descendants? | `dependencies.py`, `Ledger._invalidate_dependents` | `test_dependencies.py` |
+| How does an upstream change invalidate descendants? | `dependencies.py`, `Ledger._invalidate_dependents` | `test_dependencies.py`, `test_support_dependencies.py` |
+| How does an operator repair old corroboration cascades? | `Ledger.reconcile_support_dependencies`, CLI `upgrade` | `test_support_upgrade.py` runs the installed old/new images |
 | Does external authorization affect private source access? | `authorization.py`, `identity.authenticate` | `test_external_governance.py` |
 | How does lineage survive collector outage? | `lineage.py`, `LineageEvent`, `LineageDelivery` | `test_external_governance.py` |
 

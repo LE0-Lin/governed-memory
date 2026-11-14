@@ -319,7 +319,9 @@ class Ledger:
                     )
                 )
                 self._queue_candidates(s, [c.id, *targets], bump_heads=True)
-                self._invalidate_dependents(s, [c.id], actor, now)
+                self._invalidate_dependents(
+                    s, [c.id], actor, now, support_id=c.id if targets else None
+                )
             return self._candidate(c)
 
     def approve_support(
@@ -413,6 +415,24 @@ class Ledger:
                 "target_revision": target.revision,
             }
 
+    def reconcile_support_dependencies(self, token: str, project: str) -> int:
+        """Repair pre-v0.6.1 cascades during an explicit operator upgrade; safe to repeat."""
+        with Session(self.engine) as session, session.begin():
+            actor = self.authenticate(session, token, project, ("admin",))
+            self._lock_project(session, project)
+            revoked_supports = list(
+                session.scalars(
+                    select(SourceSupport.evidence_candidate_id)
+                    .join(Candidate, Candidate.id == SourceSupport.evidence_candidate_id)
+                    .where(Candidate.project == project, Candidate.state == "revoked")
+                )
+            )
+            now = instant(self.clock())
+            return sum(
+                self._invalidate_dependents(session, [], actor, now, support_id=identifier)
+                for identifier in revoked_supports
+            )
+
     def _queue_candidates(self, session, candidate_ids, *, bump_heads=False):
         versions = list(
             session.scalars(select(FactVersion).where(FactVersion.candidate_id.in_(candidate_ids)))
@@ -431,7 +451,9 @@ class Ledger:
         for version in versions:
             self._queue(session, version)
 
-    def _invalidate_dependents(self, session, parents, actor, now, *, source_id=None):
+    def _invalidate_dependents(
+        self, session, parents, actor, now, *, source_id=None, support_id=None
+    ):
         """Conservative transitive invalidation, in the originating governance transaction."""
         affected, frontier = set(), set(parents)
         if source_id:
@@ -442,7 +464,21 @@ class Ledger:
                     )
                 )
             )
-            frontier.update(affected)
+        if support_id:
+            # A support approval belongs to one assertion, not every claim in its source.
+            # Only derivations bound to that assertion AND source lose this input.
+            affected.update(
+                session.scalars(
+                    select(MemoryDependency.candidate_id)
+                    .join(FactVersion, FactVersion.id == MemoryDependency.parent_version_id)
+                    .join(SourceSupport, SourceSupport.candidate_id == FactVersion.candidate_id)
+                    .where(
+                        SourceSupport.evidence_candidate_id == support_id,
+                        SourceSupport.source_id == MemoryDependency.source_id,
+                    )
+                )
+            )
+        frontier.update(affected)
         while frontier:
             children = (
                 set(
@@ -456,6 +492,7 @@ class Ledger:
             )
             affected.update(children)
             frontier = children
+        invalidated = 0
         for identifier in sorted(affected):
             child = session.get(Candidate, identifier)
             if child.state not in {"proposed", "active", "superseded"}:
@@ -473,6 +510,8 @@ class Ledger:
                 )
             )
             self._queue_candidates(session, [child.id, *supports], bump_heads=True)
+            invalidated += 1
+        return invalidated
 
     def _lock_fact(self, session, candidate):
         """Serialize reviews of different candidates for the same logical fact."""

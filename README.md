@@ -4,6 +4,8 @@ Evidence memory for coding agents, with explicit approval and two time axes. A p
 
 PostgreSQL holds the authoritative ledger. Graphiti 0.31.2 and Neo4j provide a rebuildable hybrid-search projection. SQLite and lexical hash embeddings support a small, network-free demonstration after installing dependencies. Rust kernels provide optional native ranking and semantic boundaries. Optional integrations add quoted document ingestion, semantic entity/NLI review, OpenFGA/OPA decisions, OpenLineage, cited local answers and approved corroborating sources. See the [v0.4 operator workflow](docs/operators-v0.4.md).
 
+v0.6.1 fixes lifecycle and graph-outbox propagation when a corroborating approval is revoked. Existing ledgers can repair affected descendants with the project administrator's `upgrade` command; [upgrade instructions](docs/usage.md#upgrade-an-existing-installation) and the [verification record](docs/verification-v0.6.1.md) explain the exact scope. Answering and its published evaluation are unchanged.
+
 ## Run the example
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).

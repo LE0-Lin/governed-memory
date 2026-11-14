@@ -24,7 +24,9 @@ def parser():
     )
     p.add_argument("--project", required=True)
     p.add_argument("--principal", default="operator")
-    p = commands.add_parser("upgrade", help="add current ledger tables to an existing installation")
+    p = commands.add_parser(
+        "upgrade", help="upgrade tables and reconcile revoked support dependencies"
+    )
     p.add_argument("--project", required=True)
     p = commands.add_parser("credential")
     p.add_argument("--project", required=True)
@@ -181,7 +183,8 @@ def main():
                     session, settings.token, args.project, ("admin",), authorizer=ledger.authorizer
                 )
             initialize(engine)
-            output({"schema": "current", "project": args.project})
+            repaired = ledger.reconcile_support_dependencies(settings.token, args.project)
+            output({"schema": "current", "project": args.project, "dependency_repairs": repaired})
         elif args.command == "approve-support":
             output(
                 ledger.approve_support(

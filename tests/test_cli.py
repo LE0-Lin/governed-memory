@@ -33,3 +33,8 @@ def test_cli_json_is_utf8_when_the_native_pipe_encoding_is_legacy(tmp_path):
     candidate = cli("ingest", "--project", "demo", str(source))[0]
     preview = cli("preview", "--project", "demo", candidate["id"])
     assert preview["value"] == value
+    assert cli("upgrade", "--project", "demo") == {
+        "schema": "current",
+        "project": "demo",
+        "dependency_repairs": 0,
+    }

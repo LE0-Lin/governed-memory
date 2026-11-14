@@ -61,9 +61,16 @@ uv run governed-memory search --project demo 'storage database' --valid-at '2030
 
 The search still returns PostgreSQL with the remaining source's provenance. Withdraw `$support.source_id` to suppress the last support as well. Revoking the original assertion instead suppresses the entire claim. Source withdrawal is current authorization: an earlier `known_at` cannot undo it. A newly approved support cannot appear at an earlier `known_at`. This command requires exact matching values and valid intervals; it does not merge similar prose or verify source independence.
 
+Revoking a corroborating approval invalidates descendants bound to that assertion
+and that source, including further derivations. Approved descendants become
+`revoked`; pending ones become `rejected`. Their audit, OpenLineage and graph
+outbox changes commit together. Derivations bound to a valid primary source and
+other assertions in the same imported file remain eligible. To use a different
+remaining source, submit and review a new derivation with that provenance.
+
 Create another project using `create-project --from-project demo --project another`. This extends the current administrator's scope; credentials for other users remain explicitly project-scoped. `revoke-access --project demo --principal coding-agent` removes that principal's project grant, including access through historical queries. Issue a new principal/token to rotate an agent credential.
 
-## Upgrade a v0.1 installation
+## Upgrade an existing installation
 
 Stop the MCP process and projection worker, back up the ledger, and retain its existing admin token. With that credential and the existing storage configuration:
 
@@ -73,7 +80,17 @@ uv run governed-memory upgrade --project demo
 uv run governed-memory project --project demo --rebuild
 ```
 
-`upgrade` adds the support table and audit triggers; it preserves existing facts and tokens. `--rebuild` queues all snapshots and processes up to 100 per invocation. Repeat `project --project demo` while pending jobs remain. Old graph edges without embedding-profile metadata use ledger fallback until rebuilt. This is the supported additive v0.1 → v0.2 upgrade, not a general migration/rollback system.
+`upgrade` adds the support table and audit triggers; it preserves original payloads, history and tokens. `--rebuild` queues all snapshots and processes up to 100 per invocation. Repeat `project --project demo` while pending jobs remain. Old graph edges without embedding-profile metadata use ledger fallback until rebuilt. This includes the supported additive v0.1 → v0.2 upgrade, not a general migration/rollback system.
+
+For ledgers used before v0.6.1, `upgrade` also reconciles descendants of revoked
+corroborating approvals **in the selected project**. Its JSON result includes
+`dependency_repairs`, the number of candidate states repaired; repeating it
+returns zero after those repairs. Run it once per project with an existing
+administrator credential, then drain the graph projection jobs. The repair
+appends lifecycle and lineage records without rewriting the original history.
+Earlier versions already suppressed these descendants during reads; this fixes
+the stored lifecycle and delivery to the graph. Ordinary reads and graph rebuilds
+do not perform this repair implicitly.
 
 ## Optional OPA
 

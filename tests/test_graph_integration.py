@@ -110,7 +110,10 @@ def test_postgres_concurrent_approval_only_records_one_decision(context):
 
 
 @pytest.mark.integration
-async def test_dependency_invalidation_hides_stale_graph_then_removes_derived_edges(context):
+@pytest.mark.parametrize("input_source", ["primary", "corroboration"])
+async def test_dependency_invalidation_hides_stale_graph_then_removes_derived_edges(
+    context, input_source
+):
     from dataclasses import replace
     from uuid import uuid4
 
@@ -121,6 +124,9 @@ async def test_dependency_invalidation_hides_stale_graph_then_removes_derived_ed
         pytest.skip("set GM_TEST_NEO4J_URI for real dependency projection checks")
     ledger, _, tokens = context
     root = approve(context, propose(context))
+    if input_source == "corroboration":
+        support = add_support(context, root)
+        ledger.withdraw_source(tokens["admin"], "demo", root["source_id"])
     child = approve(context, derive(context, root))
     graph = GraphProjection(uri, "neo4j", os.environ["GM_TEST_NEO4J_PASSWORD"])
     group = "dependency-" + uuid4().hex
@@ -139,7 +145,17 @@ async def test_dependency_invalidation_hides_stale_graph_then_removes_derived_ed
         snapshot = next(
             e.id for e in ledger.visible(tokens["admin"], "demo") if e.candidate_id == child["id"]
         )
-        ledger.withdraw_source(tokens["admin"], "demo", root["source_id"])
+        if input_source == "corroboration":
+            ledger.decide(
+                tokens["admin"],
+                "demo",
+                support["id"],
+                "revoke",
+                1,
+                reason="corroborating assertion retracted",
+            )
+        else:
+            ledger.withdraw_source(tokens["admin"], "demo", root["source_id"])
         # The graph still contains the old edge until outbox delivery, but the service hides it now.
         assert not (
             await Retriever(ledger, graph).search(tokens["reader"], "demo", "deployment decision")
