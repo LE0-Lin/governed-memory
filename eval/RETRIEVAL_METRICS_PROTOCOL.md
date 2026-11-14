@@ -65,6 +65,9 @@ Three methods:
 Time retrieval from the initial ledger lookup through serialization, including
 all live checks, embeddings, reranking and evidence packing. Exclude ingestion,
 model loading, transport and answer generation. Compare within this run only.
+Graph retrieval and external authorization HTTP calls are disabled here, as in
+the original controlled CV protocol; they remain covered by integration tests.
+These timings do not establish full graph/remote-policy or concurrent capacity.
 Record per-observation IDs, explicit gold/eligible IDs, tokens, errors, latency,
 reranker pair computations, cache counters and repetition. No silent retries.
 

@@ -14,6 +14,7 @@ or model orchestration layers to learn.
 | What really invokes the models? | `local_models.py`, `embedding.py`, `Settings.retriever` | `test_local_models.py` |
 | When does retrieval reject unrelated evidence? | `relevance.py`, `Retriever.search`, `data/minilm-relevance-v1.json` | `test_relevance_cache.py`, `test_retrieval_evidence.py` |
 | What can the document cache reuse? | `embedding_cache.py`, `hybrid_rank` | `test_relevance_cache.py` |
+| What can repeated reranking reuse? | `rerank_cache.py`, `Retriever.search` | `test_rerank_cache.py`, `test_local_models.py` |
 | How are answers constrained and rechecked? | `AnswerService.answer`, `generate_answer`, `parse_answer` in `answering.py`, then `generation.py` | `test_answering.py`, `test_answer_format.py` |
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |

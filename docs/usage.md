@@ -14,6 +14,7 @@ Environment variables:
 | `MEMORY_LOCAL_RERANKER` | `1` selects the pinned local MiniLM cross-encoder |
 | `MEMORY_RELEVANCE_FILTER` | `1` opts into the frozen relevance cutoff with the local reranker; `0` (default) keeps all ranked candidates |
 | `MEMORY_DOCUMENT_CACHE_SIZE` | Maximum document vectors per server process, default `2048`, range `0..10000`; `0` disables reuse |
+| `MEMORY_RERANK_CACHE_SIZE` | Maximum exact query/passage scores with the local cross-encoder, default `8192`, range `0..10000`; `0` disables reuse |
 | `MEMORY_MODEL_CACHE` | Optional directory for downloaded model weights/tokenizers |
 | `MEMORY_GENERATION_PROFILE` | Enables cited answers: `small` (0.5B) or `standard` (1.5B); unset disables generation |
 | `MEMORY_ANSWER_FORMAT` | Unset/empty selects `conditional` for `standard`, legacy `json_schema` otherwise; either value explicitly overrides the default |

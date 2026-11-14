@@ -6,6 +6,8 @@ PostgreSQL holds the authoritative ledger. Graphiti 0.31.2 and Neo4j provide a r
 
 v0.6.1 fixes lifecycle and graph-outbox propagation when a corroborating approval is revoked. Existing ledgers can repair affected descendants with the project administrator's `upgrade` command; [upgrade instructions](docs/usage.md#upgrade-an-existing-installation) and the [verification record](docs/verification-v0.6.1.md) explain the exact scope. Answering and its published evaluation are unchanged.
 
+The local cross-encoder can reuse bounded query/passage scores in a long-running service. `MEMORY_RERANK_CACHE_SIZE` controls this cache; current permissions, time and source checks still run on every request. The [paired metrics protocol](eval/RETRIEVAL_METRICS_PROTOCOL.md) separates first-pass and repeat latency and tests up to 1,152 controlled historical assertions; see the [v0.7 results](eval/RESULTS-v0.7.md) for measured scope and limits.
+
 ## Run the example
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).

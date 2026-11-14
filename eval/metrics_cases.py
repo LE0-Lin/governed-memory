@@ -7,7 +7,7 @@ from eval.retrieval_evidence import load_cases
 
 
 def scaled_timelines(cohorts):
-    if isinstance(cohorts, bool) or cohorts not in (1, 4, 16):
+    if isinstance(cohorts, bool) or not isinstance(cohorts, int) or cohorts not in (1, 4, 16):
         raise ValueError("timeline cohorts must be 1, 4 or 16")
     base = load_cases("legacy_cv")
     if cohorts == 1:

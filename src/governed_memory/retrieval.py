@@ -66,11 +66,16 @@ class Retriever:
         reranker=None,
         ranking_backend="python",
         document_cache=None,
+        rerank_cache=None,
         min_relevance_score=None,
     ):
         self.ledger, self.graph = ledger, graph
         self.embedder = embedder or getattr(graph, "embedder", None) or HashEmbedder()
         self.reranker = reranker
+        if rerank_cache is not None and (
+            reranker is None or not callable(getattr(reranker, "scores", None))
+        ):
+            raise ValueError("a score cache requires a scored reranker")
         if min_relevance_score is not None:
             if (
                 isinstance(min_relevance_score, bool)
@@ -81,6 +86,7 @@ class Retriever:
             if reranker is None or not callable(getattr(reranker, "scores", None)):
                 raise ValueError("a relevance cutoff requires a scored reranker")
         self.document_cache = document_cache
+        self.rerank_cache = rerank_cache
         self.min_relevance_score = min_relevance_score
         self.ranking_backend = "rust" if kernels(ranking_backend) else "python"
         self.budget = EvidenceBudget()
@@ -156,14 +162,19 @@ class Retriever:
                 for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
             }
             ranked = [current[e.id] for e in ranked if e.id in current]
-            if self.min_relevance_score is None:
+            if self.min_relevance_score is None and self.rerank_cache is None:
                 ranked = await self.reranker.rerank(query, ranked[:50])
             else:
                 candidates = ranked[:50]
                 try:
-                    scores = np.asarray(
-                        await self.reranker.scores(query, [e.text for e in candidates]), dtype=float
+                    values = (
+                        await self.rerank_cache.scores(
+                            self.reranker, project, query, [e.text for e in candidates]
+                        )
+                        if self.rerank_cache is not None
+                        else await self.reranker.scores(query, [e.text for e in candidates])
                     )
+                    scores = np.asarray(values, dtype=float)
                 except (ValueError, TypeError):
                     raise RuntimeError("reranker returned invalid relevance scores") from None
                 if scores.shape != (len(candidates),) or not np.isfinite(scores).all():
@@ -171,7 +182,11 @@ class Retriever:
                 ordered = sorted(
                     zip(candidates, scores, strict=True), key=lambda pair: (-pair[1], pair[0].id)
                 )
-                ranked = [item for item, score in ordered if score >= self.min_relevance_score]
+                ranked = [
+                    item
+                    for item, score in ordered
+                    if self.min_relevance_score is None or score >= self.min_relevance_score
+                ]
         # Recheck current ACL/revocation after retrieval, before serializing any text.
         refreshed = {
             e.id: e
@@ -198,6 +213,7 @@ class Retriever:
             "reranker": self.reranker.metadata if self.reranker else None,
             "minimum_relevance_score": self.min_relevance_score,
             "document_cache": self.document_cache is not None,
+            "rerank_cache": self.rerank_cache is not None,
             "reason": reason,
         }
         # Force serialization into the measured interval (transport/answer generation excluded).

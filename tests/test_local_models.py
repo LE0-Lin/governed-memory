@@ -50,6 +50,22 @@ async def test_real_cross_encoder_matches_the_published_reference_example(local_
 
 
 @pytest.mark.models
+async def test_real_score_cache_matches_full_and_partial_batch_inference(local_models):
+    from governed_memory.rerank_cache import RerankScoreCache
+
+    _, reranker = local_models
+    cache = RerankScoreCache(8)
+    query = "Which database stores application data?"
+    texts = ["PostgreSQL stores application data.", "Python is a programming language."]
+    first = await cache.scores(reranker, "demo", query, texts[:1])
+    combined = await cache.scores(reranker, "demo", query, texts)
+    fresh = await reranker.scores(query, texts)
+    np.testing.assert_allclose(combined, fresh, atol=1e-5)
+    assert combined[0] == first[0] and combined[0] > combined[1]
+    assert cache.info() == {"entries": 2, "hits": 1, "scoring_requests": 2, "evictions": 0}
+
+
+@pytest.mark.models
 async def test_real_relevance_gate_abstains_without_loading_generation_then_keeps_support(
     context, local_models
 ):

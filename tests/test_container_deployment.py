@@ -255,7 +255,8 @@ async def test_container_permissions_persistence_backup_and_withdrawal(engine):
                 connection.execute(text(f'DROP DATABASE "{recovery_database}"'))
 
 
-async def test_model_container_filters_empty_answers_and_rechecks_a_warm_mcp_session(context):
+@pytest.mark.parametrize("relevance", ["0", "1"])
+async def test_model_container_cached_retrieval_rechecks_a_warm_mcp_session(context, relevance):
     image = os.environ.get("GM_TEST_GENERATION_IMAGE")
     cache = os.environ.get("GM_TEST_MODEL_CACHE_MOUNT")
     if not image or not cache:
@@ -286,8 +287,9 @@ async def test_model_container_filters_empty_answers_and_rechecks_a_warm_mcp_ses
             "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
             "MEMORY_LOCAL_EMBEDDING": "1",
             "MEMORY_LOCAL_RERANKER": "1",
-            "MEMORY_RELEVANCE_FILTER": "1",
+            "MEMORY_RELEVANCE_FILTER": relevance,
             "MEMORY_DOCUMENT_CACHE_SIZE": "8",
+            "MEMORY_RERANK_CACHE_SIZE": "8",
             "MEMORY_MODEL_CACHE": "/retrieval",
             "MEMORY_GENERATION_PROFILE": "small",
             "MEMORY_GENERATION_CACHE": "/intentionally-missing-generator",
@@ -304,20 +306,23 @@ async def test_model_container_filters_empty_answers_and_rechecks_a_warm_mcp_ses
         ClientSession(*streams) as session,
     ):
         await session.initialize()
-        response = await session.call_tool(
-            "answer_memory", {**arguments, "query": "How many people live in Berlin?"}
-        )
-        assert not response.isError
-        empty = json.loads(response.content[0].text)
-        assert empty["abstain"] and empty["reason"] == "no_relevant_evidence"
-        assert empty["generation"] is None and empty["evidence"] == []
+        if relevance == "1":
+            response = await session.call_tool(
+                "answer_memory", {**arguments, "query": "How many people live in Berlin?"}
+            )
+            assert not response.isError
+            empty = json.loads(response.content[0].text)
+            assert empty["abstain"] and empty["reason"] == "no_relevant_evidence"
+            assert empty["generation"] is None and empty["evidence"] == []
         for _ in range(2):
             response = await session.call_tool(
                 "search_memory", {**arguments, "query": "What is Berlin well known for?"}
             )
             assert not response.isError
             result = json.loads(response.content[0].text)
-            assert result["minimum_relevance_score"] == 1.4 and result["document_cache"]
+            assert result["minimum_relevance_score"] == (1.4 if relevance == "1" else None)
+            assert result["document_cache"]
+            assert result["rerank_cache"]
             assert [item["candidate_id"] for item in result["evidence"]] == [candidate["id"]]
         ledger.withdraw_source(tokens["admin"], "demo", candidate["source_id"])
         response = await session.call_tool(
