@@ -57,6 +57,14 @@ cached, while each request gets a fresh schema parser. `answering.py` handles
 evidence aliases, parsing and the authority checks around generation. Generated
 text never enters the approval path.
 
+For the validated `standard` profile, `answer_schema` selects disjoint text-with-
+citations and null branches. `parse_answer` normalizes them to the existing
+public response. `AnswerService` selects the profile default; `Settings` carries
+the optional operator override. The bare `generate_answer` helper defaults to
+legacy format so old frozen runners retain their behavior. Read
+`test_conditional_answers.py` for parser/configuration contracts and the
+[v0.6 report](../eval/RESULTS-v0.6.md) for quality limitations and individual regressions.
+
 For evaluation, read `eval/README.md` before the runners. The synthetic suite
 tests governance with structured fixtures. The original LongMemEval comparison
 tests retrieval only. `eval/full_run.py` adds resumable answers for all 500

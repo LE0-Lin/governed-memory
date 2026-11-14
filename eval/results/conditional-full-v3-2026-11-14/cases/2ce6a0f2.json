@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "2ce6a0f2",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "c77f56009106945a292df548",
+      "20616be9b2ada9ec37052067",
+      "08b650d927417dc6eeb7ab1d",
+      "6bad82b57a8e268eabb93b2d",
+      "a9e38c40a31f84b43470e9d0",
+      "79feb49cac7ad01173527641",
+      "52ca87fb52f9f28383aada49",
+      "42b5659ec4c718682b36749e"
+    ],
+    "context_sha256": "2337f195480515b956909341543ff614f39fb81ccb5dca3fecd1bc8ee5961cbc",
+    "response": {
+      "answer": "I attended one art-related event in the past month - the Women in Art exhibition on February 10th.",
+      "evidence_ids": [
+        "c77f56009106945a292df548",
+        "79feb49cac7ad01173527641"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1436,
+        "completion_tokens": 38,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I attended one art-related event in the past month - the Women in Art exhibition on February 10th.\" ,\"evidence_ids\":[\"E1\",\"E6\"]}"
+    },
+    "error": null,
+    "latency_ms": 2067.6227000076324,
+    "answer_latency_ms": 2067.6227000076324
+  }
+]

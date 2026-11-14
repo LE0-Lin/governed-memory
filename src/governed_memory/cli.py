@@ -106,7 +106,9 @@ async def graph_operation(settings, ledger, args):
             generator = settings.generator()
             if generator is None:
                 raise ValueError("set MEMORY_GENERATION_PROFILE to enable answers")
-            operation = AnswerService(retriever, generator).answer
+            operation = AnswerService(
+                retriever, generator, answer_format=settings.answer_format
+            ).answer
         result = await operation(
             settings.token,
             args.project,

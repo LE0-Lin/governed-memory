@@ -9,15 +9,20 @@ class Settings:
     neo4j_uri: str | None
     neo4j_user: str
     neo4j_password: str
+    answer_format: str | None = None
 
     @classmethod
     def from_env(cls):
+        answer_format = os.environ.get("MEMORY_ANSWER_FORMAT") or None
+        if answer_format not in {None, "json_schema", "conditional"}:
+            raise ValueError("MEMORY_ANSWER_FORMAT must be json_schema or conditional")
         return cls(
             os.environ.get("MEMORY_DATABASE_URL", "sqlite:///.local/memory.db"),
             os.environ.get("MEMORY_TOKEN", ""),
             os.environ.get("MEMORY_NEO4J_URI"),
             os.environ.get("MEMORY_NEO4J_USER", "neo4j"),
             os.environ.get("MEMORY_NEO4J_PASSWORD", ""),
+            answer_format,
         )
 
     def embedder(self):

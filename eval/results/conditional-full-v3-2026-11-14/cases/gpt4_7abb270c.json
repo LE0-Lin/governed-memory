@@ -1,0 +1,49 @@
+[
+  {
+    "question_id": "gpt4_7abb270c",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "0d99e4c457dbc3af77e9d6d9",
+      "4f0111f6d9c172a5108962f8",
+      "8463193cd0132afc81f8e386",
+      "dc4672375739ae74263b303d",
+      "59fed1094138a480be2f6500",
+      "0ad0ae00f91a6cb48a862ecd",
+      "5f5fddacafd14a5b3b3daf85",
+      "e76ae3e1b8551edb772bf3a0"
+    ],
+    "context_sha256": "0ff896e29dbc373dbd67355a128c79b72fb26c190e15ee6735793a9ce7b0ab95",
+    "response": {
+      "answer": "The Metropolitan Museum of Art (The Met), The Brooklyn Museum, The Children's Museum of the Arts, The Studio Museum in Harlem, The Children's Museum of the Arts, The Children's Museum of the Arts",
+      "evidence_ids": [
+        "59fed1094138a480be2f6500",
+        "0ad0ae00f91a6cb48a862ecd",
+        "5f5fddacafd14a5b3b3daf85"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1798,
+        "completion_tokens": 60,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Metropolitan Museum of Art (The Met), The Brooklyn Museum, The Children's Museum of the Arts, The Studio Museum in Harlem, The Children's Museum of the Arts, The Children's Museum of the Arts\",\"evidence_ids\":[\"E5\",\"E6\",\"E7\"]}"
+    },
+    "error": null,
+    "latency_ms": 3197.4521999945864,
+    "answer_latency_ms": 3197.4521999945864
+  }
+]

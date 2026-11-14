@@ -1,0 +1,54 @@
+[
+  {
+    "question_id": "1f2b8d4f",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "bc28382dc333e2d123041b79",
+      "f5789097d30a31d0f3960fa2",
+      "6fd639ed80123a4bd2719073",
+      "5f6860295f97b3e03a908826",
+      "28a2a389243a469e4d681b66",
+      "a764059aee501fba9037e809",
+      "dc68e50867065c8872219a6f",
+      "8ff8f2412074c713c17da008"
+    ],
+    "context_sha256": "e09fe8209a8a2c636d9a934a1904d81302cb6662cb45e139ecfc6bd2b095f53d",
+    "response": {
+      "answer": "The difference in price between your luxury boots and the similar pair found at the budget store is approximately $50-$100.",
+      "evidence_ids": [
+        "bc28382dc333e2d123041b79",
+        "f5789097d30a31d0f3960fa2",
+        "6fd639ed80123a4bd2719073",
+        "5f6860295f97b3e03a908826",
+        "28a2a389243a469e4d681b66",
+        "a764059aee501fba9037e809",
+        "dc68e50867065c8872219a6f",
+        "8ff8f2412074c713c17da008"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1814,
+        "completion_tokens": 71,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The difference in price between your luxury boots and the similar pair found at the budget store is approximately $50-$100.\" , \"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\", \"E8\" ]}"
+    },
+    "error": null,
+    "latency_ms": 3584.2405000003055,
+    "answer_latency_ms": 3584.2405000003055
+  }
+]

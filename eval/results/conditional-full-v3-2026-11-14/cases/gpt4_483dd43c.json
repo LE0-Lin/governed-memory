@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_483dd43c",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "54a09e25369be939a8b393e2",
+      "c3c65ecb05d4ed35ac78d873",
+      "4e3118b66cc2ddbf02edb688",
+      "4a4327efe38306479b0067eb",
+      "d20246a0a51f8d69bfdf7d7a",
+      "c52a788d56b86d3c49e3514b",
+      "acfb3e33fbbbc5787263aefe",
+      "d08b554fd8884e96876a11c7"
+    ],
+    "context_sha256": "60e0a54657446348273b55b277ccd9540ab323a44af7b5932f88df01a344b847",
+    "response": {
+      "answer": "Game of Thrones",
+      "evidence_ids": [
+        "54a09e25369be939a8b393e2",
+        "c3c65ecb05d4ed35ac78d873"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1344,
+        "completion_tokens": 22,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Game of Thrones\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1128.5037999041378,
+    "answer_latency_ms": 1128.5037999041378
+  }
+]

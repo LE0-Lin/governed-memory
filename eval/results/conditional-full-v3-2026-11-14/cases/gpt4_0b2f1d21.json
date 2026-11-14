@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_0b2f1d21",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "3e7152a640b1d7008f4273e7",
+      "020ada196ae7fb49e39532d1",
+      "e0ff66c6f813fab7eaffcc31",
+      "030a9eb26bcd387e5af61f2d",
+      "b5c98426600d219bfb194887",
+      "fe978dbd2056f336cecd1534",
+      "87edad58512e206633ed052e",
+      "e7a489b3befece0e6d5c5c2a"
+    ],
+    "context_sha256": "918e62e076b9a1c3cb982af45a3c1974b4a726e2cc5944c0ddb69bc09429fab9",
+    "response": {
+      "answer": "purchase of the coffee maker",
+      "evidence_ids": [
+        "b5c98426600d219bfb194887",
+        "fe978dbd2056f336cecd1534"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1373,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"purchase of the coffee maker\",\"evidence_ids\":[ \"E5\", \"E6\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1417.2784000402316,
+    "answer_latency_ms": 1417.2784000402316
+  }
+]

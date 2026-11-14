@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "e47becba",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "f28b5ff367e584712a31054a",
+      "9c23103e61adba53a89c639a",
+      "621a2809a1aaa5d2fd2e3356",
+      "3c3edf315da9cc7a2b6d54b0",
+      "8f96a3b6b1f5e61866d5523b",
+      "c8d38a3a8d8d497a7abf318f",
+      "2782197ef0ba4ec6e38aabaa",
+      "527452865aff31f76c3b30bd"
+    ],
+    "context_sha256": "80f8bb9a89306e0381dde36ac1b5dbf84c6ae4542f7bf019d7d5a610620f631b",
+    "response": {
+      "answer": "Business Administration",
+      "evidence_ids": [
+        "f28b5ff367e584712a31054a",
+        "9c23103e61adba53a89c639a"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1563,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Business Administration\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1591.0715999780223,
+    "answer_latency_ms": 1591.0715999780223
+  }
+]

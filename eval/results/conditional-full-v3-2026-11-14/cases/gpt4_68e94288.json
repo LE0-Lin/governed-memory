@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_68e94288",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "d7395cd4396eeedf3696608b",
+      "e51705f997a3dd5094c6cde5",
+      "2d24839021ef53d4c712bbd5",
+      "a284ec35ee531548a1a53e7b",
+      "64fa4bb91239ac4e0bed3edd",
+      "a42363994f434819a2f73b6f",
+      "065af76733dfe60e6dfcc25c",
+      "3c070473a93de46781829ba3"
+    ],
+    "context_sha256": "0ee76a3bc0af2a63408b8d0bcd1ae7b8e0894d7db8b0585f8b3c4644669c9767",
+    "response": {
+      "answer": "I participated in the PlankChallenge on March 15th, 2023.",
+      "evidence_ids": [
+        "d7395cd4396eeedf3696608b"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1633,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I participated in the PlankChallenge on March 15th, 2023.\" , \"evidence_ids\":[ \"E1\"]}"
+    },
+    "error": null,
+    "latency_ms": 1740.1744000380859,
+    "answer_latency_ms": 1740.1744000380859
+  }
+]

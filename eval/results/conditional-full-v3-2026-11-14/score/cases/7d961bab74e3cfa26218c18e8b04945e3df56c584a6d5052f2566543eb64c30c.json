@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"tomatoes","answer_error":null,"answer_latency_ms":904.3757000472397,"category":"temporal-reasoning","exact_match":1.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"gpt4_385a5000","token_f1":1.0}

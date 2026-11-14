@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_45189cb4",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "e0a0145b70479d066a1682c2",
+      "f31f7962255daeb745f16f78",
+      "e9427f091615faa5b92e0181",
+      "302dc319034896783bfd50f9",
+      "94a6133a815bb70bfd2fe586",
+      "2ad822f6f361a4a4ee48fa7b",
+      "0e03c95dcfe1add32ba2afc2",
+      "2fd4bca73e114f720c25dcbe"
+    ],
+    "context_sha256": "527f538aea428dd19a2c2e65fce4f08fe26e3354b4ead7031133800f6993e498",
+    "response": {
+      "answer": "The order of the sports events I watched in January is as follows:",
+      "evidence_ids": [
+        "302dc319034896783bfd50f9",
+        "94a6133a815bb70bfd2fe586"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1540,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The order of the sports events I watched in January is as follows:\" , \"evidence_ids\":[ \"E4\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1946.1448000511155,
+    "answer_latency_ms": 1946.1448000511155
+  }
+]

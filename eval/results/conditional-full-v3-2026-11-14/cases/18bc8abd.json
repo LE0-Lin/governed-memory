@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "18bc8abd",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "8c887182e74fc51a86a973aa",
+      "c13be3dce906c9693d73c49b",
+      "14fe207ffae4f8827b69dfd0",
+      "8bbab971a2719adfd98e9e2a",
+      "9c78e0cf5531ef829c690b92",
+      "3766aaac7c1ca46f0fb5b098",
+      "11b3eccdd96808838f594063",
+      "a819808b7c9e340939df8dac"
+    ],
+    "context_sha256": "71ba6306ba2a6a47a51a051ff4ca2c15445f72c1e65576a55c5d2ff55051d8d1",
+    "response": {
+      "answer": "Kansas City Masterpiece BBQ sauce",
+      "evidence_ids": [
+        "c13be3dce906c9693d73c49b"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1692,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Kansas City Masterpiece BBQ sauce\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1171.154799987562,
+    "answer_latency_ms": 1171.154799987562
+  }
+]

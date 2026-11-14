@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "2788b940",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "cb45e1e2935e631ab9ec18d9",
+      "e4a9ba2bbeab94bc2db4f31d",
+      "6f2c7113a00a3ab05865d333",
+      "0ddd2c58f8c898c0db8fa67c",
+      "8a034e9d6a08adb23f6b8c69",
+      "a298613bad1a49fe984a1e95",
+      "4f06856db6aa4f5936969cd3",
+      "711e9d4f062dcdca85c12926"
+    ],
+    "context_sha256": "0dd1500c2675438c4365095ed0287404b834a8eba852f767f0cd1fd82b3f36e4",
+    "response": {
+      "answer": "I'll definitely check those out. For my Zumba classes on Tuesdays and Thursdays, I like to get there about 15 minutes early to warm up. Do you have any tips on what I can do during that time to get my body ready for the high-energy class?",
+      "evidence_ids": [
+        "4f06856db6aa4f5936969cd3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1607,
+        "completion_tokens": 74,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I'll definitely check those out. For my Zumba classes on Tuesdays and Thursdays, I like to get there about 15 minutes early to warm up. Do you have any tips on what I can do during that time to get my body ready for the high-energy class?\" , \"evidence_ids\":[ \"E7\" ] }"
+    },
+    "error": null,
+    "latency_ms": 3989.075700053945,
+    "answer_latency_ms": 3989.075700053945
+  }
+]

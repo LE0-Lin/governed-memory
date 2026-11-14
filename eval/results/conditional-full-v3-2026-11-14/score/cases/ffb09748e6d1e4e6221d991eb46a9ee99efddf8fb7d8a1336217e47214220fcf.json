@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"A chocolate cake for a friend's birthday party","answer_error":null,"answer_latency_ms":1223.2066999422386,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"9a707b82","token_f1":0.5}

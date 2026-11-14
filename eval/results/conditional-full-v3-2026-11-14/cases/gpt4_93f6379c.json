@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_93f6379c",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "10661b480650d9c63f3d2aef",
+      "0417439cd1ffbda5e111411c",
+      "1b0bb154178ce92e7d20fbd9",
+      "f3663c04ca31d71f05bca4a6",
+      "29ba1d75567401e59776aab6",
+      "2c182ed01f8dbe3af199e72b",
+      "c190afe4548dd9be3682210c",
+      "50e34430496c174b4dea12f5"
+    ],
+    "context_sha256": "a6779efc07c2edf6a8216cc84da520d485e0308da0677169288c142104adb816",
+    "response": {
+      "answer": "Marketing Professionals",
+      "evidence_ids": [
+        "0417439cd1ffbda5e111411c",
+        "1b0bb154178ce92e7d20fbd9"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1533,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Marketing Professionals\",\"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 961.537699913606,
+    "answer_latency_ms": 961.537699913606
+  }
+]

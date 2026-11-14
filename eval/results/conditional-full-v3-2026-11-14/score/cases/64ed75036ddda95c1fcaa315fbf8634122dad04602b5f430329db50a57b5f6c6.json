@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"Emma","answer_error":null,"answer_latency_ms":683.4029000019655,"category":"temporal-reasoning","exact_match":1.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"gpt4_468eb064","token_f1":1.0}

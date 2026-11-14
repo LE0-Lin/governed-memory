@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"pilsner or lager","answer_error":null,"answer_latency_ms":1310.8823000220582,"category":"single-session-assistant","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"16c90bf4","token_f1":0.5454545454545454}

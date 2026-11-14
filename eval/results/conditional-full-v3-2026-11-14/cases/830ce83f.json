@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "830ce83f",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "847ec920b274f159c1673774",
+      "2644dece7b578b0228b67578",
+      "0a139da70161b5f55f75caf2",
+      "3e66c832abe886af09735409",
+      "5d2f54785047d6caf97c499f",
+      "620a102ac04c6caa06adf32a",
+      "094753b30813ce60e6be7db9",
+      "295f96566a8bc54088e205fc"
+    ],
+    "context_sha256": "41b4f4a61bffd9ca2b20dfd529536c3d88ca08a9423429d8931cc5e16060d153",
+    "response": {
+      "answer": "Chicago",
+      "evidence_ids": [
+        "0a139da70161b5f55f75caf2",
+        "3e66c832abe886af09735409"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1119,
+        "completion_tokens": 20,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Chicago\",\"evidence_ids\":[ \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 888.7463000137359,
+    "answer_latency_ms": 888.7463000137359
+  }
+]

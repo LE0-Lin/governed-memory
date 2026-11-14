@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "4dfccbf8",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "69e315a2c4dad36977be8527",
+      "0a9b85cb529281806f5966cb",
+      "fdc906be01b5f58b2174aa0e",
+      "d681a213ee8be401c523c9ba",
+      "49eacee40e6f122722814ccd",
+      "251a8afaf7bf622e78db6595",
+      "e8547ccb60964c22c54715c4",
+      "686be75120366a50aeed9c2d"
+    ],
+    "context_sha256": "49d3b09e1a39e7ab81c0a81f21b78a91d9f23d39e907f19d8ec44dbb6102e31b",
+    "response": {
+      "answer": "I was thinking about my ukulele lessons. I just started taking ukulele lessons with my friend Rachel today and it's been really fun so far. Can you give me some tips on how to practice effectively and improve my chord changes?",
+      "evidence_ids": [
+        "fdc906be01b5f58b2174aa0e"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1575,
+        "completion_tokens": 63,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I was thinking about my ukulele lessons. I just started taking ukulele lessons with my friend Rachel today and it's been really fun so far. Can you give me some tips on how to practice effectively and improve my chord changes?\" , \"evidence_ids\":[ \"E3\"]}"
+    },
+    "error": null,
+    "latency_ms": 3477.168899960816,
+    "answer_latency_ms": 3477.168899960816
+  }
+]

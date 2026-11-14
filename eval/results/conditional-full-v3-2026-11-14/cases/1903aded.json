@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "1903aded",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "8c920bf90551eae6dd08c37b",
+      "d1389f102cf3580905b8af32",
+      "cf924b85201dbfa86fd4ebff",
+      "86eba86f8ff4974eaf2ee74c",
+      "4444dfff1a375c68645dff74",
+      "3ef3b39e589826ffe42be680",
+      "a2d4d644a604204f0eaa80be",
+      "d1762ed0f7905100b853cf62"
+    ],
+    "context_sha256": "0d58994b15155083a3d1d0e844457af42b4fa4938792dfcbe73021a3a903e335",
+    "response": {
+      "answer": "Freight Forwarder",
+      "evidence_ids": [
+        "4444dfff1a375c68645dff74"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1921,
+        "completion_tokens": 16,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Freight Forwarder\",\"evidence_ids\":[\"E5\"]}"
+    },
+    "error": null,
+    "latency_ms": 951.399500016123,
+    "answer_latency_ms": 951.399500016123
+  }
+]

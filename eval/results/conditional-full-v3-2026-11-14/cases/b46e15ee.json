@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "b46e15ee",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "f851cf6acc9c4d6fbfea363c",
+      "9118534eef205eacb5a4a5c4",
+      "10a54db270ac4f1fcd07f692",
+      "275a4d220d8e7e26888339d8",
+      "4e9ee765463c4d367d676891",
+      "b9f50a6364f4655b6202d805",
+      "4926747585a97af73672987d",
+      "829c5d68c77614cd9d33310c"
+    ],
+    "context_sha256": "ef8d5a6feacf0d63564c2c9749a8fc5557eafe29bc3c53f15bcbe5bf995eed40",
+    "response": {
+      "answer": "Cancer Research Foundation",
+      "evidence_ids": [
+        "275a4d220d8e7e26888339d8"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1410,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Cancer Research Foundation\",\"evidence_ids\":[ \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 944.2542999750003,
+    "answer_latency_ms": 944.2542999750003
+  }
+]

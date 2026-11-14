@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "0ea62687",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "0616c4e5f667d0c9725998e4",
+      "eaf887df0c6d5dc048a3600c",
+      "5781003cda404730479ee978",
+      "7901c5cdf1567c35385a1eea",
+      "393cb42692d94e6a81103567",
+      "2ea54abb664ece51cf245db6",
+      "d8b4e102fdfe866442e8afa4",
+      "81682dbb3f57126712ab3a4e"
+    ],
+    "context_sha256": "54bd29474d7683bff383f1d3c80116716138e983999011755f858f3fb057bacf",
+    "response": {
+      "answer": "30 miles per gallon",
+      "evidence_ids": [
+        "0616c4e5f667d0c9725998e4",
+        "eaf887df0c6d5dc048a3600c"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1349,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"30 miles per gallon\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1124.391600023955,
+    "answer_latency_ms": 1124.391600023955
+  }
+]

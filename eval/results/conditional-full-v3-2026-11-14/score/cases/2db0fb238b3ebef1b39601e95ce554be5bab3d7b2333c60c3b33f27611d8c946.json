@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"$15 + $5 + $10 + $20 = $50","answer_error":null,"answer_latency_ms":2193.265900015831,"category":"multi-session","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"85fa3a3f","token_f1":0.3333333333333333}

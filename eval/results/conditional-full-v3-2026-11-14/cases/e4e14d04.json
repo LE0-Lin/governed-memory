@@ -1,0 +1,53 @@
+[
+  {
+    "question_id": "e4e14d04",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "40f0ec8f17e3d74a5d59f8c7",
+      "cb500b2589e4416e73d6d4f3",
+      "c9014c8e7c5a56a651ad0253",
+      "d300ad0ab0607be7a13c8a01",
+      "e1c5be59dacc60ed6d3cc3fa",
+      "95c16f96fb39acd0c6c662b1",
+      "d82c28ee2ff1154cb8aa8d82",
+      "f91c5bc391b964c4a3791e74"
+    ],
+    "context_sha256": "344477a13208382c89f8fcb541d012758630ba90f6382fe28d3fb297765fe3db",
+    "response": {
+      "answer": "I am not sure, as the evidence does not provide information about the duration of membership at 'Book Lovers Unite'.",
+      "evidence_ids": [
+        "40f0ec8f17e3d74a5d59f8c7",
+        "cb500b2589e4416e73d6d4f3",
+        "c9014c8e7c5a56a651ad0253",
+        "d300ad0ab0607be7a13c8a01",
+        "e1c5be59dacc60ed6d3cc3fa",
+        "95c16f96fb39acd0c6c662b1",
+        "d82c28ee2ff1154cb8aa8d82"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1695,
+        "completion_tokens": 64,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I am not sure, as the evidence does not provide information about the duration of membership at 'Book Lovers Unite'.\",\"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\" ] }"
+    },
+    "error": null,
+    "latency_ms": 3569.953800062649,
+    "answer_latency_ms": 3569.953800062649
+  }
+]

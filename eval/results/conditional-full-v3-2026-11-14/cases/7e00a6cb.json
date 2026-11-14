@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "7e00a6cb",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "7596dbe682e86038326931ad",
+      "724870523c06506d18fe8b69",
+      "fb7e294f46e752539ec2bcaf",
+      "0e7421e9bbe85f76bbe0381f",
+      "4552ef98bf242ce65179ddaf",
+      "c46d409c2cf22fd80abb5d8f",
+      "cdfabdf528adef88727a1202",
+      "30a399bbea606a2b21c38dda"
+    ],
+    "context_sha256": "5d5857ab1b1f8e6fb0efddd101f699fb38b702d194a4b04842fe9af350a5b1b5",
+    "response": {
+      "answer": "The Bulldog Hostel Amsterdam",
+      "evidence_ids": [
+        "fb7e294f46e752539ec2bcaf",
+        "4552ef98bf242ce65179ddaf"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1113,
+        "completion_tokens": 25,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Bulldog Hostel Amsterdam\",\"evidence_ids\":[ \"E3\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1224.8896999517456,
+    "answer_latency_ms": 1224.8896999517456
+  }
+]

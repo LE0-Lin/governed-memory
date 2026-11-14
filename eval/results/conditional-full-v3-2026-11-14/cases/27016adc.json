@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "27016adc",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "bcc64288bb86b3e568ee714f",
+      "aa95baf74d17744c23abac6e",
+      "b746958c90f7fbbbdc16032b",
+      "cff0fef9379235f558bfc227",
+      "8cb2e700c73612438aabe7e5",
+      "e35541013e0da2b18dfdce7f",
+      "fc944d17f53250ac46c1e8ba",
+      "01e08d3a0f21cc7196c1e48d"
+    ],
+    "context_sha256": "4a0ab5bfe0d89d13618d14ef977dd98ebd6a33e733dadbd4d52693ed13e87ca7",
+    "response": {
+      "answer": "The provided information does not specify what percentage of the countryside property's price is the cost of the renovations planned for the current house. Therefore, the answer cannot be determined with the available evidence.",
+      "evidence_ids": [
+        "e35541013e0da2b18dfdce7f",
+        "fc944d17f53250ac46c1e8ba"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1411,
+        "completion_tokens": 58,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The provided information does not specify what percentage of the countryside property's price is the cost of the renovations planned for the current house. Therefore, the answer cannot be determined with the available evidence.\" , \"evidence_ids\":[ \"E6\", \"E7\" ] }"
+    },
+    "error": null,
+    "latency_ms": 3133.8978999992833,
+    "answer_latency_ms": 3133.8978999992833
+  }
+]

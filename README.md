@@ -84,6 +84,13 @@ is recorded, so relevance rejection is disabled by default. See
 The [v0.5 verification record](docs/verification-v0.5.md) covers regression,
 actual models, installed containers and the unchanged runtime source fingerprint.
 
+The [v0.6 answer-format comparison](eval/RESULTS-v0.6.md) regenerates answers for
+all 500 unchanged archived contexts. Invalid answers fall from 108 to 0, valid explicit
+negative abstentions rise from 6/30 to 13/30, and the local judge estimate changes
+from 169/500 to 181/500. Individual regressions and uncertainty remain documented.
+The evaluated 1.5B profile uses conditional answers by default; a legacy override
+is available. Other profiles retain their previous default.
+
 ## Scope
 
 The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints, optional cited answers and the experiment harness. Answers use JSON Schema constraints and authority checks before and after generation; citations do not establish factual correctness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [中文验收与项目讲解](docs/acceptance.zh-CN.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).

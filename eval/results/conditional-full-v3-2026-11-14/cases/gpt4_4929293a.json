@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_4929293a",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "d01ba031694650ea27b9c1dc",
+      "79ac8bb7f0d704f45ad3f507",
+      "1774a49be39a7195aff0c16b",
+      "d6a89eafe2a687ab10d45ef3",
+      "cc06d4a9af6d813b32d2e48e",
+      "a4d62ad0b2dfd2cb41e449f2",
+      "ede46d7f374f6700d1be20e2",
+      "54a368a758726964db466c4d"
+    ],
+    "context_sha256": "af47fb6fa6d9842183a9dc2a63a79c9b7fc0b75b97e213daacbf901fb744844e",
+    "response": {
+      "answer": "Michael's engagement party",
+      "evidence_ids": [
+        "79ac8bb7f0d704f45ad3f507"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1567,
+        "completion_tokens": 16,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Michael's engagement party\",\"evidence_ids\":[\"E2\"]}"
+    },
+    "error": null,
+    "latency_ms": 821.4119999902323,
+    "answer_latency_ms": 821.4119999902323
+  }
+]

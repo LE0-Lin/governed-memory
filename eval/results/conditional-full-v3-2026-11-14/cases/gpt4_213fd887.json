@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_213fd887",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "eaf0117ff72d31c76b2587bc",
+      "41e3406eb312330af8b2a000",
+      "0b3770bf14f7d90f9128eff8",
+      "8c41c76a4b798ee6568bdbc3",
+      "ba3cdcbc240e3e21127c434e",
+      "726a246c332bd2947de97c95",
+      "22c2714a2ab5c8fda9db12eb",
+      "76fa07f7f6829f464a742917"
+    ],
+    "context_sha256": "f7266c1e0fa3ffcc66cc136d97692f410a4bf2dd7e7845135879d00c56dd5c4b",
+    "response": {
+      "answer": "charity 5K run to raise money for a local children's hospital",
+      "evidence_ids": [
+        "8c41c76a4b798ee6568bdbc3",
+        "726a246c332bd2947de97c95"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1126,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"charity 5K run to raise money for a local children's hospital\",\"evidence_ids\":[ \"E4\", \"E6\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1832.2336999699473,
+    "answer_latency_ms": 1832.2336999699473
+  }
+]

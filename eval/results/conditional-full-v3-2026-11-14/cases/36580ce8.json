@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "36580ce8",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "b09e5c6f355bafe5c0dcfec5",
+      "be01a4a4ea8a01b8ec0e79ff",
+      "217a39735c72182e30bf25e8",
+      "59a7dd228a11a560c3361be0",
+      "c70b70bc7a37881caabd916e",
+      "6befc12ef77578b5eaa45354",
+      "5e58e75637ade2d242ce949e",
+      "eaf95eeba9b8669ac68351ea"
+    ],
+    "context_sha256": "2299723576e5fef10c96733b95adc71b35a23ebdb37ec7f4590ea4c05296d7a7",
+    "response": {
+      "answer": "bronchitis",
+      "evidence_ids": [
+        "b09e5c6f355bafe5c0dcfec5"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1498,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"bronchitis\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 990.9303999738768,
+    "answer_latency_ms": 990.9303999738768
+  }
+]

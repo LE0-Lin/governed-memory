@@ -1,0 +1,49 @@
+[
+  {
+    "question_id": "6ade9755",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "b3180e2f5ed89dcb825ff599",
+      "15422ede3cdb9d2ff5bba7c1",
+      "c45476ef846e8345feae90cc",
+      "429804da6494d4f8bc186573",
+      "99682a265e49c19bd8cd684d",
+      "80365a6f09aa0d2662848e0f",
+      "750bd60fc8778955ddf2c1fc",
+      "8b608d1133aa7d652dd58af7"
+    ],
+    "context_sha256": "1a5a056b74a8ef078183f29074364b8ce64ff2e1bbb54267845d3e2aec87d6b8",
+    "response": {
+      "answer": "There are many excellent yoga apps that can guide you through a home practice. Here are some popular ones:",
+      "evidence_ids": [
+        "b3180e2f5ed89dcb825ff599",
+        "15422ede3cdb9d2ff5bba7c1",
+        "c45476ef846e8345feae90cc"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1563,
+        "completion_tokens": 45,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"There are many excellent yoga apps that can guide you through a home practice. Here are some popular ones:\" , \"evidence_ids\":[ \"E1\", \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 3149.343599914573,
+    "answer_latency_ms": 3149.343599914573
+  }
+]

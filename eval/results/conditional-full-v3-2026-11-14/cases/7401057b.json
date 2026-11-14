@@ -1,0 +1,51 @@
+[
+  {
+    "question_id": "7401057b",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "7e713dfe575aad31ca5cc46d",
+      "a13c0cc83c2bbf220f020d9b",
+      "76e5856926b27cf1e81665a2",
+      "c61dada47f1a5e4a3e1affe2",
+      "2ba6a3533eab00baca0b67a3",
+      "d391bfa3d022f9cb43ffddfa",
+      "dc31aba59205def3c1323893",
+      "0a56626d4b0f64c7e86230d2"
+    ],
+    "context_sha256": "6b9828c49d983f576a7a91124e8bdb1ded63b11b92d1be61e8660850c253a484",
+    "response": {
+      "answer": "You can redeem up to 40,000 points for a standard room reward night at any Hilton property, but the exact number of free nights you can redeem will depend on the category of the hotel and the dates of your stay.",
+      "evidence_ids": [
+        "7e713dfe575aad31ca5cc46d",
+        "a13c0cc83c2bbf220f020d9b",
+        "76e5856926b27cf1e81665a2",
+        "c61dada47f1a5e4a3e1affe2",
+        "2ba6a3533eab00baca0b67a3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1764,
+        "completion_tokens": 81,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"You can redeem up to 40,000 points for a standard room reward night at any Hilton property, but the exact number of free nights you can redeem will depend on the category of the hotel and the dates of your stay.\" , \"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 4086.5140000823885,
+    "answer_latency_ms": 4086.5140000823885
+  }
+]

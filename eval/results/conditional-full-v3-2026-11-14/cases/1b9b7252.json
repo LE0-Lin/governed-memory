@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "1b9b7252",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "280d3042303a8d72c3d0ba80",
+      "9a098aca3dcd5f312cca4204",
+      "8405af9027e0bbca723b9fc1",
+      "3ab916c66456a97f41fbe224",
+      "843402d0edcca74c7fa1c322",
+      "46f733de4ef692b486a9ece6",
+      "92853ee231a418c0c0d81789",
+      "291a0508c9045611c71d5f6c"
+    ],
+    "context_sha256": "1e372db6e8a315bf521e94f6c8aaea6d56c51b29a814da20ae80060a2360811d",
+    "response": {
+      "answer": "mindful.org",
+      "evidence_ids": [
+        "9a098aca3dcd5f312cca4204"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1494,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"mindful.org\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 872.2254000604153,
+    "answer_latency_ms": 872.2254000604153
+  }
+]

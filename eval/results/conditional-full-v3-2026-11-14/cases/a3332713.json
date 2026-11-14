@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "a3332713",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "466adf93911741f0b3b6cf79",
+      "40c27cefdb86f379d086bee6",
+      "dd519d4ddea804c9decdcb70",
+      "cbfebe9c0c42b8f1bdca62e5",
+      "a1fa449ce67fb3076117d112",
+      "734d491afe84fe8d5e0f3e8d",
+      "643642f818b2204f6f43fdfc",
+      "67f7fc205443cd81f83427ec"
+    ],
+    "context_sha256": "2f9cc5c5dc78df028749735c62e92d719c00ab10bd64affe342d974a795995e9",
+    "response": {
+      "answer": "The total amount spent on gifts for your brother and coworker is $120.",
+      "evidence_ids": [
+        "cbfebe9c0c42b8f1bdca62e5",
+        "a1fa449ce67fb3076117d112"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1627,
+        "completion_tokens": 38,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The total amount spent on gifts for your brother and coworker is $120.\" , \"evidence_ids\":[ \"E4\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1869.7419000091031,
+    "answer_latency_ms": 1869.7419000091031
+  }
+]

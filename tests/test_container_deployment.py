@@ -400,6 +400,68 @@ def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(eng
     assert withdrawn["generation"] is None
 
 
+async def test_standard_model_container_uses_conditional_answers_and_honors_withdrawal(context):
+    image = os.environ.get("GM_TEST_GENERATION_IMAGE")
+    cache = os.environ.get("GM_TEST_GENERATION_CACHE_MOUNT")
+    if os.environ.get("GM_TEST_STANDARD_GENERATION") != "1" or not image or not cache:
+        pytest.skip("opt in to the 1.5B model container with its image and cache")
+    ledger, _, tokens = context
+    if ledger.engine.dialect.name != "postgresql":
+        pytest.skip("the deployed standard model requires PostgreSQL")
+    with ledger.engine.connect() as connection:
+        schema = connection.scalar(text("SELECT current_schema()"))
+    assert re.fullmatch(r"gm_test_[0-9a-f]{32}", schema)
+    url = ledger.engine.url.update_query_dict({"options": f"-csearch_path={schema}"})
+    candidate = approve(
+        context,
+        ledger.propose(
+            tokens["agent"],
+            "demo",
+            subject="storage",
+            predicate="database",
+            value="SQLite",
+            valid_from="2030-01-01T00:00:00Z",
+        ),
+    )
+    container = Container(
+        json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]')),
+        image,
+        {
+            "MEMORY_DATABASE_URL": url.render_as_string(hide_password=False),
+            "MEMORY_GENERATION_PROFILE": "standard",
+            "MEMORY_GENERATION_CACHE": "/generation",
+            "HF_HUB_OFFLINE": "1",
+            "HF_HUB_DISABLE_PROGRESS_BARS": "1",
+        },
+        mounts=(f"type=bind,source={cache},target=/generation,readonly",),
+    )
+    arguments = dict(
+        project="demo",
+        query="Which database does storage use?",
+        valid_at="2030-02-01T00:00:00Z",
+        known_at="2030-02-01T00:00:00Z",
+    )
+    async with (
+        stdio_client(container.server(tokens["agent"])) as streams,
+        ClientSession(*streams) as session,
+    ):
+        await session.initialize()
+        response = await session.call_tool("answer_memory", arguments)
+        assert not response.isError
+        result = json.loads(response.content[0].text)
+        assert result["reason"] == "ok" and "sqlite" in result["answer"].lower()
+        assert result["generation"]["format"] == "conditional"
+        assert result["generator"]["profile"] == "standard"
+        assert result["evidence_ids"] == [result["evidence"][0]["id"]]
+        ledger.withdraw_source(tokens["admin"], "demo", candidate["source_id"])
+        response = await session.call_tool("answer_memory", arguments)
+        assert not response.isError
+        result = json.loads(response.content[0].text)
+        assert result["reason"] == "no_eligible_evidence" and result["abstain"]
+        assert result["evidence"] == result["evidence_ids"] == []
+        assert result["generation"] is None
+
+
 def test_container_semantic_operator_workflow_preserves_approval_boundary(engine):
     image = os.environ.get("GM_TEST_GENERATION_IMAGE")
     generation_cache = os.environ.get("GM_TEST_GENERATION_CACHE_MOUNT")

@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_70e84552",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "8ca45405e50786b148278132",
+      "d963f0d5d2ae2420ddb9c3cf",
+      "50a72e484631c0676414a6c5",
+      "5379878e9ee259bfa3d5c375",
+      "c5389160722e546bc6d32b44",
+      "43282985ca14c9d570910932",
+      "e4376dd0a778476bc1c55f9c",
+      "63c50727e62e18cbd02c6aab"
+    ],
+    "context_sha256": "111db6939ebd5c37513909d3735241af1e545f1935221718e9494b86426a3b7a",
+    "response": {
+      "answer": "trimming the goats' hooves",
+      "evidence_ids": [
+        "d963f0d5d2ae2420ddb9c3cf"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1623,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"trimming the goats' hooves\",\"evidence_ids\":[\"E2\"]}"
+    },
+    "error": null,
+    "latency_ms": 1041.7773999506608,
+    "answer_latency_ms": 1041.7773999506608
+  }
+]

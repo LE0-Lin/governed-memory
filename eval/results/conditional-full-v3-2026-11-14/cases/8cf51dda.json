@@ -1,0 +1,50 @@
+[
+  {
+    "question_id": "8cf51dda",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "197dcfcac611231a8acd17b7",
+      "024b7fb499f4234bf819b416",
+      "e6708a1892ba4a702775f64d",
+      "df020c9cc946838fdcac4c44",
+      "2ba4c0d0b2a28db2d30c2e00",
+      "1e141408876d35c6c8e9000f",
+      "e71b90bc5beaca42457581a3",
+      "b5b4836c667d0c119be2f9ca"
+    ],
+    "context_sha256": "388d9942caf53946a8377afde67bd35d946e799f7e4376fc896200a40d161dff",
+    "response": {
+      "answer": "To identify and characterize molecular subtypes of endometrial cancer and to investigate their clinical and biological significance.\n\nObjective 1: To identify molecular subtypes of endometrial cancer using a combination of genomic and transcriptomic approaches.\n\nObjective 2: To investigate the clinical and biological significance of the identified molecular subtypes, including their association with patient outcomes and response to therapy.\n\nObjective 3: To develop biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes.\n\nMethods: We will perform comprehensive genomic and transcriptomic analysis of endometrial cancer samples using next-generation sequencing technologies. We will use unsupervised and supervised machine learning approaches to identify molecular subtypes of endometrial cancer. We will validate the identified subtypes using an independent cohort of endometrial cancer samples and investigate their clinical and biological significance using a combination of functional and bioinformatic approaches.\n\nExpected outcomes: Identification of novel molecular subtypes of endometrial cancer and understanding of their clinical and biological significance will have a significant impact on the diagnosis and treatment of endometrial cancer. The development of biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes will lead to improved patient outcomes.",
+      "evidence_ids": [
+        "197dcfcac611231a8acd17b7",
+        "024b7fb499f4234bf819b416",
+        "e6708a1892ba4a702775f64d",
+        "df020c9cc946838fdcac4c44"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1681,
+        "completion_tokens": 280,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"To identify and characterize molecular subtypes of endometrial cancer and to investigate their clinical and biological significance.\\n\\nObjective 1: To identify molecular subtypes of endometrial cancer using a combination of genomic and transcriptomic approaches.\\n\\nObjective 2: To investigate the clinical and biological significance of the identified molecular subtypes, including their association with patient outcomes and response to therapy.\\n\\nObjective 3: To develop biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes.\\n\\nMethods: We will perform comprehensive genomic and transcriptomic analysis of endometrial cancer samples using next-generation sequencing technologies. We will use unsupervised and supervised machine learning approaches to identify molecular subtypes of endometrial cancer. We will validate the identified subtypes using an independent cohort of endometrial cancer samples and investigate their clinical and biological significance using a combination of functional and bioinformatic approaches.\\n\\nExpected outcomes: Identification of novel molecular subtypes of endometrial cancer and understanding of their clinical and biological significance will have a significant impact on the diagnosis and treatment of endometrial cancer. The development of biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes will lead to improved patient outcomes.\" ,\"evidence_ids\":[\"E1\",\"E2\",\"E3\",\"E4\"]}"
+    },
+    "error": null,
+    "latency_ms": 24372.17679992318,
+    "answer_latency_ms": 24372.17679992318
+  }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_e414231f",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "91bca6c69e3849c95ae34c6d",
+      "67ae3eed57bf1feec96db119",
+      "e8f66558adeb9232e6610ecc",
+      "9cfec94d5d7f180a0c2b51b4",
+      "8568e7ae77275967634e130e",
+      "6fd1cde2182b7dd314b91170",
+      "589aa87651059df0540f5c89",
+      "37827c9b38660467604f92f6"
+    ],
+    "context_sha256": "a6484b55a3fdf09b33d4ecfe8c2733fb2a15c0b402796a64704511a9c8d6c28e",
+    "response": {
+      "answer": "mountain bike",
+      "evidence_ids": [
+        "67ae3eed57bf1feec96db119",
+        "9cfec94d5d7f180a0c2b51b4"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1351,
+        "completion_tokens": 22,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"mountain bike\",\"evidence_ids\":[ \"E2\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1015.815099934116,
+    "answer_latency_ms": 1015.815099934116
+  }
+]

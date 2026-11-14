@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"three months","answer_error":null,"answer_latency_ms":842.3588998848572,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":false,"judge_raw":"no","lexical_eligible":true,"method":"conditional","question_id":"cc6d1ec1","token_f1":0.5}

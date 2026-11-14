@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"The order of the sports events I watched in January is as follows:","answer_error":null,"answer_latency_ms":1946.1448000511155,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":false,"judge_raw":"no","lexical_eligible":true,"method":"conditional","question_id":"gpt4_45189cb4","token_f1":0.12121212121212122}

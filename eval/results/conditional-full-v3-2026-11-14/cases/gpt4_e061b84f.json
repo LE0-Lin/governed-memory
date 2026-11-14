@@ -1,0 +1,49 @@
+[
+  {
+    "question_id": "gpt4_e061b84f",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "41801dce289ad8d6d3874315",
+      "e3b4e198de5bf541effcaa92",
+      "00228cef4475206b95362d06",
+      "e73a700088a1f09186df4873",
+      "a6bd6125cf890b429477fce4",
+      "01c28eab3a2bd41ed30a29d7",
+      "e00c2e76f85f97e9ef8bb644",
+      "665d4a1039d01499b6b5ae95"
+    ],
+    "context_sha256": "3a26705f7657b9a077ad0a1777544a119caae85f3ab2782df41f07ee9c27e5c5",
+    "response": {
+      "answer": "The order of the three sports events I participated in during the past month, from earliest to latest, is as follows:",
+      "evidence_ids": [
+        "e3b4e198de5bf541effcaa92",
+        "00228cef4475206b95362d06",
+        "e73a700088a1f09186df4873"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1564,
+        "completion_tokens": 48,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The order of the three sports events I participated in during the past month, from earliest to latest, is as follows:\" , \"evidence_ids\":[ \"E2\", \"E3\", \"E4\" ] }"
+    },
+    "error": null,
+    "latency_ms": 2523.537299945019,
+    "answer_latency_ms": 2523.537299945019
+  }
+]

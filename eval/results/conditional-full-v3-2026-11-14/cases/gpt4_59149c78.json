@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_59149c78",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "61be2ac6c446fce93b2c20f6",
+      "ecbffad170f8668507b2cd30",
+      "57dc4b536e64a3c1f7d9f367",
+      "c9ea09acb6cbb4e71fde2a48",
+      "66c88992b7be4f531852d478",
+      "6d68f8de67d7412d93f075a2",
+      "814a33e2cf5b2494a8993f84",
+      "f222920f008cf922eacc5f8c"
+    ],
+    "context_sha256": "4c711867824444bf77b5e45ad090b1e9fc3afad8cd6035e922e43202c93be5d8",
+    "response": {
+      "answer": "The Natural History Museum's newest exhibit, ",
+      "evidence_ids": [
+        "ecbffad170f8668507b2cd30"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1425,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Natural History Museum's newest exhibit, \" \n,\"evidence_ids\":[\n\"E2\"\n]}"
+    },
+    "error": null,
+    "latency_ms": 1282.7163999900222,
+    "answer_latency_ms": 1282.7163999900222
+  }
+]

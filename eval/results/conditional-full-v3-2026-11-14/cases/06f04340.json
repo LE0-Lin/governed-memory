@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "06f04340",
+    "category": "single-session-preference",
+    "method": "conditional",
+    "chunk_ids": [
+      "1fcbb395df4b263788d2c899",
+      "d871287078069bc6f225187b",
+      "cbdb7079b8d6aa299cef3941",
+      "248b8158d39481889962e1d8",
+      "0306c6f340b165e6f3dc3adb",
+      "58478a5f4a8ec4b81e69e6ee",
+      "8eaeb566145fd88045faee84",
+      "c0c3fa748ade393c394b97f2"
+    ],
+    "context_sha256": "28d5c5a57cb5611f32e3575ddcb7dc28cdde6518faa2e47f45242bc1788ce95d",
+    "response": {
+      "answer": "There are several healthy meal ideas that can be prepared with homegrown ingredients, including grilled chicken or fish with roasted vegetables, a veggie-packed pasta primavera, a grilled vegetable skewer, and a fresh fruit tart.",
+      "evidence_ids": [
+        "d871287078069bc6f225187b",
+        "cbdb7079b8d6aa299cef3941"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1841,
+        "completion_tokens": 65,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"There are several healthy meal ideas that can be prepared with homegrown ingredients, including grilled chicken or fish with roasted vegetables, a veggie-packed pasta primavera, a grilled vegetable skewer, and a fresh fruit tart.\" , \"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 3539.2043000319973,
+    "answer_latency_ms": 3539.2043000319973
+  }
+]

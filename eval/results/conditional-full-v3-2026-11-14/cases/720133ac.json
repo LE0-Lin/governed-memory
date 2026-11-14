@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "720133ac",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "1933c3c5408a620ee87c7e3c",
+      "43efe24528409bd3a607a075",
+      "ac8416d35970352afb91ccad",
+      "f3d258ef031c8d261d885cd9",
+      "dc04ac9281438992b3a76a14",
+      "fcc2318f02edd14986368c03",
+      "04274e686bc5b2bd910171f8",
+      "f5a48ac3b57e1d919b099d09"
+    ],
+    "context_sha256": "93d4e5e605f85b82fc0d600e9ec2f5bd03cb0adc8239671a8ba0cd7569ad0eea",
+    "response": {
+      "answer": "The total cost of Lola's vet visit and flea medication is $50 + $25 = $75.",
+      "evidence_ids": [
+        "43efe24528409bd3a607a075",
+        "ac8416d35970352afb91ccad"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1564,
+        "completion_tokens": 44,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The total cost of Lola's vet visit and flea medication is $50 + $25 = $75.\" , \"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2370.435699936934,
+    "answer_latency_ms": 2370.435699936934
+  }
+]

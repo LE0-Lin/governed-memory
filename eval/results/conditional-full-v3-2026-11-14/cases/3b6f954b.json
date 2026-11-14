@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "3b6f954b",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "5709b7d817011fd86a8741b3",
+      "d0eeffed8419df4fc13cb72f",
+      "23f839e61863e132ae2635d5",
+      "d3306bf7ffd0a70e210a3462",
+      "6b1b944daac5d58e96e319ad",
+      "c4d262324e450e7289b315e9",
+      "11a8d3f42f32490da855a310",
+      "a1ad256aed6b3a434772579d"
+    ],
+    "context_sha256": "84be9f98d548717e57261c7469b2f0c491a64e625951edecb04a0729f8f3ea7d",
+    "response": {
+      "answer": "The University of Melbourne",
+      "evidence_ids": [
+        "d0eeffed8419df4fc13cb72f"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1822,
+        "completion_tokens": 16,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The University of Melbourne\",\"evidence_ids\":[\"E2\"]}"
+    },
+    "error": null,
+    "latency_ms": 877.8040000470355,
+    "answer_latency_ms": 877.8040000470355
+  }
+]

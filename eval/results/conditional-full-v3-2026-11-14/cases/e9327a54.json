@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "e9327a54",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "d88d642ada9b7983fe480bbb",
+      "8340147ab761d2e94439944f",
+      "ad3aa6a246efae094cf8a1fd",
+      "217893e1e1688b1ece133196",
+      "9b9a2976d4d2d463d0bfb522",
+      "c765a8d4fbfdb0a4c902643d",
+      "5ab488edd03a3c4b24aae317",
+      "c6fec668bca58b81b175d678"
+    ],
+    "context_sha256": "f8ba7c44f87485171da5d5bf4da4521395bb156f774e8142080736419cd0e527",
+    "response": {
+      "answer": "The Sugar Factory",
+      "evidence_ids": [
+        "d88d642ada9b7983fe480bbb",
+        "8340147ab761d2e94439944f"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1649,
+        "completion_tokens": 22,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Sugar Factory\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1170.2884000260383,
+    "answer_latency_ms": 1170.2884000260383
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_d31cdae3",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "45a0c89625be7a6f84b0669d",
+      "00bbc99ab2a466b725f6c431",
+      "9cb591cf4dacb7eb587227a1",
+      "d1958c3fed8109d6ad084620",
+      "01b2bd26eb92d09dc18bc7ae",
+      "13f660aee3a8cf688b449028",
+      "cff8d7356f1accdab897c255",
+      "1be7f787097f19129d62440d"
+    ],
+    "context_sha256": "899c6f7068c22e732699407085c4ac6b2ea817814ed89a2b722e4e2a14c38929",
+    "response": {
+      "answer": "the family road trip across the American Southwest",
+      "evidence_ids": [
+        "13f660aee3a8cf688b449028"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1765,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"the family road trip across the American Southwest\",\"evidence_ids\":[ \"E6\"]}"
+    },
+    "error": null,
+    "latency_ms": 1278.233699966222,
+    "answer_latency_ms": 1278.233699966222
+  }
+]

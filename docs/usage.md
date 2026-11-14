@@ -16,6 +16,7 @@ Environment variables:
 | `MEMORY_DOCUMENT_CACHE_SIZE` | Maximum document vectors per server process, default `2048`, range `0..10000`; `0` disables reuse |
 | `MEMORY_MODEL_CACHE` | Optional directory for downloaded model weights/tokenizers |
 | `MEMORY_GENERATION_PROFILE` | Enables cited answers: `small` (0.5B) or `standard` (1.5B); unset disables generation |
+| `MEMORY_ANSWER_FORMAT` | Unset/empty selects `conditional` for `standard`, legacy `json_schema` otherwise; either value explicitly overrides the default |
 | `MEMORY_GENERATION_CACHE` | Optional directory for downloaded generator weights/tokenizers |
 | `MEMORY_GENERATION_DEVICE` | `cpu` (default) or `cuda`, with a compatible PyTorch installation |
 | `MEMORY_EMBEDDING_MODEL` | Optional external model; mutually exclusive with local embeddings |
@@ -110,6 +111,17 @@ uv run governed-memory answer --project demo 'Which database does storage use?' 
 The first call downloads the pinned Qwen model and tokenizer. `small` is the 0.5B CPU smoke profile; `standard` is the 1.5B evaluation profile. Greedy decoding allows at most 384 output tokens and a 4,096-token complete prompt. An overlong prompt fails closed rather than silently dropping evidence. `HF_HUB_OFFLINE=1` uses previously cached assets. The optional dependencies include LM Format Enforcer at a fixed upstream revision containing its Transformers 5 import fix.
 
 The response includes `answer`, resolved `evidence_ids`, authorized `evidence`, `abstain`, `reason`, generation token counts and model revision. JSON Schema constrains field types and available citation aliases; a separate parser checks whether an answer has citations and abstention has none. Missing evidence, invalid output or generation failure returns a fixed abstention with a reason. Citation presence does not prove that the claim is supported.
+
+The `standard` profile generates either an answer with citations or
+`{"answer":null}` for insufficient evidence. The service maps both branches to
+the same public fields above. Other profiles use the legacy three-field format.
+Set `MEMORY_ANSWER_FORMAT=json_schema` to restore the old format for `standard`;
+`conditional` explicitly opts in for another profile. Validate such an override
+on the intended model. The [all 500 comparison](../eval/RESULTS-v0.6.md) eliminates
+108 format failures but has both newly correct and regressed answers. Its local
+semantic estimate is a modest improvement, with uncertainty; this is not a
+general answerability guarantee. The 0.5B model's missing-owner counterexample
+is retained, and its default is unchanged.
 
 The service rechecks all supplied evidence after generation. A withdrawal or changed source discards the answer and context; revoked project access denies the request. It never writes generated text into the ledger, and it does not return malformed raw model output. Evidence remains untrusted data in the prompt. These controls do not establish general prompt-injection resistance or factual correctness.
 

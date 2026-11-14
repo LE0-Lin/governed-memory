@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "1faac195",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "d058fd365617ec5108873c06",
+      "a559885c14e915c8e4dccf47",
+      "c0c71969d4e8b4091841d10e",
+      "e90cacb0711d340ff6bbe89a",
+      "61b13ef071a294496d38c6fe",
+      "51140845f062f77cbff2e51e",
+      "8816be51fdaa5170928bc022",
+      "3b28975f318b9e2df49f092d"
+    ],
+    "context_sha256": "ed7f427d7e58367aa76237e0711ab662a04a30794e71913cdd74d3a3d3fbe535",
+    "response": {
+      "answer": "near 33rd street and 3rd avenue",
+      "evidence_ids": [
+        "a559885c14e915c8e4dccf47"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1311,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"near 33rd street and 3rd avenue\",\"evidence_ids\":[ \"E2\"]}"
+    },
+    "error": null,
+    "latency_ms": 1275.6858000066131,
+    "answer_latency_ms": 1275.6858000066131
+  }
+]

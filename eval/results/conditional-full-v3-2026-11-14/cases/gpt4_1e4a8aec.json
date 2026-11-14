@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_1e4a8aec",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "6b94a0956440cf686670ca2d",
+      "4b917b1d17abed8973566c27",
+      "5be640f336f09052a771afc1",
+      "ff2987dd62c7708af155bba9",
+      "17b543b0a1a5c4e2a186ffad",
+      "f467acd8eb514e396a53d986",
+      "0ffea2e5f616c6308be63d08",
+      "f7fe0048885c7fd943fa9f18"
+    ],
+    "context_sha256": "6c4f9b491a3207f76ba43eb3374ac9345d39b0ee0ddb4d57f012f24ddf518e0c",
+    "response": {
+      "answer": "I used a gardening app to track the weather and soil moisture levels.",
+      "evidence_ids": [
+        "4b917b1d17abed8973566c27",
+        "5be640f336f09052a771afc1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1502,
+        "completion_tokens": 34,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I used a gardening app to track the weather and soil moisture levels.\" , \"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1649.6150000020862,
+    "answer_latency_ms": 1649.6150000020862
+  }
+]

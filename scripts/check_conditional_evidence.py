@@ -104,6 +104,29 @@ def verify(dev, external, score):
         row["judge_label"] is True for row in judgments if row["category"] != "abstention"
     )
     total = sum(row["judge_label"] is True for row in judgments)
+    previous_scores = {row["question_id"]: row for row in baseline_scores}
+    paired = {}
+    for group in ("positive", "abstention"):
+        selected = [
+            row for row in judgments if (row["category"] == "abstention") == (group == "abstention")
+        ]
+        paired[group] = dict(
+            newly_correct=sum(
+                row["judge_label"] is True
+                and previous_scores[row["question_id"]]["judge_label"] is not True
+                for row in selected
+            ),
+            previously_correct_lost=sum(
+                row["judge_label"] is not True
+                and previous_scores[row["question_id"]]["judge_label"] is True
+                for row in selected
+            ),
+            correct_in_both=sum(
+                row["judge_label"] is True
+                and previous_scores[row["question_id"]]["judge_label"] is True
+                for row in selected
+            ),
+        )
     dev_counts = development_counts(read_rows(dev / "predictions.jsonl"))
     old_dev, new_dev = dev_counts["json_schema"], dev_counts["conditional"]
     gates = dict(
@@ -126,6 +149,7 @@ def verify(dev, external, score):
         "valid_negative_abstentions": valid_negative,
         "positive_local_judge_correct": positive,
         "overall_local_judge_correct": total,
+        "paired_local_judgments": paired,
         "development": dev_counts,
         "promotion_gates": gates,
         "eligible_for_runtime_promotion": all(gates.values()),

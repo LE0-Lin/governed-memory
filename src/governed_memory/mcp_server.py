@@ -74,7 +74,7 @@ def build_server(settings: Settings, ledger=None, graph=None, generator=None):
     if generator:
         from governed_memory.answering import AnswerService
 
-        answers = AnswerService(retriever, generator)
+        answers = AnswerService(retriever, generator, answer_format=settings.answer_format)
 
         @server.tool()
         async def answer_memory(

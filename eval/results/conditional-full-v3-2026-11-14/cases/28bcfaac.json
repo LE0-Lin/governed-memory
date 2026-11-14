@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "28bcfaac",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "93f465eff9ab4c68d825d8cd",
+      "ce2205580a5f526f6a19edcc",
+      "0f239d1cb9bf5212548b5b10",
+      "46ed633e841e2edadb531933",
+      "43f5b7f2c525b8ad3e1a651d",
+      "1b6626eb02d825bb0d14b9b1",
+      "44a004539834b0d7738e9d4d",
+      "ecd99b43981589032bfeb292"
+    ],
+    "context_sha256": "d9f1a6a6dd2d2ba2114ce240709bb65bcf8a6a55b4a87b4cf65e9767879ec9ed",
+    "response": {
+      "answer": "MusicTheory.net",
+      "evidence_ids": [
+        "93f465eff9ab4c68d825d8cd"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1305,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"MusicTheory.net\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 857.736499980092,
+    "answer_latency_ms": 857.736499980092
+  }
+]

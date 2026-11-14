@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_194be4b3",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "ff9cfe69bd49e3ebce8c6a33",
+      "aa864340f575713987358736",
+      "ca5f436489fc9ff3a68dbdf0",
+      "1600316f4b0aa5e8ab4cb56c",
+      "fe413587bf2db665e80151e4",
+      "c81fef1fd119371e32477b2b",
+      "f4d095d2769df7713935a3b7",
+      "69ef5ff51a91d76236938cf9"
+    ],
+    "context_sha256": "09eea54d9aae5338c38e065c239457f2d34116fd6b0c4ec38a7528f0bcbf01f7",
+    "response": {
+      "answer": "I currently own 2 musical instruments.",
+      "evidence_ids": [
+        "1600316f4b0aa5e8ab4cb56c",
+        "c81fef1fd119371e32477b2b"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1900,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I currently own 2 musical instruments.\" , \"evidence_ids\":[ \"E4\", \"E6\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1628.445699927397,
+    "answer_latency_ms": 1628.445699927397
+  }
+]

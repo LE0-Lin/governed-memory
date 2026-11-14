@@ -1,9 +1,17 @@
 import json
+from types import SimpleNamespace
 
 import pytest
 
-from governed_memory.answering import ABSTENTION, answer_schema, generate_answer, parse_answer
+from governed_memory.answering import (
+    ABSTENTION,
+    AnswerService,
+    answer_schema,
+    generate_answer,
+    parse_answer,
+)
 from governed_memory.generation import GeneratedText
+from governed_memory.settings import Settings
 
 from .test_answer_format import accepts
 
@@ -64,3 +72,30 @@ async def test_conditional_wire_format_preserves_public_response_and_empty_conte
     assert response["generation"]["format"] == "conditional"
     await generate_answer(generator, "Who is the owner?", [], answer_format="conditional")
     assert generator.calls == 1
+
+
+@pytest.mark.parametrize(
+    "profile,expected",
+    [
+        ("standard", "conditional"),
+        ("small", "json_schema"),
+        ("judge", "json_schema"),
+        (None, "json_schema"),
+    ],
+)
+def test_only_the_validated_profile_changes_its_service_default(profile, expected):
+    generator = SimpleNamespace(metadata={"profile": profile})
+    assert AnswerService(None, generator).answer_format == expected
+    assert (
+        AnswerService(None, generator, answer_format="json_schema").answer_format == "json_schema"
+    )
+
+
+def test_operator_can_restore_the_legacy_format_and_invalid_configuration_fails_early(monkeypatch):
+    monkeypatch.setenv("MEMORY_ANSWER_FORMAT", "json_schema")
+    assert Settings.from_env().answer_format == "json_schema"
+    monkeypatch.setenv("MEMORY_ANSWER_FORMAT", "")
+    assert Settings.from_env().answer_format is None
+    monkeypatch.setenv("MEMORY_ANSWER_FORMAT", "invalid")
+    with pytest.raises(ValueError, match="MEMORY_ANSWER_FORMAT"):
+        Settings.from_env()

@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "8a137a7f",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "06926e3817c55749735947b4",
+      "7f198adb52f527ade8ce5616",
+      "11e32c3fd5147dd071403ef0",
+      "fff79b7941391473af51c2a2",
+      "1aeb60d8c8cab45bfa6b3dbd",
+      "60c72c92c5f81d7441c163db",
+      "74e549a6bd15cc7cfaaf6017",
+      "d974f1f1bcaac26be3450098"
+    ],
+    "context_sha256": "8dbb95364de55f9d4a0c0fdfa035bd405b5481779768fc2b78a2e1338a5c2688",
+    "response": {
+      "answer": "Philips LED bulb",
+      "evidence_ids": [
+        "7f198adb52f527ade8ce5616"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1535,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Philips LED bulb\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1009.9313999526203,
+    "answer_latency_ms": 1009.9313999526203
+  }
+]

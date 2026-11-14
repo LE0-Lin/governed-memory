@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "e493bb7c",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "56fcfa2d9e073ade4f9d58da",
+      "38656fdc30aa265705b3e1b6",
+      "89f62148b947aa2d0efa4137",
+      "c683539b96e430561f95fde4",
+      "a34c655c23800bf643b4088e",
+      "078a935f4ab1c0efbcbd8d62",
+      "6615f43e900126b9d54a6940",
+      "b1a5e55cf9568251149c8a7c"
+    ],
+    "context_sha256": "a5607ab9ecae5a6317f7714497dbefcc2656924ec8afac4c325cec02b7583a71",
+    "response": {
+      "answer": "above my living room sofa",
+      "evidence_ids": [
+        "89f62148b947aa2d0efa4137"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1509,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"above my living room sofa\",\"evidence_ids\":[ \"E3\"]}"
+    },
+    "error": null,
+    "latency_ms": 953.2190000172704,
+    "answer_latency_ms": 953.2190000172704
+  }
+]

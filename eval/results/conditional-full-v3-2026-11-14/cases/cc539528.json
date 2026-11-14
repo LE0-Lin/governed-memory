@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "cc539528",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "ae0528d69cb639ad90d4eec5",
+      "506eaa68e8a283c53c396701",
+      "2e3e62879fbd2414cbbb2309",
+      "093a24f8440485d404504d6c",
+      "ff55bf2960dd81a4e72ddf4c",
+      "9311f43f557190a0abf5c9e8",
+      "845ed88da52c3e7ec26b4791",
+      "784f30a32fbdbb47e5511c30"
+    ],
+    "context_sha256": "734bee19f4df24cdadbf4a8de5d05a2c67169475927d8c8730e5c8f58978ace7",
+    "response": {
+      "answer": "Yes, there are a lot of great online resources and courses available for learning front-end and back-end development. Here are a few that I recommend:",
+      "evidence_ids": [
+        "506eaa68e8a283c53c396701"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1653,
+        "completion_tokens": 46,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Yes, there are a lot of great online resources and courses available for learning front-end and back-end development. Here are a few that I recommend:\" , \"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2942.6019999664277,
+    "answer_latency_ms": 2942.6019999664277
+  }
+]

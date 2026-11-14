@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "4b24c848",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "fae3c923ad08537034fd8b3f",
+      "361cdee4950a328ee88ee6a2",
+      "73cfa38b1e28a7e0eba90ef1",
+      "00961a211ac63520b8dc8835",
+      "4042595577f12836dfa718a3",
+      "8ab4611d0e510a56c0b80665",
+      "caa6493c6a86523dea14c228",
+      "270cef27c240c8d3376e934d"
+    ],
+    "context_sha256": "e3987c817376110bfd640cbe830f0dbb06ea8f1ad9e1c9d704836856679db115",
+    "response": {
+      "answer": "five tops",
+      "evidence_ids": [
+        "361cdee4950a328ee88ee6a2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1521,
+        "completion_tokens": 17,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"five tops\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 849.4474999606609,
+    "answer_latency_ms": 849.4474999606609
+  }
+]

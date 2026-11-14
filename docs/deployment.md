@@ -76,6 +76,14 @@ load the generator. Reuse requires repeated calls to the same MCP process;
 restarting a process or launching another CLI command starts an empty cache.
 See [the behavior and limitations](usage.md#relevance-filtering-and-vector-reuse).
 
+The `standard` generation profile defaults to conditional answers. Compose
+forwards `MEMORY_ANSWER_FORMAT`; unset/empty keeps the profile default, while
+`json_schema` restores legacy output generation. Public answer fields remain
+unchanged. The separate installed 1.5B MCP regression requires
+`GM_TEST_STANDARD_GENERATION=1`, the model image and a cache containing the pinned
+standard weights. Run it sequentially with other large-model jobs; the recorded
+CPU container check uses PostgreSQL without the other storage services.
+
 ## Back up the ledger and verify recovery
 
 Stop application/projection processes during the recovery exercise. Keep a copy

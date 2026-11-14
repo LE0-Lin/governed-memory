@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "c14c00dd",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "a9715db886b28bfe3f492d77",
+      "f95dfae121e021b799411568",
+      "cf346fdf577e41761e4352de",
+      "576b17e58f91f5fadefba93e",
+      "e260e97bb7ab47aed43905c9",
+      "6e3a04a23491d87c07a0f0fc",
+      "c6c9586fd9d2c90adfe00d0a",
+      "12cc8ef6b74b8882053ab4fb"
+    ],
+    "context_sha256": "79c2e1452d36eb0314add2c13c5100384417831631f61758b12a06f0871ac7a9",
+    "response": {
+      "answer": "Lavender scented shampoo",
+      "evidence_ids": [
+        "a9715db886b28bfe3f492d77"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1266,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Lavender scented shampoo\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1063.1697000935674,
+    "answer_latency_ms": 1063.1697000935674
+  }
+]

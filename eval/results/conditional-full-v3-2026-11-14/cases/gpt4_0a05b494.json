@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_0a05b494",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "a96b5e313eb628a972abfae5",
+      "e6055f3d3e2f6129fe7ce841",
+      "1f84cacb289ebe75456a4aaa",
+      "120db9778af713b8499a6bd1",
+      "559cae7db474f91ee05e9682",
+      "1eb2ef6678e2e34b276f5212",
+      "d77d43f93a9ab80b5dfabe75"
+    ],
+    "context_sha256": "96f4d87e1ac65c6b8cf619e62221bcc210e135f85038d786a69eec7cddff99ed",
+    "response": {
+      "answer": "the woman selling jam at the farmer's market",
+      "evidence_ids": [
+        "e6055f3d3e2f6129fe7ce841",
+        "1f84cacb289ebe75456a4aaa"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1370,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"the woman selling jam at the farmer's market\",\"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1394.1893000155687,
+    "answer_latency_ms": 1394.1893000155687
+  }
+]

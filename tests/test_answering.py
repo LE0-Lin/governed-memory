@@ -18,7 +18,7 @@ from .conftest import approve, propose
 
 class TestGenerator:
     __test__ = False
-    metadata = {"test_double": True}
+    metadata = {"test_double": True, "profile": "standard"}
 
     def __init__(self, callback=None):
         self.callback = callback

@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "b759caee",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "98def1f930736493b12acf9d",
+      "66ad910f8c1097f8c346ef7c",
+      "19c181965fcf70f95d594239",
+      "d9fc5939e63c590716e308a6",
+      "3fc443fa34c1b0fc4511d2e6",
+      "2f2c85eaef50b8db6f0a0b7d",
+      "9c29517e7f5714db87bef3e8",
+      "8b02d3f0dc5303d5e94b5d3b"
+    ],
+    "context_sha256": "78ff475802aae7beb3d3bbdc89365034226e9597ca3bf1a4db07e247c1945d42",
+    "response": {
+      "answer": "Jessica Poole (@jessica_poole_jewellery)",
+      "evidence_ids": [
+        "19c181965fcf70f95d594239"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1640,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Jessica Poole (@jessica_poole_jewellery)\",\"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1519.4648000178859,
+    "answer_latency_ms": 1519.4648000178859
+  }
+]

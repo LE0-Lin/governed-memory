@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_c27434e8",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "395c17ab541bcfddd956512c",
+      "e7859fc39eb9184236bb6516",
+      "880ea74f37bbf7193a788418",
+      "193b2797c2be9cd562e17a5c",
+      "0b5e0af673180e4ee3f2b0ca",
+      "437632c84654491d08591950",
+      "21fb30705759d9c977579738",
+      "d50a568691c742241f397ef5"
+    ],
+    "context_sha256": "625175ce2edb457561bf3117a3968b4172d94c299437eebd86bb483781d2ce2c",
+    "response": {
+      "answer": "the Japanese Zero fighter plane model",
+      "evidence_ids": [
+        "880ea74f37bbf7193a788418",
+        "193b2797c2be9cd562e17a5c"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1861,
+        "completion_tokens": 25,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"the Japanese Zero fighter plane model\",\"evidence_ids\":[ \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1498.6157000530511,
+    "answer_latency_ms": 1498.6157000530511
+  }
+]

@@ -184,7 +184,11 @@ async def generate_answer(
 
 
 class AnswerService:
-    def __init__(self, retriever, generator, *, answer_format="json_schema"):
+    def __init__(self, retriever, generator, *, answer_format=None):
+        if answer_format is None:
+            answer_format = (
+                "conditional" if generator.metadata.get("profile") == "standard" else "json_schema"
+            )
         if answer_format not in {"json_schema", "conditional"}:
             raise ValueError("unknown answer format")
         self.retriever, self.generator = retriever, generator
