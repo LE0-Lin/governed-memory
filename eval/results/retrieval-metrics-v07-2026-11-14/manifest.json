@@ -1,0 +1,212 @@
+{
+  "commit": "985b10892bd4f40fb207520177e313a0183358d1",
+  "dirty_source": false,
+  "code_sha256": "6a5b9b80e0b39143859877d70207fb040b5abb4bcfc78f0f1afb671f80d650ec",
+  "protocol_sha256": "bb1f5217e6a40f00e022989f9f264c0ee53c8772b5586c358055e7e8018dde9d",
+  "protocol": "# Retrieval metrics protocol v2\n\nFrozen before implementation and canonical measurement, 2026-11-14. The user\nauthorized pursuing stronger measured recall, stale filtering and latency. The\noriginal CV numbers are aspirations, not labels, calibration targets or reasons\nto discard runs. All prior protocols and results remain unchanged.\n\n## Proposed change and gates\n\nA diagnostic of v0.6.1's default unfiltered, document-cached service found mean\nauthority work of 46.3 ms, reranking of 42.7 ms and query encoding of 10.1 ms.\nThese are diagnostic timings, not a controlled version-to-version speedup.\n\nAdd a bounded LRU of deterministic query/passage reranker scores. Keys include\nproject, model class/profile, and SHA-256 of exact query and passage. Cache no\ntext, credentials, eligibility, ordering or responses. Keep all existing live\nauthority checks. Default capacity is 8,192 scalar scores (range 0..10,000);\nzero disables it. Document-vector capacity stays 2,048. Relevance rejection\nstays disabled by default. Do not change ranking, thresholds, models or budgets.\n\nPromotion requires identical ordered evidence IDs and token counts to the\ngoverned score-uncached control for every successful paired observation, no\nstale result, and passing authority/cache regressions. Report all failures and\nregressions. A gain on repeat hits alone must be described as such; unique or\nfirst-use P95 cannot be replaced by warm P95. Do not tune on the measured data.\n\n## Workloads and labels\n\nUse the unchanged 80-question published relevance heldout set and the unchanged\n84-query CV timelines at 1, 4 and 16 replicated cohorts: 72, 288 and 1,152\nhistorical assertions, respectively. `metrics_cases.py` generates these expanded\nfixtures deterministically. It prefixes entity names and source aliases with a\ncohort name, preserves every original lifecycle and dependency, and assigns\nquery i to cohort i modulo the cohort count. Each size retains all 84 original\nquery types; its eligible labels span all cohorts and gold refers to the queried\ncohort. Retain generated fixtures and their checksums before model inference.\n\nThis is a scalability stress test derived from previously examined synthetic\ntemplates, not new independent data, realistic production history or blind\nexternal accuracy. Explicit labels remain independent of ledger visibility.\nThe 80-question heldout data were also previously evaluated. No label-based\nselection is needed for a computation cache. Do not rerun the 500-question\nanswer generator or treat old answer outputs as new scores.\n\n## Paired experiment\n\nUse real isolated PostgreSQL schemas, the existing pinned CPU MiniLM models,\ntwo inference threads, native Rust ranking, k=5 and 1,024 evidence tokens. One\ncaller executes three repetitions, rotating method order by query index plus\nrepetition. Share the loaded inference models; keep separate caches per method\nand workload. Warm only one unrelated query/passage before measurement, without\npre-encoding measured documents or queries. Retain all first-use misses.\n\nThree methods:\n\n1. Session-retrieval control: assertions received by known_at and current\n   project/source audience, without fact approval, validity, supersession,\n   withdrawal or dependency filtering. Give it both vector and score caches,\n   too; it is an unsafe experimental control, not a deployable configuration.\n2. Governed control: current v0.6.1 behavior, document cache enabled, no score\n   cache, no relevance cutoff.\n3. Governed candidate: same eligibility, ranking and document cache, plus the\n   score cache, no relevance cutoff.\n\nTime retrieval from the initial ledger lookup through serialization, including\nall live checks, embeddings, reranking and evidence packing. Exclude ingestion,\nmodel loading, transport and answer generation. Compare within this run only.\nGraph retrieval and external authorization HTTP calls are disabled here, as in\nthe original controlled CV protocol; they remain covered by integration tests.\nThese timings do not establish full graph/remote-policy or concurrent capacity.\nRecord per-observation IDs, explicit gold/eligible IDs, tokens, errors, latency,\nreranker pair computations, cache counters and repetition. No silent retries.\n\nReport per workload/method: positive macro gold recall; returned and stale\ncounts/rates; relative stale-rate reduction when baseline rate is nonzero;\nnegative unrelated evidence; overall, first-repetition and repeat P50/P95;\npair computation counts and cache hits/evictions. Never pool the fixture sizes\nor repeats as independent questions. Also report pairwise output equivalence.\n\nArchive source/data/model/package/hardware identities, raw observations, all\nfailed attempts, independent aggregate/hash checks, installed runtime and MCP\ncache-hit revocation checks, and required repository CI. Freeze source before\nthe canonical run; verify it has not changed afterwards. Any implementation\nchange following measured outcomes requires a new versioned run and preserves\nthe old attempt. The final CV wording must retain workload and timing scope.\n",
+  "datasets": {
+    "timelines_1": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1",
+    "timelines_4": "8ac6e7b9a7bfecc93e8f4ccdc956c347c5ae6d35c1fcb477d6be4da2806b042e",
+    "timelines_16": "00fa3b611b2b0978fb1427a9f69507dd879d5f768ca5d8f999d2d2625b469ecf",
+    "heldout": "5ff65d647993cf40029b0c53c5c6d4ed8da1c86f0123cf8abcd2bfea111fe74f"
+  },
+  "started_at": "2026-11-14T11:36:18.726811+00:00",
+  "python": "3.12.16",
+  "os": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "cpu": "AMD Ryzen 9 7945HX with Radeon Graphics",
+  "repetitions": 3,
+  "methods": [
+    "session_baseline",
+    "governed_control",
+    "governed_score_cache"
+  ],
+  "document_capacity": 2048,
+  "score_capacity": 8192,
+  "runtime_image": "sha256:f4b9aa45c4a6a3940cb9ec1a79c22fdeffac39c9d90656e15b4cb1373b767695",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 256,
+    "native_dimensions": 384,
+    "projection_dimensions": 1024
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "packages": {
+    "governed-memory": "0.7.0",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "sqlalchemy": "2.0.57"
+  },
+  "storage": "postgresql",
+  "completed_at": "2026-11-14T11:45:42.242550+00:00",
+  "source_unchanged": true,
+  "cache": {
+    "timelines_1": {
+      "session_baseline": {
+        "document": {
+          "entries": 72,
+          "hits": 11592,
+          "encoding_requests": 72,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 3096,
+          "hits": 6192,
+          "scoring_requests": 3096,
+          "evictions": 0
+        }
+      },
+      "governed_control": {
+        "document": {
+          "entries": 36,
+          "hits": 2988,
+          "encoding_requests": 36,
+          "evictions": 0
+        },
+        "rerank": null
+      },
+      "governed_score_cache": {
+        "document": {
+          "entries": 36,
+          "hits": 2988,
+          "encoding_requests": 36,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 1008,
+          "hits": 2016,
+          "scoring_requests": 1008,
+          "evictions": 0
+        }
+      }
+    },
+    "timelines_4": {
+      "session_baseline": {
+        "document": {
+          "entries": 288,
+          "hits": 46368,
+          "encoding_requests": 288,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4176,
+          "hits": 8352,
+          "scoring_requests": 4176,
+          "evictions": 0
+        }
+      },
+      "governed_control": {
+        "document": {
+          "entries": 144,
+          "hits": 11952,
+          "encoding_requests": 144,
+          "evictions": 0
+        },
+        "rerank": null
+      },
+      "governed_score_cache": {
+        "document": {
+          "entries": 144,
+          "hits": 11952,
+          "encoding_requests": 144,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4032,
+          "hits": 8064,
+          "scoring_requests": 4032,
+          "evictions": 0
+        }
+      }
+    },
+    "timelines_16": {
+      "session_baseline": {
+        "document": {
+          "entries": 1152,
+          "hits": 185472,
+          "encoding_requests": 1152,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4200,
+          "hits": 8400,
+          "scoring_requests": 4200,
+          "evictions": 0
+        }
+      },
+      "governed_control": {
+        "document": {
+          "entries": 576,
+          "hits": 47808,
+          "encoding_requests": 576,
+          "evictions": 0
+        },
+        "rerank": null
+      },
+      "governed_score_cache": {
+        "document": {
+          "entries": 576,
+          "hits": 47808,
+          "encoding_requests": 576,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4200,
+          "hits": 8400,
+          "scoring_requests": 4200,
+          "evictions": 0
+        }
+      }
+    },
+    "heldout": {
+      "session_baseline": {
+        "document": {
+          "entries": 32,
+          "hits": 928,
+          "encoding_requests": 32,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 320,
+          "hits": 640,
+          "scoring_requests": 320,
+          "evictions": 0
+        }
+      },
+      "governed_control": {
+        "document": {
+          "entries": 32,
+          "hits": 928,
+          "encoding_requests": 32,
+          "evictions": 0
+        },
+        "rerank": null
+      },
+      "governed_score_cache": {
+        "document": {
+          "entries": 32,
+          "hits": 928,
+          "encoding_requests": 32,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 320,
+          "hits": 640,
+          "scoring_requests": 320,
+          "evictions": 0
+        }
+      }
+    }
+  }
+}

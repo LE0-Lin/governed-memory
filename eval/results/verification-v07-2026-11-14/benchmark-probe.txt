@@ -1,0 +1,1 @@
+{"source": {"commit": "985b10892bd4f40fb207520177e313a0183358d1", "dirty_source": false, "code_sha256": "6a5b9b80e0b39143859877d70207fb040b5abb4bcfc78f0f1afb671f80d650ec", "protocol_sha256": "e92b777710426651c7d87414a855973b81cb4e9bd7dd636995c31631a18ff7cc"}, "package": "0.7.0", "torch": "2.15.0+cpu"}

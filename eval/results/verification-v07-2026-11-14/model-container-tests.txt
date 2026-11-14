@@ -1,0 +1,9 @@
+ss..s.sss.                                                               [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22
+  E:\OpenSource\governed-memory\.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class SearchInterface(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: E:\OpenSource\governed-memory\.local\v07-model-container-tests.xml -
+4 passed, 6 skipped, 2 deselected, 1 warning in 191.48s (0:03:11)

@@ -1,0 +1,22 @@
+/policy-tests/governance_test.rego:36:
+data.governed_memory_test.test_rejecting_a_withdrawn_source_is_allowed: PASS (6.383132ms)
+/policy-tests/governance_test.rego:13:
+data.governed_memory_test.test_agent_cannot_self_approve: PASS (6.457877ms)
+/policy-tests/governance_test.rego:26:
+data.governed_memory_test.test_terminal_state_cannot_be_reactivated: PASS (6.575744ms)
+/policy-tests/governance_test.rego:46:
+data.governed_memory_test.test_missing_identity_is_denied: PASS (6.77034ms)
+/policy-tests/governance_test.rego:40:
+data.governed_memory_test.test_protected_source_withdrawal_needs_admin: PASS (6.77143ms)
+/policy-tests/governance_test.rego:22:
+data.governed_memory_test.test_withdrawn_source_cannot_be_approved: PASS (6.875678ms)
+/policy-tests/governance_test.rego:11:
+data.governed_memory_test.test_operator_can_approve: PASS (7.045828ms)
+/policy-tests/governance_test.rego:32:
+data.governed_memory_test.test_superseded_candidate_can_be_revoked: PASS (7.09294ms)
+/policy-tests/governance_test.rego:17:
+data.governed_memory_test.test_protected_fact_needs_admin: PASS (7.100315ms)
+/policy-tests/governance_test.rego:48:
+data.governed_memory_test.test_missing_protection_fields_are_denied: PASS (7.367103ms)
+--------------------------------------------------------------------------------
+PASS: 10/10

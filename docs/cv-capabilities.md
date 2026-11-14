@@ -52,3 +52,20 @@ All engineering paths above are now exercised; see
 controlled recall is 100% for both methods and stale-rate reduction is 100% for
 this corpus. Negative-query relevance remains limited. These observations do not
 retroactively establish the original three CV numbers or the 2025 dates.
+
+## v0.7 measured extension
+
+The [new controlled comparison](../eval/RESULTS-v0.7.md) retains the original
+protocol/data and adds a separately frozen scalability/cache experiment. Its
+largest case has 1,152 synthetic historical assertions and 84 queries replayed
+three times per method: positive temporal Recall@5 is 100% versus 85% for the
+session baseline; stale evidence is 0/789 versus 498/816. Overall retrieval P95
+is 540.4 ms, compared with 627.9 ms for the same governed retriever without score
+reuse. Repeat-query P95 falls from 623.5 to 410.6 ms (34.1%). All 996 paired
+governed outputs across the four workloads remain identical.
+
+These are new, bounded measurements that can replace CV numbers when their
+synthetic-workload and retrieval scope is retained. They do not reconstruct the
+original experiment or establish general answer accuracy, production capacity
+or historical dates. First-use gains are not established, and unrelated eligible
+negative-query evidence remains a limitation. See the [v0.7 verification](verification-v0.7.md).

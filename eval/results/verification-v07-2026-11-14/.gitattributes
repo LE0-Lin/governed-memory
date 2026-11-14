@@ -1,0 +1,4 @@
+*.json -text
+*.jsonl -text
+*.txt -text
+*.xml -text

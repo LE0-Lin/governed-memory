@@ -27,6 +27,13 @@ Environment variables:
 The application reads process environment; it does not load `.env` automatically. Shell examples below use PowerShell. `compose.yaml` reads its own `.env` in the usual Docker Compose way.
 CLI JSON is emitted as UTF-8, including when Windows native pipes use a legacy code page.
 
+Score reuse benefits repeated exact query/passage pairs in a persistent MCP
+process. New queries or changed text/model profiles miss the cache; separate
+CLI invocations start empty. Cached scores never carry permission or provenance
+decisions: each request still reads the current ledger before and after model
+work. The [measured results](../eval/RESULTS-v0.7.md) report first-pass and repeat
+latency separately; size the bounded cache for the intended workload.
+
 ```powershell
 $env:MEMORY_DATABASE_URL = 'postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory'
 $env:MEMORY_NEO4J_URI = 'bolt://127.0.0.1:57687'
