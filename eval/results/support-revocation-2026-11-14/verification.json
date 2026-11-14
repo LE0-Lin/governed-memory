@@ -1,0 +1,107 @@
+{
+  "version": "0.6.1",
+  "date": "2026-11-14 Asia/Shanghai",
+  "verified_runtime_commit": "5a4ca57591fdde44a076778984872588cf6b3ba6",
+  "code_sha256": "9d3786f5c7117f0c6959872c446d77f73c61c64b0352c5fbeed989e4e0ad6733",
+  "code_hash_definition": "eval.run: sorted src/**/*.py then eval/*.py, relative path + NUL + LF-normalized bytes",
+  "frozen_run_provenance": "Run before the source commit: parent 4dc2c2e and dirty=true; recorded code hash equals verified source.",
+  "ci": {
+    "url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43576561828",
+    "status": "success",
+    "successful_jobs": 6
+  },
+  "local_acceptance": {
+    "groups": {
+      "core": {
+        "tests": 288,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 9,
+        "passed": 279
+      },
+      "container": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "passed": 2
+      }
+    },
+    "passed": 281,
+    "skipped": 11,
+    "configurations": 292,
+    "full_collection": 310,
+    "unchanged_model_configurations_not_rerun_locally": 18,
+    "skip_reasons": {
+      "native_extension_absent_on_local_windows": 5,
+      "postgres_only_on_sqlite": 6
+    }
+  },
+  "initial_red_sqlite": {
+    "failed": 4,
+    "passed": 1,
+    "note": "Includes the new repair API test, absent before implementation."
+  },
+  "installed_upgrade": {
+    "previous_package": "0.6.0",
+    "new_package": "0.6.1",
+    "projects": 2,
+    "stale_graph_edges_before_per_project": 2,
+    "valid_graph_edges_before_per_project": 1,
+    "repaired_approved_descendants": 2,
+    "repaired_pending_descendants": 1,
+    "repeated_repairs": 0,
+    "new_graph_jobs_drained": 2,
+    "valid_graph_edges_retained": 1,
+    "other_project_unchanged_until_explicit_upgrade": true,
+    "old_audit_and_lineage_payloads_preserved": true,
+    "source_hashes_preserved": true,
+    "non_admin_upgrade_denied": true
+  },
+  "frozen_governance": {
+    "retrievals": 768,
+    "operation_checks": 48,
+    "execution_failures": 0,
+    "backend": "SQLite + rank-bm25 + lexical hash vectors; Graphiti tested separately",
+    "dataset_sha256": "79409d2e485d8f299ffdc1a75f22e9c2ec54948ebe71d72fecf166b52a8fa772"
+  },
+  "rego": {
+    "version": "1.22.2",
+    "passed": 10
+  },
+  "offline_demo_network_denied": true,
+  "images": {
+    "new_core": "sha256:00c3700eaac0effe03c8d434d39ee57eca3b6def70b487f3ebb94c9b87c69bb1",
+    "previous_core": "sha256:454341ed3617c3243f51153ee305d27f2de007f83dd34b9598247240b00ed3c8"
+  },
+  "new_core_probe": {
+    "package": "0.6.1",
+    "uid": 10001,
+    "root_readonly": true,
+    "native_extension_imported": true,
+    "pytorch_installed": false,
+    "network": "none"
+  },
+  "wheel_sha256": "adf3e96d12a0d2d8f6a218deb456b08e1606f167d3cd1a72bda229a94474a4e6",
+  "answer_runtime_changed": false,
+  "old_evaluation_files_changed": false,
+  "new_model_or_cv_metric_claim": false,
+  "evidence_files_sha256": {
+    "red-sqlite.txt": "6aaea78fb62242e4075e2f66f222f35fa8a5c3a40d1a7189f4d7665fb67ccc02",
+    "core-tests.txt": "117fbf98ad3736c01b008f42beec20580046544cf19adef27a3427e147652c1a",
+    "core-tests.xml": "fa24a43881cdea384e5819ea650f88e82753b0d038894497494307819133424d",
+    "container-tests.txt": "15b3133379af21f8be0ebec59f494286ab2e370f4b5fbe4f10a8d9485c32424c",
+    "container-tests.xml": "25504fc088e4dda4e39a494aba26eb62b1b616be0a21011d42b7d9f604eaeaf4",
+    "rego.txt": "f1a8481d723708987e0207637aabc2bf2867ffb4dbd021019f85094167b63659",
+    "offline-demo.txt": "fa78fa5d8bf4480f853cc2c122050aff9f915f50c82a54ca8a7168a0cf21c1c5",
+    "frozen-governance/predictions.jsonl": "b377dc40bca16d2a937ab8c809230d1ce428a1f73789cd691fe916758ac479bf",
+    "frozen-governance/operations.jsonl": "e763daca9721857d9dca3b52a9dc22570d52f30447c7865994e7a3982dd132c3",
+    "frozen-governance/summary.json": "6524fd1ed644e5240ec91ae52100756a8c79644f500ea8123a17db78838bcb6e",
+    "frozen-governance/provenance.json": "f7af3a3de881bf01122357f9356bb55e46712816be7f247f2facff744df7fdd6"
+  },
+  "cleanup": {
+    "owned_services_exited_zero": 6,
+    "images_data_models_retained": true,
+    "dedicated_daemon_exited_zero": true
+  }
+}
