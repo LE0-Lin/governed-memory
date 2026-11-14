@@ -87,3 +87,10 @@ The [v0.5 report](RESULTS-v0.5.md) records a development-only cutoff, independen
 heldout checks, paired cache timing and a counterfactual full500 archived-score
 replay. The [protocol](RETRIEVAL_QUALITY_PROTOCOL.md) was frozen before results.
 Poor long-conversation transfer is retained; relevance rejection is opt-in.
+
+The [v0.6 answer-format report](RESULTS-v0.6.md) retains three complete development
+experiments and new answers for all 500 archived cross-encoder contexts. It
+separates fewer format failures from semantic quality, records individual
+regressions and includes an independent promotion receipt. The frozen
+[direct-answer/null protocol](CONDITIONAL_ANSWER_V3_PROTOCOL.md) fixes the
+candidate before external generation and scoring.
