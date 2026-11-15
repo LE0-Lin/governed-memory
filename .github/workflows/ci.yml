@@ -13,6 +13,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch the pinned retrieval reference
+        run: git fetch --no-tags --depth=1 origin df8349b7abfcdd8485868225e6bb74589f397edb
       - uses: astral-sh/setup-uv@v6
         with:
           version: "0.12.5"
@@ -34,6 +36,8 @@ jobs:
       GM_TEST_CONTAINER_IMAGE: governed-memory:local
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch the pinned retrieval reference
+        run: git fetch --no-tags --depth=1 origin df8349b7abfcdd8485868225e6bb74589f397edb
       - uses: astral-sh/setup-uv@v6
         with:
           version: "0.12.5"

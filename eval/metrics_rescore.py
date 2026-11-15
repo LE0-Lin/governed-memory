@@ -14,6 +14,7 @@ def verify(directory):
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     summaries = json.loads((directory / "summary.json").read_text(encoding="utf-8"))
     expected = {}
+    comparison = manifest.get("comparison", ["governed_control", "governed_score_cache"])
     for workload, digest in manifest["datasets"].items():
         path = directory / f"{workload}-fixture.json"
         assert checksum(path) == digest, workload
@@ -51,7 +52,7 @@ def verify(directory):
         assert set(row["stale_ids"]) == set(row["predicted_ids"]) - eligible
         assert row["evidence_tokens"] <= 1024 and len(row["predicted_ids"]) <= 5
         groups[f"{row['workload']}/{row['method']}"].append(row)
-        if row["method"] != "session_baseline":
+        if row["method"] in comparison:
             pairs[(row["workload"], row["query_id"], row["repetition"])][row["method"]] = row
     for name, selected in groups.items():
         published = summaries[name]
@@ -85,6 +86,9 @@ def verify(directory):
         }
         for key, value in calculated.items():
             assert published[key] == value, (name, key)
+        for key in ("visible_reads", "visible_rows"):
+            if key in published:
+                assert published[key] == sum(row[key] for row in selected), (name, key)
         for phase, subset in (
             ("", selected),
             ("first_pass_", [row for row in selected if row["repetition"] == 0]),
@@ -103,7 +107,7 @@ def verify(directory):
             assert cache["scoring_requests"] == calculated["reranker_pair_computations"]
     mismatches = 0
     for methods in pairs.values():
-        before, after = methods["governed_control"], methods["governed_score_cache"]
+        before, after = (methods[name] for name in comparison)
         mismatches += any(
             before[key] != after[key]
             for key in ("predicted_ids", "evidence_tokens", "evidence_sha256", "reason", "error")

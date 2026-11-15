@@ -188,10 +188,21 @@ class Retriever:
                     if self.min_relevance_score is None or score >= self.min_relevance_score
                 ]
         # Recheck current ACL/revocation after retrieval, before serializing any text.
+        selection = {}
+        if ranked and len(ranked) < len(eligible):
+            selection["memory_ids"] = [item.id for item in ranked]
         refreshed = {
             e.id: e
-            for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
+            for e in self.ledger.visible(
+                token, project, valid_at=valid_at, known_at=known_at, **selection
+            )
         }
+        if selection and not refreshed:
+            # Keep the existing reason when selected hits vanish but other evidence remains.
+            refreshed = {
+                e.id: e
+                for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
+            }
         ranked = [refreshed[e.id] for e in ranked if e.id in refreshed]
         results, used = self.pack(ranked, token_budget, k)
         reason = "ok"

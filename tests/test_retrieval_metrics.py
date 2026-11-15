@@ -81,13 +81,20 @@ def test_pair_gate_detects_token_or_source_changes_even_with_the_same_fact_ids()
     assert paired_equivalence(rows)["mismatches"] == [("one", "q", 0)]
 
 
-def test_independent_rescore_checks_fixture_gold_and_keeps_all_observations(tmp_path):
+@pytest.mark.parametrize("paired_reference", [False, True])
+def test_independent_rescore_checks_fixture_gold_and_keeps_all_observations(
+    tmp_path, paired_reference
+):
     write_json(
         tmp_path / "tiny-fixture.json",
         {"queries": [{"id": "q", "gold": ["original"], "eligible": ["original"]}]},
     )
     write_json(tmp_path / "tiny-aliases.json", {"original": "candidate"})
-    methods = ("session_baseline", "governed_control", "governed_score_cache")
+    methods = (
+        ("reference_v07", "targeted_refresh")
+        if paired_reference
+        else ("session_baseline", "governed_control", "governed_score_cache")
+    )
     groups = defaultdict(list)
     rows = []
     for repetition in range(3):
@@ -119,10 +126,11 @@ def test_independent_rescore_checks_fixture_gold_and_keeps_all_observations(tmp_
             "methods": methods,
             "cache": {"tiny": {method: {"rerank": None} for method in methods}},
             "source_unchanged": True,
+            **({"comparison": methods} if paired_reference else {}),
         },
     )
     receipt = verify(tmp_path)
-    assert receipt["observations"] == 9 and receipt["paired_comparisons"] == 3
+    assert receipt["observations"] == 3 * len(methods) and receipt["paired_comparisons"] == 3
     assert receipt["paired_mismatches"] == 0
     rows[0]["gold_ids"] = ["invented"]
     stream.write_text("\n".join(json.dumps(row) for row in rows), encoding="utf-8")

@@ -280,6 +280,18 @@ async def test_model_container_cached_retrieval_rechecks_a_warm_mcp_session(cont
             valid_from="2030-01-01T00:00:00Z",
         ),
     )
+    for index in range(51):
+        approve(
+            context,
+            ledger.propose(
+                tokens["agent"],
+                "demo",
+                subject=f"unrelated-service-{index:02}",
+                predicate="database",
+                value="SQLite stores local build artifacts",
+                valid_from="2030-01-01T00:00:00Z",
+            ),
+        )
     container = Container(
         json.loads(os.environ.get("GM_TEST_DOCKER_COMMAND", '["docker"]')),
         image,
@@ -288,8 +300,8 @@ async def test_model_container_cached_retrieval_rechecks_a_warm_mcp_session(cont
             "MEMORY_LOCAL_EMBEDDING": "1",
             "MEMORY_LOCAL_RERANKER": "1",
             "MEMORY_RELEVANCE_FILTER": relevance,
-            "MEMORY_DOCUMENT_CACHE_SIZE": "8",
-            "MEMORY_RERANK_CACHE_SIZE": "8",
+            "MEMORY_DOCUMENT_CACHE_SIZE": "128",
+            "MEMORY_RERANK_CACHE_SIZE": "128",
             "MEMORY_MODEL_CACHE": "/retrieval",
             "MEMORY_GENERATION_PROFILE": "small",
             "MEMORY_GENERATION_CACHE": "/intentionally-missing-generator",
@@ -299,7 +311,7 @@ async def test_model_container_cached_retrieval_rechecks_a_warm_mcp_session(cont
         mounts=(f"type=bind,source={cache},target=/retrieval,readonly",),
     )
     arguments = dict(
-        project="demo", valid_at="2030-02-01T00:00:00Z", known_at="2030-02-01T00:00:00Z"
+        project="demo", valid_at="2030-12-01T00:00:00Z", known_at="2030-12-01T00:00:00Z"
     )
     async with (
         stdio_client(container.server(tokens["agent"])) as streams,
@@ -323,14 +335,16 @@ async def test_model_container_cached_retrieval_rechecks_a_warm_mcp_session(cont
             assert result["minimum_relevance_score"] == (1.4 if relevance == "1" else None)
             assert result["document_cache"]
             assert result["rerank_cache"]
-            assert [item["candidate_id"] for item in result["evidence"]] == [candidate["id"]]
+            assert candidate["id"] in {item["candidate_id"] for item in result["evidence"]}
         ledger.withdraw_source(tokens["admin"], "demo", candidate["source_id"])
         response = await session.call_tool(
             "search_memory", {**arguments, "query": "What is Berlin well known for?"}
         )
         assert not response.isError
         result = json.loads(response.content[0].text)
-        assert result["reason"] == "no_eligible_evidence" and result["evidence"] == []
+        assert candidate["id"] not in {item["candidate_id"] for item in result["evidence"]}
+        if relevance == "1":
+            assert result["reason"] == "no_relevant_evidence" and result["evidence"] == []
 
 
 def test_container_cli_answers_with_the_real_cpu_model_and_honors_withdrawal(engine):
