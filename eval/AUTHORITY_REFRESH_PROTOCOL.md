@@ -7,8 +7,8 @@ and the remaining distance from the CV's claims. Prior results stay unchanged.
 ## Diagnosis and scope
 
 A diagnostic of installed v0.7.0 with 1,152 synthetic historical assertions and
-warm model caches observes mean retrieval208.4 ms: the four authority reads take
-45.6/33.2/45.8/33.4 ms, together about76%. Packing takes19.1 ms. This diagnostic
+warm model caches observes mean retrieval 208.4 ms: the four authority reads take
+45.6/33.2/45.8/33.4 ms, together about 76%. Packing takes 19.1 ms. This diagnostic
 is not a before/after speedup; host conditions differ from previous runs.
 
 Optimize only two related read costs. Do not materialize the unused primary
@@ -37,17 +37,17 @@ caches. Retain reference file hashes and the reference commit. Do not estimate
 a version speedup by subtracting an old run's latency from a new one.
 
 Use all four unchanged v0.7 workload recipes: 72/288/1,152 synthetic historical
-assertions with84 query instances per size, and the known80-query relevance
+assertions with 84 query instances per size, and the known 80-query relevance
 heldout set. Materialize and hash their fixtures before inference. They reuse
 previously examined templates and labels, and are not independent real-world or
 blind data. This cache/read optimization does not learn from their labels.
 
-Two methods, reference_v07 and targeted_refresh, both with document capacity2048,
-score capacity8192, no cutoff, native Rust, k5, token budget1024, actual isolated
+Two methods, reference_v07 and targeted_refresh, both with document capacity 2048,
+score capacity 8192, no cutoff, native Rust, k=5, token budget 1024, actual isolated
 PostgreSQL and pinned CPU MiniLM models with two inference threads. Share loaded
 models, retain separate caches, and warm only unrelated text. Run three replays
 with method order rotating by query index plus repetition, one caller.
-Expected observations: (84*3+80)*2*3=1,992, with996 exact paired comparisons.
+Expected observations: (84*3+80)*2*3=1,992, with 996 exact paired comparisons.
 
 Record every query's explicit gold/eligible IDs, predicted IDs, evidence payload
 hash, tokens, errors, reason, latency and repetition. Report per workload positive
@@ -74,4 +74,6 @@ The completion report must say whether this round helped, give reference->new
 numbers and relative changes, and explain CV coverage and remaining evidence
 gaps. Existing engineering coverage and successful synthetic metrics do not
 prove real-production recall, full graph/remote-policy latency or 2025 dates.
-No new500-question answer-generation run or automatic CV edit is in this scope.
+No new 500-question answer-generation run or automatic CV edit is in this scope.
+
+Execution-environment note, frozen before canonical measurement: the local C:\ volume exhausted space and Ubuntu reported I/O errors before a candidate benchmark could start. The canonical comparison therefore runs on one isolated GitHub-hosted Ubuntu CPU runner with PostgreSQL. Both versions share that runner and all resources. Record its hardware and run ID; do not compare its absolute latency to the earlier Ryzen/WSL run. Existing local model/data/image files are retained, and local deployment is not claimed after this fault.

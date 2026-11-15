@@ -66,6 +66,8 @@ async def experiment(output):
         "document_capacity": 2048,
         "score_capacity": 8192,
         "runtime_image": os.environ.get("GM_EVAL_IMAGE_ID"),
+        "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+        "runner_name": os.environ.get("RUNNER_NAME"),
     }
     write_json(output / "manifest.json", manifest)
     embedder = MeasuredEmbedder(MiniLMEmbedder(os.environ.get("MEMORY_MODEL_CACHE")))
