@@ -69,3 +69,27 @@ synthetic-workload and retrieval scope is retained. They do not reconstruct the
 original experiment or establish general answer accuracy, production capacity
 or historical dates. First-use gains are not established, and unrelated eligible
 negative-query evidence remains a limitation. See the [v0.7 verification](verification-v0.7.md).
+
+## v0.8 final authority read
+
+The [paired v0.8 study](../eval/RESULTS-v0.8.md) compares the exact v0.7 runtime
+with a narrowed final live read. In the largest synthetic case, overall P95 is
+521.9 -> 408.3 ms (21.8% lower), first-pass P95 602.9 -> 558.3 ms (7.4%), and
+repeat P95 400.6 -> 378.9 ms (5.4%). Both variants retain 100% positive temporal
+Recall@5 and zero stale evidence. All 996 pairs match complete ordered evidence,
+tokens and reasons; 1,992 observations complete without retrieval errors.
+The runner differs from v0.7, so only within-run deltas are valid.
+
+The first version was slower overall and was rejected, with its raw results
+preserved. The final version clears the prespecified largest-case overall and
+first-pass gates; smallest-case and heldout first-pass P95 still worsen 4.7%
+and 5.0%. This round does not establish a quality gain or universal acceleration.
+Regular six-job CI and the separate paired/model-container jobs pass; see
+[v0.8 verification](verification-v0.8.md).
+
+The CV's listed engineering features are exercised. Current synthetic recall,
+stale filtering and retrieval latency support a scoped replacement for its
+unverified numbers. Independent real histories, full graph/remote-policy and
+transport latency, production/concurrency evidence and contemporaneous 2025
+records remain unproved. No numerical completion percentage follows from this
+checklist, and no CV wording or date was changed.

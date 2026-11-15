@@ -1,0 +1,830 @@
+{
+  "version": "relevance-contract-v1",
+  "split": "heldout",
+  "groups": [
+    {
+      "id": "heldout-08",
+      "documents": [
+        {
+          "id": "heldout-08-d0",
+          "subject": "Orchid library",
+          "predicate": "license",
+          "value": "Apache 2.0"
+        },
+        {
+          "id": "heldout-08-d1",
+          "subject": "Orchid library",
+          "predicate": "implementation language",
+          "value": "Rust"
+        },
+        {
+          "id": "heldout-08-d2",
+          "subject": "Orchid library",
+          "predicate": "minimum compiler",
+          "value": "1.83"
+        },
+        {
+          "id": "heldout-08-d3",
+          "subject": "Orchid library",
+          "predicate": "maintainer",
+          "value": "systems team"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-08-q0",
+          "query": "What license covers Orchid library?",
+          "gold": [
+            "heldout-08-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-08-q1",
+          "query": "What language implements Orchid library?",
+          "gold": [
+            "heldout-08-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-08-q2",
+          "query": "What is the minimum compiler version for Orchid library?",
+          "gold": [
+            "heldout-08-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-08-q3",
+          "query": "Who maintains Orchid library?",
+          "gold": [
+            "heldout-08-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-08-q4",
+          "query": "Under which terms can Orchid library be redistributed?",
+          "gold": [
+            "heldout-08-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-08-q5",
+          "query": "Orchid library license",
+          "gold": [
+            "heldout-08-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-08-q6",
+          "query": "How many downloads does Orchid library have?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-08-q7",
+          "query": "What price is charged for Orchid library?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-08-q8",
+          "query": "What makes the ocean appear blue?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-08-q9",
+          "query": "What is the license for Ochre library?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-09",
+      "documents": [
+        {
+          "id": "heldout-09-d0",
+          "subject": "Cobalt parcel",
+          "predicate": "carrier",
+          "value": "DHL"
+        },
+        {
+          "id": "heldout-09-d1",
+          "subject": "Cobalt parcel",
+          "predicate": "destination",
+          "value": "Lisbon"
+        },
+        {
+          "id": "heldout-09-d2",
+          "subject": "Cobalt parcel",
+          "predicate": "weight",
+          "value": "two kilograms"
+        },
+        {
+          "id": "heldout-09-d3",
+          "subject": "Cobalt parcel",
+          "predicate": "service",
+          "value": "express"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-09-q0",
+          "query": "Which carrier transports Cobalt parcel?",
+          "gold": [
+            "heldout-09-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-09-q1",
+          "query": "Where is Cobalt parcel going?",
+          "gold": [
+            "heldout-09-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-09-q2",
+          "query": "How much does Cobalt parcel weigh?",
+          "gold": [
+            "heldout-09-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-09-q3",
+          "query": "What shipping service does Cobalt parcel use?",
+          "gold": [
+            "heldout-09-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-09-q4",
+          "query": "Which delivery company handles Cobalt parcel?",
+          "gold": [
+            "heldout-09-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-09-q5",
+          "query": "Cobalt parcel carrier",
+          "gold": [
+            "heldout-09-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-09-q6",
+          "query": "When will Cobalt parcel arrive?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-09-q7",
+          "query": "What is the tracking number for Cobalt parcel?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-09-q8",
+          "query": "What is the boiling point of ethanol?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-09-q9",
+          "query": "What is the carrier for Silver parcel?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-10",
+      "documents": [
+        {
+          "id": "heldout-10-d0",
+          "subject": "Dahlia lab",
+          "predicate": "room",
+          "value": "B204"
+        },
+        {
+          "id": "heldout-10-d1",
+          "subject": "Dahlia lab",
+          "predicate": "opening hours",
+          "value": "nine to five"
+        },
+        {
+          "id": "heldout-10-d2",
+          "subject": "Dahlia lab",
+          "predicate": "supervisor",
+          "value": "Nora"
+        },
+        {
+          "id": "heldout-10-d3",
+          "subject": "Dahlia lab",
+          "predicate": "equipment",
+          "value": "optical microscopes"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-10-q0",
+          "query": "Which room houses Dahlia lab?",
+          "gold": [
+            "heldout-10-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-10-q1",
+          "query": "When is Dahlia lab open?",
+          "gold": [
+            "heldout-10-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-10-q2",
+          "query": "Who supervises Dahlia lab?",
+          "gold": [
+            "heldout-10-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-10-q3",
+          "query": "What equipment is available in Dahlia lab?",
+          "gold": [
+            "heldout-10-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-10-q4",
+          "query": "What room number should visitors use for Dahlia lab?",
+          "gold": [
+            "heldout-10-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-10-q5",
+          "query": "Dahlia lab room",
+          "gold": [
+            "heldout-10-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-10-q6",
+          "query": "What is the budget for Dahlia lab?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-10-q7",
+          "query": "How many students work in Dahlia lab?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-10-q8",
+          "query": "How long is the Nile?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-10-q9",
+          "query": "What is the room for Lotus lab?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-11",
+      "documents": [
+        {
+          "id": "heldout-11-d0",
+          "subject": "Finch subscription",
+          "predicate": "billing period",
+          "value": "quarterly"
+        },
+        {
+          "id": "heldout-11-d1",
+          "subject": "Finch subscription",
+          "predicate": "price",
+          "value": "ninety pounds"
+        },
+        {
+          "id": "heldout-11-d2",
+          "subject": "Finch subscription",
+          "predicate": "included storage",
+          "value": "one terabyte"
+        },
+        {
+          "id": "heldout-11-d3",
+          "subject": "Finch subscription",
+          "predicate": "cancellation notice",
+          "value": "seven days"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-11-q0",
+          "query": "How often is Finch subscription billed?",
+          "gold": [
+            "heldout-11-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-11-q1",
+          "query": "What is the price of Finch subscription?",
+          "gold": [
+            "heldout-11-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-11-q2",
+          "query": "How much storage does Finch subscription include?",
+          "gold": [
+            "heldout-11-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-11-q3",
+          "query": "What notice is required to cancel Finch subscription?",
+          "gold": [
+            "heldout-11-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-11-q4",
+          "query": "What interval separates Finch subscription invoices?",
+          "gold": [
+            "heldout-11-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-11-q5",
+          "query": "Finch subscription billing period",
+          "gold": [
+            "heldout-11-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-11-q6",
+          "query": "What payment card funds Finch subscription?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-11-q7",
+          "query": "When did Finch subscription begin?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-11-q8",
+          "query": "Why do leaves change color in autumn?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-11-q9",
+          "query": "What is the billing period for Wren subscription?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-12",
+      "documents": [
+        {
+          "id": "heldout-12-d0",
+          "subject": "Helix recipe",
+          "predicate": "main ingredient",
+          "value": "chickpeas"
+        },
+        {
+          "id": "heldout-12-d1",
+          "subject": "Helix recipe",
+          "predicate": "cooking time",
+          "value": "twenty minutes"
+        },
+        {
+          "id": "heldout-12-d2",
+          "subject": "Helix recipe",
+          "predicate": "servings",
+          "value": "four"
+        },
+        {
+          "id": "heldout-12-d3",
+          "subject": "Helix recipe",
+          "predicate": "oven temperature",
+          "value": "180 Celsius"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-12-q0",
+          "query": "What is the main ingredient in Helix recipe?",
+          "gold": [
+            "heldout-12-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-12-q1",
+          "query": "How long does Helix recipe take to cook?",
+          "gold": [
+            "heldout-12-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-12-q2",
+          "query": "How many servings does Helix recipe make?",
+          "gold": [
+            "heldout-12-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-12-q3",
+          "query": "What oven temperature does Helix recipe require?",
+          "gold": [
+            "heldout-12-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-12-q4",
+          "query": "What food forms the base of Helix recipe?",
+          "gold": [
+            "heldout-12-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-12-q5",
+          "query": "Helix recipe main ingredient",
+          "gold": [
+            "heldout-12-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-12-q6",
+          "query": "How many calories are in Helix recipe?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-12-q7",
+          "query": "What allergens are listed for Helix recipe?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-12-q8",
+          "query": "What planet has the shortest day?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-12-q9",
+          "query": "What is the main ingredient for Hearth recipe?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-13",
+      "documents": [
+        {
+          "id": "heldout-13-d0",
+          "subject": "Piper course",
+          "predicate": "instructor",
+          "value": "Elena"
+        },
+        {
+          "id": "heldout-13-d1",
+          "subject": "Piper course",
+          "predicate": "duration",
+          "value": "six weeks"
+        },
+        {
+          "id": "heldout-13-d2",
+          "subject": "Piper course",
+          "predicate": "assessment",
+          "value": "a final project"
+        },
+        {
+          "id": "heldout-13-d3",
+          "subject": "Piper course",
+          "predicate": "delivery mode",
+          "value": "online"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-13-q0",
+          "query": "Who teaches Piper course?",
+          "gold": [
+            "heldout-13-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-13-q1",
+          "query": "How long does Piper course run?",
+          "gold": [
+            "heldout-13-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-13-q2",
+          "query": "How is Piper course assessed?",
+          "gold": [
+            "heldout-13-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-13-q3",
+          "query": "How is Piper course delivered?",
+          "gold": [
+            "heldout-13-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-13-q4",
+          "query": "Who is the teacher responsible for Piper course?",
+          "gold": [
+            "heldout-13-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-13-q5",
+          "query": "Piper course instructor",
+          "gold": [
+            "heldout-13-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-13-q6",
+          "query": "How much tuition does Piper course charge?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-13-q7",
+          "query": "What grade is required to pass Piper course?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-13-q8",
+          "query": "When was Saturn discovered?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-13-q9",
+          "query": "What is the instructor for Robin course?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-14",
+      "documents": [
+        {
+          "id": "heldout-14-d0",
+          "subject": "Topaz garden",
+          "predicate": "watering interval",
+          "value": "every three days"
+        },
+        {
+          "id": "heldout-14-d1",
+          "subject": "Topaz garden",
+          "predicate": "primary crop",
+          "value": "tomatoes"
+        },
+        {
+          "id": "heldout-14-d2",
+          "subject": "Topaz garden",
+          "predicate": "soil type",
+          "value": "loam"
+        },
+        {
+          "id": "heldout-14-d3",
+          "subject": "Topaz garden",
+          "predicate": "caretaker",
+          "value": "Owen"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-14-q0",
+          "query": "How often is Topaz garden watered?",
+          "gold": [
+            "heldout-14-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-14-q1",
+          "query": "What is the primary crop in Topaz garden?",
+          "gold": [
+            "heldout-14-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-14-q2",
+          "query": "What soil type is used in Topaz garden?",
+          "gold": [
+            "heldout-14-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-14-q3",
+          "query": "Who looks after Topaz garden?",
+          "gold": [
+            "heldout-14-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-14-q4",
+          "query": "What is the irrigation schedule for Topaz garden?",
+          "gold": [
+            "heldout-14-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-14-q5",
+          "query": "Topaz garden watering interval",
+          "gold": [
+            "heldout-14-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-14-q6",
+          "query": "What is the area of Topaz garden?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-14-q7",
+          "query": "How much did Topaz garden cost?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-14-q8",
+          "query": "Why do magnets attract iron?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-14-q9",
+          "query": "What is the watering interval for Garnet garden?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    },
+    {
+      "id": "heldout-15",
+      "documents": [
+        {
+          "id": "heldout-15-d0",
+          "subject": "Vesta recording",
+          "predicate": "file format",
+          "value": "FLAC"
+        },
+        {
+          "id": "heldout-15-d1",
+          "subject": "Vesta recording",
+          "predicate": "sample rate",
+          "value": "48 kilohertz"
+        },
+        {
+          "id": "heldout-15-d2",
+          "subject": "Vesta recording",
+          "predicate": "duration",
+          "value": "twelve minutes"
+        },
+        {
+          "id": "heldout-15-d3",
+          "subject": "Vesta recording",
+          "predicate": "producer",
+          "value": "audio team"
+        }
+      ],
+      "queries": [
+        {
+          "id": "heldout-15-q0",
+          "query": "What file format is Vesta recording stored in?",
+          "gold": [
+            "heldout-15-d0"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-15-q1",
+          "query": "What sample rate does Vesta recording use?",
+          "gold": [
+            "heldout-15-d1"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-15-q2",
+          "query": "How long is Vesta recording?",
+          "gold": [
+            "heldout-15-d2"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-15-q3",
+          "query": "Who produced Vesta recording?",
+          "gold": [
+            "heldout-15-d3"
+          ],
+          "kind": "direct"
+        },
+        {
+          "id": "heldout-15-q4",
+          "query": "What encoding container is used for Vesta recording?",
+          "gold": [
+            "heldout-15-d0"
+          ],
+          "kind": "paraphrase"
+        },
+        {
+          "id": "heldout-15-q5",
+          "query": "Vesta recording file format",
+          "gold": [
+            "heldout-15-d0"
+          ],
+          "kind": "keyword"
+        },
+        {
+          "id": "heldout-15-q6",
+          "query": "Who performed on Vesta recording?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-15-q7",
+          "query": "When was Vesta recording released?",
+          "gold": [],
+          "kind": "missing_attribute"
+        },
+        {
+          "id": "heldout-15-q8",
+          "query": "What is the tallest mountain in Argentina?",
+          "gold": [],
+          "kind": "unrelated"
+        },
+        {
+          "id": "heldout-15-q9",
+          "query": "What is the file format for Nova recording?",
+          "gold": [],
+          "kind": "unknown_entity"
+        }
+      ]
+    }
+  ]
+}

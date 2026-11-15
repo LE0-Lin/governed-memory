@@ -1,0 +1,26 @@
+FF................................................s...                   [100%]
+================================== FAILURES ===================================
+_ test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty[sqlite] _
+tests\test_targeted_refresh.py:32: in test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty
+    approve(context, propose(context, "PostgreSQL", valid_from="2030-02-01T00:00:00Z"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:64: in propose
+    return ledger.propose(
+E   TypeError: governed_memory.ledger.Ledger.propose() got multiple values for keyword argument 'valid_from'
+_ test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty[postgres] _
+tests\test_targeted_refresh.py:32: in test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty
+    approve(context, propose(context, "PostgreSQL", valid_from="2030-02-01T00:00:00Z"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:64: in propose
+    return ledger.propose(
+E   TypeError: governed_memory.ledger.Ledger.propose() got multiple values for keyword argument 'valid_from'
+============================== warnings summary ===============================
+.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22
+  E:\OpenSource\governed-memory\.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class SearchInterface(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_targeted_refresh.py::test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty[sqlite]
+FAILED tests/test_targeted_refresh.py::test_snapshot_filter_preserves_historical_payloads_and_empty_means_empty[postgres]
+2 failed, 51 passed, 1 skipped, 1 warning in 22.40s

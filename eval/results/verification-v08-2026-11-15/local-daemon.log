@@ -1,0 +1,113 @@
+time="2026-11-15T20:16:23.337039441+08:00" level=info msg="Starting up"
+time="2026-11-15T20:16:23.339995610+08:00" level=info msg="containerd not running, starting managed containerd"
+time="2026-11-15T20:16:23.354258345+08:00" level=info msg="started new containerd process" address=/var/run/governed-memory-docker/containerd/containerd.sock module=libcontainerd pid=431
+time="2026-11-15T20:16:23.722800210+08:00" level=info msg="starting containerd" revision=b98a3aace656320842a23f4a392a33f46af97866 version=v1.7.28
+time="2026-11-15T20:16:23.746229811+08:00" level=info msg="loading plugin \"io.containerd.event.v1.exchange\"..." type=io.containerd.event.v1
+time="2026-11-15T20:16:23.746310843+08:00" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.containerd.internal.v1
+time="2026-11-15T20:16:23.746961487+08:00" level=info msg="loading plugin \"io.containerd.warning.v1.deprecations\"..." type=io.containerd.warning.v1
+time="2026-11-15T20:16:23.747008511+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.blockfile\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.747381256+08:00" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.blockfile\"..." error="no scratch file generator: skip plugin" type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.747427340+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.devmapper\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.747444089+08:00" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.devmapper\"..." error="devmapper not configured: skip plugin" type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.747452363+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.native\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.747755984+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.overlayfs\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.748268701+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.aufs\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.756969532+08:00" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.aufs\"..." error="aufs is not supported (modprobe aufs failed: exit status 1 \"modprobe: FATAL: Module aufs not found in directory /lib/modules/6.6.87.2-microsoft-standard-WSL2\\n\"): skip plugin" type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.757037277+08:00" level=info msg="loading plugin \"io.containerd.snapshotter.v1.zfs\"..." type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.757272217+08:00" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.zfs\"..." error="path /var/lib/governed-memory-docker/containerd/daemon/io.containerd.snapshotter.v1.zfs must be a zfs filesystem to be used with the zfs snapshotter: skip plugin" type=io.containerd.snapshotter.v1
+time="2026-11-15T20:16:23.757312508+08:00" level=info msg="loading plugin \"io.containerd.content.v1.content\"..." type=io.containerd.content.v1
+time="2026-11-15T20:16:23.757333098+08:00" level=info msg="loading plugin \"io.containerd.metadata.v1.bolt\"..." type=io.containerd.metadata.v1
+time="2026-11-15T20:16:23.757380083+08:00" level=info msg="metadata content store policy set" policy=shared
+time="2026-11-15T20:16:23.767133628+08:00" level=info msg="loading plugin \"io.containerd.gc.v1.scheduler\"..." type=io.containerd.gc.v1
+time="2026-11-15T20:16:23.767195009+08:00" level=info msg="loading plugin \"io.containerd.differ.v1.walking\"..." type=io.containerd.differ.v1
+time="2026-11-15T20:16:23.767209026+08:00" level=info msg="loading plugin \"io.containerd.lease.v1.manager\"..." type=io.containerd.lease.v1
+time="2026-11-15T20:16:23.767254460+08:00" level=info msg="loading plugin \"io.containerd.streaming.v1.manager\"..." type=io.containerd.streaming.v1
+time="2026-11-15T20:16:23.767285446+08:00" level=info msg="loading plugin \"io.containerd.runtime.v1.linux\"..." type=io.containerd.runtime.v1
+time="2026-11-15T20:16:23.767384376+08:00" level=info msg="loading plugin \"io.containerd.monitor.v1.cgroups\"..." type=io.containerd.monitor.v1
+time="2026-11-15T20:16:23.769405548+08:00" level=info msg="loading plugin \"io.containerd.runtime.v2.task\"..." type=io.containerd.runtime.v2
+time="2026-11-15T20:16:23.769692668+08:00" level=info msg="loading plugin \"io.containerd.runtime.v2.shim\"..." type=io.containerd.runtime.v2
+time="2026-11-15T20:16:23.769740653+08:00" level=info msg="loading plugin \"io.containerd.sandbox.store.v1.local\"..." type=io.containerd.sandbox.store.v1
+time="2026-11-15T20:16:23.769763785+08:00" level=info msg="loading plugin \"io.containerd.sandbox.controller.v1.local\"..." type=io.containerd.sandbox.controller.v1
+time="2026-11-15T20:16:23.769788908+08:00" level=info msg="loading plugin \"io.containerd.service.v1.containers-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.769830979+08:00" level=info msg="loading plugin \"io.containerd.service.v1.content-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.769864616+08:00" level=info msg="loading plugin \"io.containerd.service.v1.diff-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.769908619+08:00" level=info msg="loading plugin \"io.containerd.service.v1.images-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.769960696+08:00" level=info msg="loading plugin \"io.containerd.service.v1.introspection-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.770006089+08:00" level=info msg="loading plugin \"io.containerd.service.v1.namespaces-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.770025199+08:00" level=info msg="loading plugin \"io.containerd.service.v1.snapshots-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.770039536+08:00" level=info msg="loading plugin \"io.containerd.service.v1.tasks-service\"..." type=io.containerd.service.v1
+time="2026-11-15T20:16:23.770705978+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.containers\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770746189+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.content\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770843479+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.diff\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770880127+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.events\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770896166+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.images\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770936676+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770949663+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.leases\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770963700+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.770997718+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.sandbox-controllers\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771013766+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.sandboxes\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771048624+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771065102+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.streaming\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771081080+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771099690+08:00" level=info msg="loading plugin \"io.containerd.transfer.v1.local\"..." type=io.containerd.transfer.v1
+time="2026-11-15T20:16:23.771146804+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.transfer\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771201652+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.771228546+08:00" level=info msg="loading plugin \"io.containerd.internal.v1.restart\"..." type=io.containerd.internal.v1
+time="2026-11-15T20:16:23.774541419+08:00" level=info msg="loading plugin \"io.containerd.tracing.processor.v1.otlp\"..." type=io.containerd.tracing.processor.v1
+time="2026-11-15T20:16:23.774611264+08:00" level=info msg="skip loading plugin \"io.containerd.tracing.processor.v1.otlp\"..." error="skip plugin: tracing endpoint not configured" type=io.containerd.tracing.processor.v1
+time="2026-11-15T20:16:23.774623551+08:00" level=info msg="loading plugin \"io.containerd.internal.v1.tracing\"..." type=io.containerd.internal.v1
+time="2026-11-15T20:16:23.774634776+08:00" level=info msg="skip loading plugin \"io.containerd.internal.v1.tracing\"..." error="skip plugin: tracing endpoint not configured" type=io.containerd.internal.v1
+time="2026-11-15T20:16:23.774645472+08:00" level=info msg="loading plugin \"io.containerd.grpc.v1.healthcheck\"..." type=io.containerd.grpc.v1
+time="2026-11-15T20:16:23.774656237+08:00" level=info msg="loading plugin \"io.containerd.nri.v1.nri\"..." type=io.containerd.nri.v1
+time="2026-11-15T20:16:23.774698619+08:00" level=info msg="NRI interface is disabled by configuration."
+time="2026-11-15T20:16:23.778207899+08:00" level=info msg=serving... address=/var/run/governed-memory-docker/containerd/containerd-debug.sock
+time="2026-11-15T20:16:23.779177657+08:00" level=info msg=serving... address=/var/run/governed-memory-docker/containerd/containerd.sock.ttrpc
+time="2026-11-15T20:16:23.789396201+08:00" level=info msg=serving... address=/var/run/governed-memory-docker/containerd/containerd.sock
+time="2026-11-15T20:16:23.789472570+08:00" level=info msg="containerd successfully booted in 0.070203s"
+time="2026-11-15T20:16:23.813373952+08:00" level=info msg="OTEL tracing is not configured, using no-op tracer provider"
+time="2026-11-15T20:16:23.815616110+08:00" level=info msg="CDI directory does not exist, skipping: failed to monitor for changes: no such file or directory" dir=/etc/cdi
+time="2026-11-15T20:16:23.815649597+08:00" level=info msg="CDI directory does not exist, skipping: failed to monitor for changes: no such file or directory" dir=/var/run/cdi
+time="2026-11-15T20:16:24.061773648+08:00" level=info msg="Creating a containerd client" address=/var/run/governed-memory-docker/containerd/containerd.sock timeout=1m0s
+time="2026-11-15T20:16:24.142087414+08:00" level=info msg="[graphdriver] using prior storage driver: overlay2"
+time="2026-11-15T20:16:24.670638949+08:00" level=info msg="Loading containers: start."
+time="2026-11-15T20:16:27.617661118+08:00" level=info msg="Loading containers: done."
+time="2026-11-15T20:16:27.748808386+08:00" level=info msg="Docker daemon" commit=f8215cc2 containerd-snapshotter=false storage-driver=overlay2 version=28.5.1
+time="2026-11-15T20:16:27.749257586+08:00" level=info msg="Initializing buildkit"
+time="2026-11-15T20:16:27.799530436+08:00" level=info msg="Completed buildkit initialization"
+time="2026-11-15T20:16:27.811195410+08:00" level=info msg="Daemon has completed initialization"
+time="2026-11-15T20:16:27.811302941+08:00" level=info msg="API listen on /var/run/governed-memory-docker.sock"
+time="2026-11-15T20:16:31.220495807+08:00" level=warning msg="Security options with `:` as a separator are deprecated and will be completely unsupported in 17.04, use `=` instead."
+time="2026-11-15T20:19:05.195058159+08:00" level=info msg="shim disconnected" id=26293d7d9c2713034b4272f91b543aa4e49bf06ab0a399ed716154234e41c81b namespace=moby
+time="2026-11-15T20:19:05.195401754+08:00" level=warning msg="cleaning up after shim disconnected" id=26293d7d9c2713034b4272f91b543aa4e49bf06ab0a399ed716154234e41c81b namespace=moby
+time="2026-11-15T20:19:05.195479131+08:00" level=info msg="ignoring event" container=26293d7d9c2713034b4272f91b543aa4e49bf06ab0a399ed716154234e41c81b module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+time="2026-11-15T20:19:05.195412745+08:00" level=info msg="cleaning up dead shim" namespace=moby
+time="2026-11-15T20:38:55.066059124+08:00" level=info msg="Layer sha256:2267620a4abaf4fbf6b48a76087711b435ebbb33e552fd3ec84a066e1b70cda3 cleaned up"
+time="2026-11-15T20:39:16.679549227+08:00" level=info msg="ignoring event" container=661dd25042ce8bc63a27e163680a31478ecf6288f70275e67d6c0aaa5824f931 module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+time="2026-11-15T20:39:16.682597770+08:00" level=info msg="shim disconnected" id=661dd25042ce8bc63a27e163680a31478ecf6288f70275e67d6c0aaa5824f931 namespace=moby
+time="2026-11-15T20:39:16.686483156+08:00" level=warning msg="cleaning up after shim disconnected" id=661dd25042ce8bc63a27e163680a31478ecf6288f70275e67d6c0aaa5824f931 namespace=moby
+time="2026-11-15T20:39:16.686819844+08:00" level=info msg="cleaning up dead shim" namespace=moby
+time="2026-11-15T20:40:01.369506749+08:00" level=info msg="ignoring event" container=ba59c94eea8508ad2b06e74602908a6f24c073518a8ef1f82fdf76c9ae9db458 module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+time="2026-11-15T20:40:01.370257982+08:00" level=info msg="shim disconnected" id=ba59c94eea8508ad2b06e74602908a6f24c073518a8ef1f82fdf76c9ae9db458 namespace=moby
+time="2026-11-15T20:40:01.370773469+08:00" level=warning msg="cleaning up after shim disconnected" id=ba59c94eea8508ad2b06e74602908a6f24c073518a8ef1f82fdf76c9ae9db458 namespace=moby
+time="2026-11-15T20:40:01.370823696+08:00" level=info msg="cleaning up dead shim" namespace=moby
+time="2026-11-15T20:41:19.189049594+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.192672675+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.192699428+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.192716699+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.192727896+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.192738913+08:00" level=error msg="Error writing log message" driver=json-file error="error writing log entry: write /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b-json.log: input/output error" message=
+time="2026-11-15T20:41:19.323745631+08:00" level=error msg="Error removing mounted layer 9319ca76c7b38c04f3029e25eae3afdfb7075b461b250d624e623e2e8515a596: unlinkat /var/lib/governed-memory-docker/overlay2/28ad36a0b2f7604f5b3c6bbed12ed250b76416c35e1fc9b7afd0568cd8eec00c/merged: input/output error"
+time="2026-11-15T20:41:17.805708875+08:00" level=info msg="ignoring event" container=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+time="2026-11-15T20:41:17.809539550+08:00" level=info msg="shim disconnected" id=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b namespace=moby
+time="2026-11-15T20:41:17.810301598+08:00" level=warning msg="cleaning up after shim disconnected" id=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b namespace=moby
+time="2026-11-15T20:41:17.810321727+08:00" level=info msg="cleaning up dead shim" namespace=moby
+time="2026-11-15T20:41:18.265311657+08:00" level=warning msg="failed to clean up after shim disconnected" error="rename /var/lib/governed-memory-docker/containerd/daemon/io.containerd.runtime.v2.task/moby/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b /var/lib/governed-memory-docker/containerd/daemon/io.containerd.runtime.v2.task/moby/.e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b: input/output error" id=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b namespace=moby
+time="2026-11-15T20:41:18.284508581+08:00" level=error msg="e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b cleanup: failed to delete container from containerd: write /var/lib/governed-memory-docker/containerd/daemon/io.containerd.metadata.v1.bolt/meta.db: input/output error"
+time="2026-11-15T20:41:18.360683152+08:00" level=warning msg="driver failed revoking external connectivity on endpoint" eid=5162562dce4a2682d161edc96232dd9e386f3763c10a73d29ca1ba695fcc038b ep=gm-postgres error="failed to update bridge endpoint 5162562 to store: failed to update bridge store for object type *bridge.bridgeEndpoint: write /var/lib/governed-memory-docker/network/files/local-kv.db: input/output error" net=bridge nid=882ea9573c0ccd37afb2227bab1a282d2670e9a96b8395475cafa30f72ce3b97
+time="2026-11-15T20:41:18.442627526+08:00" level=warning msg="Failed detaching sandbox ebfc76e2db4401921084b0063c674b4a3a62bf72aee0d5a2520555a94e57d25e from endpoint 5162562dce4a2682d161edc96232dd9e386f3763c10a73d29ca1ba695fcc038b: failed to update store for object type *libnetwork.Endpoint: write /var/lib/governed-memory-docker/network/files/local-kv.db: input/output error\n"
+time="2026-11-15T20:41:18.443501332+08:00" level=warning msg="Failed deleting endpoint 5162562dce4a2682d161edc96232dd9e386f3763c10a73d29ca1ba695fcc038b: endpoint with name gm-postgres id 5162562dce4a2682d161edc96232dd9e386f3763c10a73d29ca1ba695fcc038b has active containers\n"
+time="2026-11-15T20:41:18.446462543+08:00" level=warning msg="Failed to delete sandbox ebfc76e2db4401921084b0063c674b4a3a62bf72aee0d5a2520555a94e57d25e from store: write /var/lib/governed-memory-docker/network/files/local-kv.db: input/output error"
+time="2026-11-15T20:41:18.448952454+08:00" level=warning msg="e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b cleanup: failed to unmount IPC: lstat /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/mounts/shm: input/output error"
+time="2026-11-15T20:41:18.449058589+08:00" level=error msg="error unmounting container" container=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b error="open /var/lib/governed-memory-docker/overlay2/7820607cf213b9572e015035c1283be5acbeb7e2b6a9708143f2131ad7d7063e/lower: input/output error"
+time="2026-11-15T20:41:18.508593859+08:00" level=warning msg="e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b cleanup: failed to unmount secrets: lstat /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/mounts/secrets: input/output error"
+time="2026-11-15T20:41:18.512834094+08:00" level=error msg="failed to process event" container=e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b error="open /var/lib/governed-memory-docker/containers/e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b/.tmp-config.v2.json490676911: input/output error" event=exit event-info="{e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b e5f68ff4c15bd8dcd4e02f7fde2d0af830b9483539d25660938033a1334c400b 742 135 2026-11-15 12:41:19.269176304 +0000 UTC <nil>}" module=libcontainerd namespace=moby

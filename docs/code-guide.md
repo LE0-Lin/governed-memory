@@ -15,6 +15,7 @@ or model orchestration layers to learn.
 | When does retrieval reject unrelated evidence? | `relevance.py`, `Retriever.search`, `data/minilm-relevance-v1.json` | `test_relevance_cache.py`, `test_retrieval_evidence.py` |
 | What can the document cache reuse? | `embedding_cache.py`, `hybrid_rank` | `test_relevance_cache.py` |
 | What can repeated reranking reuse? | `rerank_cache.py`, `Retriever.search` | `test_rerank_cache.py`, `test_local_models.py` |
+| Why does the final authority read use fewer IDs? | `Ledger.visible(memory_ids=...)`, final refresh in `Retriever.search` | `test_targeted_refresh.py`, `test_reference_v07.py` |
 | How are answers constrained and rechecked? | `AnswerService.answer`, `generate_answer`, `parse_answer` in `answering.py`, then `generation.py` | `test_answering.py`, `test_answer_format.py` |
 | What fits in a response? | `budget.py`, then `tokenizer.py` | `test_retrieval.py` |
 | How does an agent use it? | `mcp_server.py`; operator commands are in `cli.py` | `test_ingest_mcp.py` |
@@ -45,6 +46,15 @@ The graph adapter returns IDs, not trusted text. `Retriever.search` joins those
 IDs back to ledger evidence, checks authority before reranking and serialization,
 then packs whole evidence items. Graph failures are visible in the response's
 `backend` field. `budget.py` owns the one evidence serializer/token counter.
+
+When reranking selects fewer snapshots than the eligible pool, the last live
+read restricts SQL to those exact `FactVersion` IDs. It still authenticates and
+checks current grants, time, sources and dependency availability. An empty
+filtered result triggers a full fresh read to preserve the existing reason
+codes. Earlier reads remain full so withdrawals can admit valid lower-ranked
+survivors. This is a query restriction, with no new cache or authority layer.
+The [v0.8 report](../eval/RESULTS-v0.8.md) compares the exact old Git classes
+against this path and retains the unsuccessful first attempt.
 
 The optional relevance cutoff filters raw reranker scores before packing. The
 cutoff artifact is tied to a model revision; `Settings` applies it only to the

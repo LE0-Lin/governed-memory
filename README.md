@@ -8,7 +8,7 @@ v0.6.1 fixes lifecycle and graph-outbox propagation when a corroborating approva
 
 The local cross-encoder can reuse bounded query/passage scores in a long-running service. `MEMORY_RERANK_CACHE_SIZE` controls this cache; current permissions, time and source checks still run on every request. The [paired metrics protocol](eval/RETRIEVAL_METRICS_PROTOCOL.md) separates first-pass and repeat latency and tests up to 1,152 controlled historical assertions; see the [v0.7 results](eval/RESULTS-v0.7.md) for measured scope and limits.
 
-v0.8 evaluates a narrower final authority read after reranking, preserving all live checks and empty-result reasons. The [revised reference protocol](eval/AUTHORITY_REFRESH_V2_PROTOCOL.md) compares exact v0.7 source with the candidate; [v0.8 results](eval/RESULTS-v0.8.md) retain first-pass/repeat outcomes and the rejected first attempt.
+v0.8 narrows the final authority read after reranking, preserving all live checks and empty-result reasons. In the largest controlled synthetic case, same-run retrieval P95 falls from 521.9 to 408.3 ms (21.8%); smaller workloads show little benefit and some first-pass regressions. The [revised reference protocol](eval/AUTHORITY_REFRESH_V2_PROTOCOL.md), [results](eval/RESULTS-v0.8.md) and [verification](docs/verification-v0.8.md) retain the scope, exact v0.7 comparison and rejected first attempt.
 
 ## Run the example
 

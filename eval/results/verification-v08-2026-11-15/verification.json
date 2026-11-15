@@ -1,0 +1,161 @@
+{
+  "version": "0.8.0",
+  "date": "2026-11-15 Asia/Shanghai",
+  "verified_source_commit": "20057750b410eaa278b42fcd7045fa1ed2eb70c4",
+  "code_sha256": "074194f66412f70b1be40aa7131eaa7ce9b9989b1f6ebf0b9105ae3c2be37bb3",
+  "protocol_sha256": "73e98137c3007bed654c8f6a312eb69220f3d65b0f999e5c73c10bcc4c382717",
+  "reference_commit": "df8349b7abfcdd8485868225e6bb74589f397edb",
+  "regular_ci": {
+    "id": 43717801551,
+    "successful_jobs": 6
+  },
+  "dedicated_ci": {
+    "id": 43717801550,
+    "successful_jobs": 2
+  },
+  "test_collection_configurations": 371,
+  "test_accounting": "CI job groups overlap and are not summed as unique tests. Local partial failures are retained, not counted as acceptance.",
+  "ci_groups": {
+    "core_each_windows_ubuntu": {
+      "passed": 189,
+      "skipped": 147,
+      "deselected": 35
+    },
+    "storage_core_container": {
+      "passed": 325,
+      "skipped": 46
+    },
+    "real_models": {
+      "passed": 32,
+      "skipped": 14,
+      "known_quality_xfail": 1
+    },
+    "native_each_windows_ubuntu": {
+      "passed": 8,
+      "skipped": 4,
+      "deselected": 3
+    },
+    "installed_model_mcp": {
+      "passed": 2,
+      "sqlite_skipped": 2
+    }
+  },
+  "model_image": "sha256:aead486e2d8631bc13579ffa80233b608ef95f363818b21d68220ef38900ded1",
+  "paired_v2": {
+    "observations": 1992,
+    "unique_workload_queries": 332,
+    "summary_groups": 8,
+    "paired_comparisons": 996,
+    "paired_mismatches": 0,
+    "execution_errors": 0,
+    "governed_stale_results": 0,
+    "observations_sha256": "36e826fc6b13a6a7aaae4087a1ff59043f6deac09f7413d5bb68738a9dc8c2ac",
+    "source_unchanged_during_run": true
+  },
+  "largest_controlled_case": {
+    "historical_assertions": 1152,
+    "positive_recall_both": 1.0,
+    "stale_both": 0,
+    "returned_each": 795,
+    "deltas": {
+      "latency_ms_p95": {
+        "reference": 521.9162034000063,
+        "candidate": 408.2976687500021,
+        "relative_reduction": 0.21769497461439202
+      },
+      "first_pass_p95_ms": {
+        "reference": 602.8788147500094,
+        "candidate": 558.3376011999959,
+        "relative_reduction": 0.07388087366858798
+      },
+      "repeat_p95_ms": {
+        "reference": 400.55481709999583,
+        "candidate": 378.9455796999732,
+        "relative_reduction": 0.05394826495028271
+      },
+      "visible_rows": {
+        "reference": 193536,
+        "candidate": 157752,
+        "relative_reduction": 0.18489583333333337
+      }
+    }
+  },
+  "smaller_first_pass_regressions_preserved": true,
+  "v1_rejected": {
+    "source_commit": "63eec49ae9cca8df876b50bff3d9178440d41f64",
+    "run_id": 43716291311,
+    "overall_p95_regression_percent": 31.3,
+    "first_pass_p95_regression_percent": 16.3,
+    "archive": "../authority-v08-v1-2026-11-15"
+  },
+  "local_build_artifacts": {
+    "governed_memory-0.8.0.tar.gz": {
+      "bytes": 6605339,
+      "sha256": "7491d49cfc69ac6a6dad5b16bde17f50a93350f382aa27e59442292a1490ffc7"
+    },
+    "governed_memory-0.8.0-py3-none-any.whl": {
+      "bytes": 839305,
+      "sha256": "473ffbcfb06b545ac4a62068f112fb52886744102e16034fc7b7179a29b71568"
+    }
+  },
+  "local_failures": {
+    "initial_test_authoring": "Two duplicate-valid_from argument errors, corrected before accepted targeted runs.",
+    "partial_core": {
+      "passed": 226,
+      "skipped": 22,
+      "deselected": 11,
+      "setup_errors": 99
+    },
+    "partial_models": {
+      "passed": 7,
+      "known_quality_xfail": 1,
+      "setup_errors": 3
+    },
+    "infrastructure": "C: critically low; Docker writable-layer I/O error; Ubuntu cannot launch processes; PostgreSQL unavailable.",
+    "local_recovery_performed": false,
+    "local_service_or_daemon_clean_shutdown_verified": false,
+    "data_models_caches_old_images_deleted": false,
+    "ubuntu_migration": "Pending explicit approval; affects the whole distribution."
+  },
+  "old_evaluation_outputs_modified": false,
+  "new_500_question_generation": false,
+  "cv_or_historical_dates_modified": false,
+  "scope": "Known controlled synthetic histories; one caller, warmed CPU models, PostgreSQL authority path, Rust ranking; graph, external-policy HTTP, transport and generation excluded.",
+  "canonical_v2_files_sha256": {
+    ".gitattributes": "4554b00c7af17fba3506162074e0c74da36b801df2de52edd119d99284463ed9",
+    "equivalence.json": "cc7553c03d3fdfe0b29d197ba40bf68768d8256b794015efefe38b1d1d702bbd",
+    "heldout-aliases.json": "0dc0aaa2e6afade091bab5a0020276a91b5e30f29a486a98fb62f1fa9fddb697",
+    "heldout-fixture.json": "5ff65d647993cf40029b0c53c5c6d4ed8da1c86f0123cf8abcd2bfea111fe74f",
+    "independent-verification.json": "9ee78ee16a3191af4dbf9954427b14b3a3ccd9c0b8653bcb7ab36ad01c5efaf7",
+    "manifest.json": "ba476f7a388d6d709a5b66d22559a0fe3b1ebaf1fac164afa36f3302d3bcc675",
+    "observations.jsonl": "36e826fc6b13a6a7aaae4087a1ff59043f6deac09f7413d5bb68738a9dc8c2ac",
+    "summary.json": "82de685e2f008b767cecc72d6f76ef4f2c01a1052940c1a24728e84b1637576e",
+    "timelines_1-aliases.json": "ea7d918ff918905d9c81988880e2faf8cb17c40726fbb6d76b9152650ef86758",
+    "timelines_1-fixture.json": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1",
+    "timelines_16-aliases.json": "10c5cc79e4535370fff68c1041ac87a803eb9a5c34eba0be97d42656d07d060d",
+    "timelines_16-fixture.json": "00fa3b611b2b0978fb1427a9f69507dd879d5f768ca5d8f999d2d2625b469ecf",
+    "timelines_4-aliases.json": "18ef450c3d9ba83884f0c77dbf1944014ce65982c0b10e2c94836760a5abc6f0",
+    "timelines_4-fixture.json": "8ac6e7b9a7bfecc93e8f4ccdc956c347c5ae6d35c1fcb477d6be4da2806b042e"
+  },
+  "evidence_files_sha256": {
+    "source-ci.log": "4ecbd69ce8753b09583c8078e74915fd36cf3d7fbfaf4040b87b48f9732d4d9a",
+    "source-ci.json": "02102a84129ab5fee8cfe40b66728f0019e506606ac79da9db8f62fb63907bad",
+    "connected-ci.json": "7283569a77bd75937a795240d39e31e3751856b764c27b2988198c9560ed450e",
+    "installed-model-mcp.xml": "1b73a978b5552b976bdd005c72fdfb7781db7ef4c4e5a65b6c56a2fb7af36d56",
+    "model-image-id.txt": "cf97a74c744dc944fc96f0ae9db8b2270b0752ee81ee6af8b44a02f2e77cc16c",
+    "local-rescore-v1.json": "07e31d6dc2846c1113fa2a663e8a51ceba2530665c53a3d44b71e88abbda8b9e",
+    "local-rescore-v2.json": "9ee78ee16a3191af4dbf9954427b14b3a3ccd9c0b8653bcb7ab36ad01c5efaf7",
+    "local-build.txt": "9131b5a0bbe06e8a1b57fec58ca426795ce3f13781775989c00a110d3a8879e5",
+    "local-initial-test-authoring-failure.txt": "b5a72a6deaaa8a61bed055c9b70339fdd225b2cdf055a0bc3be46cd1d906bbb0",
+    "local-corrected-targeted-tests.txt": "c728c946c57823b7dbbacc84266629b2431a11142505d3543bb1caa24cb827ff",
+    "local-reference-tests.txt": "25b3911bccbbbafbda70c7c4a1417b6d5fcbb462b9449e65c5230ca0762d89d0",
+    "local-v2-sqlite-tests.txt": "001fa0beb4d1deb687dab0c55d4e511373a4545f48a844dec8c87d426a57ed0a",
+    "local-backward-rescore.txt": "417a3f6c8d86281d54b2c295cae756e3d3b2c770d036b2ddba5a0657fd9446e3",
+    "local-failed-model-build.txt": "4ae5216242bc7d9136bf98d972a401ccb3232691692ab3248d9a42b6964a7ef1",
+    "local-partial-core-tests.txt": "e11abc82c5bbc3e57407f0f68bd872a16abc3c6493dda8a06474ba938c386622",
+    "local-partial-core-tests.xml": "05d45ca05de437c1b82234a0382e89412d342c12f5c073d05985587e2ac4c4f4",
+    "local-partial-model-tests.txt": "edf5f28872badf5502a05c3474de7fe62538621bbb0a28f0d9f91d7e977f93de",
+    "local-partial-model-tests.xml": "1cf7380ad8146b3c76554eed557c2022746eca5112e59c2c34615dd79fdb09ef",
+    "local-daemon.log": "8fa5f4b6002553972c2caa756291a62663d8a98e4faa645e3012f7c92f8c3a19"
+  }
+}
