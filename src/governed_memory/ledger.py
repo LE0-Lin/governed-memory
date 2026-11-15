@@ -618,7 +618,7 @@ class Ledger:
         with Session(self.engine) as s:
             actor = self.authenticate(s, token, project)
             query = (
-                select(FactVersion, Candidate)
+                select(FactVersion, Candidate, Source)
                 .join(
                     Candidate,
                     Candidate.id == FactVersion.candidate_id,
@@ -637,10 +637,10 @@ class Ledger:
             if memory_ids is not None:
                 query = query.where(FactVersion.id.in_(memory_ids))
             rows = s.execute(query).all()
-            source_map = approved_source_map(s, [c for _, c in rows], known, actor)
-            dependency_map = dependencies.availability(s, [c.id for _, c in rows], known, actor)
+            source_map = approved_source_map(s, [c for _, c, _ in rows], known, actor)
+            dependency_map = dependencies.availability(s, [c.id for _, c, _ in rows], known, actor)
             result = []
-            for version, candidate in rows:
+            for version, candidate, _ in rows:
                 sources = source_map.get(candidate.id, [])
                 if not sources or not dependency_map[candidate.id]:
                     continue

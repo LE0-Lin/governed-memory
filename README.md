@@ -8,7 +8,7 @@ v0.6.1 fixes lifecycle and graph-outbox propagation when a corroborating approva
 
 The local cross-encoder can reuse bounded query/passage scores in a long-running service. `MEMORY_RERANK_CACHE_SIZE` controls this cache; current permissions, time and source checks still run on every request. The [paired metrics protocol](eval/RETRIEVAL_METRICS_PROTOCOL.md) separates first-pass and repeat latency and tests up to 1,152 controlled historical assertions; see the [v0.7 results](eval/RESULTS-v0.7.md) for measured scope and limits.
 
-v0.8 reduces authority-read work by loading fewer unused fields and rechecking only selected snapshot IDs after reranking. All live checks and empty-result reasons are preserved. The [reference protocol](eval/AUTHORITY_REFRESH_PROTOCOL.md) compares exact v0.7 source with the new path; [v0.8 results](eval/RESULTS-v0.8.md) retain first-pass and repeat outcomes.
+v0.8 evaluates a narrower final authority read after reranking, preserving all live checks and empty-result reasons. The [revised reference protocol](eval/AUTHORITY_REFRESH_V2_PROTOCOL.md) compares exact v0.7 source with the candidate; [v0.8 results](eval/RESULTS-v0.8.md) retain first-pass/repeat outcomes and the rejected first attempt.
 
 ## Run the example
 

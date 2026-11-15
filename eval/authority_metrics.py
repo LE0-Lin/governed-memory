@@ -23,7 +23,7 @@ from governed_memory.rerank_cache import RerankScoreCache
 from governed_memory.retrieval import Retriever, serialize
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = ROOT / "eval/AUTHORITY_REFRESH_PROTOCOL.md"
+PROTOCOL = ROOT / "eval/AUTHORITY_REFRESH_V2_PROTOCOL.md"
 METHODS = ("reference_v07", "targeted_refresh")
 
 

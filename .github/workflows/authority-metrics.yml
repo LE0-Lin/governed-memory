@@ -11,6 +11,7 @@ on:
       - eval/reference_v07.py
       - eval/metrics_rescore.py
       - eval/AUTHORITY_REFRESH_PROTOCOL.md
+      - eval/AUTHORITY_REFRESH_V2_PROTOCOL.md
       - tests/test_container_deployment.py
       - pyproject.toml
       - uv.lock
