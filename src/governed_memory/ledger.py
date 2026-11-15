@@ -606,7 +606,10 @@ class Ledger:
             self._invalidate_dependents(session, [prior.id], actor, now)
         self._insert_version(session, candidate, candidate.valid_from, candidate.valid_until, now)
 
-    def visible(self, token: str, project: str, *, valid_at=None, known_at=None) -> list[Evidence]:
+    def visible(
+        self, token: str, project: str, *, valid_at=None, known_at=None, memory_ids=None
+    ) -> list[Evidence]:
+        """Read currently eligible snapshots, optionally limited to exact snapshot IDs."""
         now = instant(self.clock())
         valid, known = (
             instant(valid_at) if valid_at else now,
@@ -614,7 +617,7 @@ class Ledger:
         )
         with Session(self.engine) as s:
             actor = self.authenticate(s, token, project)
-            rows = s.execute(
+            query = (
                 select(FactVersion, Candidate, Source)
                 .join(
                     Candidate,
@@ -631,7 +634,9 @@ class Ledger:
                     Candidate.proposed_at <= known,
                 )
             )
-            rows = rows.all()
+            if memory_ids is not None:
+                query = query.where(FactVersion.id.in_(memory_ids))
+            rows = s.execute(query).all()
             source_map = approved_source_map(s, [c for _, c, _ in rows], known, actor)
             dependency_map = dependencies.availability(s, [c.id for _, c, _ in rows], known, actor)
             result = []
