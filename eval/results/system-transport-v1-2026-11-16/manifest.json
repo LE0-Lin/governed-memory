@@ -1,0 +1,91 @@
+{
+  "commit": "5b32311e2b735c9c45552b36177637a500478375",
+  "dirty_source": false,
+  "code_sha256": "808c3a1598762fd455672ed501f193b52e0a483a3c726ecd9617b693578cdc15",
+  "protocol_sha256": "e5913001d123a936fe8ccf82104a0f6c3fa2d5ee6f17b4df52f40e4a7384d542",
+  "protocol": "# Full retrieval path and OpenFGA transport protocol\n\nFrozen before implementation/canonical measurement, 2026-11-15. Preserve every\nearlier run and protocol. Original CV claims are 83.2% temporal recall, 26.4%\nfewer stale retrievals and 1.12 s P95 versus a session baseline; their original\ndata/hardware/timing are unknown. Report CV-versus-current numbers every round,\nseparately from controlled same-run version comparisons.\n\n## Hypothesis and runtime boundary\n\nv0.8 creates and closes an HTTP client for every OpenFGA check. A Windows\nloopback protocol-stub diagnostic made 20 checks in 14.75 s, including 14.35 s\nof client construction. This is diagnostic setup evidence, not actual OpenFGA\nor model-serving performance. Reuse one HTTP client per authorizer, close it\nwhen its owning CLI/server exits, and retain fresh HIGHER_CONSISTENCY checks\nfor every existing authorization boundary. Cache no decision, role, credential,\ntext or response. Keep time, source, dependency and final evidence checks.\n\nNo graph/ranking/model/cache-capacity/threshold/budget/generation/schema change\nis proposed. Existing embedding and score caches remain 2048/8192. Add explicit\nresource cleanup without changing externally supplied ledger ownership.\n\n## Exact installed reference\n\nBuild two core wheels: exact v0.8.0 Git commit\n`ac1d6ed9bd87f1b9aed412ea65a05fd589731700` and the clean candidate. Install\neach without dependencies into a separate Python target directory. Each stdio\nMCP subprocess imports that target first; validate its package version and\nevery packaged runtime file against its source before timing. Both share the\nsame pinned dependency environment/native extension and read the same isolated\nPostgreSQL schema, Neo4j projection, OpenFGA store and fixed query times.\nRecord wheel/source/protocol/dependency/model/hardware identities and startup\ntimes. No monkeypatched production authorizer or experimental MCP tool.\n\n## Workload and measurement\n\nUse the unchanged known controlled timeline recipes at 1 and 16 cohorts:\n72 and 1152 historical assertions, 84 queries each. These are previously seen\nsynthetic templates, not independent real histories or a blind accuracy set.\nFreeze generated fixtures and explicit gold/eligible labels before inference.\n\nUse actual PostgreSQL, Graphiti/Neo4j, OpenFGA backed by PostgreSQL, pinned CPU\nMiniLM embedding/reranking, Rust, and the standard search_memory stdio tool.\nConfigure actual OPA and exercise approvals outside timing; retrieval does not\ncall OPA, so do not imply OPA HTTP is included in search latency. No LLM/API\nextraction or answer generation. One caller, two inference threads per model\nprocess, k=5, budget=1024, relevance cutoff disabled. Both methods are governed.\n\nWarm models/services only with an unrelated one-fact project and unrelated\nquery, never measured documents/queries. Measured project caches start empty.\nStart both MCP servers before timing. Three replays rotate method order by\nquery index plus replay, yielding 1008 observations and 504 exact-output pairs.\nTime on the caller from call_tool through complete decoded response; also\nretain the server-reported retrieval latency. Ingestion, graph projection,\nprocess/model startup and generation are outside the retrieval interval.\nRecord startup separately; retain every first-pass cost, failure and outlier.\n\nGraph errors/fallbacks must remain visible; any graph-unavailable result fails\nthe full-path claim. Record all backends and require actual graph hits in both\nmethods. Do not silently retry timed queries. Dedicated isolated hosted CPU\nrunner; no competing image builds/tests. Local WSL remains untouched.\n\n## Gates and authority probes\n\nPreserve complete ordered evidence/payload hashes, token counts and reasons\nfor all pairs, with zero retrieval errors and stale evidence. Independently\nverify explicit labels, observation grid and all aggregate percentiles. Report\nnegative unrelated evidence; zero stale does not mean correct abstention.\n\nAfter canonical timings, in both already-warm MCP processes, remove the live\nOpenFGA grant and require immediate denial, restore access/downgrade it, and\nwithdraw a selected source while deliberately leaving its graph edge stale.\nRequire returned snapshots to remain a subset of the fresh eligible ledger.\nArchive these probes separately from immutable fixture-scored observations.\nUnit/integration checks must cover changed/invalid decisions, HTTP failures,\nclient disposal and externally owned ledger lifetime. Required repository CI\nand installed model regressions must pass.\n\nPromote the transport optimization only if largest-case overall AND first-pass\ncaller P95 improve versus the same-run installed v0.8 reference, with all\ncorrectness gates passing. Disclose smaller/repeat regressions too. A failure\nremains archived; any changed implementation needs a distinct versioned run.\nDo not compare the new full-path latency to old ledger-only 0.408 s as a version\nregression or speedup. Report both scopes beside the CV's 1.12 s. This closes\nsame-host graph/FGA/stdio evidence only, not WAN/concurrent production capacity,\nindependent real-world recall or historical 2025 date evidence.\n",
+  "methods": [
+    "reference_v08",
+    "pooled_transport"
+  ],
+  "comparison": [
+    "reference_v08",
+    "pooled_transport"
+  ],
+  "datasets": {
+    "timelines_1": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1",
+    "timelines_16": "00fa3b611b2b0978fb1427a9f69507dd879d5f768ca5d8f999d2d2625b469ecf"
+  },
+  "started_at": "2026-11-16T07:28:24.674384+00:00",
+  "python": "3.12.14",
+  "os": "Linux-7.0.0-1016-aws-x86_64-with-glibc2.43",
+  "cpu": "Intel(R) Xeon(R) 6975P-C",
+  "packages": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "sqlalchemy": "2.0.57",
+    "httpx": "0.28.1",
+    "mcp": "1.30.0",
+    "graphiti-core": "0.31.2",
+    "governed-memory-native": "0.4.0"
+  },
+  "github_run_id": "43823918983",
+  "repetitions": 3,
+  "runtime": {
+    "reference_v08": {
+      "version": "0.8.0",
+      "module": "/home/runner/work/governed-memory/governed-memory/.local/reference-runtime/governed_memory/__init__.py",
+      "source_commit": "ac1d6ed9bd87f1b9aed412ea65a05fd589731700",
+      "verified_runtime_files": 36
+    },
+    "pooled_transport": {
+      "version": "0.9.0",
+      "module": "/home/runner/work/governed-memory/governed-memory/.local/candidate-runtime/governed_memory/__init__.py",
+      "source_commit": "5b32311e2b735c9c45552b36177637a500478375",
+      "verified_runtime_files": 36
+    }
+  },
+  "wheels": {
+    "reference_v08": {
+      "name": "governed_memory-0.8.0-py3-none-any.whl",
+      "sha256": "85bced395c88759084d3471074331644f01c187921aa577a54e58a1ddbb2d8ec"
+    },
+    "pooled_transport": {
+      "name": "governed_memory-0.9.0-py3-none-any.whl",
+      "sha256": "da9201444d8d0e99fbe746541742bd83e9a6fee4e2a447e4b1c6312ebe91c6cb"
+    }
+  },
+  "startup_ms": {
+    "timelines_1": {
+      "reference_v08": 4371.854042000024,
+      "pooled_transport": 4630.396058000002
+    },
+    "timelines_16": {
+      "reference_v08": 4608.959008,
+      "pooled_transport": 4619.578518999959
+    }
+  },
+  "cache": {},
+  "timing": "Caller-observed standard MCP stdio, actual PG/Neo4j/OpenFGA, CPU models and Rust; excludes startup/ingestion/projection/generation. OPA approvals occur before timing.",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 256,
+    "native_dimensions": 384,
+    "projection_dimensions": 1024
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "completed_at": "2026-11-16T07:33:55.488615+00:00",
+  "source_unchanged": true
+}
