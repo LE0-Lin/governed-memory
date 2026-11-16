@@ -7,7 +7,6 @@ import ipaddress
 import runpy
 import socket
 import sys
-from pathlib import Path
 
 
 def local(host):
@@ -30,7 +29,6 @@ def deny_external_network(event, args):
 
 if __name__ == "__main__":
     sys.addaudithook(deny_external_network)
-    runpy.run_path(
-        str(Path(__file__).resolve().parents[1] / "examples/demo.py"), run_name="__main__"
-    )
+    sys.argv = ["governed-memory", "demo"]
+    runpy.run_module("governed_memory.cli", run_name="__main__")
     print("Offline example passed with external network access denied.")

@@ -25,6 +25,18 @@ jobs:
       - run: uv run pytest -q -m "not integration"
       - run: uv run python scripts/check_offline_demo.py
       - run: uv build
+      - name: Export locked core install constraints
+        run: uv export --frozen --no-dev --no-emit-project --no-hashes --no-editable --quiet -o .local/requirements-core.txt
+      - name: Verify the installed wheel outside the checkout
+        run: uv run --no-sync python scripts/check_release_install.py --constraints .local/requirements-core.txt --output .local/release-check.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.os }}
+          include-hidden-files: true
+          path: |
+            dist/*
+            .local/requirements-core.txt
+            .local/release-check.json
   storage-and-evaluation:
     runs-on: ubuntu-latest
     env:

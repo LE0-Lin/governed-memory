@@ -4,11 +4,18 @@ build-backend = "hatchling.build"
 
 [project]
 name = "governed-memory"
-version = "0.8.1"
+version = "0.9.0"
 description = "Approval-gated, bitemporal evidence memory for coding agents"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = "MIT"
+keywords = ["agent-memory", "mcp", "bitemporal", "knowledge-graph", "provenance"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.12",
+]
+
 dependencies = [
   "graphiti-core==0.31.2",
   "httpx>=0.28,<1",
@@ -18,6 +25,12 @@ dependencies = [
   "sqlalchemy>=2.0,<2.1",
   "tiktoken>=0.8,<1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/LE0-Lin/governed-memory"
+Documentation = "https://github.com/LE0-Lin/governed-memory/blob/main/docs/getting-started.md"
+Issues = "https://github.com/LE0-Lin/governed-memory/issues"
+Changelog = "https://github.com/LE0-Lin/governed-memory/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 native = ["governed-memory-native==0.4.0"]

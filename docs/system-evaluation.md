@@ -6,6 +6,11 @@ retrieval. It excludes Graphiti/Neo4j, OpenFGA HTTP and MCP transport. The
 measurement of those paths, using the existing standard `search_memory` tool.
 The original measurements remain in their original result folders.
 
+Reproduce this historical baseline from **v0.8.1**, using its workflow/source.
+The source-identity guard intentionally rejects later production changes,
+including the packaged demo added in v0.9.0. Release installation verification
+is a different check and does not regenerate the old performance numbers.
+
 The [workflow](../.github/workflows/system-metrics.yml) builds the exact v0.8
 core wheel from its Git commit and the candidate wheel from its clean source.
 The final baseline requires identical production source in both; the package

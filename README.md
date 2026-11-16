@@ -1,106 +1,133 @@
+<p align="center"><img src="docs/assets/hero.svg" alt="Governed Memory — remember what was approved" width="1120"></p>
+
 # Governed Memory
 
-Evidence memory for coding agents, with explicit approval and two time axes. A proposed architecture decision stays outside the trusted graph until an operator approves its structured facts. Retrieval checks current access, withdrawal, effective time and what was known at the requested time.
+[![Checks](https://github.com/LE0-Lin/governed-memory/actions/workflows/ci.yml/badge.svg)](https://github.com/LE0-Lin/governed-memory/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/LE0-Lin/governed-memory)](https://github.com/LE0-Lin/governed-memory/releases/latest)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB)](pyproject.toml)
+[![License](https://img.shields.io/github/license/LE0-Lin/governed-memory)](LICENSE)
 
-PostgreSQL holds the authoritative ledger. Graphiti 0.31.2 and Neo4j provide a rebuildable hybrid-search projection. SQLite and lexical hash embeddings support a small, network-free demonstration after installing dependencies. Rust kernels provide optional native ranking and semantic boundaries. Optional integrations add quoted document ingestion, semantic entity/NLI review, OpenFGA/OPA decisions, OpenLineage, cited local answers and approved corroborating sources. See the [v0.4 operator workflow](docs/operators-v0.4.md).
+**Persistent evidence memory for coding agents, with operator approval and two time axes.**
 
-v0.6.1 fixes lifecycle and graph-outbox propagation when a corroborating approval is revoked. Existing ledgers can repair affected descendants with the project administrator's `upgrade` command; [upgrade instructions](docs/usage.md#upgrade-an-existing-installation) and the [verification record](docs/verification-v0.6.1.md) explain the exact scope. Answering and its published evaluation are unchanged.
+[中文](README.zh-CN.md) · [Get started](docs/getting-started.md) · [Connect MCP](docs/getting-started.md#connect-an-mcp-client) · [Measurements](docs/evaluation.md) · [Releases](https://github.com/LE0-Lin/governed-memory/releases)
 
-The local cross-encoder can reuse bounded query/passage scores in a long-running service. `MEMORY_RERANK_CACHE_SIZE` controls this cache; current permissions, time and source checks still run on every request. The [paired metrics protocol](eval/RETRIEVAL_METRICS_PROTOCOL.md) separates first-pass and repeat latency and tests up to 1,152 controlled historical assertions; see the [v0.7 results](eval/RESULTS-v0.7.md) for measured scope and limits.
+An agent proposes “use PostgreSQL.” An operator reviews it. Later, a correction
+arrives: you can query both **what was effective then** and **what was known then**.
+Every response rechecks access and source withdrawal, including when the graph
+projection or model-computation cache is stale.
 
-v0.8 narrows the final authority read after reranking, preserving all live checks and empty-result reasons. In the largest controlled synthetic case, same-run retrieval P95 falls from 521.9 to 408.3 ms (21.8%); smaller workloads show little benefit and some first-pass regressions. The [revised reference protocol](eval/AUTHORITY_REFRESH_V2_PROTOCOL.md), [results](eval/RESULTS-v0.8.md) and [verification](docs/verification-v0.8.md) retain the scope, exact v0.7 comparison and rejected first attempt.
+## Try it locally
 
-v0.8.1 measures standard MCP retrieval with actual PostgreSQL, Graphiti/Neo4j and OpenFGA HTTP. Its largest controlled case has 100% positive temporal Recall@5, zero stale evidence and caller P95 0.762 s (first-pass 0.806 s, repeats 0.516 s), with warmed models. Production runtime source stays identical to v0.8: a pooling candidate failed its latency gate and was reverted. See the [full-path results and CV comparison](eval/RESULTS-v0.8.1.md), [reproduction guide](docs/system-evaluation.md) and [verification](docs/verification-v0.8.1.md). This timing scope differs from the earlier ledger-only 0.408 s; no new speedup is claimed.
+Requires **Python 3.12** and [uv](https://docs.astral.sh/uv/). Windows and Linux
+are tested. The core demo needs no Docker, API keys, model downloads or services
+after installation.
 
-## Run the example
+```sh
+git clone https://github.com/LE0-Lin/governed-memory.git
+cd governed-memory
+uv sync --frozen
+uv run governed-memory demo
+```
 
-Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
+The installed package includes the demo; a source checkout is optional when
+using the [release wheel](https://github.com/LE0-Lin/governed-memory/releases/latest).
+See [install without a checkout](docs/getting-started.md#install-a-release-wheel).
+
+The demo verifies current/historical decisions, a late correction, denied
+self-approval and withdrawal. Its JSON output includes:
+
+```json
+{"scenario":"unapproved injection","self_approval":"denied"}
+{"scenario":"withdrawal","withdrawn_evidence_visible":false}
+```
+
+Source locators and token counts come from the actual run. The demo uses an
+isolated in-memory SQLite database and ignores live storage credentials.
+Its hash-vector channel is lexical; learned semantic retrieval is an optional
+[model configuration](docs/usage.md#imports-and-embeddings).
+
+## Use your own persistent memory
+
+1. [Initialize a local ledger](docs/getting-started.md#keep-a-real-local-ledger) and keep its operator credential separate from the agent.
+2. Import an ADR or JSONL session. Imports stage proposals; they do not approve themselves.
+3. Review the candidate and approve its actual revisions through the CLI.
+4. Bind a separate agent token to the MCP server. Query it across coding sessions.
+
+The [walkthrough](docs/getting-started.md) includes PowerShell/POSIX setup,
+an example valid today, client configuration and expected results.
+For PostgreSQL/Neo4j, read [deployment and recovery](docs/deployment.md).
+
+## What it provides
+
+| Capability | Behavior |
+| --- | --- |
+| Approval-gated memory | Proposed text remains outside trusted retrieval until operator approval. Agent tools expose no approval or identity override. |
+| Bitemporal history | Query effective time (`valid_at`) and recorded knowledge (`known_at`); retain immutable snapshots and provenance. |
+| Hybrid retrieval | BM25/vector fusion, optional Rust kernels and pinned local cross-encoder; whole-item token budgets. |
+| Live authority | Local grants, source audiences, withdrawal and exact dependency checks; optional OpenFGA intersection and OPA governance. |
+| Rebuildable graph | PostgreSQL is authoritative; Graphiti/Neo4j returns candidate IDs that are rechecked against the ledger. |
+| Controlled ingestion | JSONL/ADR imports, optional semantic chunking/entity/NLI review; model suggestions do not grant approval. |
+| Lifecycle propagation | Exact-snapshot dependency invalidation, reviewed corroborating sources and OpenLineage delivery outbox. |
+| Optional cited answers | Local generation with constrained output and evidence rechecks. Citations alone do not establish correctness. |
+
+```mermaid
+flowchart LR
+    A[Agent proposal] --> P[Untrusted candidate]
+    O[Operator review] -->|approve| L[Authoritative ledger]
+    P --> O
+    L --> G[Graph projection]
+    Q[MCP query] --> R[Hybrid retrieval]
+    G -->|IDs| R
+    R --> C[Live ledger and access checks]
+    L --> C
+    C --> E[Budgeted source evidence]
+```
+
+SQLite supports the local core workflow. PostgreSQL, Neo4j and the optional
+governance/model integrations support the fuller self-hosted configuration.
+See [configuration](docs/usage.md), [design](docs/design.md) and the
+[code reading guide](docs/code-guide.md).
+
+## Evidence, with its limits
+
+Latest full-path measurement: **v0.8.1**, not a fresh benchmark of this release.
+
+| Measurement | Recorded observation |
+| --- | --- |
+| Controlled temporal retrieval | **60/60 positive queries per workload**, within 84 known synthetic questions |
+| Stale evidence, largest case | **0/792 returned items** across three correlated replays |
+| Full retrieval P95 | **0.762 s** on one CPU host, warmed models, PostgreSQL + Neo4j + OpenFGA + MCP |
+| Separate relevance heldout | **47/48 positives** recovered all gold evidence |
+| Optional 500-question answers | **181/500** accepted by a local model judge on a different task |
+
+These are finite test results, **not general accuracy, a zero-failure promise or
+a production SLO**. Startup and generation are outside retrieval timing.
+Repeated/cohort-expanded fixtures are not independent real-world samples.
+Negative queries can still return unrelated eligible evidence. The
+[evidence card](docs/evaluation.md) explains the denominators, scope and why
+“100%” should not be a headline guarantee. [Raw runs and failures](eval/README.md)
+remain public, including rejected performance changes.
+
+## Develop and contribute
 
 ```sh
 uv sync --frozen --extra dev
-uv run python examples/demo.py
-```
-
-The synthetic example verifies SQLite → PostgreSQL, a late correction with different `known_at` results, a blocked self-approval and source withdrawal. Example output includes:
-
-```text
-current decision: PostgreSQL
-earlier effective date: SQLite
-late correction, before receipt: PostgreSQL
-late correction, after receipt: PostgreSQL with WAL archival
-unapproved injection: self-approval denied
-withdrawal: withdrawn evidence hidden
-```
-
-The JSON output also includes source locators and evidence token counts. Example dates in 2030 are fictional test data.
-
-## Use persistent storage
-
-```sh
-docker compose up -d --wait
-```
-
-Set `MEMORY_DATABASE_URL=postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory`, `MEMORY_NEO4J_URI=bolt://127.0.0.1:57687` and `MEMORY_NEO4J_PASSWORD=local-graph-only`. These match the local development Compose defaults. Then:
-
-```sh
-uv run governed-memory init --project demo
-```
-
-Save the issued admin token outside the repository and set it as `MEMORY_TOKEN` **in the operator's process**. Ingest stages candidates:
-
-```sh
-uv run governed-memory ingest --project demo examples/decision.md
-uv run governed-memory preview --project demo CANDIDATE_ID
-uv run governed-memory approve --project demo CANDIDATE_ID --expected-revision 0 --expected-head 0 --reason "Accept the database decision"
-uv run governed-memory project --project demo
-uv run governed-memory search --project demo "storage database" --valid-at 2030-11-09T00:00:00Z
-```
-
-Use the candidate and head revisions actually returned by `preview`; stale approvals fail. `project` processes up to 100 queued snapshots per invocation; rerun it for larger queues. `project --project demo --rebuild` requeues all historical snapshots once, for a fresh graph. Approval commits the ledger and queue together; it does not claim that graph projection has already succeeded.
-
-Issue a separate agent credential with `credential --project demo --principal coding-agent --role agent`. The agent's stdio MCP process receives that token as `MEMORY_TOKEN` and runs `uv run governed-memory serve`. By default it exposes `propose_memory`, `search_memory` and `explain_memory`. Setting `MEMORY_GENERATION_PROFILE=small` or `standard` adds `answer_memory`; install the optional `models` dependencies first. Approval, rejection, withdrawal, credential issuance and project management stay in the operator CLI. See [configuration](docs/usage.md) and [container deployment/recovery](docs/deployment.md).
-
-For a v0.1 ledger, back it up and run `upgrade --project demo` with its existing admin credential before starting v0.2. Rebuild an existing graph once to attach embedding-profile metadata. [Operator instructions](docs/usage.md) cover this upgrade, OPA, local models and adding a second source without replacing a fact's timeline.
-
-## Verify and reproduce
-
-```sh
 uv run pytest -q
-uv run python -m eval.run --output .local/evaluation --check
+uv run python scripts/check_offline_demo.py
 ```
 
-For real storage tests, set `GM_TEST_DATABASE_URL` to the PostgreSQL URL above, `GM_TEST_NEO4J_URI=bolt://127.0.0.1:57687`, and `GM_TEST_NEO4J_PASSWORD=local-graph-only` before running pytest. PostgreSQL tests create and remove isolated schemas. OPA tests use `GM_TEST_OPA_URL`; downloaded retrieval-model tests use `GM_TEST_REAL_MODELS=1` and generator tests use `GM_TEST_REAL_GENERATION=1`. Container recovery/model-image checks are configured in [deployment.md](docs/deployment.md). Without the corresponding configuration those tests skip. CI runs Windows/Ubuntu core checks, real storage/OPA/container tests and a separate local-model job that verifies CPU wheels and actual generation.
+CI also exercises actual storage/policy services, installed containers, local
+models and native Rust on Windows/Linux. Optional tests skip when their services
+or models are absent; [contribution instructions](CONTRIBUTING.md) explain how
+to enable them. Release checks install the built wheel into a separate environment
+and exercise persisted MCP proposal, approval, restart and withdrawal.
 
-[Evaluation protocols](eval/README.md) separate the frozen synthetic governance suite from a fixed 14-question LongMemEval S retrieval comparison and the [full 500-question answer protocol](eval/FULL_PROTOCOL.md). The earlier reports measure governance and retrieval; the full protocol adds cited generation, format-failure accounting and a separate local model judge. The default offline vector channel uses deterministic lexical hashing; optional learned retrieval uses standard Sentence Transformers models. Paid external embedding providers have not been benchmarked.
+**Status:** experimental developer tool for local stdio MCP and controlled
+self-hosting. One projection worker, additive upgrades and retained audit
+history; distributed failover, public HTTP hosting and production capacity are
+not established. Use [backup/recovery instructions](docs/deployment.md) for stored
+data. [Report a bug](https://github.com/LE0-Lin/governed-memory/issues/new/choose)
+or read [security guidance](SECURITY.md).
 
-In the [recorded synthetic run](eval/RESULTS.md), the governed service and the strong temporal baseline both recalled all required evidence in heldout time-query controls. The governed service additionally enforced the supplied approval/withdrawal signals, at higher local retrieval latency. The report includes the denominators, baseline failures and limits of that result.
-
-The [v0.2 verification record](eval/RESULTS-v0.2.md) includes the unchanged frozen-suite rerun, real policy/model checks and an installed-wheel upgrade from v0.1. The [14-question external comparison](eval/LONGMEMEVAL.md) found no recall gain from reranking over BM25 and records the extra CPU cost.
-
-The [v0.3 full-set report](eval/RESULTS-v0.3.md) retains two complete runs of 500 questions × three methods. Schema constraints reduced answer-validation failures from 1,298 to 398 of 1,500 outputs. The best local judge estimate was 169/500 (33.8%); this does not establish official benchmark accuracy or production answer quality. Raw failures, model judgments and a long host-interruption timing outlier are all retained.
-The [v0.3 verification record](docs/verification-v0.3.md) covers the complete regression, actual CPU model container, recovery path and installed wheel.
-
-The [v0.4 verification](docs/verification-v0.4.md) covers native Rust, semantic ingestion/review, OpenFGA, transitive dependencies and OpenLineage. Its [frozen controlled comparison](eval/RESULTS-v0.4.md) retains all 504 observations: both methods recalled all positive gold facts; governed retrieval reduced stale results from 597/951 to 0/1,008, with 1.264 s warm P95. Negative queries still returned unrelated eligible evidence. These are controlled-corpus results, not general benchmark accuracy or the CV's prewritten metrics.
-
-The [v0.5 retrieval report](eval/RESULTS-v0.5.md) adds 1,476 paired service observations
-and a replay of all 500 archived external retrievals. Bounded document-vector reuse
-reduced P95 by 14–22% against the same-run filtered, uncached configuration, with
-identical retrieved IDs. An opt-in relevance cutoff rejected 28/32 heldout negative
-queries but left 3/48 positive queries empty. Its poor long-conversation transfer
-is recorded, so relevance rejection is disabled by default. See
-[configuration and limitations](docs/usage.md#relevance-filtering-and-vector-reuse).
-The [v0.5 verification record](docs/verification-v0.5.md) covers regression,
-actual models, installed containers and the unchanged runtime source fingerprint.
-
-The [v0.6 answer-format comparison](eval/RESULTS-v0.6.md) regenerates answers for
-all 500 unchanged archived contexts. Invalid answers fall from 108 to 0, valid explicit
-negative abstentions rise from 6/30 to 13/30, and the local judge estimate changes
-from 169/500 to 181/500. Individual regressions and uncertainty remain documented.
-The evaluated 1.5B profile uses conditional answers by default; a legacy override
-is available. Other profiles retain their previous default.
-
-## Scope
-
-The application implements approval transitions, bitemporal corrections, source provenance, authorization, retrieval constraints, optional cited answers and the experiment harness. Answers use JSON Schema constraints and authority checks before and after generation; citations do not establish factual correctness. Graphiti supplies graph persistence and hybrid search; its extraction and entity resolution are not used on the trusted write path. Start with the [code reading guide](docs/code-guide.md), [中文验收与项目讲解](docs/acceptance.zh-CN.md), [design and trust boundaries](docs/design.md) and [third-party attribution](THIRD_PARTY.md).
-
-This is a small experimental service: it scans authorized ledger rows before retrieval and supports one controlled projection worker. Upgrade adds current tables to v0.1–v0.3 ledgers; distributed deployment, general rollback tooling and production security guarantees remain outside its scope. Another approved source can preserve a directly supported fact after withdrawal. Derived claims bind exact inputs and invalidate transitively when those inputs change. Audit history remains stored. The permission boundary assumes that the database credentials, operator token and host are trusted.
+MIT licensed. See [third-party attribution](THIRD_PARTY.md) for libraries, models
+and evaluation data.

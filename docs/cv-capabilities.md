@@ -1,7 +1,12 @@
-# CV capability acceptance (v0.4)
+# Feature and measurement coverage
 
 This is an implementation and evidence checklist, frozen before the new evaluation.
 The existing v0.3 LongMemEval outputs and synthetic results remain unchanged.
+
+The engineering checklist began with v0.4; versioned observations below are
+historical records. The [current evidence card](evaluation.md) gives finite
+denominators, limits and the latest measured runtime. Project development time
+and recent GitHub publication time are separate and are not completion gaps.
 
 | CV capability | Acceptance evidence |
 | --- | --- |
@@ -37,12 +42,12 @@ same event/run identifiers, and a collector should deduplicate them.
 
 ## Evidence that implementation cannot establish
 
-The CV's 83.2% temporal recall, 26.4% stale-retrieval reduction and 1.12 s P95 are
-unverified targets, not acceptance thresholds to tune against. New measurements
-will be reported as observed, with their workload, baseline and hardware. Neither
+The CV lists 83.2% temporal recall, 26.4% stale-retrieval reduction and 1.12 s P95.
+Their original evaluation protocol is not supplied here; the new measurements
+have their own stated workload, baseline and hardware. Neither
 the v0.3 83.3% session recall nor its 33.8% local QA score establishes these claims.
-The February–May 2025 project dates need contemporaneous records; coding now does
-not establish those dates. Kubernetes and a full frontend are outside this CV entry.
+GitHub upload time does not establish when development began. Kubernetes and a
+full frontend are outside this CV entry.
 
 ## Verified outcome
 
@@ -51,7 +56,7 @@ All engineering paths above are now exercised; see
 [controlled results](../eval/RESULTS-v0.4.md). The measured warm P95 is 1.264 s;
 controlled recall is 100% for both methods and stale-rate reduction is 100% for
 this corpus. Negative-query relevance remains limited. These observations do not
-retroactively establish the original three CV numbers or the 2025 dates.
+reconstruct the original CV experiment.
 
 ## v0.7 measured extension
 
@@ -66,8 +71,8 @@ governed outputs across the four workloads remain identical.
 
 These are new, bounded measurements that can replace CV numbers when their
 synthetic-workload and retrieval scope is retained. They do not reconstruct the
-original experiment or establish general answer accuracy, production capacity
-or historical dates. First-use gains are not established, and unrelated eligible
+original experiment or establish general answer accuracy or production capacity.
+First-use gains are not established, and unrelated eligible
 negative-query evidence remains a limitation. See the [v0.7 verification](verification-v0.7.md).
 
 ## v0.8 final authority read
@@ -89,9 +94,8 @@ Regular six-job CI and the separate paired/model-container jobs pass; see
 
 The CV's listed engineering features are exercised. Current synthetic recall,
 stale filtering and retrieval latency support a scoped replacement for its
-unverified numbers. Independent real histories, full graph/remote-policy and
-transport latency, production/concurrency evidence and contemporaneous 2025
-records remain unproved. No numerical completion percentage follows from this
+original numbers. At that stage full graph/remote-policy/transport latency and
+production/concurrency evidence were still absent. No numerical completion percentage follows from this
 checklist, and no CV wording or date was changed.
 
 ## v0.8.1 full-path evidence
@@ -109,4 +113,11 @@ improves evidence coverage, not runtime performance. The final full-path run
 has 1008 observations, 504 exact pairs and no errors/stale results, with actual
 warm-process revocation/downgrade and stale-graph withdrawal checks. This closes
 the prior same-host graph/authorization/transport timing gap. Independent real
-histories, WAN/concurrency/production performance and historical dates remain.
+histories and WAN/concurrency/production performance remain unmeasured.
+
+## v0.9.0 usability and presentation
+
+The release adds a packaged offline demo, version reporting, bilingual guides
+and separate-environment CLI/MCP installation checks. It does not add a new
+retrieval or answer benchmark. In a CV, finite denominators and workload scope
+are more informative than an unqualified 100%; see the [suggested wording](evaluation.md#describing-the-project-in-a-cv).

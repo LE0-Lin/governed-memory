@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import json
 import sys
+from importlib.metadata import version
 from pathlib import Path
 
 from governed_memory.db import create_db, initialize, require_current_schema
@@ -17,8 +18,16 @@ def output(value):
 
 
 def parser():
-    root = argparse.ArgumentParser(description="Governed temporal memory operator CLI")
+    root = argparse.ArgumentParser(
+        prog="governed-memory", description="Governed temporal memory operator CLI"
+    )
+    root.add_argument(
+        "--version", action="version", version=f"%(prog)s {version('governed-memory')}"
+    )
     commands = root.add_subparsers(dest="command", required=True)
+    commands.add_parser(
+        "demo", help="run an isolated offline example without credentials or services"
+    )
     p = commands.add_parser(
         "init", help="initialize an empty ledger and issue its admin credential"
     )
@@ -133,6 +142,11 @@ def main():
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8")
     args = parser().parse_args()
+    if args.command == "demo":
+        from governed_memory.demo import main as demo
+
+        asyncio.run(demo())
+        return
     settings = Settings.from_env()
     if args.command == "serve":
         from governed_memory.mcp_server import run
