@@ -237,11 +237,7 @@ def main():
         else:
             raise SystemExit(asyncio.run(graph_operation(settings, ledger, args)))
     finally:
-        try:
-            if ledger.authorizer:
-                ledger.authorizer.close()
-        finally:
-            engine.dispose()
+        engine.dispose()
 
 
 if __name__ == "__main__":

@@ -24,6 +24,7 @@ from eval.system_runtime import (
     dependency_versions,
     mcp_session,
     verify_runtime,
+    verify_unchanged_runtime,
     wheel_identity,
 )
 from governed_memory.authorization import provision
@@ -34,8 +35,8 @@ from governed_memory.models import Grant
 from governed_memory.policy import OpaPolicy
 from governed_memory.retrieval import serialize
 
-PROTOCOL = Path(__file__).with_name("SYSTEM_RETRIEVAL_PROTOCOL.md")
-METHODS = ("reference_v08", "pooled_transport")
+PROTOCOL = Path(__file__).with_name("SYSTEM_BASELINE_PROTOCOL.md")
+METHODS = ("reference_v08", "governed_current")
 
 
 def arguments(query):
@@ -181,6 +182,7 @@ async def experiment(output, targets, wheels):
         **source,
         "protocol": PROTOCOL.read_text(encoding="utf-8"),
         "protocol_sha256": checksum(PROTOCOL),
+        "runtime_source_identical": verify_unchanged_runtime(source["commit"]),
         "methods": METHODS,
         "comparison": METHODS,
         "datasets": {name: checksum(output / f"{name}-fixture.json") for name in datasets},
@@ -297,7 +299,6 @@ async def experiment(output, targets, wheels):
                             )
                             write_json(output / "authority-probes.json", probes)
                     finally:
-                        authorizer.close()
                         for group in (project, warm):
                             await graph.graph.driver.execute_query(
                                 "MATCH (n:Entity {group_id:$group}) DETACH DELETE n", group=group

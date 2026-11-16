@@ -135,13 +135,10 @@ def run_command(args, settings, ledger):
         authorizer = provision(
             endpoint, project, grants, api_key=os.environ.get("MEMORY_FGA_API_KEY")
         )
-        try:
-            return {
-                "MEMORY_FGA_STORE_ID": authorizer.store_id,
-                "MEMORY_FGA_MODEL_ID": authorizer.model_id,
-            }
-        finally:
-            authorizer.close()
+        return {
+            "MEMORY_FGA_STORE_ID": authorizer.store_id,
+            "MEMORY_FGA_MODEL_ID": authorizer.model_id,
+        }
     with Session(ledger.engine) as session:
         ledger.authenticate(session, token, project, ("admin",))
     if args.command == "fga-grant":

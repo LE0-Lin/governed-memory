@@ -77,33 +77,32 @@ class OpenFgaAuthorizer:
             model_id,
             api_key,
         )
-        # Reuse transport only. Every check still requests a fresh authorization decision.
-        self.client = connection(endpoint, api_key)
-
-    def close(self):
-        self.client.close()
+        # Validate even before the first request; credentials are not logged or persisted.
+        with connection(endpoint, api_key):
+            pass
 
     def allows(self, identity, relation):
         if relation not in {"reader", "writer", "approver", "admin"}:
             raise ValueError("unknown authorization relation")
         try:
-            response = self.client.post(
-                f"stores/{self.store_id}/check",
-                json={
-                    "authorization_model_id": self.model_id,
-                    "tuple_key": {
-                        "user": user_key(identity.id),
-                        "relation": relation,
-                        "object": f"project:{identity.project}",
+            with connection(self.endpoint, self.api_key) as client:
+                response = client.post(
+                    f"stores/{self.store_id}/check",
+                    json={
+                        "authorization_model_id": self.model_id,
+                        "tuple_key": {
+                            "user": user_key(identity.id),
+                            "relation": relation,
+                            "object": f"project:{identity.project}",
+                        },
+                        "consistency": "HIGHER_CONSISTENCY",
                     },
-                    "consistency": "HIGHER_CONSISTENCY",
-                },
-            )
-            response.raise_for_status()
-            payload = response.json()
-            if not isinstance(payload, dict) or type(payload.get("allowed")) is not bool:
-                raise Denied("OpenFGA returned an invalid authorization decision")
-            return payload["allowed"]
+                )
+                response.raise_for_status()
+                payload = response.json()
+                if not isinstance(payload, dict) or type(payload.get("allowed")) is not bool:
+                    raise Denied("OpenFGA returned an invalid authorization decision")
+                return payload["allowed"]
         except (httpx.HTTPError, ValueError) as exc:
             raise Denied("OpenFGA authorization unavailable") from exc
 
@@ -123,22 +122,23 @@ class OpenFgaAuthorizer:
         relation = "writer" if role == "agent" else role
         if relation not in {"reader", "writer", "approver", "admin"}:
             raise ValueError("unknown authorization role")
-        response = self.client.post(
-            f"stores/{self.store_id}/write",
-            json={
-                "authorization_model_id": self.model_id,
-                "deletes" if remove else "writes": {
-                    "tuple_keys": [
-                        {
-                            "user": user_key(principal_id),
-                            "relation": relation,
-                            "object": f"project:{project}",
-                        }
-                    ]
+        with connection(self.endpoint, self.api_key) as client:
+            response = client.post(
+                f"stores/{self.store_id}/write",
+                json={
+                    "authorization_model_id": self.model_id,
+                    "deletes" if remove else "writes": {
+                        "tuple_keys": [
+                            {
+                                "user": user_key(principal_id),
+                                "relation": relation,
+                                "object": f"project:{project}",
+                            }
+                        ]
+                    },
                 },
-            },
-        )
-        response.raise_for_status()
+            )
+            response.raise_for_status()
 
 
 def provision(endpoint, project, grants, *, api_key=None):
@@ -153,10 +153,6 @@ def provision(endpoint, project, grants, *, api_key=None):
         response.raise_for_status()
         model_id = response.json()["authorization_model_id"]
     authorizer = OpenFgaAuthorizer(endpoint, store_id, model_id, api_key=api_key)
-    try:
-        for principal_id, role in grants:
-            authorizer.grant(principal_id, project, role)
-    except Exception:
-        authorizer.close()
-        raise
+    for principal_id, role in grants:
+        authorizer.grant(principal_id, project, role)
     return authorizer

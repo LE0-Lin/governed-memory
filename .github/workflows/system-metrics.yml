@@ -9,6 +9,7 @@ on:
       - native/**
       - eval/system_*.py
       - eval/SYSTEM_RETRIEVAL_PROTOCOL.md
+      - eval/SYSTEM_BASELINE_PROTOCOL.md
       - eval/metrics_rescore.py
       - eval/cv_run.py
       - pyproject.toml

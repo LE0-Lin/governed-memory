@@ -102,11 +102,8 @@ def test_malformed_fga_decisions_fail_closed(monkeypatch, payload):
     authorizer = OpenFgaAuthorizer(
         "http://localhost:8080", "01ARZ3NDEKTSV4RRFFQ69G5FAV", "01ARZ3NDEKTSV4RRFFQ69G5FAW"
     )
-    try:
-        with pytest.raises(Denied):
-            authorizer.check(Identity("operator", "demo", "admin"), "admin")
-    finally:
-        authorizer.close()
+    with pytest.raises(Denied):
+        authorizer.check(Identity("operator", "demo", "admin"), "admin")
 
 
 def test_incomplete_fga_configuration_is_never_silently_disabled(monkeypatch):

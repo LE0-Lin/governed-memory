@@ -17,6 +17,15 @@ from mcp.client.stdio import stdio_client
 REFERENCE = "ac1d6ed9bd87f1b9aed412ea65a05fd589731700"
 
 
+def verify_unchanged_runtime(commit):
+    changed = subprocess.check_output(
+        ["git", "diff", "--name-only", REFERENCE, commit, "--", "src", "native/src"], text=True
+    ).strip()
+    if changed:
+        raise ValueError(f"the retained-runtime baseline has changed production source: {changed}")
+    return True
+
+
 def verify_runtime(target, commit):
     target = target.resolve()
     paths = subprocess.check_output(
