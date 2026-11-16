@@ -1,0 +1,92 @@
+name: system-metrics
+on:
+  workflow_dispatch:
+  push:
+    branches: [enhancement/full-stack-retrieval]
+    paths:
+      - .github/workflows/system-metrics.yml
+      - src/**
+      - native/**
+      - eval/system_*.py
+      - eval/SYSTEM_RETRIEVAL_PROTOCOL.md
+      - eval/metrics_rescore.py
+      - eval/cv_run.py
+      - pyproject.toml
+      - uv.lock
+permissions:
+  contents: read
+jobs:
+  full-retrieval-and-installed-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GM_EVAL_DATABASE_URL: postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory
+      GM_EVAL_NEO4J_URI: bolt://127.0.0.1:57687
+      GM_EVAL_NEO4J_PASSWORD: local-graph-only
+      GM_EVAL_FGA_URL: http://127.0.0.1:58080
+      GM_EVAL_OPA_URL: http://127.0.0.1:58181
+      GM_TEST_DATABASE_URL: postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory?connect_timeout=5
+      GM_TEST_GENERATION_IMAGE: governed-memory:models-system
+      MEMORY_MODEL_CACHE: .local/model-cache
+      GRAPHITI_TELEMETRY_ENABLED: "false"
+      HF_HUB_DISABLE_XET: "1"
+      HF_HUB_DOWNLOAD_TIMEOUT: "120"
+      UV_HTTP_TIMEOUT: "300"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch complete pinned installed reference source
+        run: git fetch --no-tags --depth=1 origin ac1d6ed9bd87f1b9aed412ea65a05fd589731700
+      - uses: dtolnay/rust-toolchain@1.90.0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: .local/model-cache
+          key: pinned-models-${{ hashFiles('src/governed_memory/local_models.py', 'src/governed_memory/semantic_review.py') }}
+      - run: uv sync --frozen --no-editable --extra dev --extra models --extra native
+      - run: docker compose --profile policy --profile governance up -d --wait
+      - name: Export exact reference outside the current Git checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/gm-v08-source"
+          git archive ac1d6ed9bd87f1b9aed412ea65a05fd589731700 | tar -x -C "$RUNNER_TEMP/gm-v08-source"
+      - name: Build the reference core wheel
+        working-directory: ${{ runner.temp }}/gm-v08-source
+        run: uv build --wheel --out-dir "$GITHUB_WORKSPACE/.local/reference-dist"
+      - name: Install both independent wheels with identical shared dependencies
+        run: |
+          uv build --wheel --out-dir .local/candidate-dist
+          uv pip install --python .venv/bin/python --no-deps --target .local/reference-runtime .local/reference-dist/*.whl
+          uv pip install --python .venv/bin/python --no-deps --target .local/candidate-runtime .local/candidate-dist/*.whl
+      - name: Download pinned models before the isolated measurements
+        run: uv run --no-sync python -c "from governed_memory.local_models import MiniLMEmbedder,MiniLMReranker; MiniLMEmbedder('.local/model-cache'); MiniLMReranker('.local/model-cache')"
+      - name: Measure both actual MCP runtimes and live authority probes
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: >-
+          uv run --no-sync python -m eval.system_metrics
+          --output .local/system-results/run-v1
+          --reference-target .local/reference-runtime
+          --candidate-target .local/candidate-runtime
+          --reference-wheels .local/reference-dist
+          --candidate-wheels .local/candidate-dist
+      - name: Independently verify labels, pairs, graph use and percentiles
+        run: uv run --no-sync python -m eval.metrics_rescore --results .local/system-results/run-v1 --output .local/system-results/run-v1/independent-verification.json
+      - name: Build and test deployed model image after timing completes
+        run: |
+          docker build --build-arg INSTALL_MODELS=true -t governed-memory:models-system .
+          GM_TEST_MODEL_CACHE_MOUNT="$GITHUB_WORKSPACE/.local/model-cache" uv run --no-sync pytest -q tests/test_container_deployment.py -k cached_retrieval --junitxml=.local/system-model-mcp.xml
+          docker image inspect governed-memory:models-system --format '{{.Id}}' > .local/system-model-image.txt
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-results
+          path: |
+            .local/system-results
+            .local/system-model-mcp.xml
+            .local/system-model-image.txt
+      - if: always()
+        run: docker compose --profile policy --profile governance logs --tail 60
+      - if: always()
+        run: docker compose --profile policy --profile governance down

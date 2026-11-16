@@ -56,7 +56,9 @@ def context(engine):
     agent = issue_credential(engine, admin, "agent", "demo", "agent")
     approver = issue_credential(engine, admin, "approver", "demo", "approver")
     reader = issue_credential(engine, admin, "reader", "demo", "reader")
-    return ledger, clock, {"admin": admin, "agent": agent, "approver": approver, "reader": reader}
+    yield ledger, clock, {"admin": admin, "agent": agent, "approver": approver, "reader": reader}
+    if ledger.authorizer:
+        ledger.authorizer.close()
 
 
 def propose(context, value="SQLite", **kwargs):

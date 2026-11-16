@@ -108,9 +108,14 @@ def database():
         engine.dispose()
 
 
-def populate(engine, data):
+def populate(engine, data, *, policy=None):
+    ledger, agent, project, candidates, _ = populate_with_operator(engine, data, policy=policy)
+    return ledger, agent, project, candidates
+
+
+def populate_with_operator(engine, data, *, policy=None):
     state = {"now": instant("2030-01-01T00:00:00Z")}
-    ledger = Ledger(engine, lambda: state["now"])
+    ledger = Ledger(engine, lambda: state["now"], policy=policy)
     project = "cv-controlled-v1"
     admin = bootstrap(engine, "operator", project)
     agent = issue_credential(engine, admin, "agent", project, "agent")
@@ -165,7 +170,7 @@ def populate(engine, data):
                     reason="frozen synthetic lifecycle label",
                 )
     state["now"] = instant(data["now"])
-    return ledger, agent, project, candidates
+    return ledger, agent, project, candidates, admin
 
 
 async def session_baseline(ledger, token, project, query, retriever, config):

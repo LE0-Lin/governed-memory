@@ -2,7 +2,7 @@
 
 import argparse
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -80,10 +80,11 @@ def verify(directory):
             "negative_unrelated_results": sum(
                 len(row["predicted_ids"]) - len(row["stale_ids"]) for row in negative
             ),
-            "reranker_pair_computations": sum(
-                row["reranker_pair_computations"] for row in selected
-            ),
         }
+        if "reranker_pair_computations" in published:
+            calculated["reranker_pair_computations"] = sum(
+                row["reranker_pair_computations"] for row in selected
+            )
         for key, value in calculated.items():
             assert published[key] == value, (name, key)
         for key in ("visible_reads", "visible_rows"):
@@ -102,9 +103,19 @@ def verify(directory):
                     )
                 )
         workload, method = name.split("/")
-        cache = manifest["cache"][workload][method]["rerank"]
+        cache = manifest.get("cache", {}).get(workload, {}).get(method, {}).get("rerank")
         if cache:
             assert cache["scoring_requests"] == calculated["reranker_pair_computations"]
+        if "backends" in published:
+            assert published["backends"] == dict(Counter(row["backend"] for row in selected))
+            assert "ledger-fallback:graph-unavailable" not in published["backends"]
+            assert any(
+                key.startswith("graphiti") and count for key, count in published["backends"].items()
+            )
+            assert all(0 <= row["server_latency_ms"] <= row["latency_ms"] for row in selected)
+            assert published["server_p95_ms"] == float(
+                np.percentile([row["server_latency_ms"] for row in selected], 95)
+            )
     mismatches = 0
     for methods in pairs.values():
         before, after = (methods[name] for name in comparison)

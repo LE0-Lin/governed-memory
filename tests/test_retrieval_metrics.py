@@ -8,6 +8,7 @@ from eval.metrics_cases import scaled_timelines
 from eval.metrics_rescore import verify
 from eval.retrieval_evidence import checksum, write_json
 from eval.retrieval_metrics import paired_equivalence, summarize
+from eval.system_metrics import summarize as system_summary
 
 
 @pytest.mark.parametrize("size", [1, 4])
@@ -81,7 +82,7 @@ def test_pair_gate_detects_token_or_source_changes_even_with_the_same_fact_ids()
     assert paired_equivalence(rows)["mismatches"] == [("one", "q", 0)]
 
 
-@pytest.mark.parametrize("paired_reference", [False, True])
+@pytest.mark.parametrize("paired_reference", [False, True, "system"])
 def test_independent_rescore_checks_fixture_gold_and_keeps_all_observations(
     tmp_path, paired_reference
 ):
@@ -114,11 +115,15 @@ def test_independent_rescore_checks_fixture_gold_and_keeps_all_observations(
                 "error": None,
                 "reranker_pair_computations": 1,
             }
+            if paired_reference == "system":
+                row.pop("reranker_pair_computations")
+                row.update(backend="graphiti-hybrid-rrf", server_latency_ms=8.0)
             rows.append(row)
             groups[f"tiny/{method}"].append(row)
     stream = tmp_path / "observations.jsonl"
     stream.write_text("\n".join(json.dumps(row) for row in rows), encoding="utf-8")
-    write_json(tmp_path / "summary.json", {key: summarize(group) for key, group in groups.items()})
+    aggregate = system_summary if paired_reference == "system" else summarize
+    write_json(tmp_path / "summary.json", {key: aggregate(group) for key, group in groups.items()})
     write_json(
         tmp_path / "manifest.json",
         {
