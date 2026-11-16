@@ -1,0 +1,92 @@
+{
+  "commit": "eb6e50f88b5309893638286180c4c06152844f75",
+  "dirty_source": false,
+  "code_sha256": "80afc91602fca0ccf4b3da6102f95ec04aca84241dcc74b76c5425d0785a2516",
+  "protocol_sha256": "836960fd3137923e7993689971ca0b4bc6d72614b7b8a46c686accb692d307ae",
+  "protocol": "# Retained runtime full-path baseline\n\nFrozen before this measurement on 2026-11-16. The earlier transport-pooling\nstudy at source 5b32311 and CI43823918983 is retained in full. On the largest\ncase it regressed overall P95 537.0 -> 584.3 ms (+8.8%) and first-pass\n577.1 -> 644.8 ms (+11.7%); repeats improved 406.4 -> 395.3 ms (-2.7%).\nIt fails its prespecified promotion gate and will not ship as an optimization.\nThe smallest case improved overall 10.4%/first 15.0%/repeat 22.3%; preserve both.\nWindows stub setup costs did not establish hosted Linux full-path gains.\n\nRestore the production runtime to exact v0.8 source ac1d6ed. The patch release\nadds evaluation/evidence only; no new transport cache or authority behavior.\nValidate that every src/native runtime file is byte-identical to the reference.\nThe two installed wheels differ in package version, not runtime Python/Rust.\nDo not interpret their latency differences as a code speedup or regression.\n\nUse the same full retrieval path, source/wheel verification, fixed known\n72/1152-assertion recipes, explicit labels, neural models, 2 threads, Rust,\n2048/8192 caches, no relevance cutoff, k=5/budget=1024 and three rotating replays\nfrom SYSTEM_RETRIEVAL_PROTOCOL.md. Expected 1008 observations, 504 pairs, four\nsummary groups. Record actual hardware; no cross-run timing subtraction.\nWarm only an unrelated one-fact project; measured caches start empty. Record\nall first/repeat caller and server costs, including errors/outliers. No retries.\n\nMeasure actual standard MCP stdio with PostgreSQL, Graphiti/Neo4j and OpenFGA\nHTTP. OPA approves synthetic fixture transactions before timing; search does\nnot call OPA. Startup, projection, ingestion and generation remain outside the\nretrieval interval. After timing, verify live grant revocation, downgrade and\nsource withdrawal with the graph deliberately stale in both installed runtimes.\nIndependently audit fixture labels, complete grid, exact payload pairs, tokens,\nbackend counts and percentiles. Require actual graph hits, no graph-unavailable\nfallbacks, zero retrieval errors/stale results and unchanged source. Final\nrequired CI and actual installed model regressions must pass.\n\nPublish all results. There is no performance-promotion gate because no runtime\noptimization is being promoted. This is an explicit full-path baseline with a\nretained negative experiment, not another attempt to obtain a favorable pooling\nscore. No labels/fixtures/models/ranking are tuned. No independent real histories,\nWAN/concurrent production capacity, general answerability, historical 2025 dates\nor new 500-question answer score is established. Every round must compare CV\n83.2%/26.4%/1.12 s to the correctly scoped current values, separately from any\nsame-run code gains. Preserve the old ledger-only 0.408 s observation unchanged.\n",
+  "runtime_source_identical": true,
+  "methods": [
+    "reference_v08",
+    "governed_current"
+  ],
+  "comparison": [
+    "reference_v08",
+    "governed_current"
+  ],
+  "datasets": {
+    "timelines_1": "8d3b4087eee2c06381c29c886efc2be38ac226c78f4ea54c7e7a1ddca01a24b1",
+    "timelines_16": "00fa3b611b2b0978fb1427a9f69507dd879d5f768ca5d8f999d2d2625b469ecf"
+  },
+  "started_at": "2026-11-16T07:49:52.300080+00:00",
+  "python": "3.12.14",
+  "os": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "packages": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "sqlalchemy": "2.0.57",
+    "httpx": "0.28.1",
+    "mcp": "1.30.0",
+    "graphiti-core": "0.31.2",
+    "governed-memory-native": "0.4.0"
+  },
+  "github_run_id": "43826351173",
+  "repetitions": 3,
+  "runtime": {
+    "reference_v08": {
+      "version": "0.8.0",
+      "module": "/home/runner/work/governed-memory/governed-memory/.local/reference-runtime/governed_memory/__init__.py",
+      "source_commit": "ac1d6ed9bd87f1b9aed412ea65a05fd589731700",
+      "verified_runtime_files": 36
+    },
+    "governed_current": {
+      "version": "0.8.1",
+      "module": "/home/runner/work/governed-memory/governed-memory/.local/candidate-runtime/governed_memory/__init__.py",
+      "source_commit": "eb6e50f88b5309893638286180c4c06152844f75",
+      "verified_runtime_files": 36
+    }
+  },
+  "wheels": {
+    "reference_v08": {
+      "name": "governed_memory-0.8.0-py3-none-any.whl",
+      "sha256": "85bced395c88759084d3471074331644f01c187921aa577a54e58a1ddbb2d8ec"
+    },
+    "governed_current": {
+      "name": "governed_memory-0.8.1-py3-none-any.whl",
+      "sha256": "e83c1f743b1dda6f41e20240e87fbc9a368b0b9e0800096e89cc359b6f7d03c2"
+    }
+  },
+  "startup_ms": {
+    "timelines_1": {
+      "reference_v08": 5527.524727000014,
+      "governed_current": 5488.607186999985
+    },
+    "timelines_16": {
+      "reference_v08": 4951.605943000004,
+      "governed_current": 5342.83644300001
+    }
+  },
+  "cache": {},
+  "timing": "Caller-observed standard MCP stdio, actual PG/Neo4j/OpenFGA, CPU models and Rust; excludes startup/ingestion/projection/generation. OPA approvals occur before timing.",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 256,
+    "native_dimensions": 384,
+    "projection_dimensions": 1024
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "completed_at": "2026-11-16T07:57:09.623678+00:00",
+  "source_unchanged": true
+}

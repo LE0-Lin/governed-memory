@@ -1,0 +1,29 @@
+WARN psycopg==3.3.8 needs to be downloaded from a registry
+WARN mcp==1.30.0 needs to be downloaded from a registry
+WARN rank-bm25==0.2.2 needs to be downloaded from a registry
+WARN tiktoken==0.14.0 needs to be downloaded from a registry
+WARN sqlalchemy==2.0.57 needs to be downloaded from a registry
+WARN httpx==0.28.1 needs to be downloaded from a registry
+WARN graphiti-core==0.31.2 needs to be downloaded from a registry
+WARN graphiti-core needs to be downloaded from a registry
+WARN ijson==3.6.0 needs to be downloaded from a registry
+WARN pytest==8.4.2 needs to be downloaded from a registry
+WARN accelerate==1.15.0 needs to be downloaded from a registry
+WARN jsonschema==4.26.0 needs to be downloaded from a registry
+WARN interegular==0.3.3 needs to be downloaded from a registry
+WARN sentence-transformers==5.7.0 needs to be downloaded from a registry
+WARN pytest-asyncio==1.4.1.post1 needs to be downloaded from a registry
+WARN pyyaml==6.0.3 needs to be downloaded from a registry
+WARN packaging==26.3 needs to be downloaded from a registry
+WARN pydantic==2.14.3 needs to be downloaded from a registry
+WARN ruff==0.17.4 needs to be downloaded from a registry
+  × No solution found when resolving dependencies for split (markers:
+  │ (python_full_version == '3.12.*' and sys_platform == 'linux') or
+  │ (python_full_version == '3.12.*' and sys_platform == 'win32')):
+  ╰─▶ Because graphiti-core==0.31.2 needs to be downloaded from a registry and
+      your project depends on graphiti-core==0.31.2, we can conclude that your
+      project's requirements are unsatisfiable.
+      And because your project requires governed-memory[dev], we can conclude
+      that your project's requirements are unsatisfiable.
+
+hint: Packages were unavailable because the network was disabled. When the network is disabled, registry packages may only be read from the cache.

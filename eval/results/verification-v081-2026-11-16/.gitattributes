@@ -1,0 +1,5 @@
+* -text
+*.log -diff
+*.txt -diff
+*.xml -diff
+diagnostic-windows-client-setup.json -diff

@@ -1,0 +1,16 @@
+request headers {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'}
+received ('127.0.0.1', 60508) HTTP/1.1 {'Host': '127.0.0.1:62027', 'User-Agent': 'python-httpx/0.28.1', 'Content-Length': '2', 'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/json'} False
+response HTTP/1.1 {'connection': 'close', 'content-length': '16', 'date': 'Sun, 15 Nov 2026 15:59:49 GMT', 'server': 'BaseHTTP/0.6 Python/3.12.0'}
+pool <ConnectionPool [Requests: 0 active, 0 queued | Connections: 0 active, 0 idle]> time 0.004230900085531175
+request headers {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'}
+received ('127.0.0.1', 60511) HTTP/1.1 {'Host': '127.0.0.1:62027', 'User-Agent': 'python-httpx/0.28.1', 'Content-Length': '2', 'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/json'} False
+response HTTP/1.1 {'connection': 'close', 'content-length': '16', 'date': 'Sun, 15 Nov 2026 15:59:49 GMT', 'server': 'BaseHTTP/0.6 Python/3.12.0'}
+pool <ConnectionPool [Requests: 0 active, 0 queued | Connections: 0 active, 0 idle]> time 0.01366479997523129
+request headers {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'}
+received ('127.0.0.1', 60513) HTTP/1.1 {'Host': '127.0.0.1:62027', 'User-Agent': 'python-httpx/0.28.1', 'Content-Length': '2', 'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/json'} False
+response HTTP/1.1 {'connection': 'close', 'content-length': '16', 'date': 'Sun, 15 Nov 2026 15:59:49 GMT', 'server': 'BaseHTTP/0.6 Python/3.12.0'}
+pool <ConnectionPool [Requests: 0 active, 0 queued | Connections: 0 active, 0 idle]> time 0.015965300030075014
+request headers {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'}
+received ('127.0.0.1', 60515) HTTP/1.1 {'Host': '127.0.0.1:62027', 'User-Agent': 'python-httpx/0.28.1', 'Content-Length': '2', 'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/json'} False
+response HTTP/1.1 {'connection': 'close', 'content-length': '16', 'date': 'Sun, 15 Nov 2026 15:59:49 GMT', 'server': 'BaseHTTP/0.6 Python/3.12.0'}
+pool <ConnectionPool [Requests: 0 active, 0 queued | Connections: 0 active, 0 idle]> time 0.0029412000440061092

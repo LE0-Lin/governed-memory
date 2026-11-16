@@ -10,6 +10,8 @@ The local cross-encoder can reuse bounded query/passage scores in a long-running
 
 v0.8 narrows the final authority read after reranking, preserving all live checks and empty-result reasons. In the largest controlled synthetic case, same-run retrieval P95 falls from 521.9 to 408.3 ms (21.8%); smaller workloads show little benefit and some first-pass regressions. The [revised reference protocol](eval/AUTHORITY_REFRESH_V2_PROTOCOL.md), [results](eval/RESULTS-v0.8.md) and [verification](docs/verification-v0.8.md) retain the scope, exact v0.7 comparison and rejected first attempt.
 
+v0.8.1 measures standard MCP retrieval with actual PostgreSQL, Graphiti/Neo4j and OpenFGA HTTP. Its largest controlled case has 100% positive temporal Recall@5, zero stale evidence and caller P95 0.762 s (first-pass 0.806 s, repeats 0.516 s), with warmed models. Production runtime source stays identical to v0.8: a pooling candidate failed its latency gate and was reverted. See the [full-path results and CV comparison](eval/RESULTS-v0.8.1.md), [reproduction guide](docs/system-evaluation.md) and [verification](docs/verification-v0.8.1.md). This timing scope differs from the earlier ledger-only 0.408 s; no new speedup is claimed.
+
 ## Run the example
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).

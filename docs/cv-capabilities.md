@@ -93,3 +93,20 @@ unverified numbers. Independent real histories, full graph/remote-policy and
 transport latency, production/concurrency evidence and contemporaneous 2025
 records remain unproved. No numerical completion percentage follows from this
 checklist, and no CV wording or date was changed.
+
+## v0.8.1 full-path evidence
+
+The [full MCP baseline](../eval/RESULTS-v0.8.1.md) adds actual Neo4j and OpenFGA
+HTTP plus caller-observed stdio transport. Current large-case positive temporal
+Recall@5 is 100%, stale evidence 0/792, retrieval P95 0.762 s (first 0.806/repeat 0.516).
+The CV original values remain 83.2%, 26.4% fewer stale retrievals and 1.12 s; the
+archived session comparison established 100% stale-rate reduction, not a new
+full-path session baseline. Preserve those different scopes.
+
+The proposed pooling optimization regressed largest overall/first P95 by 8.8%/
+11.7% and was reverted. Production source is identical to v0.8; this release
+improves evidence coverage, not runtime performance. The final full-path run
+has 1008 observations, 504 exact pairs and no errors/stale results, with actual
+warm-process revocation/downgrade and stale-graph withdrawal checks. This closes
+the prior same-host graph/authorization/transport timing gap. Independent real
+histories, WAN/concurrency/production performance and historical dates remain.

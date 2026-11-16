@@ -1,0 +1,100 @@
+{
+  "timelines_1/governed_current": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 1008,
+    "stale_count": 0,
+    "stale_rate": 0.0,
+    "negative_stale_failures": 0,
+    "negative_unrelated_results": 288,
+    "latency_ms_p50": 106.38821999998527,
+    "latency_ms_p95": 212.1233678499948,
+    "first_pass_observations": 84,
+    "first_pass_p50_ms": 149.62844949999976,
+    "first_pass_p95_ms": 248.5265700500051,
+    "repeat_observations": 168,
+    "repeat_p50_ms": 95.17687299999977,
+    "repeat_p95_ms": 162.98888465000516,
+    "backends": {
+      "graphiti-hybrid-rrf": 177,
+      "graphiti-hybrid-rrf+ledger-fill": 75
+    },
+    "server_p95_ms": 208.8250694500047
+  },
+  "timelines_1/reference_v08": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 1008,
+    "stale_count": 0,
+    "stale_rate": 0.0,
+    "negative_stale_failures": 0,
+    "negative_unrelated_results": 288,
+    "latency_ms_p50": 108.2977095000075,
+    "latency_ms_p95": 211.4701814500108,
+    "first_pass_observations": 84,
+    "first_pass_p50_ms": 148.9494719999982,
+    "first_pass_p95_ms": 252.58778575000346,
+    "repeat_observations": 168,
+    "repeat_p50_ms": 95.42405700000245,
+    "repeat_p95_ms": 169.290695450006,
+    "backends": {
+      "graphiti-hybrid-rrf": 177,
+      "graphiti-hybrid-rrf+ledger-fill": 75
+    },
+    "server_p95_ms": 206.30220545000242
+  },
+  "timelines_16/governed_current": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 792,
+    "stale_count": 0,
+    "stale_rate": 0.0,
+    "negative_stale_failures": 0,
+    "negative_unrelated_results": 225,
+    "latency_ms_p50": 371.88543049995815,
+    "latency_ms_p95": 761.5597198999977,
+    "first_pass_observations": 84,
+    "first_pass_p50_ms": 489.99720750001075,
+    "first_pass_p95_ms": 805.9898088500062,
+    "repeat_observations": 168,
+    "repeat_p50_ms": 264.22200950003116,
+    "repeat_p95_ms": 515.7062509500406,
+    "backends": {
+      "graphiti-hybrid-rrf+ledger-fill": 252
+    },
+    "server_p95_ms": 757.3181116499966
+  },
+  "timelines_16/reference_v08": {
+    "observations": 252,
+    "positive_observations": 180,
+    "negative_observations": 72,
+    "errors": 0,
+    "temporal_recall": 1.0,
+    "returned": 792,
+    "stale_count": 0,
+    "stale_rate": 0.0,
+    "negative_stale_failures": 0,
+    "negative_unrelated_results": 225,
+    "latency_ms_p50": 355.7389259999866,
+    "latency_ms_p95": 719.788567650005,
+    "first_pass_observations": 84,
+    "first_pass_p50_ms": 493.16046750001874,
+    "first_pass_p95_ms": 805.3807949500307,
+    "repeat_observations": 168,
+    "repeat_p50_ms": 265.8166770000321,
+    "repeat_p95_ms": 524.639492800003,
+    "backends": {
+      "graphiti-hybrid-rrf+ledger-fill": 252
+    },
+    "server_p95_ms": 715.7800672499889
+  }
+}

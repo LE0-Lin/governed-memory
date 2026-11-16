@@ -1,0 +1,8 @@
+{
+  "scope": "Diagnostic only: real Windows HTTP client to a loopback protocol stub, not an OpenFGA service or canonical performance run.",
+  "requests": 20,
+  "client_constructions": 20,
+  "total_ms": 14750.87689992506,
+  "client_construction_ms": 14354.427800164558,
+  "construction_fraction": 0.9731236927505973
+}
