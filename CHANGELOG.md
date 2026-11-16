@@ -13,6 +13,9 @@
   or production guarantees. Last full-path performance data remain v0.8.1;
   no new retrieval/answer quality or speedup is claimed.
 
+See [installation verification](docs/verification-v0.9.0.md) and the
+[release assets](https://github.com/LE0-Lin/governed-memory/releases/tag/v0.9.0).
+
 ## 0.8.1
 
 - Establish full same-host retrieval timing through PostgreSQL, Neo4j, OpenFGA

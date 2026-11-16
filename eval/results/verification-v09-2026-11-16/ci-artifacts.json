@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "id": 14228410840,
+      "name": "release-ubuntu-latest",
+      "size_in_bytes": 8007764,
+      "url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14228410840",
+      "archive_download_url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14228410840/zip",
+      "expired": false,
+      "created_at": "2026-11-16T12:55:47Z",
+      "expires_at": "2027-02-14T12:55:06Z",
+      "updated_at": "2026-11-16T12:55:47Z",
+      "digest": "sha256:cc42e1ceb0961da9fd20d34ca03aa7e549d9a0ad9de01f76d51afb38d56d91e6",
+      "workflow_run": {
+        "id": 43870896889,
+        "repository_id": 1451521244,
+        "head_repository_id": 1451521244,
+        "head_branch": "enhancement/release-usability",
+        "head_sha": "6ae9e1bab3d38be99f36022c8627a67210cd17b4"
+      }
+    },
+    {
+      "id": 14227916961,
+      "name": "evaluation",
+      "size_in_bytes": 49073,
+      "url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14227916961",
+      "archive_download_url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14227916961/zip",
+      "expired": false,
+      "created_at": "2026-11-16T12:58:39Z",
+      "expires_at": "2027-02-14T12:55:06Z",
+      "updated_at": "2026-11-16T12:58:39Z",
+      "digest": "sha256:d84c91e872b47fa70c3a8be5b1f6cf10a72f0454ee493184ccb2066e29ba4b70",
+      "workflow_run": {
+        "id": 43870896889,
+        "repository_id": 1451521244,
+        "head_repository_id": 1451521244,
+        "head_branch": "enhancement/release-usability",
+        "head_sha": "6ae9e1bab3d38be99f36022c8627a67210cd17b4"
+      }
+    },
+    {
+      "id": 14227717819,
+      "name": "release-windows-latest",
+      "size_in_bytes": 8007787,
+      "url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14227717819",
+      "archive_download_url": "https://api.github.com/repos/LE0-Lin/governed-memory/actions/artifacts/14227717819/zip",
+      "expired": false,
+      "created_at": "2026-11-16T12:57:06Z",
+      "expires_at": "2027-02-14T12:55:06Z",
+      "updated_at": "2026-11-16T12:57:06Z",
+      "digest": "sha256:f411191f30c4efaef3ed20fa4376ba2200f706692fa6f8eaebf3c3442db03e7e",
+      "workflow_run": {
+        "id": 43870896889,
+        "repository_id": 1451521244,
+        "head_repository_id": 1451521244,
+        "head_branch": "enhancement/release-usability",
+        "head_sha": "6ae9e1bab3d38be99f36022c8627a67210cd17b4"
+      }
+    }
+  ]
+}
