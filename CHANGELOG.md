@@ -37,6 +37,6 @@ See [installation verification](docs/verification-v0.9.0.md) and the
 - **0.5.0:** document-vector cache and opt-in relevance filter with transfer limits.
 - **0.4.0:** native kernels, semantic review, OpenFGA/OpenLineage and dependencies.
 
-See [evaluation records](eval/README.md), [verification guides](docs/acceptance.zh-CN.md)
+See [evaluation records](eval/README.md), [evaluation scope](docs/evaluation.md)
 and the [Git history](https://github.com/LE0-Lin/governed-memory/commits/main) for
 original protocols, test evidence and unchanged negative results.

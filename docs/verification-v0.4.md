@@ -1,8 +1,8 @@
 # v0.4 verification
 
-Verified on 2026-11-13 (Asia/Shanghai). This release fills the engineering gaps in
-the [CV acceptance matrix](cv-capabilities.md); it does not establish historical
-project dates or turn prewritten CV numbers into measured results.
+Verified on 2026-11-13 (Asia/Shanghai). This release adds native Rust ranking,
+semantic chunking, entity/NLI review suggestions, OpenFGA intersection,
+dependency invalidation, and OpenLineage delivery.
 
 ## Implemented paths
 

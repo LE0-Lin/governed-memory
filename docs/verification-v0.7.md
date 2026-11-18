@@ -24,7 +24,7 @@ corroboration provenance, and withdrawal during a partial cache miss. Real
 MiniLM inference verifies cached and recomputed scores across batch shapes.
 
 The expanded timeline labels are independently generated from the unchanged
-frozen CV fixtures. Tests compare every query's explicit eligible labels against
+frozen synthetic fixtures. Tests compare every query's explicit eligible labels against
 both SQLite and PostgreSQL at 1 and 4 cohorts, and verify coverage and dependency
 bindings at 16 cohorts. The independent rescorer rejects a modified gold label
 and checks the complete observation grid, tokens, stale labels and percentiles.

@@ -38,9 +38,8 @@ observe live OpenFGA revocation, reader downgrade and source withdrawal while
 the selected Neo4j edge deliberately remains stale. These mutation probes are
 separate from fixture-scored observations.
 
-These histories are previously examined synthetic templates. The experiment
-measures one caller with services on the same hosted runner; it cannot establish
-independent real-world recall, WAN latency or production concurrency. OPA governs
-the fixture approvals; it is not called by retrieval and is not part of search
-latency. CV-versus-current values must retain these boundaries, and must be
-reported separately from paired old/new gains within this run.
+These histories are synthetic templates measured with one caller and services on
+the same host; they do not establish real-world recall, WAN latency, or
+multi-caller throughput. OPA governs fixture approvals and is not called during
+retrieval. Cross-protocol numbers should be reported separately from paired
+within-run deltas.

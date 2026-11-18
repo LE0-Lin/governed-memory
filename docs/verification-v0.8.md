@@ -84,12 +84,11 @@ reproduces all eight groups and verifies the complete observation grid and
 explicit fixture labels. Quality is maintained; unrelated negative evidence
 and the heldout 97.92% positive recall remain.
 
-The data are previously examined synthetic histories, one caller, warmed CPU
-models, PostgreSQL, and Rust ranking. Graph/remote-policy HTTP, transport,
-ingestion, model loading and generation are outside timing. This is not an
-independent real-history, production-capacity or complete-answer benchmark.
-CV engineering features are exercised; those broader claims and 2025 historical
-dates still need their own evidence. No old result files or CV were rewritten.
+The data are synthetic histories, one caller, warmed CPU models, PostgreSQL,
+and Rust ranking. Graph/remote-policy HTTP, transport, ingestion, model loading
+and generation are outside timing. This is not a real-history,
+production-capacity or complete-answer benchmark. No prior result files were
+rewritten.
 
 ## Local infrastructure failure retained
 

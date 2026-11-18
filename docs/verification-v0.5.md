@@ -78,5 +78,5 @@ also specifies both fictional 2030 time axes explicitly. Replay reconstruction
 failures and their diagnosis are retained with the raw results. The relevance
 cutoff was not changed to improve validation scores.
 
-These checks establish the exercised local workflows, not distributed recovery,
-general answerability, production capacity, historical CV dates or human review.
+These checks cover the exercised local workflows and do not establish
+distributed recovery, general answerability, or production capacity.

@@ -88,25 +88,19 @@ governance/model integrations support the fuller self-hosted configuration.
 See [configuration](docs/usage.md), [design](docs/design.md) and the
 [code reading guide](docs/code-guide.md).
 
-## Evidence, with its limits
+## Benchmarks and scope
 
-Latest full-path measurement: **v0.8.1**, not a fresh benchmark of this release.
+Measured on **v0.8.1** (full local stack: PostgreSQL, Neo4j/Graphiti, OpenFGA, and stdio MCP on a single CPU host with warmed models, `k=5`, 1024-token budget):
 
-| Measurement | Recorded observation |
-| --- | --- |
-| Controlled temporal retrieval | **60/60 positive queries per workload**, within 84 known synthetic questions |
-| Stale evidence, largest case | **0/792 returned items** across three correlated replays |
-| Full retrieval P95 | **0.762 s** on one CPU host, warmed models, PostgreSQL + Neo4j + OpenFGA + MCP |
-| Separate relevance heldout | **47/48 positives** recovered all gold evidence |
-| Optional 500-question answers | **181/500** accepted by a local model judge on a different task |
+| Workload | Result | Notes |
+| --- | --- | --- |
+| Controlled temporal retrieval | **60/60** positive queries | 84 synthetic queries (60 positive, 24 negative) across 72 and 1,152 historical assertions |
+| Stale evidence returned | **0/792** returned items | Largest synthetic case across three replays (correlated, not independent trials) |
+| Full-path retrieval P95 | **0.762 s** (first-pass 0.806 s, repeat 0.516 s) | Single caller, CPU inference; excludes process/model startup (4.95–5.53 s) and answer generation |
+| Relevance heldout | **47/48** positive queries (97.92%) | Separate 80-query synthetic set (48 positive, 32 negative) |
+| Optional 500-question answers | **181/500** (36.2%) | Long-conversation QA scored by a local model judge |
 
-These are finite test results, **not general accuracy, a zero-failure promise or
-a production SLO**. Startup and generation are outside retrieval timing.
-Repeated/cohort-expanded fixtures are not independent real-world samples.
-Negative queries can still return unrelated eligible evidence. The
-[evidence card](docs/evaluation.md) explains the denominators, scope and why
-“100%” should not be a headline guarantee. [Raw runs and failures](eval/README.md)
-remain public, including rejected performance changes.
+These numbers reflect bounded synthetic and local-model runs rather than general accuracy or a production SLO. Negative queries can still return unrelated eligible evidence unless the optional relevance cutoff is enabled. Full protocols, hardware details, and raw outputs—including reverted experiments—are in [docs/evaluation.md](docs/evaluation.md) and [eval/README.md](eval/README.md).
 
 ## Develop and contribute
 

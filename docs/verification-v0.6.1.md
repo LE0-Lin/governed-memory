@@ -88,6 +88,5 @@ also shut down cleanly, retaining the data volumes, images and model caches.
 
 The repair preserves the original parent/source binding. It does not silently
 rebind a derivation to another source, resurrect revoked candidates, or rewrite
-past approvals. A replacement derivation requires a fresh review. The old
-500-question outputs, quality limitations, historical CV dates and unsupported
-prewritten CV percentages remain unchanged.
+past approvals. A replacement derivation requires a fresh review. Earlier
+500-question answer outputs and documented quality limits remain unchanged.

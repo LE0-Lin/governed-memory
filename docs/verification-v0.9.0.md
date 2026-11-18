@@ -61,17 +61,11 @@ are retained in [the verification directory](../eval/results/verification-v09-20
 The [GitHub Release](https://github.com/LE0-Lin/governed-memory/releases/tag/v0.9.0)
 is the distribution point for the final source build and its receipts.
 
-## CV and measurement boundaries
+## Measurement scope
 
-The latest performance study is still [v0.8.1](../eval/RESULTS-v0.8.1.md): 60/60
-positive template queries per workload, 0/792 stale returned items in the largest
-case and full same-host retrieval P95 0.762 s. Three replays are correlated. The
-earlier session comparison's 100% relative stale reduction is a separate study.
-The CV values are 83.2% temporal recall, 26.4% fewer stale results and P95 1.12 s;
-different protocols do not establish a matched improvement over that experiment.
-
-This round improves packaging, documentation and installation evidence. It does
-not establish a new speedup, general accuracy or zero-failure guarantee. See
-[the evidence card](evaluation.md) for the separate 47/48 relevance and 181/500
-locally graded answer results. The user's earlier project chronology is distinct
-from recent GitHub publication; the date of upload is not a completion gap.
+The latest full-path performance study remains [v0.8.1](../eval/RESULTS-v0.8.1.md):
+60/60 positive synthetic queries per workload, 0/792 stale returned items across
+three correlated replays, and 0.762 s P95 on a single CPU host. This release
+covers packaging, documentation, and isolated installation verification without
+re-running retrieval or answer benchmarks; see [evaluation.md](evaluation.md)
+for the complete metrics and known limits.

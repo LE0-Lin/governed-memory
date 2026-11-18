@@ -76,18 +76,8 @@ the observed intermediary `Connection: close` responses; the candidate test was
 corrected to respect that header while still requiring one client and fresh
 decisions. Those dropped candidate tests are not current feature acceptance.
 
-## Local environment and CV boundaries
+## Scope and environment notes
 
-The previous WSL I/O fault was not repaired or claimed recovered. A later
-read-only check observed about 30.7 GiB free on C:, with cause unestablished;
-Ubuntu still points to its original C: path and is listed running. This chat
-deleted no model/cache/database/image and did not migrate, stop or repair the
-whole Ubuntu distribution. No clean local service/daemon shutdown was verified.
-The user explicitly selected no migration; any distribution-level recovery
-still needs new authorization. All full-path services and timing here are CI.
-
-The CV comparison remains scoped: controlled positive recall 100%, archived
-session stale reduction 100%, current full-path P95 0.762 s versus original
-83.2%/26.4%/1.12 s. Numerical differences do not recreate the original unknown
-experiment. Independent real histories, WAN/concurrency/production evidence
-and the CV's 2025 dates remain unproved; CV and historical dates are unchanged.
+All full-path services and timing measurements in this release ran in CI on a
+single host with one caller. Real-world histories, WAN latency, and
+multi-caller production throughput remain outside the scope of this baseline.

@@ -78,5 +78,4 @@ from 6/30 to 13/30. The local judge estimate changes from 169/500 to 181/500,
 with 43 previously correct positive answers lost and 49 newly correct positives.
 These results do not establish a reliable semantic quality gain. The first two
 development failures, small-model counterexamples and all old results remain
-available. No official score, human review, historical CV date or production
-capacity is asserted.
+available. No official benchmark score or production capacity is asserted.
