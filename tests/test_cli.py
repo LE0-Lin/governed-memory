@@ -2,7 +2,11 @@ import json
 import os
 import subprocess
 import sys
+import tomllib
 from importlib.metadata import version
+from pathlib import Path
+
+import governed_memory
 
 
 def test_packaged_demo_and_version_ignore_unrelated_live_configuration(tmp_path):
@@ -35,7 +39,11 @@ def test_packaged_demo_and_version_ignore_unrelated_live_configuration(tmp_path)
         encoding="utf-8",
         check=True,
     )
-    assert reported.stdout.strip() == f"governed-memory {version('governed-memory')}"
+    pyproject = Path(__file__).resolve().parents[1] / "pyproject.toml"
+    expected_version = tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["version"]
+    assert governed_memory.__version__ == expected_version
+    assert version("governed-memory") == expected_version
+    assert reported.stdout.strip() == f"governed-memory {expected_version}"
 
 
 def test_cli_json_is_utf8_when_the_native_pipe_encoding_is_legacy(tmp_path):
