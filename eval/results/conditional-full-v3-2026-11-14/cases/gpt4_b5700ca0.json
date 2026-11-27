@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_b5700ca0",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "3407c9bc33218e361b281fde",
+      "4be30fb4e22eff34346c7c58",
+      "d1fb9ee4a896dca0410d8d2a",
+      "985d2c10dcf378cf40412d43",
+      "7ef0aadf556819900a696521",
+      "99d5d0f6c4f6cbb7ec03bfc6",
+      "9e3da8ff7ced9394562cc1d1",
+      "6c4be3032408254307c8f102"
+    ],
+    "context_sha256": "1194a93ba19b606614818c640861e8c42573cc3c725ec479058ba7378053254c",
+    "response": {
+      "answer": "Episcopal Church",
+      "evidence_ids": [
+        "985d2c10dcf378cf40412d43"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1334,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Episcopal Church\",\"evidence_ids\":[ \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 830.8669000398368,
+    "answer_latency_ms": 830.8669000398368
+  }
+]

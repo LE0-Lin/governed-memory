@@ -1,0 +1,70 @@
+{
+  "version": "0.6.0",
+  "date": "2026-11-14 Asia/Shanghai",
+  "runtime_source_commit": "adfbdd5fe9bd22522361bad6a521d53cc9eb82ef",
+  "runtime_source_sha256": "c5ea8570a7ecbb436ecc737586cab7b7429f7662a72906a503f32410ebecee5d",
+  "inference_source_commit": "bf35814b099ef0f4846f4e2ab68ef7702bd8f66b",
+  "inference_source_sha256": "6de1a8a0578b6282e08d71cad1f16ca30a5e1c8572977f2f9f9e9ba838d4ae13",
+  "ci_url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43533826175",
+  "ci_jobs_successful": 6,
+  "local_acceptance": {
+    "passed": 281,
+    "skipped": 14,
+    "expected_model_quality_failures": 1,
+    "configurations": 296,
+    "core_storage": {
+      "passed": 267,
+      "skipped": 9
+    },
+    "actual_models": {
+      "passed": 9,
+      "expected_model_quality_failures": 1
+    },
+    "core_container": {
+      "passed": 1,
+      "skipped": 1
+    },
+    "small_model_containers": {
+      "passed": 3,
+      "skipped": 3
+    },
+    "standard_model_container": {
+      "passed": 1,
+      "skipped": 1
+    }
+  },
+  "rego": {
+    "passed": 10,
+    "failed": 0
+  },
+  "frozen_governance": {
+    "retrievals": 768,
+    "operation_checks": 48,
+    "execution_failures": 0
+  },
+  "offline_demo_network_denied": true,
+  "wheel_sdist_built": true,
+  "wheel_sha256": "758c258eb243f072cb1d5eb634f7c38d77d7ec0fb8cdfe1304a74485212028ae",
+  "images": {
+    "core": "sha256:454341ed3617c3243f51153ee305d27f2de007f83dd34b9598247240b00ed3c8",
+    "models": "sha256:2115254538f32aa2756631dc64274b0200a526544555ea48ffbd5834f7c4714d"
+  },
+  "full500": {
+    "unchanged_contexts": 500,
+    "runtime_errors": 0,
+    "invalid_answers": 0,
+    "valid_explicit_negative_abstentions": 13,
+    "negative_total": 30,
+    "positive_local_judge_correct": 160,
+    "positive_total": 470,
+    "overall_local_judge_correct": 181,
+    "judge_calibration_correct": 20,
+    "judge_calibration_total": 20
+  },
+  "standard_default": "conditional",
+  "other_profile_default": "json_schema",
+  "legacy_override": "MEMORY_ANSWER_FORMAT=json_schema",
+  "model_judge_is_official_or_human": false,
+  "semantic_gain_is_established": false,
+  "original_v03_v04_v05_results_modified": false
+}

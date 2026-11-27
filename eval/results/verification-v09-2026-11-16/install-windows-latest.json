@@ -1,0 +1,24 @@
+{
+  "version": "0.9.0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "win32",
+  "wheel": "governed_memory-0.9.0-py3-none-any.whl",
+  "wheel_sha256": "12f19ffe34c297a192bcbd65606554c30bb21aac503b46cd99a49323cd211920",
+  "constraints_sha256": "00b4df8f870003c71214ec770226961bc14d81eccbd767a53c2484be6ea75a7f",
+  "outside_checkout": true,
+  "isolated_interpreter": true,
+  "core_has_torch": false,
+  "source_archive_excludes_private_state": true,
+  "offline_packaged_demo": true,
+  "demo_did_not_create_live_database": true,
+  "persistent_mcp_checks": [
+    "unapproved proposal hidden",
+    "agent self-approval denied",
+    "operator approval visible",
+    "source provenance",
+    "fresh-process persistence",
+    "warm-process source withdrawal"
+  ],
+  "source_commit": "6ae9e1bab3d38be99f36022c8627a67210cd17b4",
+  "source_dirty": false
+}

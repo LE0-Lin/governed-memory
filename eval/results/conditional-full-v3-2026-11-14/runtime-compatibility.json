@@ -1,0 +1,6 @@
+{
+  "evaluated_source_commit": "bf35814b099ef0f4846f4e2ab68ef7702bd8f66b",
+  "answer_helper_ast_sha256": "e8b33dbb82f806c3fe51700299a878b50a6746bd5c0fc3dfcb833cf91791b24c",
+  "prompt_schema_parser_and_generation_unchanged": true,
+  "runtime_changes": "profile default selection, operator override, package version and tests; no candidate prompt revision"
+}

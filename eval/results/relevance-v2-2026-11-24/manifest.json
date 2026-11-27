@@ -1,0 +1,73 @@
+{
+  "commit": "da3e0a00b5491d50f080afd54712a33ae12a8877",
+  "dirty_source": false,
+  "code_sha256": "2816d8a9ded12a3e9aa1734df3d4c4c6e575fa93b96b88b1719796e5c3f58e45",
+  "protocol_sha256": "6d8b1fc8e1aa6d69e776c1cbc8dbc5f1c9554cfc2526ee6fd32e75299d0e0722",
+  "engineering_corpus_sha256": "f96e80f3bfdb94f068ed3b867ae146bc010f7ad97229636f7854ea6c0d72f06a",
+  "started_at": "2026-11-24T06:18:46.043967+00:00",
+  "python": "3.12.0",
+  "os": "Windows-11-10.0.26100-SP0",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "ranking_backend": "python",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 256,
+    "native_dimensions": 384,
+    "projection_dimensions": 1024
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "strict_v1_cutoff": 1.4,
+  "v2_policy": {
+    "version": "minilm-relevance-v2",
+    "minimum_score": -1.2,
+    "minimum_anchor_score": -3.0,
+    "minimum_gain": 0.8,
+    "passage_word_limit": 32,
+    "minimum_passage_score": -5.0
+  },
+  "packages": {
+    "governed-memory": "0.9.0",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "sqlalchemy": "2.0.57"
+  },
+  "storage": "sqlite",
+  "completed_at": "2026-11-24T06:24:55.864408+00:00",
+  "source_changed_during_run": false,
+  "observations_sha256": "e6fe3a2b4a1d5f6a4c5e84605a33e998a28fd8b0aa6f8787dee9cdec5b25832f",
+  "reason_counts": {
+    "timelines_1/unfiltered:ok": 252,
+    "timelines_1/strict_v1:ok": 180,
+    "timelines_1/default_v2:ok": 177,
+    "timelines_1/default_v2:no_relevant_evidence": 75,
+    "timelines_1/strict_v1:no_relevant_evidence": 72,
+    "timelines_16/unfiltered:ok": 252,
+    "timelines_16/strict_v1:ok": 180,
+    "timelines_16/default_v2:ok": 180,
+    "timelines_16/default_v2:no_relevant_evidence": 72,
+    "timelines_16/strict_v1:no_relevant_evidence": 72,
+    "heldout/unfiltered:ok": 240,
+    "heldout/strict_v1:ok": 147,
+    "heldout/default_v2:ok": 156,
+    "heldout/strict_v1:no_relevant_evidence": 93,
+    "heldout/default_v2:no_relevant_evidence": 84,
+    "engineering/session_baseline:session_baseline": 60,
+    "engineering/unfiltered:ok": 60,
+    "engineering/strict_v1:ok": 45,
+    "engineering/default_v2:ok": 48,
+    "engineering/strict_v1:no_relevant_evidence": 15,
+    "engineering/default_v2:no_relevant_evidence": 12
+  }
+}

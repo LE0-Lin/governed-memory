@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "ad7109d1",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "7f4f8af4a669bf7ab06d043e",
+      "4b6299d6f2b0458097fa3974",
+      "d8370719268626265037cae3",
+      "ed807e58d6207eea006a6dbc",
+      "998b759c689a50893548ee3c",
+      "4d1a4dead84a49e2c6efe256",
+      "df5d473c930d70277ff9f999",
+      "95717f4521c50d41b42683c5"
+    ],
+    "context_sha256": "3128224ba09d01e0450d9e8ce4f23a6169bbed31adae2085fda51c833bfb145d",
+    "response": {
+      "answer": "500 Mbps",
+      "evidence_ids": [
+        "7f4f8af4a669bf7ab06d043e"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1695,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"500 Mbps\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 959.6244000131264,
+    "answer_latency_ms": 959.6244000131264
+  }
+]

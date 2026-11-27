@@ -1,0 +1,11 @@
+{
+  "observations": 2988,
+  "unique_workload_queries": 332,
+  "summary_groups": 12,
+  "paired_comparisons": 996,
+  "paired_mismatches": 0,
+  "execution_errors": 0,
+  "governed_stale_results": 0,
+  "observations_sha256": "a43dea5aa6b6aac14e9d3a09f40dbeeb7fa324fd356874a5997750fc40c4b0e5",
+  "source_unchanged_during_run": true
+}

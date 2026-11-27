@@ -1,0 +1,20 @@
+{
+  "timelines_1": {
+    "external_revocation_denied": true,
+    "reader_downgrade_read_only": true,
+    "source_withdrawal_with_stale_graph": true,
+    "methods": [
+      "reference_v08",
+      "governed_current"
+    ]
+  },
+  "timelines_16": {
+    "external_revocation_denied": true,
+    "reader_downgrade_read_only": true,
+    "source_withdrawal_with_stale_graph": true,
+    "methods": [
+      "reference_v08",
+      "governed_current"
+    ]
+  }
+}

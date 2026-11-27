@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"train","answer_error":null,"answer_latency_ms":1023.9269000012428,"category":"temporal-reasoning","exact_match":1.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"gpt4_ec93e27f","token_f1":1.0}

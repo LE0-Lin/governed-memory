@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_2487a7cb",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "e0e5ee75600ae5ea620c8ce2",
+      "895550d55fcd2b4b2d090e74",
+      "caf5c7a32fec2ee1bbe1b8f3",
+      "8dea181d59addced41d290ef",
+      "ae4e3bd31b522b08ce212bb2",
+      "ea73f55b0ef2cd6dddaecd53",
+      "58d86fe4b23cdf9044087c21",
+      "3e7ac64b16480ddd9fe9e563"
+    ],
+    "context_sha256": "db3f0d7bf4ca4a994dc474dc146239bcb1d596040c2efba955591516a4a76773",
+    "response": {
+      "answer": "the 'Data Analysis using Python' webinar",
+      "evidence_ids": [
+        "e0e5ee75600ae5ea620c8ce2",
+        "895550d55fcd2b4b2d090e74"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1477,
+        "completion_tokens": 27,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"the 'Data Analysis using Python' webinar\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1478.0552999582142,
+    "answer_latency_ms": 1478.0552999582142
+  }
+]

@@ -1,0 +1,137 @@
+name: governed-memory
+services:
+  memory:
+    profiles: [app]
+    image: governed-memory:local
+    build:
+      context: .
+      args:
+        INSTALL_MODELS: ${INSTALL_MODELS:-false}
+    environment:
+      MEMORY_DATABASE_URL: postgresql+psycopg://memory:${POSTGRES_PASSWORD:-local-memory-only}@postgres:5432/memory
+      MEMORY_NEO4J_URI: bolt://neo4j:7687
+      MEMORY_NEO4J_PASSWORD: ${NEO4J_PASSWORD:-local-graph-only}
+      MEMORY_TOKEN: ${MEMORY_AGENT_TOKEN:-}
+      MEMORY_OPA_URL: ${MEMORY_CONTAINER_OPA_URL:-}
+      MEMORY_GENERATION_PROFILE: ${MEMORY_GENERATION_PROFILE:-}
+      MEMORY_ANSWER_FORMAT: ${MEMORY_ANSWER_FORMAT:-}
+      MEMORY_GENERATION_CACHE: /models/generation
+      MEMORY_MODEL_CACHE: /models/retrieval
+      MEMORY_LOCAL_EMBEDDING: ${MEMORY_LOCAL_EMBEDDING:-0}
+      MEMORY_LOCAL_RERANKER: ${MEMORY_LOCAL_RERANKER:-0}
+      MEMORY_RELEVANCE_FILTER: ${MEMORY_RELEVANCE_FILTER:-auto}
+      MEMORY_DOCUMENT_CACHE_SIZE: ${MEMORY_DOCUMENT_CACHE_SIZE:-2048}
+      MEMORY_RERANK_CACHE_SIZE: ${MEMORY_RERANK_CACHE_SIZE:-8192}
+      MEMORY_RANKING_BACKEND: ${MEMORY_RANKING_BACKEND:-rust}
+      MEMORY_FGA_URL: ${MEMORY_CONTAINER_FGA_URL:-}
+      MEMORY_FGA_STORE_ID: ${MEMORY_FGA_STORE_ID:-}
+      MEMORY_FGA_MODEL_ID: ${MEMORY_FGA_MODEL_ID:-}
+      MEMORY_FGA_API_KEY: ${MEMORY_FGA_API_KEY:-}
+      MEMORY_LINEAGE_ENDPOINT: ${MEMORY_LINEAGE_ENDPOINT:-}
+      MEMORY_LINEAGE_API_KEY: ${MEMORY_LINEAGE_API_KEY:-}
+      HF_HUB_OFFLINE: ${HF_HUB_OFFLINE:-0}
+    volumes:
+      - models:/models
+    stdin_open: true
+    tty: false
+    read_only: true
+    tmpfs: ["/tmp:noexec,nosuid,size=128m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+  postgres:
+    image: postgres:17.6
+    environment:
+      POSTGRES_DB: memory
+      POSTGRES_USER: memory
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-memory-only}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - ledger:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U memory -d memory"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  neo4j:
+    image: neo4j:5.26.12-community
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-local-graph-only}
+      NEO4J_server_memory_heap_initial__size: 256m
+      NEO4J_server_memory_heap_max__size: 512m
+      NEO4J_server_memory_pagecache_size: 256m
+    ports:
+      - "127.0.0.1:57687:7687"
+    volumes:
+      - graph:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p '${NEO4J_PASSWORD:-local-graph-only}' 'RETURN 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+  opa:
+    image: openpolicyagent/opa:1.22.2-static@sha256:805656c845fb626b856fb4b4799d6c91e053a41eecc48537f4f1c2fd6974fbdd
+    profiles: [policy]
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "/policies"]
+    ports:
+      - "127.0.0.1:58181:8181"
+    volumes:
+      - ./src/governed_memory/policies:/policies:ro
+      - ./tests/policy:/policy-tests:ro
+    read_only: true
+    cap_drop: [ALL]
+    healthcheck:
+      test: ["CMD", "/opa", "eval", "--fail", "--data", "/policies", "true"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  fga-postgres:
+    profiles: [governance]
+    image: postgres:17.6
+    environment:
+      POSTGRES_USER: fga
+      POSTGRES_DB: fga
+      POSTGRES_PASSWORD: ${FGA_POSTGRES_PASSWORD:-local-fga-only}
+    volumes:
+      - fga:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fga -d fga"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  fga-migrate:
+    profiles: [governance]
+    image: openfga/openfga:v1.10.3@sha256:79df38493e1c7bfa3b23a63df96fc6e630922e5c9dc63ad3052eddcaf4da1761
+    command: ["migrate"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://fga:${FGA_POSTGRES_PASSWORD:-local-fga-only}@fga-postgres:5432/fga?sslmode=disable
+    depends_on:
+      fga-postgres:
+        condition: service_healthy
+  openfga:
+    profiles: [governance]
+    image: openfga/openfga:v1.10.3@sha256:79df38493e1c7bfa3b23a63df96fc6e630922e5c9dc63ad3052eddcaf4da1761
+    command: ["run", "--playground-enabled=false"]
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://fga:${FGA_POSTGRES_PASSWORD:-local-fga-only}@fga-postgres:5432/fga?sslmode=disable
+    ports:
+      - "127.0.0.1:58080:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    depends_on:
+      fga-migrate:
+        condition: service_completed_successfully
+volumes:
+  models:
+  ledger:
+  graph:
+  fga:

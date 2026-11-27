@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "cc06de0d",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "cce66e5d7996b89cf32eb3a2",
+      "8f9c83bcac3dc950258e0bf0",
+      "41d0da62a75b7c4ae3028ebe",
+      "64053f505a440dc6ad83bcff",
+      "02de266576551b1ab6984169",
+      "a817f5960bf3f3c20bdec1f4",
+      "912781ce42ec5c7708bc22e4",
+      "80d1ba20ebaecbb4ed8f37fc"
+    ],
+    "context_sha256": "01e6e4752245655eb26e4495b060b1b516a966b9d16b09742715e92af3acf3ac",
+    "response": {
+      "answer": "The taxi ride was $12 more expensive than the estimated daily train fare of $9.14.",
+      "evidence_ids": [
+        "41d0da62a75b7c4ae3028ebe",
+        "64053f505a440dc6ad83bcff"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1566,
+        "completion_tokens": 42,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The taxi ride was $12 more expensive than the estimated daily train fare of $9.14.\" , \"evidence_ids\":[ \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2091.152200009674,
+    "answer_latency_ms": 2091.152200009674
+  }
+]

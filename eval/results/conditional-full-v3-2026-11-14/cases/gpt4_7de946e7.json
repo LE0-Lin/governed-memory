@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_7de946e7",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "e0972b7f2c5f968e70ac2403",
+      "16abd2098aa01414ca550a69",
+      "d0e86c2b3bb9ca961594920d",
+      "9704d3b3a4ea006446d87661",
+      "b403e1143344d80516829312",
+      "86e56ca8c88f26e9793494f9",
+      "59d2af07bc170b3cfb7a70b3",
+      "883c04018ff69058706a7160"
+    ],
+    "context_sha256": "0950b98bd4648a86c501cff77820958928daefbe35666e77ca85357a194eae1a",
+    "response": {
+      "answer": "The persistent cough",
+      "evidence_ids": [
+        "86e56ca8c88f26e9793494f9"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1613,
+        "completion_tokens": 15,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The persistent cough\",\"evidence_ids\":[\"E6\"]}"
+    },
+    "error": null,
+    "latency_ms": 764.3058999674395,
+    "answer_latency_ms": 764.3058999674395
+  }
+]

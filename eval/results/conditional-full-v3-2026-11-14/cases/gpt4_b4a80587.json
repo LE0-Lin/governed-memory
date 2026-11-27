@@ -1,0 +1,45 @@
+[
+  {
+    "question_id": "gpt4_b4a80587",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "6832953ab483f0a09d192c6b",
+      "b0e594035cbfa762455002eb",
+      "84f7a2ab08347b6ae3bc3a14",
+      "02c6eb896576dabfb0136596",
+      "3b21bdd16289f2910f51cd33",
+      "a7acb2f1697a870d15fc52e7",
+      "6dfd420d92a315aaa48499bb",
+      "2b40112d31ca954eb978884c"
+    ],
+    "context_sha256": "69cf8c5fc3ef61622453b4fd5497855e772579c72e23ccb05754c245d0c60a34",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1258,
+        "completion_tokens": 6,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":null}"
+    },
+    "error": null,
+    "latency_ms": 561.7932999739423,
+    "answer_latency_ms": 561.7932999739423
+  }
+]

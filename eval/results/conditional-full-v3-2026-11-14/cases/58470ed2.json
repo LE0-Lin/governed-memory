@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "58470ed2",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "0689f9464693a701fa66276e",
+      "5fa18f4c906ec4316f89bcb6",
+      "1bcb8678bad2dd7c314b7130",
+      "6db4757bb5f982bb736b886a",
+      "c9440bbf73e0dc72236b900c",
+      "068741cd5828a91b896c1aca",
+      "642a4392b7e0ee4d40ec9a59",
+      "099a015de149994b210410c5"
+    ],
+    "context_sha256": "2fc4f94358d61a702981c35b6158425e6eaf9dd048f7c51e2bb9079a08904063",
+    "response": {
+      "answer": "The Library is a sphere whose exact center is any one of its hexagons and whose circumference is inaccessible.",
+      "evidence_ids": [
+        "1bcb8678bad2dd7c314b7130"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1848,
+        "completion_tokens": 38,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Library is a sphere whose exact center is any one of its hexagons and whose circumference is inaccessible.\" , \"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2037.0597000000998,
+    "answer_latency_ms": 2037.0597000000998
+  }
+]

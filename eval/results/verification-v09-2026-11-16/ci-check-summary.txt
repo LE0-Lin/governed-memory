@@ -1,0 +1,8 @@
+storage-and-evaluation	Run uv run pytest -q	2026-11-16T12:58:31.2603065Z 326 passed, 46 skipped, 1 warning in 115.67s (0:01:55)
+core (windows-latest)	Run uv run pytest -q -m "not integration"	2026-11-16T12:56:15.6890271Z 191 passed, 146 skipped, 35 deselected, 1 warning in 38.70s
+core (windows-latest)	Run uv run python scripts/check_offline_demo.py	2026-11-16T12:56:18.4655735Z Offline example passed with external network access denied.
+native (windows-latest)	Run uv run pytest -q tests/test_native.py tests/test_semantic_memory.py -m "not models"	2026-11-16T12:56:16.8707644Z 8 passed, 4 skipped, 3 deselected, 1 warning in 2.75s
+core (ubuntu-latest)	Run uv run pytest -q -m "not integration"	2026-11-16T12:55:35.6945063Z 191 passed, 146 skipped, 35 deselected, 1 warning in 16.45s
+core (ubuntu-latest)	Run uv run python scripts/check_offline_demo.py	2026-11-16T12:55:37.1463301Z Offline example passed with external network access denied.
+local-models	Run uv run pytest -q tests/test_local_models.py tests/test_answering.py tests/test_answer_format.py tests/test_semantic_memory.py	2026-11-16T12:56:34.4438176Z 32 passed, 14 skipped, 1 xfailed, 2 warnings in 31.94s
+native (ubuntu-latest)	Run uv run pytest -q tests/test_native.py tests/test_semantic_memory.py -m "not models"	2026-11-16T12:55:56.0656778Z 8 passed, 4 skipped, 3 deselected, 1 warning in 2.23s

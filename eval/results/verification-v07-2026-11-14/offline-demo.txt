@@ -1,0 +1,7 @@
+{"scenario": "current decision", "values": ["PostgreSQL"], "sources": ["mcp:proposal"], "reason": "ok", "evidence_tokens": 254}
+{"scenario": "earlier effective date", "values": ["SQLite"], "sources": ["mcp:proposal"], "reason": "ok", "evidence_tokens": 255}
+{"scenario": "late correction, before receipt", "values": ["PostgreSQL"], "sources": ["mcp:proposal"], "reason": "ok", "evidence_tokens": 254}
+{"scenario": "late correction, after receipt", "values": ["PostgreSQL with WAL archival"], "sources": ["mcp:proposal"], "reason": "ok", "evidence_tokens": 262}
+{"scenario": "unapproved injection", "self_approval": "denied"}
+{"scenario": "withdrawal", "withdrawn_evidence_visible": false}
+Offline example passed with external network access denied.

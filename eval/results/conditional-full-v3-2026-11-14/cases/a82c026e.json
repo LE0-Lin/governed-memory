@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "a82c026e",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "4eb975de6d7a901d441bc6c9",
+      "c11d2de0ad9d0a9867498021",
+      "177b273d172254a43a0a10f1",
+      "1138e0f8bd3572c674708696",
+      "afbf064247c65e485f43463a",
+      "4035c3f461b2da5456e52747",
+      "2c73fb07d1218df340169130",
+      "8586c1b52243c5d9cc6de74c"
+    ],
+    "context_sha256": "d101a15f6562b20f4656202d76cea86de200491cf9291a29305e8b1cb3ece5ea",
+    "response": {
+      "answer": "Dark Souls 3",
+      "evidence_ids": [
+        "c11d2de0ad9d0a9867498021"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1544,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Dark Souls 3\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1102.6317999931052,
+    "answer_latency_ms": 1102.6317999931052
+  }
+]

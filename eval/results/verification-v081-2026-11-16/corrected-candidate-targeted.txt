@@ -1,0 +1,9 @@
+...........s..ssss.s.s.s.s.                                              [100%]
+============================== warnings summary ===============================
+tests/test_authorization_transport.py::test_mcp_shutdown_closes_only_its_owned_resources[owned]
+  E:\OpenSource\governed-memory\.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class SearchInterface(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: E:\OpenSource\governed-memory\.local\v09-targeted-v2.xml -
+18 passed, 9 skipped, 2 deselected, 1 warning in 16.81s

@@ -1,0 +1,49 @@
+[
+  {
+    "question_id": "gpt4_7f6b06db",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "ec27f6a1d054b0849e163226",
+      "44984e6cb8b5d44f07b42b85",
+      "bd897054567c2810e74930c0",
+      "6a97d304bcb2f245df9d4dde",
+      "0e8863a8dfe26782ca0a5c95",
+      "92359951c027d4cfc4f15683",
+      "0075073f2e64e884252de1cd",
+      "cf3ad8c4478b992e2295d876"
+    ],
+    "context_sha256": "af93fb535329ffb640388ae922c8ad53430c234addb7d9fbfcd2e2f9d2c19eb1",
+    "response": {
+      "answer": "John Muir Woods National Monument, Fitness Classes, Muir Woods National Monument",
+      "evidence_ids": [
+        "bd897054567c2810e74930c0",
+        "ec27f6a1d054b0849e163226",
+        "44984e6cb8b5d44f07b42b85"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1318,
+        "completion_tokens": 38,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"John Muir Woods National Monument, Fitness Classes, Muir Woods National Monument\",\"evidence_ids\":[ \"E3\", \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1875.2923000138253,
+    "answer_latency_ms": 1875.2923000138253
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "service": {
+    "observations": 1476,
+    "paired_predictions_equal": true,
+    "summary_matches": true
+  },
+  "external_replay": {
+    "cases": 500,
+    "predictions": 1000,
+    "summary_matches": true
+  },
+  "checker_sha256": "7b2e94b8c00ffd22f6aa03d1bda1086649023dc53b3bd957b5d2e475bc34d4e5",
+  "observations_sha256": "6101ac52814b28be4e209ec7da22248ba2a004ff58f84e21ff74353ebb6cc516",
+  "replay_predictions_sha256": "8eb5c15e558e355a2085ea190544577d15db7ac8d2f5f0b67e2ac6f2ab0f5266"
+}

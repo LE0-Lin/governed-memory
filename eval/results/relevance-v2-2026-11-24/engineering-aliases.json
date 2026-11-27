@@ -1,0 +1,18 @@
+{
+  "wal.initial": "ac827b33-e562-5173-a826-2d07ddcfee10",
+  "wal.retention": "acf77b0a-4b3f-5bab-b1d2-ef11c04bdae5",
+  "mcp.transport": "1186e654-1170-575d-9e94-88a9a92a1755",
+  "fga.timeout": "dfe90396-8dd7-52d4-80c1-05eb6a0730ab",
+  "rust.rrf": "d255b2ab-a228-5ba8-ae54-4179ddd46f86",
+  "lineage.outbox": "1a0dbc8f-956c-5aaa-a037-36b58e94c482",
+  "mcp.utf8": "e5a06f11-5a1b-5886-806e-654c2a8060c1",
+  "budget.primary": "f2a86ff2-b78a-5e73-9e9c-247672e1d7c6",
+  "budget.corroborated": "c9f03bc7-99d8-59f7-b481-8f9b167381c0",
+  "tls.cert_withdrawn": "03edd76e-bd09-5201-9edb-d473977c8142",
+  "tls.derived_envoy": "75db06b9-b79b-5e3d-9472-16b8fd05461b",
+  "wal.zstd": "87a526b0-2053-559d-b8e3-1f21261f2649",
+  "wal.postmortem": "414f1f22-6516-5ec9-88e4-818dfb779d6b",
+  "fga.pooling_reverted": "65092313-1e04-5982-8dae-0c73eed2303e",
+  "wal.poison": "6ffaef11-fc1d-571b-8e93-87d71465d05c",
+  "release.wheel": "86a89cba-9ce1-5701-acfc-a990898ab033"
+}

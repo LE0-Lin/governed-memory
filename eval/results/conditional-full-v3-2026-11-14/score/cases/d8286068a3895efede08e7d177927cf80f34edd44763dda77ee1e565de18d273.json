@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"Voice (e.g., male or female)","answer_error":null,"answer_latency_ms":1363.2401999784634,"category":"single-session-assistant","exact_match":0.0,"judge_error":null,"judge_label":false,"judge_raw":"no","lexical_eligible":true,"method":"conditional","question_id":"8752c811","token_f1":0.13333333333333333}

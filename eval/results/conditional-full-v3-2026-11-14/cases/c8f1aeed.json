@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "c8f1aeed",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "e8491f3f771e4465d477958f",
+      "b94f9dc0b1caedf6eab1163d",
+      "6394b01c451b660ae689129c",
+      "21b334d79d6e65e9ecd5382d",
+      "de766cb9c91b2378b71c1ce3",
+      "ba35257ff46dfe861b2ec773",
+      "fe1f261e8cb078158d1c1f07",
+      "69b59f7f570d5304905f0fe0"
+    ],
+    "context_sha256": "f1f1da8a04af4540e7d7041000138b90e34f45a4e9f6967c774b27a59e6c6c52",
+    "response": {
+      "answer": "Pennsylvania",
+      "evidence_ids": [
+        "b94f9dc0b1caedf6eab1163d"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1563,
+        "completion_tokens": 17,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Pennsylvania\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 883.7275999831036,
+    "answer_latency_ms": 883.7275999831036
+  }
+]

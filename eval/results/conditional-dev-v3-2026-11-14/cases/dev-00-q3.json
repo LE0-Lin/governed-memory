@@ -1,0 +1,84 @@
+[
+  {
+    "question_id": "dev-00-q3",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "nightly",
+      "evidence_ids": [
+        "dev-00-d2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 203,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"nightly\",\n  \"evidence_ids\": [ \"E3\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 2423.1706000864506,
+    "answer_latency_ms": 2423.1706000864506
+  },
+  {
+    "question_id": "dev-00-q3",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "nightly",
+      "evidence_ids": [
+        "dev-00-d2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 172,
+        "completion_tokens": 17,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"nightly\",\"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1221.3598000817,
+    "answer_latency_ms": 1221.3598000817
+  }
+]

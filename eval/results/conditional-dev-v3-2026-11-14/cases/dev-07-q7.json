@@ -1,0 +1,83 @@
+[
+  {
+    "question_id": "dev-07-q7",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-07-d0",
+      "dev-07-d1",
+      "dev-07-d2",
+      "dev-07-d3"
+    ],
+    "context_sha256": "96202c1811684a33a3b955178d84f1053109779df5dbd30d3a213e154f51c81a",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 203,
+        "completion_tokens": 51,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"The size of the Willow release cannot be determined directly from the provided information as there is no mention of the file size in the given evidence\",\n  \"evidence_ids\": [],\n  \"abstain\": true\n}"
+    },
+    "error": null,
+    "latency_ms": 4794.523500022478,
+    "answer_latency_ms": 4794.523500022478
+  },
+  {
+    "question_id": "dev-07-q7",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-07-d0",
+      "dev-07-d1",
+      "dev-07-d2",
+      "dev-07-d3"
+    ],
+    "context_sha256": "96202c1811684a33a3b955178d84f1053109779df5dbd30d3a213e154f51c81a",
+    "response": {
+      "answer": "a short answer",
+      "evidence_ids": [
+        "dev-07-d0",
+        "dev-07-d1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 172,
+        "completion_tokens": 22,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"a short answer\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1624.5486000552773,
+    "answer_latency_ms": 1624.5486000552773
+  }
+]

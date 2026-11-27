@@ -1,0 +1,12 @@
+{
+  "candidate_source": "352eb1e",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "device": "cuda",
+  "question": "Who is the owner of the project?",
+  "evidence": "The project uses SQLite as its database.",
+  "answer": "the project's owner is the person who created the project.",
+  "abstain": false,
+  "reason": "ok",
+  "finding": "A valid conditional JSON response can still contain an unsupported answer. This is a model quality failure, not evidence that schema constraints establish answerability."
+}

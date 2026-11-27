@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "86f00804",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "71d378e4a04a19838bb4cf70",
+      "6f1be9bc4d7d7888e8ae62f2",
+      "425f54849fcb1597f7cb34b9",
+      "92865a59aaaf1b8df692d337",
+      "2e10d8a8512c7acedb41be27",
+      "7d9fdf419b97c5646f6317cf",
+      "23ad37ab803119b6136bc15e",
+      "62f8715bf76e79ac1d64d764"
+    ],
+    "context_sha256": "509027facf79682271de09856fc425d0cb5e49b78a4b9515c606b91729d4ad6e",
+    "response": {
+      "answer": "The Seven Husbands of Evelyn Hugo",
+      "evidence_ids": [
+        "6f1be9bc4d7d7888e8ae62f2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1669,
+        "completion_tokens": 23,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The Seven Husbands of Evelyn Hugo\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1177.093300037086,
+    "answer_latency_ms": 1177.093300037086
+  }
+]

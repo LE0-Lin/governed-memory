@@ -1,0 +1,26 @@
+{
+  "archived_ungated": {
+    "queries": 500,
+    "answerable": 470,
+    "unanswerable": 30,
+    "answerable_empty": 1,
+    "unanswerable_empty": 0,
+    "gold_sessions": 890,
+    "session_hits": 741,
+    "session_recall": 0.8325842696629213,
+    "hit_any": 446,
+    "returned_chunks": 3990
+  },
+  "frozen_cutoff": {
+    "queries": 500,
+    "answerable": 470,
+    "unanswerable": 30,
+    "answerable_empty": 206,
+    "unanswerable_empty": 19,
+    "gold_sessions": 890,
+    "session_hits": 341,
+    "session_recall": 0.3831460674157303,
+    "hit_any": 262,
+    "returned_chunks": 759
+  }
+}

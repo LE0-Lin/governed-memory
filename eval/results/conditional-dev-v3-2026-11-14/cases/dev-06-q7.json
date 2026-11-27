@@ -1,0 +1,80 @@
+[
+  {
+    "question_id": "dev-06-q7",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-06-d0",
+      "dev-06-d1",
+      "dev-06-d2",
+      "dev-06-d3"
+    ],
+    "context_sha256": "80034e04db0f9e348ed335910b10da90149c0119bde1e66ef64f3d62a4af3cb4",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 207,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"None specified in provided information\",\"evidence_ids\":[],\"abstain\":true}"
+    },
+    "error": null,
+    "latency_ms": 1344.550900044851,
+    "answer_latency_ms": 1344.550900044851
+  },
+  {
+    "question_id": "dev-06-q7",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-06-d0",
+      "dev-06-d1",
+      "dev-06-d2",
+      "dev-06-d3"
+    ],
+    "context_sha256": "80034e04db0f9e348ed335910b10da90149c0119bde1e66ef64f3d62a4af3cb4",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 176,
+        "completion_tokens": 6,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":null}"
+    },
+    "error": null,
+    "latency_ms": 561.7076000198722,
+    "answer_latency_ms": 561.7076000198722
+  }
+]

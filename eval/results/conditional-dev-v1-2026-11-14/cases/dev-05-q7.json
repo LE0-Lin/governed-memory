@@ -1,0 +1,82 @@
+[
+  {
+    "question_id": "dev-05-q7",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-05-d0",
+      "dev-05-d1",
+      "dev-05-d2",
+      "dev-05-d3"
+    ],
+    "context_sha256": "3da71b8f88dae82c26dfa60d1185a451a32333df69d66cdd306236c14781cc45",
+    "response": {
+      "answer": "Thirty Euros",
+      "evidence_ids": [
+        "dev-05-d1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 205,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"Thirty Euros\",\n  \"evidence_ids\": [ \"E2\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 1631.4013000810519,
+    "answer_latency_ms": 1631.4013000810519
+  },
+  {
+    "question_id": "dev-05-q7",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-05-d0",
+      "dev-05-d1",
+      "dev-05-d2",
+      "dev-05-d3"
+    ],
+    "context_sha256": "3da71b8f88dae82c26dfa60d1185a451a32333df69d66cdd306236c14781cc45",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 209,
+        "completion_tokens": 9,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"status\":\"insufficient_evidence\"}"
+    },
+    "error": null,
+    "latency_ms": 450.8100999519229,
+    "answer_latency_ms": 450.8100999519229
+  }
+]

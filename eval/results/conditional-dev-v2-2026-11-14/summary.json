@@ -1,0 +1,18 @@
+{
+  "json_schema": {
+    "queries": 80,
+    "answer_errors": 5,
+    "negative_queries": 32,
+    "valid_negative_abstentions": 17,
+    "positive_queries": 48,
+    "positive_gold_included": 46
+  },
+  "conditional": {
+    "queries": 80,
+    "answer_errors": 0,
+    "negative_queries": 32,
+    "valid_negative_abstentions": 32,
+    "positive_queries": 48,
+    "positive_gold_included": 39
+  }
+}

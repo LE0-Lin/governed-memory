@@ -1,0 +1,8 @@
+{
+  "unchanged_answers_and_error_status": 135,
+  "changed_verdicts_on_unchanged": 0,
+  "paired_gains": 58,
+  "paired_losses": 46,
+  "paired_exact_two_sided_p": 0.28069032903417923,
+  "not_a_test_of_human_accuracy": true
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "0a995998",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "5c7eade89ae7c06363d70e0c",
+      "48f6dad79ad29a81a23b567a",
+      "fbd6ea9daf276bc2a9860c97",
+      "8c4bf5dd0f1808a3df8a66a7",
+      "8bbb6afa2f22d769d98db3f6",
+      "ae45a15ed026c733b2866f29",
+      "3654663ef10582d51a101300",
+      "d409f4e0afaabd0632a3db50"
+    ],
+    "context_sha256": "eda97128896cb96e1d666a057a8070861facd001bdb43701a68599b3e21e960f",
+    "response": {
+      "answer": "I need to pick up a pair of boots from Zara and return a pair of boots I bought there earlier. Therefore, I need to pick up two pairs of boots and return two pairs of boots. The number of items I need to pick up or return is 4 pairs of boots.",
+      "evidence_ids": [
+        "48f6dad79ad29a81a23b567a",
+        "fbd6ea9daf276bc2a9860c97"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1851,
+        "completion_tokens": 79,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I need to pick up a pair of boots from Zara and return a pair of boots I bought there earlier. Therefore, I need to pick up two pairs of boots and return two pairs of boots. The number of items I need to pick up or return is 4 pairs of boots.\" , \"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 4833.823900087737,
+    "answer_latency_ms": 4833.823900087737
+  }
+]

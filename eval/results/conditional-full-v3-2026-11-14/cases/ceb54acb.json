@@ -1,0 +1,54 @@
+[
+  {
+    "question_id": "ceb54acb",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "09b2c041483300169508bd0c",
+      "55642845fb8744913ab7abfa",
+      "81d83657a78dc30b74972ffc",
+      "b5f3397b53a6ca132f747708",
+      "4d10f3599c80d0b412b9a89c",
+      "dc4b5d81c0b47ab074891493",
+      "9225d6576e0d332b5537f396",
+      "3aa77446233360c0f5bb2f0d"
+    ],
+    "context_sha256": "d624a04a0eec73d0454ba52e7025ae74dd425b3f0768b7b83d6c19c344d4ecda",
+    "response": {
+      "answer": "compulsive sexuality, problematical sexual behaviors, sexual fixations, sexual impulsivity",
+      "evidence_ids": [
+        "09b2c041483300169508bd0c",
+        "55642845fb8744913ab7abfa",
+        "81d83657a78dc30b74972ffc",
+        "b5f3397b53a6ca132f747708",
+        "4d10f3599c80d0b412b9a89c",
+        "dc4b5d81c0b47ab074891493",
+        "9225d6576e0d332b5537f396",
+        "3aa77446233360c0f5bb2f0d"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1091,
+        "completion_tokens": 59,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"compulsive sexuality, problematical sexual behaviors, sexual fixations, sexual impulsivity\",\"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\", \"E8\" ] }"
+    },
+    "error": null,
+    "latency_ms": 2556.083200033754,
+    "answer_latency_ms": 2556.083200033754
+  }
+]

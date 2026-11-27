@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "7024f17c",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "d5619913b98dbea7cd2fa100",
+      "7ef9085f8919fac75d1ab751",
+      "23559cb0debeeeeedb1246d9",
+      "5fc96c360f78c4c0ccc91efa",
+      "a5197639e14dc821e18848b7",
+      "4080b4963ac3f642304308c0",
+      "b9ad59f1d34c7345b628069a",
+      "6ae6742e80de23d516d38279"
+    ],
+    "context_sha256": "3a77365938e3a566037611f8bf88690c385cb57e3b40419f7d5f5f19b8820a64",
+    "response": {
+      "answer": "I'm sorry, but there isn't enough information provided to determine how many hours of jogging and yoga you did last week.",
+      "evidence_ids": [
+        "5fc96c360f78c4c0ccc91efa",
+        "4080b4963ac3f642304308c0"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1503,
+        "completion_tokens": 45,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I'm sorry, but there isn't enough information provided to determine how many hours of jogging and yoga you did last week.\" , \"evidence_ids\":[ \"E4\", \"E6\" ] }"
+    },
+    "error": null,
+    "latency_ms": 2326.9301999825984,
+    "answer_latency_ms": 2326.9301999825984
+  }
+]

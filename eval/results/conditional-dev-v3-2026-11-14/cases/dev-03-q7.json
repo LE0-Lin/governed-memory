@@ -1,0 +1,85 @@
+[
+  {
+    "question_id": "dev-03-q7",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-03-d0",
+      "dev-03-d1",
+      "dev-03-d2",
+      "dev-03-d3"
+    ],
+    "context_sha256": "1839926490e5ba9b1f8dee6f269c8e04bacfbc794568c77dd503e5d57ed1ba1a",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "invalid_model_response",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 199,
+        "completion_tokens": 132,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": "InvalidAnswer",
+      "raw_model_text": "{\n  \"answer\": \"The number of pages in Nimbus documentation cannot be determined directly from the provided information as there is no specific mention of page count in the given evidence. The evidence provides details about the format, language, owner, and review cadence of the documentation but does not include any numerical value for the total number of pages. Therefore, abstaining from providing a definitive answer based on this evidence alone. Evidence IDs: [E1, E2, E3, E4]\",\n  \"abstain\": true,\n  \"evidence_ids\": [\"E1\", \"E2\", \"E3\", \"E4\"]\n}"
+    },
+    "error": null,
+    "latency_ms": 10138.750299927779,
+    "answer_latency_ms": 10138.750299927779
+  },
+  {
+    "question_id": "dev-03-q7",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-03-d0",
+      "dev-03-d1",
+      "dev-03-d2",
+      "dev-03-d3"
+    ],
+    "context_sha256": "1839926490e5ba9b1f8dee6f269c8e04bacfbc794568c77dd503e5d57ed1ba1a",
+    "response": {
+      "answer": "a short answer",
+      "evidence_ids": [
+        "dev-03-d0",
+        "dev-03-d1",
+        "dev-03-d2",
+        "dev-03-d3"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 168,
+        "completion_tokens": 30,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"a short answer\",\"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1637.7350999973714,
+    "answer_latency_ms": 1637.7350999973714
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "question_id": "gpt4_2f56ae70",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [],
+    "context_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "no_eligible_evidence",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": null,
+      "error": null,
+      "raw_model_text": null
+    },
+    "error": null,
+    "latency_ms": 0.003800028935074806,
+    "answer_latency_ms": 0.003800028935074806
+  }
+]

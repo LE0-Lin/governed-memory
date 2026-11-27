@@ -1,0 +1,54 @@
+[
+  {
+    "question_id": "19b5f2b3_abs",
+    "category": "abstention",
+    "method": "conditional",
+    "chunk_ids": [
+      "fe1d9f25428ccb751f156c02",
+      "87d03870e67bcab6e451eb3f",
+      "65137433b7f8c376d12007eb",
+      "ee6132b6e02645371fbca882",
+      "086eabfe68577cc62c467929",
+      "67e1a59ee8225bb966c45853",
+      "861fd4da24cb51115dcfda8e",
+      "eb8abb9b53d69f3e59783a69"
+    ],
+    "context_sha256": "d4e05fa561dbd590ce9622eedb7a20b641d3efe41b5ef4320f6d418df52c02f3",
+    "response": {
+      "answer": "I am unsure as the evidence does not contain information regarding the duration of time spent in Korea.",
+      "evidence_ids": [
+        "fe1d9f25428ccb751f156c02",
+        "87d03870e67bcab6e451eb3f",
+        "65137433b7f8c376d12007eb",
+        "ee6132b6e02645371fbca882",
+        "086eabfe68577cc62c467929",
+        "67e1a59ee8225bb966c45853",
+        "861fd4da24cb51115dcfda8e",
+        "eb8abb9b53d69f3e59783a69"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1271,
+        "completion_tokens": 63,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I am unsure as the evidence does not contain information regarding the duration of time spent in Korea.\" , \"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\", \"E8\" ] }"
+    },
+    "error": null,
+    "latency_ms": 2925.809200038202,
+    "answer_latency_ms": 2925.809200038202
+  }
+]

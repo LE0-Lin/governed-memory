@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "9a707b82",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "a6651e4eee19366f94dc6ef6",
+      "b2f5e9aecbee53e15f6e0ab1",
+      "d2499659cc255ce10411b1cf",
+      "67299c3e63ba0a024f453f21",
+      "21856e60699196ddcd0c82e1",
+      "affa7229663813050aeb1d93",
+      "31c658739c2f20d7dcb3029c",
+      "d0ccedd3c2aa8cfa654ca63c"
+    ],
+    "context_sha256": "1702c32fc22fb8dc805dc5e20941e165354d00ef5bfe08332f497b54038d3fd9",
+    "response": {
+      "answer": "A chocolate cake for a friend's birthday party",
+      "evidence_ids": [
+        "21856e60699196ddcd0c82e1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1362,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"A chocolate cake for a friend's birthday party\",\"evidence_ids\":[ \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1223.2066999422386,
+    "answer_latency_ms": 1223.2066999422386
+  }
+]

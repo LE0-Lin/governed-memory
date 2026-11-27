@@ -1,0 +1,46 @@
+{
+  "cases": 500,
+  "invalid_answers": 0,
+  "runtime_errors": 0,
+  "valid_negative_abstentions": 13,
+  "positive_local_judge_correct": 160,
+  "overall_local_judge_correct": 181,
+  "paired_local_judgments": {
+    "positive": {
+      "newly_correct": 49,
+      "previously_correct_lost": 43,
+      "correct_in_both": 111
+    },
+    "abstention": {
+      "newly_correct": 9,
+      "previously_correct_lost": 3,
+      "correct_in_both": 12
+    }
+  },
+  "development": {
+    "json_schema": {
+      "valid_negative_abstentions": 17,
+      "positive_gold_included": 46
+    },
+    "conditional": {
+      "valid_negative_abstentions": 18,
+      "positive_gold_included": 47
+    }
+  },
+  "promotion_gates": {
+    "original_contexts_preserved": true,
+    "zero_runtime_errors": true,
+    "fewer_invalid_answers": true,
+    "more_valid_negative_abstentions": true,
+    "positive_correctness_preserved": true,
+    "overall_correctness_preserved": true,
+    "development_negatives_preserved": true,
+    "development_positives_preserved": true,
+    "judge_calibration_passed": true
+  },
+  "eligible_for_runtime_promotion": true,
+  "new_predictions_sha256": "dc1f711b02ba3807feca540ebd06f20040eee427c8de069f4f3ead8edaf88088",
+  "scored_sha256": "37461296e1e3cc4f96e3830ca100cc937ecaeba02b08427d2179d3351a9f5587",
+  "checker_sha256": "fc1794b66587a84b9362bb5bb4df2282a626772e81d902e5cfb462533ffe9df5",
+  "scoring_is_official_or_human": false
+}

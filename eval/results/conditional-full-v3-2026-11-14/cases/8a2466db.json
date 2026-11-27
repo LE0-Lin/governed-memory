@@ -1,0 +1,52 @@
+[
+  {
+    "question_id": "8a2466db",
+    "category": "single-session-preference",
+    "method": "conditional",
+    "chunk_ids": [
+      "613754e5711d225c50a69fc0",
+      "ae832bf3e3f7b40e60169740",
+      "9aad27702513fc958d0e221c",
+      "9a9ecde613382ae9c3008f31",
+      "cd8d605aa8d777c775d71a68",
+      "2c92ff327a29510d374a00c7",
+      "0a2f6c73ca7ce56bb479e2e1",
+      "0ee54d7a3fbef557d4e153dd"
+    ],
+    "context_sha256": "68251d0ab261d23e683f6440940b4e57f81681b654e352c5c9a6c3ab1cf37dd1",
+    "response": {
+      "answer": "Adobe Premiere Pro's official documentation and tutorials, YouTube channels like Premiere Bro, Video Copilot, and Adobe Creative Cloud, online courses on platforms like Udemy, LinkedIn Learning, and Skillshare, Premiere Pro communities and forums, such as Reddit's r/premierepro and Adobe's Premiere Pro forum",
+      "evidence_ids": [
+        "9aad27702513fc958d0e221c",
+        "9a9ecde613382ae9c3008f31",
+        "cd8d605aa8d777c775d71a68",
+        "2c92ff327a29510d374a00c7",
+        "0a2f6c73ca7ce56bb479e2e1",
+        "0ee54d7a3fbef557d4e153dd"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1222,
+        "completion_tokens": 95,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Adobe Premiere Pro's official documentation and tutorials, YouTube channels like Premiere Bro, Video Copilot, and Adobe Creative Cloud, online courses on platforms like Udemy, LinkedIn Learning, and Skillshare, Premiere Pro communities and forums, such as Reddit's r/premierepro and Adobe's Premiere Pro forum\",\"evidence_ids\":[ \"E3\", \"E4\", \"E5\", \"E6\", \"E7\", \"E8\" ] }"
+    },
+    "error": null,
+    "latency_ms": 4686.382599989884,
+    "answer_latency_ms": 4686.382599989884
+  }
+]

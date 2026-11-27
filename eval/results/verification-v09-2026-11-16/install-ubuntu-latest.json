@@ -1,0 +1,24 @@
+{
+  "version": "0.9.0",
+  "python": "3.12.14 (main, Aug 14 2026, 15:34:45) [Clang 22.1.3 ]",
+  "platform": "linux",
+  "wheel": "governed_memory-0.9.0-py3-none-any.whl",
+  "wheel_sha256": "e5254205b618ff5ecabb6bbeb3e2682697678772330068065c7d363078676ab3",
+  "constraints_sha256": "00b4df8f870003c71214ec770226961bc14d81eccbd767a53c2484be6ea75a7f",
+  "outside_checkout": true,
+  "isolated_interpreter": true,
+  "core_has_torch": false,
+  "source_archive_excludes_private_state": true,
+  "offline_packaged_demo": true,
+  "demo_did_not_create_live_database": true,
+  "persistent_mcp_checks": [
+    "unapproved proposal hidden",
+    "agent self-approval denied",
+    "operator approval visible",
+    "source provenance",
+    "fresh-process persistence",
+    "warm-process source withdrawal"
+  ],
+  "source_commit": "6ae9e1bab3d38be99f36022c8627a67210cd17b4",
+  "source_dirty": false
+}

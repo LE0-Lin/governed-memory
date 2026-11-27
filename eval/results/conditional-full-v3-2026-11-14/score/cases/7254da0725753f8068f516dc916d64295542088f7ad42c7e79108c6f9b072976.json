@@ -1,0 +1,1 @@
+{"abstain":true,"answer":"I do not have enough evidence to answer this question.","answer_error":null,"answer_latency_ms":677.7982000494376,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":false,"judge_raw":"no","lexical_eligible":true,"method":"conditional","question_id":"gpt4_f420262d","token_f1":0.0}

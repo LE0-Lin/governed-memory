@@ -1,0 +1,51 @@
+[
+  {
+    "question_id": "gpt4_98f46fc6",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "519e4d180069c21a9017cf64",
+      "77c3999fff284a289d8a6f00",
+      "97ce81ee51725993bd5ed445",
+      "e8b0ac8fbbcb9c1fafa66941",
+      "bec61e52041aa242b9e2beae",
+      "92106102b363cf02205105ba",
+      "89573eeaa1f4a1aee5582004",
+      "373909e743f67df7d75e28d5"
+    ],
+    "context_sha256": "bbd5dcdcb7a9964fdf47aec7e1f302d0edaeede339e23342e16244646f49608e",
+    "response": {
+      "answer": "charity bake sale",
+      "evidence_ids": [
+        "519e4d180069c21a9017cf64",
+        "77c3999fff284a289d8a6f00",
+        "97ce81ee51725993bd5ed445",
+        "e8b0ac8fbbcb9c1fafa66941",
+        "bec61e52041aa242b9e2beae"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1973,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"charity bake sale\",\"evidence_ids\":[\"E1\",\"E2\",\"E3\",\"E4\",\"E5\"]}"
+    },
+    "error": null,
+    "latency_ms": 1422.1461999695748,
+    "answer_latency_ms": 1422.1461999695748
+  }
+]

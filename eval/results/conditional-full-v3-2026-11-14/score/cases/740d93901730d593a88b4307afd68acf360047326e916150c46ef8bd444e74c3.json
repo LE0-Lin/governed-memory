@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"purchase of the coffee maker","answer_error":null,"answer_latency_ms":1417.2784000402316,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":false,"judge_raw":"no","lexical_eligible":true,"method":"conditional","question_id":"gpt4_0b2f1d21","token_f1":0.25}

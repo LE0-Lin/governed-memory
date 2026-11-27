@@ -1,0 +1,9 @@
+{
+  "status": "incomplete",
+  "source_commit": "bd9889d",
+  "completed_cases": 3,
+  "error": "ValueError: invalid archived candidate scores",
+  "purpose": "Reproduced the first replay failure after recovering the task state.",
+  "threshold_changed": false,
+  "original_predictions_modified": false
+}

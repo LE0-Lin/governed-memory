@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"The narrator receiving their new phone case happened first","answer_error":null,"answer_latency_ms":1424.3731000460684,"category":"temporal-reasoning","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"gpt4_78cf46a3","token_f1":0.6666666666666666}

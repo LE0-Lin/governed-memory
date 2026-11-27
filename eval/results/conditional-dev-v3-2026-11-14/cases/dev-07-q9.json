@@ -1,0 +1,85 @@
+[
+  {
+    "question_id": "dev-07-q9",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-07-d0",
+      "dev-07-d1",
+      "dev-07-d2",
+      "dev-07-d3"
+    ],
+    "context_sha256": "96202c1811684a33a3b955178d84f1053109779df5dbd30d3a213e154f51c81a",
+    "response": {
+      "answer": "The version for Aspen release is 3.4.1",
+      "evidence_ids": [
+        "dev-07-d0",
+        "dev-07-d1"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 202,
+        "completion_tokens": 45,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"The version for Aspen release is 3.4.1\",\n  \"evidence_ids\": [ \"E1\", \"E2\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 3226.8291000509635,
+    "answer_latency_ms": 3226.8291000509635
+  },
+  {
+    "question_id": "dev-07-q9",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-07-d0",
+      "dev-07-d1",
+      "dev-07-d2",
+      "dev-07-d3"
+    ],
+    "context_sha256": "96202c1811684a33a3b955178d84f1053109779df5dbd30d3a213e154f51c81a",
+    "response": {
+      "answer": "3.4.1",
+      "evidence_ids": [
+        "dev-07-d0"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 171,
+        "completion_tokens": 20,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"3.4.1\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1238.242099992931,
+    "answer_latency_ms": 1238.242099992931
+  }
+]

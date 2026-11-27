@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "91b15a6e",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "9ca75fbd467f9e9125c23575",
+      "a151596fc9eb820a1471d864",
+      "5b55de7cbddf59ac8894320e",
+      "aa03c47a506b679f01dc3841",
+      "16d4b1ddbdc52e1975f90e5a",
+      "58dae235388fdcd11a36c76b",
+      "73d1ef0bb7dfb5490fe832fd",
+      "c216648dc5745f56a6d1921e"
+    ],
+    "context_sha256": "6d54ec316c601d022e231dd4cb7cee9b174cfeaa0d192c9806febbb327a571fa",
+    "response": {
+      "answer": "The minimum amount you could get if you sold the vintage diamond necklace would be $5,000, while the antique vanity could potentially fetch between $500-$1,000 or more, depending on its condition and uniqueness.",
+      "evidence_ids": [
+        "a151596fc9eb820a1471d864",
+        "5b55de7cbddf59ac8894320e"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1600,
+        "completion_tokens": 70,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The minimum amount you could get if you sold the vintage diamond necklace would be $5,000, while the antique vanity could potentially fetch between $500-$1,000 or more, depending on its condition and uniqueness.\" , \"evidence_ids\":[ \"E2\", \"E3\" ] }"
+    },
+    "error": null,
+    "latency_ms": 3658.1056000432,
+    "answer_latency_ms": 3658.1056000432
+  }
+]

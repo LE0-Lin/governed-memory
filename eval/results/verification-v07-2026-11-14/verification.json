@@ -1,0 +1,93 @@
+{
+  "version": "0.7.0",
+  "date": "2026-11-14 Asia/Shanghai",
+  "verified_source_commit": "985b10892bd4f40fb207520177e313a0183358d1",
+  "code_sha256": "6a5b9b80e0b39143859877d70207fb040b5abb4bcfc78f0f1afb671f80d650ec",
+  "protocol_sha256": "bb1f5217e6a40f00e022989f9f264c0ee53c8772b5586c358055e7e8018dde9d",
+  "runtime_ci_url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43589872881",
+  "runtime_ci_successful_jobs": 6,
+  "local_acceptance": {
+    "passed": 335,
+    "skipped": 16,
+    "xfail": 1,
+    "failed": 0,
+    "configurations": 352
+  },
+  "local_test_accounting": "Deduplicated testcase classname/name; the actual standard-model run supersedes its earlier opt-in skips. The new audit unit test is a separate passing group.",
+  "rego": {
+    "version": "1.22.2",
+    "passed": 10
+  },
+  "frozen_governance": {
+    "retrievals": 768,
+    "operations": 48,
+    "execution_failures": 0
+  },
+  "offline_demo_network_denied": true,
+  "retrieval_experiment": {
+    "observations": 2988,
+    "unique_workload_queries": 332,
+    "summary_groups": 12,
+    "paired_comparisons": 996,
+    "paired_mismatches": 0,
+    "execution_errors": 0,
+    "governed_stale_results": 0,
+    "observations_sha256": "a43dea5aa6b6aac14e9d3a09f40dbeeb7fa324fd356874a5997750fc40c4b0e5",
+    "source_unchanged_during_run": true
+  },
+  "largest_controlled_case": {
+    "historical_assertions": 1152,
+    "unique_queries": 84,
+    "replays_per_method": 3,
+    "positive_temporal_recall": 1.0,
+    "session_temporal_recall": 0.85,
+    "stale": 0,
+    "returned": 789,
+    "session_stale": 498,
+    "session_returned": 816,
+    "overall_p95_ms": 540.4001656001127,
+    "control_overall_p95_ms": 627.8979232000892,
+    "repeat_p95_ms": 410.6021268000404,
+    "control_repeat_p95_ms": 623.4590990502966,
+    "overall_p95_reduction": 0.13935028985928655,
+    "repeat_p95_reduction": 0.341412889112529,
+    "scope": "Previously examined synthetic templates; one caller, warmed CPU models, PostgreSQL authority path; no graph/remote-policy HTTP/transport/generation latency."
+  },
+  "images": {
+    "core": "sha256:42f8a1403f3f0750bb560d058f5643519ab992ea5fe0e8163bebeac824b504d5",
+    "models": "sha256:45f2142ef90cb68953bd91f46269dd070e2d2658c87764b6420728fbbdf74492",
+    "benchmark": "sha256:f4b9aa45c4a6a3940cb9ec1a79c22fdeffac39c9d90656e15b4cb1373b767695"
+  },
+  "wheel_sha256": "0794129e2ff7ac1138ff2698e3e57e1d16954c4a207f3dfd471d4c535eb1dd62",
+  "benchmark_dockerfile_sha256": "db4be9b0637dedd1b515f2ea2f1bc803c18fc34c58a1d231d56ff1ebf5d53f27",
+  "setup_probe_note": "The production model image intentionally has no Git; its initial source-provenance probe failed before inference. The retained corrected probe uses a benchmark-only Git child image. The canonical run has no failed observations.",
+  "known_quality_xfail": "Pinned 0.5B missing-owner abstention, unchanged and not a passing no-answer check.",
+  "old_evaluation_outputs_modified": false,
+  "new_500_question_generation": false,
+  "cleanup": {
+    "owned_services_exited_zero": 6,
+    "verified_dedicated_daemon_exited_zero": true,
+    "data_images_models_retained": true
+  },
+  "evidence_files_sha256": {
+    "audit-tests.txt": "5a8ab6af9941ee86b614c378d8461d62e09cd0d39425872c17e040d93f5d3d64",
+    "audit-tests.xml": "fab8f25ba3016b37f11b30abd7fc13665458710b9f514b8df2d8a7ba220fc0dd",
+    "benchmark-probe.txt": "d1f4dd2c654bf4640226b6d3f6e7198a4c4e76b3c3f5408b3e88d14d59fc1511",
+    "core-container-tests.txt": "7f1970a73a12d45877fad117e38ea61e80f643bb76af9a2db86002ee9e0ba220",
+    "core-container-tests.xml": "618bad1f11a8b0728c850d393e4f980642c5b57bfdabc421a9c9dda3938d5eac",
+    "core-probe.txt": "b70bd20e1e9663746177b8d9d0463c869af792462d9bbe4fbbaaf740b94cea8a",
+    "core-tests.txt": "1b86fdde3a0822d9c5df998e09f626d98c320f97a6185f0ef9a7ee5d15abc9a5",
+    "core-tests.xml": "f5a503b9373d41fc782e8d3274a494c8ce05e78310e40d5ba83b8c1bcb00d6c3",
+    "diagnostic-v061.json": "2fbb4cd518f34cd57176a29c092d1bb331adf30cd5e924129121104211f36eb7",
+    "initial-probe-missing-git.txt": "d5406f83a4c79cea6817064277a3eed19bf61b78c49b871e3792ca8dee9331a6",
+    "model-container-tests.txt": "3805490f6b3d65e4e9606417ae81e1da5c9f129837a45adb2f5d3757a81bc95c",
+    "model-container-tests.xml": "7d69ef316febc529ca630d7509fae6fb59b87b0487e2f193a2703ab33213c536",
+    "model-tests.txt": "f15b026079a43c17a21000bba253653e7a415e83cd86655b458b12f8a3dd214c",
+    "model-tests.xml": "f1ed53c4f2c3980406c3ba077e519c9e03d9f4fdb17dbc613edcdecf0406fe1e",
+    "offline-demo.txt": "67ed11ab81c907802b80ae5fcd019c8d70f892baabcd129ec06fdf5cd59054c1",
+    "rego.txt": "1c935b9a52768d855cbbc61880f0ab43c4dfc887b8507aa794c47c3a8ebc328f",
+    "runtime-ci.json": "09c46e0e7170874cdff9d337890b064b982667ca1b114d64643afea13fa3b4dc",
+    "standard-container-tests.txt": "ea17d0ff0df72dc51ff262aa6ef19d45a759870a008150fc0617f39f3d6beec4",
+    "standard-container-tests.xml": "9e1cb03698128c0a62b937f7b3703c8fbe158ffa9ca6a9682d93a00757ddd5f8"
+  }
+}

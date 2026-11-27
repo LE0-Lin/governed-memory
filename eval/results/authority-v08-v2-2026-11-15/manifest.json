@@ -1,0 +1,224 @@
+{
+  "commit": "20057750b410eaa278b42fcd7045fa1ed2eb70c4",
+  "dirty_source": false,
+  "code_sha256": "074194f66412f70b1be40aa7131eaa7ce9b9989b1f6ebf0b9105ae3c2be37bb3",
+  "protocol_sha256": "73e98137c3007bed654c8f6a312eb69220f3d65b0f999e5c73c10bcc4c382717",
+  "protocol": "# Final authority read comparison v2\n\nFrozen before this revision's measurement, 2026-11-15. The complete v1 run\n(GitHub43716291311, source63eec49) is retained. It had1,992 error-free\nobservations and996 identical pairs, but the large-case overall P95 regressed\n371.6->488.0 ms (+31.3%), first-pass454.4->528.5 ms (+16.3%). Repeat P95 improved\n369.8->340.0 ms (-8.0%). It does not justify a general performance promotion.\n\n## Revision and unchanged gates\n\nRestore the original Source ORM columns/materialization. The candidate now\nchanges only the final visibility query's optional exact-snapshot restriction,\nand its empty-subset fallback that preserves existing reason codes. Keep the\nfirst three reads, source object loading, models, caches, kernels, budgets,\nordering and source/ACL/dependency checks exactly as before. This isolates the\nlate restriction from the other v1 change; it does not assume which caused the\nregression. Runtime files may still differ only in ledger.py and retrieval.py.\n\nUse the exact same reference commit, shared-file validation, four known\nsynthetic workload recipes, explicit labels, model revisions, cache capacities,\nsingle caller, rotating method order and three replays from\nAUTHORITY_REFRESH_PROTOCOL.md. Both methods start with empty caches and warm\nonly unrelated text. Expected1,992 observations,996 pairs,8 summary groups.\nRecord all first-pass and repeat costs and all errors/outliers. Preserve v1\nand every subsequent attempt, with distinct run identities and source hashes.\n\nRun on one isolated GitHub-hosted CPU runner with actual PostgreSQL, because\nthe local C: storage fault prevents WSL execution. Record actual hardware and\nversions. Compare only within each paired run; do not subtract the old Ryzen\ntimings or v1 runner results from v2 as if they were controlled speedups.\n\nThe immutable exact-output, zero-stale/error and regression gates remain.\nFor this round's objective, do not promote the candidate if the largest\ncase's first-pass OR overall P95 is worse than its same-run reference. A\nrepeat-only gain cannot compensate for this regression. Report smaller-case\nregressions explicitly too. No inference about production accuracy/capacity,\nunseen histories, or full graph/remote-policy latency is permitted.\nThe installed-model MCP test and regular six-job CI must pass for the final\nruntime. No new 500-question answer generation is included in this run.\n",
+  "reference": {
+    "commit": "df8349b7abfcdd8485868225e6bb74589f397edb",
+    "source_sha256": {
+      "native/src/lib.rs": "4ffba1d66b750856b107c10e44b884b83983c981c981adb53639800ec2286bdf",
+      "src/governed_memory/__init__.py": "b72bbc6c02a1101449eeb21cc20d76b62295ad4707e19b982356c6f96d900f1b",
+      "src/governed_memory/answering.py": "88e95af50f3df924eeef2ca5d1e8550a219908e59ff65df344e18b796f8dee88",
+      "src/governed_memory/authorization.py": "8e56ee2e80fb967b04a2220ba4efdbc177b93ae53cc04857d2c2d6e343de6097",
+      "src/governed_memory/budget.py": "df15d58803b22f6bdd0918b079bb9336f9db54ed7b6dfac40e2e95f7ddca0ce7",
+      "src/governed_memory/chunking.py": "5c62a36384a09157b0bfaf98ca6fdf32ba1ef1665deb1330e26d4f031268e8cd",
+      "src/governed_memory/cli.py": "389fbaa01936a1c5064f4fadc3d9e47371cbc10bbba1512f28a45259e747ebf8",
+      "src/governed_memory/constraints.py": "2be499c42ede5e151639c8dacd71066f3390cb4f8e6a93d53610b3a8617399b0",
+      "src/governed_memory/data/cl100k_base.json": "e9e46f78bfe9cb07f7a4e927a2d6eccf62f6a0583f37ce9d4326365405bdfa99",
+      "src/governed_memory/data/cl100k_base.tiktoken": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+      "src/governed_memory/data/minilm-relevance-v1.json": "081b56ebfd0a813855102e48fd74d7857dc7317a729e8476de18a2a0811c6f58",
+      "src/governed_memory/db.py": "e0ec61292b9aa46dea7ef40e3e8d8288f3db10afdf1505cc9988847087549c4c",
+      "src/governed_memory/dependencies.py": "12501d4c04a5f317daf119bee65339ba1b06cdf9efe015762d0216c7cf2d1e39",
+      "src/governed_memory/embedding.py": "535c55106a678723538d773a22c9fcb3b4643c00cd8b8b73eca34bb1927de7de",
+      "src/governed_memory/embedding_cache.py": "f25f9456b2235e0d2e8dc2fa6e81881e86ba12d7755bbab1ef5b0f0204c5e398",
+      "src/governed_memory/errors.py": "bbce89747951176b00500cc7a3c79a9feb5ad6968805adb99ca46dfc95b528c1",
+      "src/governed_memory/evidence.py": "365a49793b2480c0ad987c764fff8cc79ea511f20974f547fee8189e9fa6f111",
+      "src/governed_memory/generation.py": "2921a218f8e1137d481e4d513171b8fcbd67e0e4ce3b9f45bc1451eac5876573",
+      "src/governed_memory/graph_adapter.py": "9fee00d5e37ff5b63ab76cfbec34df99017a70f24b5ed1d5a16bc92752899b35",
+      "src/governed_memory/identity.py": "7c01020bc35d32147724b9fcaf699c5135d180d725af113e1406808f6b38ffe8",
+      "src/governed_memory/ingest.py": "b602071206337acb5e403572827a87eac5f6b755933d340be684b54740039bc4",
+      "src/governed_memory/ledger.py": "a0af8beade80ddedd855ac19bb52e5d4314855b4b207c0706128e4db29b8a67d",
+      "src/governed_memory/lineage.py": "7bef857ab09f64dd102abfd3f6b4956e66c90ff3a64222a5f8fca9b1644d8eca",
+      "src/governed_memory/local_models.py": "24c37e0df9665c8efa7bdd29df799e3ef42057a5439a37a9b4003ff862a4c888",
+      "src/governed_memory/mcp_server.py": "c8bbaf800b7bbd022ef10a24151cdf18425d73bd6b6a1d4e944713ba9559ce84",
+      "src/governed_memory/models.py": "2291e0347482c42b775bb97928ce3d7143cc3295d8549a8ac6c9ada5527ac6c0",
+      "src/governed_memory/native.py": "c8166502fcf1374cc3327e9c25f7ff3d6224ae7d9fde58dda366204a5a6b53a4",
+      "src/governed_memory/operators.py": "70d0e86f5f9ffdc1a00d8466b0e36f7cacf1060e2287653e51abb0a0653673f3",
+      "src/governed_memory/policies/governance.rego": "8d337276c80cf6b041d34d004cd6b8de72c6a2302be6d6dd349292e72043d351",
+      "src/governed_memory/policy.py": "113879a979b8d0ebe3d44633ba1ee9603aac785a4cb9008b2dc10965e34346a6",
+      "src/governed_memory/relevance.py": "7135c1e8819a34cdf0be4c7dc38f5d0ecc1b80d97522067f0dbbb54835a75e38",
+      "src/governed_memory/rerank_cache.py": "45190c80ff79e317944d8004c28587fdfce00be918ce1ac09c189f4bc321acdb",
+      "src/governed_memory/retrieval.py": "1c8df39fe337b1376e63294cb29f1df481c216281671545d62347063bfedfbdd",
+      "src/governed_memory/semantic_ingest.py": "d1f1e8b21df0dedbd60004a5d775243e41c3ecdb1eef6b436219c1332772aafa",
+      "src/governed_memory/semantic_review.py": "f74535165aec3eefa0ad73e8903fa342088556168859dd5b747c45efd3e65d51",
+      "src/governed_memory/settings.py": "a3164845adb5f6107935455fdca9945caf54ff031c7c87d39e789f881a2a66b1",
+      "src/governed_memory/tokenizer.py": "7633a0221919c9c1dc683f187418d6e7d661463977116a8ca69d17b0b0fb915d"
+    },
+    "shared_runtime_unchanged": true
+  },
+  "datasets": {
+    "timelines_1": "6c7a3406114b5830ec06dd1e4ad9b4ee4005dae6cac3768478e4183a2d7ac955",
+    "timelines_4": "4c66c30ca683a73d21ac5948dfdf0aa0f38f2d296a03539a5dce9b99c8e7e582",
+    "timelines_16": "ea97c45e3e7b335e782ca3b76b3d93a42d55611562047cd7ff3ba6e5cc7ba79b",
+    "heldout": "5ff65d647993cf40029b0c53c5c6d4ed8da1c86f0123cf8abcd2bfea111fe74f"
+  },
+  "started_at": "2026-11-15T13:13:33.129287+00:00",
+  "python": "3.12.14",
+  "os": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+  "cpu": "AMD EPYC 9V45 96-Core Processor",
+  "methods": [
+    "reference_v07",
+    "targeted_refresh"
+  ],
+  "comparison": [
+    "reference_v07",
+    "targeted_refresh"
+  ],
+  "repetitions": 3,
+  "document_capacity": 2048,
+  "score_capacity": 8192,
+  "runtime_image": null,
+  "github_run_id": "43717801550",
+  "runner_name": "GitHub Actions 1000004514",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 256,
+    "native_dimensions": 384,
+    "projection_dimensions": 1024
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "device": "cpu",
+    "threads": 2,
+    "max_tokens": 512,
+    "scores": "raw logits"
+  },
+  "packages": {
+    "governed-memory": "0.8.0",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "sqlalchemy": "2.0.57"
+  },
+  "storage": "postgresql",
+  "completed_at": "2026-11-15T13:17:26.945457+00:00",
+  "source_unchanged": true,
+  "cache": {
+    "timelines_1": {
+      "reference_v07": {
+        "document": {
+          "entries": 36,
+          "hits": 2988,
+          "encoding_requests": 36,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 1008,
+          "hits": 2016,
+          "scoring_requests": 1008,
+          "evictions": 0
+        }
+      },
+      "targeted_refresh": {
+        "document": {
+          "entries": 36,
+          "hits": 2988,
+          "encoding_requests": 36,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 1008,
+          "hits": 2016,
+          "scoring_requests": 1008,
+          "evictions": 0
+        }
+      }
+    },
+    "timelines_4": {
+      "reference_v07": {
+        "document": {
+          "entries": 144,
+          "hits": 11952,
+          "encoding_requests": 144,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4032,
+          "hits": 8064,
+          "scoring_requests": 4032,
+          "evictions": 0
+        }
+      },
+      "targeted_refresh": {
+        "document": {
+          "entries": 144,
+          "hits": 11952,
+          "encoding_requests": 144,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4032,
+          "hits": 8064,
+          "scoring_requests": 4032,
+          "evictions": 0
+        }
+      }
+    },
+    "timelines_16": {
+      "reference_v07": {
+        "document": {
+          "entries": 576,
+          "hits": 47808,
+          "encoding_requests": 576,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4200,
+          "hits": 8400,
+          "scoring_requests": 4200,
+          "evictions": 0
+        }
+      },
+      "targeted_refresh": {
+        "document": {
+          "entries": 576,
+          "hits": 47808,
+          "encoding_requests": 576,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 4200,
+          "hits": 8400,
+          "scoring_requests": 4200,
+          "evictions": 0
+        }
+      }
+    },
+    "heldout": {
+      "reference_v07": {
+        "document": {
+          "entries": 32,
+          "hits": 928,
+          "encoding_requests": 32,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 320,
+          "hits": 640,
+          "scoring_requests": 320,
+          "evictions": 0
+        }
+      },
+      "targeted_refresh": {
+        "document": {
+          "entries": 32,
+          "hits": 928,
+          "encoding_requests": 32,
+          "evictions": 0
+        },
+        "rerank": {
+          "entries": 320,
+          "hits": 640,
+          "scoring_requests": 320,
+          "evictions": 0
+        }
+      }
+    }
+  }
+}

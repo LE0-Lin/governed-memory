@@ -1,0 +1,30 @@
+{
+  "commit": "352eb1e23386617371f6f51abe161baf956eca76",
+  "dirty_source": false,
+  "code_sha256": "102f995b9afeb2de9177933237426d55827075261300b4d06deb0556c10c576d",
+  "protocol_sha256": "e92b777710426651c7d87414a855973b81cb4e9bd7dd636995c31631a18ff7cc",
+  "manifest_sha256": "3b8ccb07e7c8f4cff62a8582de5ab927e95378335913dfbc92fb01d6360e3cd8",
+  "conditional_protocol_sha256": "c71fb7262974c6f139e52ab1bad5e87aee4ac4195c256f0736235cf74081c06f",
+  "stage": "dev",
+  "versions": {
+    "governed-memory": "0.5.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "rank-bm25": "0.2.2",
+    "accelerate": "1.15.0",
+    "lm-format-enforcer": "0.11.3"
+  },
+  "hardware": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "cuda": "12.8",
+    "capability": [
+      8,
+      9
+    ],
+    "driver": "581.80"
+  },
+  "started_at": "2026-11-13T23:19:09.649933+00:00"
+}

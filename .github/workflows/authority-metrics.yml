@@ -1,0 +1,109 @@
+name: authority-metrics
+on:
+  workflow_dispatch:
+  push:
+    branches: [enhancement/targeted-evidence-refresh]
+    paths:
+      - .github/workflows/authority-metrics.yml
+      - src/**
+      - native/**
+      - eval/authority_metrics.py
+      - eval/reference_v07.py
+      - eval/metrics_rescore.py
+      - eval/AUTHORITY_REFRESH_PROTOCOL.md
+      - eval/AUTHORITY_REFRESH_V2_PROTOCOL.md
+      - tests/test_container_deployment.py
+      - pyproject.toml
+      - uv.lock
+permissions:
+  contents: read
+jobs:
+  paired-retrieval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: memory
+          POSTGRES_PASSWORD: local-memory-only
+          POSTGRES_DB: memory
+        ports: ["55432:5432"]
+        options: --health-cmd "pg_isready -U memory -d memory" --health-interval 3s --health-retries 40
+    env:
+      GM_EVAL_DATABASE_URL: postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory
+      MEMORY_MODEL_CACHE: .local/model-cache
+      GRAPHITI_TELEMETRY_ENABLED: "false"
+      HF_HUB_DISABLE_XET: "1"
+      HF_HUB_DOWNLOAD_TIMEOUT: "120"
+      UV_HTTP_TIMEOUT: "300"
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin 2f73e5940b5219fb6deb5fe0fd872f32cea7ff09
+      - uses: dtolnay/rust-toolchain@1.90.0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: .local/model-cache
+          key: pinned-models-${{ hashFiles('src/governed_memory/local_models.py', 'src/governed_memory/semantic_review.py') }}
+      - run: uv sync --frozen --no-editable --extra dev --extra models --extra native
+      - name: Warm only unrelated model text
+        run: uv run --no-sync python -c "from governed_memory.local_models import MiniLMEmbedder, MiniLMReranker; import asyncio; e=MiniLMEmbedder('.local/model-cache'); r=MiniLMReranker('.local/model-cache'); asyncio.run(e.create('Unrelated fictional warmup')); asyncio.run(r.scores('warmup',['Unrelated fictional text']))"
+      - name: Run the frozen paired comparison
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: uv run --no-sync python -m eval.authority_metrics --output .local/authority-results/run-v1
+      - name: Independently verify all observations
+        run: uv run --no-sync python -m eval.metrics_rescore --results .local/authority-results/run-v1 --output .local/authority-results/run-v1/independent-verification.json
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authority-results
+          path: .local/authority-results
+  installed-model-mcp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: memory
+          POSTGRES_PASSWORD: local-memory-only
+          POSTGRES_DB: memory
+        ports: ["55432:5432"]
+        options: --health-cmd "pg_isready -U memory -d memory" --health-interval 3s --health-retries 40
+    env:
+      GM_TEST_DATABASE_URL: postgresql+psycopg://memory:local-memory-only@127.0.0.1:55432/memory?connect_timeout=5
+      GM_TEST_GENERATION_IMAGE: governed-memory:models-ci
+      MEMORY_MODEL_CACHE: .local/model-cache
+      GRAPHITI_TELEMETRY_ENABLED: "false"
+      HF_HUB_DISABLE_XET: "1"
+      HF_HUB_DOWNLOAD_TIMEOUT: "120"
+      UV_HTTP_TIMEOUT: "300"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: .local/model-cache
+          key: pinned-models-${{ hashFiles('src/governed_memory/local_models.py', 'src/governed_memory/semantic_review.py') }}
+      - run: uv sync --frozen --extra dev --extra models
+      - run: uv run --no-sync python -c "from governed_memory.local_models import MiniLMEmbedder, MiniLMReranker; MiniLMEmbedder('.local/model-cache'); MiniLMReranker('.local/model-cache')"
+      - run: docker build --build-arg INSTALL_MODELS=true -t governed-memory:models-ci .
+      - name: Exercise both relevance modes with more than fifty eligible facts
+        run: GM_TEST_MODEL_CACHE_MOUNT="$GITHUB_WORKSPACE/.local/model-cache" uv run --no-sync pytest -q tests/test_container_deployment.py -k cached_retrieval --junitxml=.local/installed-model-mcp.xml
+      - if: always()
+        run: docker image inspect governed-memory:models-ci --format '{{.Id}}' > .local/model-image-id.txt
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: installed-model-mcp
+          path: |
+            .local/installed-model-mcp.xml
+            .local/model-image-id.txt

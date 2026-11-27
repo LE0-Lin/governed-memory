@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "0100672e",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "dc7a5e7c2d44b4d158466791",
+      "26b8f8492999db5e48fe9dc6",
+      "3c639ab115a69f06f3d26a51",
+      "fa32f0a871826ec3b5139656",
+      "1803688a8fcf88de0df12799",
+      "876e71b47509b68477581451",
+      "2c23b52b6aab01cfb7288db0",
+      "cba967b99c7dce492c2f631b"
+    ],
+    "context_sha256": "88e65a8e235718df15773dbaa8ade871fe7c7216f36a2dd50ae280c36ef827ad",
+    "response": {
+      "answer": "The text does not provide specific information about how much was spent on each coffee mug for the coworkers.",
+      "evidence_ids": [
+        "3c639ab115a69f06f3d26a51"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1596,
+        "completion_tokens": 36,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The text does not provide specific information about how much was spent on each coffee mug for the coworkers.\" , \"evidence_ids\":[ \"E3\" ] }"
+    },
+    "error": null,
+    "latency_ms": 1835.7792000751942,
+    "answer_latency_ms": 1835.7792000751942
+  }
+]

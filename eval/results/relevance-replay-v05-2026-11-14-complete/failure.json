@@ -1,0 +1,9 @@
+{
+  "status": "incomplete",
+  "source_commit": "e7acc5a",
+  "completed_cases": 3,
+  "error": "ValueError: ambiguous reconstructed chunk ID",
+  "diagnosis": "A public history repeats a session ID at different dates. The original ID format omits the date, so repeated chunks have distinct dated text. These low-score candidates were not packed. The earlier identical-body diagnosis was incomplete; ambiguity must be rejected if a candidate is consumed, rather than for every unused corpus chunk.",
+  "threshold_changed": false,
+  "original_predictions_modified": false
+}

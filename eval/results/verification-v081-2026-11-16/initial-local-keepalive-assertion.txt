@@ -1,0 +1,55 @@
+F..........s..ssss.s.s.s.s.                                              [100%]
+================================== FAILURES ===================================
+____________ test_keepalive_reuses_transport_but_never_a_decision _____________
+
+    def test_keepalive_reuses_transport_but_never_a_decision():
+        state = {"allowed": True, "status": 200}
+        requests = []
+    
+        class Handler(BaseHTTPRequestHandler):
+            protocol_version = "HTTP/1.1"
+    
+            def do_POST(self):
+                payload = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                requests.append((self.client_address, payload))
+                body = json.dumps({"allowed": state["allowed"]}).encode()
+                self.send_response(state["status"])
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, *_):
+                pass
+    
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        server.daemon_threads = True
+        thread = Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        authorizer = OpenFgaAuthorizer(f"http://127.0.0.1:{server.server_port}", "0" * 26, "1" * 26)
+        actor = Identity("agent", "demo", "agent")
+        try:
+            authorizer.check(actor, "writer")
+            state["allowed"] = False
+            with pytest.raises(Denied, match="permission denied"):
+                authorizer.check(actor, "writer")
+            state.update(allowed=True, status=503)
+            with pytest.raises(Denied, match="unavailable"):
+                authorizer.check(actor, "writer")
+            state["status"] = 200
+            authorizer.check(actor, "writer")
+            assert len(requests) == 4
+>           assert len({address for address, _ in requests}) == 1
+E           AssertionError: assert 4 == 1
+E            +  where 4 = len({('127.0.0.1', 59126), ('127.0.0.1', 59128), ('127.0.0.1', 59130), ('127.0.0.1', 59133)})
+
+tests\test_authorization_transport.py:53: AssertionError
+============================== warnings summary ===============================
+tests/test_authorization_transport.py::test_mcp_shutdown_closes_only_its_owned_resources[owned]
+  E:\OpenSource\governed-memory\.venv\Lib\site-packages\graphiti_core\driver\search_interface\search_interface.py:22: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class SearchInterface(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+-- generated xml file: E:\OpenSource\governed-memory\.local\v09-targeted.xml --
+=========================== short test summary info ===========================
+FAILED tests/test_authorization_transport.py::test_keepalive_reuses_transport_but_never_a_decision
+1 failed, 17 passed, 9 skipped, 2 deselected, 1 warning in 18.13s

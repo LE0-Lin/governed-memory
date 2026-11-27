@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_4929293b",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "b902a9e2237ebe6447cd4159",
+      "941fc61314c015b886a8a6b6",
+      "bab508e397791db0f40a6904",
+      "82a6e5504f6e5122be8c5901",
+      "c0d8e8aa84561eb3dd4e8f8f",
+      "9bc0a2ee98d934d1d42172ff",
+      "a9ca342df3ec338ae83d0a41",
+      "36e0be6afbb1bf9650864b1a"
+    ],
+    "context_sha256": "8733fc6bbb58a64a6117e969752def7c83a9963e4076cfa129e1fa3df6f4c3de",
+    "response": {
+      "answer": "Niece's kindergarten graduation ceremony",
+      "evidence_ids": [
+        "82a6e5504f6e5122be8c5901"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1745,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Niece's kindergarten graduation ceremony\",\"evidence_ids\":[ \"E4\"]}"
+    },
+    "error": null,
+    "latency_ms": 1034.3888000352308,
+    "answer_latency_ms": 1034.3888000352308
+  }
+]

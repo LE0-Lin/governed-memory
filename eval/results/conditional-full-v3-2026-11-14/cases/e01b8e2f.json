@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "e01b8e2f",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "8b16689147c4c84c1c515407",
+      "dfa85cbc2b0e1404a92f3d61",
+      "7e193d53308db866765b302c",
+      "644aed7214144706e867b2c5",
+      "686c8e957405b0ccd3d4656e",
+      "f7946c78df5cf04f1ff62778",
+      "e9726099cc347285f30b5b61",
+      "22d7d0ceca60cb91f203784b"
+    ],
+    "context_sha256": "9331c3ff944edee917101a6be67bf69cde4aef66efb738fb5ba00b5f8f43fdc9",
+    "response": {
+      "answer": "Oahu, Maui, Kauai, and the Big Island",
+      "evidence_ids": [
+        "8b16689147c4c84c1c515407",
+        "dfa85cbc2b0e1404a92f3d61"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1196,
+        "completion_tokens": 32,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Oahu, Maui, Kauai, and the Big Island\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1575.371199985966,
+    "answer_latency_ms": 1575.371199985966
+  }
+]

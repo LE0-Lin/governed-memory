@@ -1,0 +1,54 @@
+[
+  {
+    "question_id": "a40e080f",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "3438b87306f74b7c4012f84f",
+      "1da996670338bc20acd29b40",
+      "f2445c0f066f65711964c129",
+      "2e1a14c918dc54697d427f08",
+      "170d7302b101812eab3e89cf",
+      "8d3f551133886a5dbd4902fa",
+      "33ff9b01be2ef132d6d77749",
+      "ce52ab289feef3f840bc9401"
+    ],
+    "context_sha256": "954fdf60f3e8d5da8466ff6f94d63918f5d94bedef89b3017917f4b4223364cb",
+    "response": {
+      "answer": "Patagonia and Southwest Airlines",
+      "evidence_ids": [
+        "3438b87306f74b7c4012f84f",
+        "1da996670338bc20acd29b40",
+        "f2445c0f066f65711964c129",
+        "2e1a14c918dc54697d427f08",
+        "170d7302b101812eab3e89cf",
+        "8d3f551133886a5dbd4902fa",
+        "33ff9b01be2ef132d6d77749",
+        "ce52ab289feef3f840bc9401"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1267,
+        "completion_tokens": 49,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Patagonia and Southwest Airlines\",\"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\", \"E8\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2176.4667000388727,
+    "answer_latency_ms": 2176.4667000388727
+  }
+]

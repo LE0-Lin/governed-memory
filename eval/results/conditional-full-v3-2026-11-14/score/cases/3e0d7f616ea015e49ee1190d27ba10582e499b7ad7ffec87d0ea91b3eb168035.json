@@ -1,0 +1,1 @@
+{"abstain":true,"answer":"I do not have enough evidence to answer this question.","answer_error":null,"answer_latency_ms":617.1112000010908,"category":"abstention","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":false,"method":"conditional","question_id":"c8090214_abs","token_f1":0.12903225806451613}

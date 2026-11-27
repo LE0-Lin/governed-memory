@@ -1,0 +1,46 @@
+{
+  "commit": "bf35814b099ef0f4846f4e2ab68ef7702bd8f66b",
+  "dirty_source": false,
+  "code_sha256": "6de1a8a0578b6282e08d71cad1f16ca30a5e1c8572977f2f9f9e9ba838d4ae13",
+  "protocol_sha256": "e92b777710426651c7d87414a855973b81cb4e9bd7dd636995c31631a18ff7cc",
+  "manifest_sha256": "279b5db80be2aaa208dd404998794874f8d1fc52b93d426da689a9ae1f28043d",
+  "conditional_protocol_sha256": "68e9c896e748c272d4299ec6317caec1c1d9dbe726e8f1db3879c12696f9f793",
+  "stage": "external",
+  "versions": {
+    "governed-memory": "0.5.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.5.4",
+    "rank-bm25": "0.2.2",
+    "accelerate": "1.15.0",
+    "lm-format-enforcer": "0.11.3"
+  },
+  "hardware": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "cuda": "12.8",
+    "capability": [
+      8,
+      9
+    ],
+    "driver": "581.80"
+  },
+  "completed_at": "2026-11-14T00:00:34.415517+00:00",
+  "generator": {
+    "profile": "standard",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "max_input_tokens": 4096,
+    "decoding": "greedy",
+    "concurrency": 1
+  },
+  "predictions_sha256": "dc1f711b02ba3807feca540ebd06f20040eee427c8de069f4f3ead8edaf88088",
+  "rows": 500,
+  "source_changed_during_run": false,
+  "retrieval_contexts_unchanged": true,
+  "runtime_errors": 0,
+  "answer_errors": 0
+}

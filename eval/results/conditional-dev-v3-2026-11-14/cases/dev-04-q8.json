@@ -1,0 +1,80 @@
+[
+  {
+    "question_id": "dev-04-q8",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-04-d0",
+      "dev-04-d1",
+      "dev-04-d2",
+      "dev-04-d3"
+    ],
+    "context_sha256": "a7cec97aa9a0d4d68a6246686febb0ae99a28be7bfa238d1cfb774995f79d772",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "invalid_model_response",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 203,
+        "completion_tokens": 54,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": "InvalidAnswer",
+      "raw_model_text": "{\"answer\":\"Venus orbits the Sun at an average distance of about 0.72 astronomical units (AU) away from Earth's orbit, which is approximately 67 million kilometers.\" , \"evidence_ids\":[], \"abstain\":false}"
+    },
+    "error": null,
+    "latency_ms": 3754.8180000158027,
+    "answer_latency_ms": 3754.8180000158027
+  },
+  {
+    "question_id": "dev-04-q8",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-04-d0",
+      "dev-04-d1",
+      "dev-04-d2",
+      "dev-04-d3"
+    ],
+    "context_sha256": "a7cec97aa9a0d4d68a6246686febb0ae99a28be7bfa238d1cfb774995f79d772",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 172,
+        "completion_tokens": 6,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":null}"
+    },
+    "error": null,
+    "latency_ms": 504.91189991589636,
+    "answer_latency_ms": 504.91189991589636
+  }
+]

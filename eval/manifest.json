@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "synthetic": true,
+  "sha256": "79409d2e485d8f299ffdc1a75f22e9c2ec54948ebe71d72fecf166b52a8fa772",
+  "projects": 24,
+  "templates": 8,
+  "queries": 192,
+  "operation_checks": 48,
+  "split_unit": "template family",
+  "k": 3,
+  "token_budget": 1024,
+  "tokenizer": "cl100k_base",
+  "embedding": "sha256 lexical hashing, 1024 dimensions",
+  "independence": "Variants within a template are correlated; no significance claim.",
+  "freeze_note": "Before the first evaluation, fix a dev audience fixture to use a separate fact key; it must not supersede the public database fact."
+}

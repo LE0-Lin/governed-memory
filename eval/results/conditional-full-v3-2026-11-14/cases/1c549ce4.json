@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "1c549ce4",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "c4267aaded1f32ca32886cb5",
+      "3efdad6decc7cf5d89ee326e",
+      "5572225b94f85daea5307daf",
+      "584060c1e34bc3cf3a440240",
+      "330958419a8c3768b0609c96",
+      "6b0fec152d8915c6eb1bd594",
+      "2d748631c7052f40fab81ec7",
+      "24710e3ce349af5e14629dbd"
+    ],
+    "context_sha256": "14286ae3c53d0087681dc66e20cb359ed8c1d2d73e9e6e06720e9f06843ae4a2",
+    "response": {
+      "answer": "The total cost of the car cover and detailing spray you purchased was $120.",
+      "evidence_ids": [
+        "584060c1e34bc3cf3a440240",
+        "330958419a8c3768b0609c96"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1794,
+        "completion_tokens": 38,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The total cost of the car cover and detailing spray you purchased was $120.\" , \"evidence_ids\":[ \"E4\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1894.031099975109,
+    "answer_latency_ms": 1894.031099975109
+  }
+]

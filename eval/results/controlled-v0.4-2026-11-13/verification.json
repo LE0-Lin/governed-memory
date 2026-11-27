@@ -1,0 +1,83 @@
+{
+  "source_commit": "80377a9f721f43f452b510e8bf80adaf1d746d53",
+  "ci_url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43283570683",
+  "jobs": [
+    {
+      "id": 131410933051,
+      "name": "storage-and-evaluation",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 131410933571,
+      "name": "core (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 131410933580,
+      "name": "core (windows-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 131410933604,
+      "name": "native (windows-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 131410933702,
+      "name": "native (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 131410933801,
+      "name": "local-models",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "local_verification": {
+    "windows_models_and_storage": {
+      "passed": 212,
+      "skipped": 9,
+      "container_tests_excluded": true
+    },
+    "core_container": {
+      "passed": 1,
+      "skipped": 1
+    },
+    "model_container": {
+      "passed": 2,
+      "skipped": 2,
+      "seconds": 486.83
+    },
+    "native_linux_subset": {
+      "passed": 39
+    },
+    "rust_unit_tests": 2,
+    "opa_rego_tests": 10,
+    "standalone_core_wheel": {
+      "torch_installed": false,
+      "offline_example_passed": true
+    },
+    "openfga_postgres_restart_check": true
+  },
+  "images": {
+    "core": "sha256:74225e35ef315b1308ffbb20b5490eb9f3c024b8917f614396f3842335c07a94",
+    "models": "sha256:2b757111cf2933c891722679d46daf5692691b46d01df329833ae612a250457b",
+    "benchmark": "sha256:5d2b20e23f8f52e460e59c5571511c7415c0154e943ff22ca558550d4c9945bf"
+  },
+  "environment": {
+    "docker_logical_cpus": 32,
+    "docker_memory_bytes": 7902199808,
+    "benchmark_uid": 10001,
+    "root_readonly": true,
+    "capabilities_dropped": true,
+    "model_cache_readonly": true,
+    "network": "host for isolated PostgreSQL schema",
+    "model_downloads": "disabled; HF_HUB_OFFLINE=1"
+  }
+}

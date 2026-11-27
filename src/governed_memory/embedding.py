@@ -7,9 +7,72 @@ import re
 
 from graphiti_core.embedder.client import EmbedderClient
 
+STOPWORDS = frozenset(
+    {
+        "a",
+        "an",
+        "and",
+        "are",
+        "as",
+        "at",
+        "be",
+        "by",
+        "did",
+        "do",
+        "does",
+        "for",
+        "from",
+        "had",
+        "has",
+        "have",
+        "how",
+        "in",
+        "into",
+        "is",
+        "it",
+        "its",
+        "many",
+        "much",
+        "of",
+        "on",
+        "or",
+        "s",
+        "so",
+        "than",
+        "that",
+        "the",
+        "their",
+        "then",
+        "there",
+        "these",
+        "this",
+        "to",
+        "under",
+        "was",
+        "were",
+        "what",
+        "when",
+        "where",
+        "which",
+        "who",
+        "whom",
+        "whose",
+        "why",
+        "will",
+        "with",
+        "would",
+    }
+)
+
 
 def words(text: str) -> list[str]:
     return re.findall(r"\w+", text.casefold())
+
+
+def content_words(text: str) -> list[str]:
+    tokens = words(text)
+    filtered = [token for token in tokens if token not in STOPWORDS]
+    return filtered or tokens
 
 
 async def embed_many(client, texts: list[str]):

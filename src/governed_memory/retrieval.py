@@ -5,7 +5,7 @@ from rank_bm25 import BM25Okapi
 
 from governed_memory.budget import EvidenceBudget
 from governed_memory.budget import serialize as serialize
-from governed_memory.embedding import HashEmbedder, embed_many, words
+from governed_memory.embedding import HashEmbedder, content_words, embed_many, words
 from governed_memory.native import kernels
 
 
@@ -28,8 +28,8 @@ async def hybrid_rank(
     embedder = embedder or HashEmbedder()
     if isinstance(embedder, HashEmbedder):
         # Hash features carry lexical overlap, not semantic similarity.
-        terms = set(words(query))
-        evidence = [item for item in evidence if terms.intersection(words(item.text))]
+        terms = set(content_words(query))
+        evidence = [item for item in evidence if terms.intersection(content_words(item.text))]
         if not evidence:
             return []
     corpus = [words(item.text) or [""] for item in evidence]
@@ -68,6 +68,7 @@ class Retriever:
         document_cache=None,
         rerank_cache=None,
         min_relevance_score=None,
+        relevance_policy=None,
     ):
         self.ledger, self.graph = ledger, graph
         self.embedder = embedder or getattr(graph, "embedder", None) or HashEmbedder()
@@ -76,6 +77,8 @@ class Retriever:
             reranker is None or not callable(getattr(reranker, "scores", None))
         ):
             raise ValueError("a score cache requires a scored reranker")
+        if min_relevance_score is not None and relevance_policy is not None:
+            raise ValueError("specify either min_relevance_score or relevance_policy, not both")
         if min_relevance_score is not None:
             if (
                 isinstance(min_relevance_score, bool)
@@ -85,12 +88,33 @@ class Retriever:
                 raise ValueError("minimum relevance score must be finite")
             if reranker is None or not callable(getattr(reranker, "scores", None)):
                 raise ValueError("a relevance cutoff requires a scored reranker")
+        if relevance_policy is not None and (
+            reranker is None or not callable(getattr(reranker, "scores", None))
+        ):
+            raise ValueError("a relevance policy requires a scored reranker")
         self.document_cache = document_cache
         self.rerank_cache = rerank_cache
         self.min_relevance_score = min_relevance_score
+        self.relevance_policy = relevance_policy
         self.ranking_backend = "rust" if kernels(ranking_backend) else "python"
         self.budget = EvidenceBudget()
         self.encoding = self.budget.encoding
+
+    async def _score_texts(self, project: str, query: str, texts: list[str]) -> np.ndarray:
+        if not texts:
+            return np.empty(0, dtype=float)
+        try:
+            values = (
+                await self.rerank_cache.scores(self.reranker, project, query, texts)
+                if self.rerank_cache is not None
+                else await self.reranker.scores(query, texts)
+            )
+            scores = np.asarray(values, dtype=float)
+        except (ValueError, TypeError):
+            raise RuntimeError("reranker returned invalid relevance scores") from None
+        if scores.shape != (len(texts),) or not np.isfinite(scores).all():
+            raise RuntimeError("reranker returned invalid relevance scores")
+        return scores
 
     def pack(self, ranked, budget: int, k: int) -> tuple[list[dict], int]:
         return self.budget.pack(ranked, budget, k)
@@ -116,8 +140,8 @@ class Retriever:
         eligible = self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
         embedder = self.embedder
         if isinstance(embedder, HashEmbedder):
-            terms = set(words(query))
-            eligible = [e for e in eligible if terms.intersection(words(e.text))]
+            terms = set(content_words(query))
+            eligible = [e for e in eligible if terms.intersection(content_words(e.text))]
         backend = (
             "local-bm25+hash-rrf"
             if isinstance(embedder, HashEmbedder)
@@ -162,31 +186,55 @@ class Retriever:
                 for e in self.ledger.visible(token, project, valid_at=valid_at, known_at=known_at)
             }
             ranked = [current[e.id] for e in ranked if e.id in current]
-            if self.min_relevance_score is None and self.rerank_cache is None:
+            if (
+                self.min_relevance_score is None
+                and self.relevance_policy is None
+                and self.rerank_cache is None
+            ):
                 ranked = await self.reranker.rerank(query, ranked[:50])
             else:
                 candidates = ranked[:50]
-                try:
-                    values = (
-                        await self.rerank_cache.scores(
-                            self.reranker, project, query, [e.text for e in candidates]
-                        )
-                        if self.rerank_cache is not None
-                        else await self.reranker.scores(query, [e.text for e in candidates])
-                    )
-                    scores = np.asarray(values, dtype=float)
-                except (ValueError, TypeError):
-                    raise RuntimeError("reranker returned invalid relevance scores") from None
-                if scores.shape != (len(candidates),) or not np.isfinite(scores).all():
-                    raise RuntimeError("reranker returned invalid relevance scores")
+                scores = await self._score_texts(project, query, [e.text for e in candidates])
                 ordered = sorted(
                     zip(candidates, scores, strict=True), key=lambda pair: (-pair[1], pair[0].id)
                 )
-                ranked = [
-                    item
-                    for item, score in ordered
-                    if self.min_relevance_score is None or score >= self.min_relevance_score
-                ]
+                if self.relevance_policy is not None:
+                    policy = self.relevance_policy
+                    survivors = [
+                        (item, float(score))
+                        for item, score in ordered
+                        if score >= policy.prefilter_floor(item)
+                    ]
+                    structured = [item for item, _ in survivors if policy.is_structured_fact(item)]
+                    part_scores = {}
+                    if structured:
+                        parts = list(
+                            dict.fromkeys(
+                                [item.subject for item in structured]
+                                + [f"{item.predicate}: {item.value}" for item in structured]
+                            )
+                        )
+                        part_values = await self._score_texts(project, query, parts)
+                        part_scores = dict(zip(parts, part_values.tolist(), strict=True))
+                    ranked = [
+                        item
+                        for item, score in survivors
+                        if policy.accepts(
+                            query,
+                            item,
+                            score,
+                            subject_score=part_scores.get(getattr(item, "subject", None)),
+                            pv_score=part_scores.get(
+                                f"{getattr(item, 'predicate', '')}: {getattr(item, 'value', '')}"
+                            ),
+                        )
+                    ]
+                else:
+                    ranked = [
+                        item
+                        for item, score in ordered
+                        if self.min_relevance_score is None or score >= self.min_relevance_score
+                    ]
         # Recheck current ACL/revocation after retrieval, before serializing any text.
         selection = {}
         if ranked and len(ranked) < len(eligible):
@@ -223,6 +271,7 @@ class Retriever:
             "ranking_engine": self.ranking_backend,
             "reranker": self.reranker.metadata if self.reranker else None,
             "minimum_relevance_score": self.min_relevance_score,
+            "relevance_policy": self.relevance_policy.version if self.relevance_policy else None,
             "document_cache": self.document_cache is not None,
             "rerank_cache": self.rerank_cache is not None,
             "reason": reason,

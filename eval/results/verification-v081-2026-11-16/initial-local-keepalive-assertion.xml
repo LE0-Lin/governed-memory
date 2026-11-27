@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="9" tests="27" time="18.128" timestamp="2026-11-15T23:54:30.170368+08:00" hostname="Le0n"><testcase classname="tests.test_authorization_transport" name="test_keepalive_reuses_transport_but_never_a_decision" time="1.395"><failure message="AssertionError: assert 4 == 1&#10; +  where 4 = len({('127.0.0.1', 59126), ('127.0.0.1', 59128), ('127.0.0.1', 59130), ('127.0.0.1', 59133)})">def test_keepalive_reuses_transport_but_never_a_decision():
+        state = {"allowed": True, "status": 200}
+        requests = []
+    
+        class Handler(BaseHTTPRequestHandler):
+            protocol_version = "HTTP/1.1"
+    
+            def do_POST(self):
+                payload = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                requests.append((self.client_address, payload))
+                body = json.dumps({"allowed": state["allowed"]}).encode()
+                self.send_response(state["status"])
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, *_):
+                pass
+    
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        server.daemon_threads = True
+        thread = Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        authorizer = OpenFgaAuthorizer(f"http://127.0.0.1:{server.server_port}", "0" * 26, "1" * 26)
+        actor = Identity("agent", "demo", "agent")
+        try:
+            authorizer.check(actor, "writer")
+            state["allowed"] = False
+            with pytest.raises(Denied, match="permission denied"):
+                authorizer.check(actor, "writer")
+            state.update(allowed=True, status=503)
+            with pytest.raises(Denied, match="unavailable"):
+                authorizer.check(actor, "writer")
+            state["status"] = 200
+            authorizer.check(actor, "writer")
+            assert len(requests) == 4
+&gt;           assert len({address for address, _ in requests}) == 1
+E           AssertionError: assert 4 == 1
+E            +  where 4 = len({('127.0.0.1', 59126), ('127.0.0.1', 59128), ('127.0.0.1', 59130), ('127.0.0.1', 59133)})
+
+tests\test_authorization_transport.py:53: AssertionError</failure></testcase><testcase classname="tests.test_authorization_transport" name="test_mcp_shutdown_closes_only_its_owned_resources[owned]" time="2.412" /><testcase classname="tests.test_authorization_transport" name="test_mcp_shutdown_closes_only_its_owned_resources[external]" time="1.301" /><testcase classname="tests.test_authorization_transport" name="test_mcp_failed_configuration_releases_its_client_and_engine" time="1.256" /><testcase classname="tests.test_reference_v07" name="test_v08_study_rejects_changed_shared_authorization_runtime" time="0.202" /><testcase classname="tests.test_external_governance" name="test_malformed_fga_decisions_fail_closed[payload0]" time="0.757" /><testcase classname="tests.test_external_governance" name="test_malformed_fga_decisions_fail_closed[payload1]" time="0.782" /><testcase classname="tests.test_external_governance" name="test_malformed_fga_decisions_fail_closed[payload2]" time="0.887" /><testcase classname="tests.test_external_governance" name="test_malformed_fga_decisions_fail_closed[payload3]" time="0.975" /><testcase classname="tests.test_external_governance" name="test_incomplete_fga_configuration_is_never_silently_disabled" time="0.001" /><testcase classname="tests.test_external_governance" name="test_openlineage_real_http_retry_retains_ids_and_validates_offline[sqlite]" time="2.887" /><testcase classname="tests.test_external_governance" name="test_openlineage_real_http_retry_retains_ids_and_validates_offline[postgres]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_external_governance.py:164: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[sqlite-empty]" time="0.039" /><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[sqlite-type]" time="0.037" /><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[sqlite-postgres-text]" time="0.012"><skipped type="pytest.skip" message="PostgreSQL rejects NUL bytes in text columns">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:30: PostgreSQL rejects NUL bytes in text columns</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[postgres-empty]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:21: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[postgres-type]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:21: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_failed_session_import_preserves_the_existing_ledger[postgres-postgres-text]" time="0.071"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:21: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_multiple_session_records_commit_together_and_remain_idempotent[sqlite]" time="0.023" /><testcase classname="tests.test_ingest_mcp" name="test_multiple_session_records_commit_together_and_remain_idempotent[postgres]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:63: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_structured_session_import_is_idempotent_and_untrusted[sqlite]" time="0.023" /><testcase classname="tests.test_ingest_mcp" name="test_structured_session_import_is_idempotent_and_untrusted[postgres]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:89: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_markdown_adr_import[sqlite]" time="0.016" /><testcase classname="tests.test_ingest_mcp" name="test_markdown_adr_import[postgres]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:115: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_mcp_exposes_no_approval_or_identity_tool_parameters[sqlite]" time="0.019" /><testcase classname="tests.test_ingest_mcp" name="test_mcp_exposes_no_approval_or_identity_tool_parameters[postgres]" time="0.000"><skipped type="pytest.skip" message="set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger">E:\OpenSource\governed-memory\tests\test_ingest_mcp.py:126: set GM_TEST_DATABASE_URL to exercise a real PostgreSQL ledger</skipped></testcase><testcase classname="tests.test_ingest_mcp" name="test_stdio_mcp_persists_between_independent_sessions" time="4.383" /></testsuite></testsuites>

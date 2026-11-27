@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "3d86fd0a",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "5e2abb20c682b655af54c961",
+      "873674818685755b5eb4ee26",
+      "28fceb760aaaf05ba5bff62f",
+      "c4bc8900805400501b3e2adb",
+      "044d4845ba622b170d0297c3",
+      "933259b4282d40f08f2f34ac",
+      "7d842cd4a3a70388d7afe88b",
+      "7c177045f1aab1237af5ff1a"
+    ],
+    "context_sha256": "6f4c539817d020d32dc6f6559ea523314fdcf4411b1de0160fa5650c95d65ca4",
+    "response": {
+      "answer": "Coffee Shop (City)",
+      "evidence_ids": [
+        "28fceb760aaaf05ba5bff62f"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1506,
+        "completion_tokens": 21,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Coffee Shop (City)\" , \"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1030.6332000764087,
+    "answer_latency_ms": 1030.6332000764087
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "eac54add",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "9639c76169a93037f6cae481",
+      "c0a605ede575c28877076fd5",
+      "ef43eb1e74eb69ade159bfe6",
+      "16e333cf50c9bd8fa9a5061c",
+      "6ebc9be19b15ee30eb3277a6",
+      "1d86e8f6d5c2dcbf9c441102",
+      "9fd6d3af5ac6482585982108",
+      "99354e60d5d5338ff5c54b66"
+    ],
+    "context_sha256": "a942b60b4ea5a2a4cae2ad6dd6aebe00e268535987226afdd6b9ad5558a62dba",
+    "response": {
+      "answer": "team was able to show that they had corrected the mutation in some of the embryos",
+      "evidence_ids": [
+        "6ebc9be19b15ee30eb3277a6"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1200,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"team was able to show that they had corrected the mutation in some of the embryos\",\"evidence_ids\":[\"E5\"]}"
+    },
+    "error": null,
+    "latency_ms": 1429.5506000053138,
+    "answer_latency_ms": 1429.5506000053138
+  }
+]

@@ -1,0 +1,5 @@
+* -text
+*.txt -diff
+*.log -diff
+*.xml -diff
+source-ci.json -diff

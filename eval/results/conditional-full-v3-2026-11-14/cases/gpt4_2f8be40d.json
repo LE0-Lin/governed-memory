@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_2f8be40d",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "fb5de7a831da25733a6a2582",
+      "75c629e1b23a78606310c19b",
+      "6e13ba64af0e053aa5338ddb",
+      "9bbd4eb4aaf5d82c8fd23ea3",
+      "d0c76babb5c5a7fbd3039136",
+      "5e2ef4c9ae569666cfb81e1a",
+      "b8625cb28eba8af0b9fd9c8b",
+      "1ef195b61a4ad1c04a6fac2a"
+    ],
+    "context_sha256": "342877b4e7ef7a75e5ac80d42cdfcf00711cd2deb8dd923e43259a71991d9508",
+    "response": {
+      "answer": "I have attended 2 weddings in this year",
+      "evidence_ids": [
+        "fb5de7a831da25733a6a2582",
+        "75c629e1b23a78606310c19b"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1490,
+        "completion_tokens": 24,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I have attended 2 weddings in this year\",\"evidence_ids\":[\"E1\",\"E2\"]}"
+    },
+    "error": null,
+    "latency_ms": 1236.6966999834403,
+    "answer_latency_ms": 1236.6966999834403
+  }
+]

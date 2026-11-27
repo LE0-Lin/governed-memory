@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"The taxi ride was $12 more expensive than the estimated daily train fare of $9.14.","answer_error":null,"answer_latency_ms":2091.152200009674,"category":"multi-session","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"cc06de0d","token_f1":0.0}

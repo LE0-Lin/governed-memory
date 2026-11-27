@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "1d4da289",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "d5146cfdafee1c421ffdc5f9",
+      "60cff198b6a18162608dcfde",
+      "a6c05ceb2e89a0df8b6a490b",
+      "a0b51c630583336648842247",
+      "39bb268173d4b7d2e2edbfb4",
+      "afab293d2ece9f92327f3244",
+      "6fabeca4846131e384382719",
+      "b015149e9fdd7fec871024b5"
+    ],
+    "context_sha256": "94a73c581e8c335721645e0463996adc139f3b69032b85ccb024909c0d51d9cb",
+    "response": {
+      "answer": "biometric authentication or one-time passwords (OTP)",
+      "evidence_ids": [
+        "a6c05ceb2e89a0df8b6a490b",
+        "a0b51c630583336648842247"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1544,
+        "completion_tokens": 30,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"biometric authentication or one-time passwords (OTP)\" , \"evidence_ids\":[ \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1546.8065000604838,
+    "answer_latency_ms": 1546.8065000604838
+  }
+]

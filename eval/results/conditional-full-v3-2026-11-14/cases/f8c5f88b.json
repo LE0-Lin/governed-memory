@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "f8c5f88b",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "bfbf6472dde2d6d9daeae5de",
+      "a7c25ea0a3d540ea601ccb32",
+      "48a4aa6b605a5e27de3bc663",
+      "90804b9816e2992ff7554001",
+      "a134a486a62171f70c168ea3",
+      "cad301c47ad76b95534fc953",
+      "9f99b3a2df06d604f39c323a",
+      "82d03d57857e23edeb893fc5"
+    ],
+    "context_sha256": "c20e82eb9a0c850494bed4c979070b53de17709e8ef7b65bb75796f0f20e4df6",
+    "response": {
+      "answer": "a sports store downtown",
+      "evidence_ids": [
+        "a7c25ea0a3d540ea601ccb32"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1462,
+        "completion_tokens": 19,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"a sports store downtown\",\"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1422.7619000012055,
+    "answer_latency_ms": 1422.7619000012055
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "question_id": "dev-04-q6",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-04-d0",
+      "dev-04-d1",
+      "dev-04-d2",
+      "dev-04-d3"
+    ],
+    "context_sha256": "a7cec97aa9a0d4d68a6246686febb0ae99a28be7bfa238d1cfb774995f79d772",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 206,
+        "completion_tokens": 95,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"The provided information does not include any details about the annual cost of Saffron analytics. Therefore, I cannot determine the annual cost based on this evidence alone. The evidence includes details about the analytics platform's features but does not provide financial information such as costs. Abstaining from making assumptions about the annual cost without additional relevant data. abstain: true\",\n  \"evidence_ids\": [],\n  \"abstain\": true\n}"
+    },
+    "error": null,
+    "latency_ms": 6764.127599890344,
+    "answer_latency_ms": 6764.127599890344
+  },
+  {
+    "question_id": "dev-04-q6",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-04-d0",
+      "dev-04-d1",
+      "dev-04-d2",
+      "dev-04-d3"
+    ],
+    "context_sha256": "a7cec97aa9a0d4d68a6246686febb0ae99a28be7bfa238d1cfb774995f79d772",
+    "response": {
+      "answer": "I do not have enough evidence to answer this question.",
+      "evidence_ids": [],
+      "abstain": true,
+      "reason": "model_abstained",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 175,
+        "completion_tokens": 6,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":null}"
+    },
+    "error": null,
+    "latency_ms": 624.3698999751359,
+    "answer_latency_ms": 624.3698999751359
+  }
+]

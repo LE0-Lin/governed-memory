@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "bc8a6e93_abs",
+    "category": "abstention",
+    "method": "conditional",
+    "chunk_ids": [
+      "8321d1bbfffedad7240d0d1a",
+      "b92c30fb3214051e6297bd2a",
+      "d33f0fe95850d376d4880a5f",
+      "bba09de9d4dfe37db3d95100",
+      "d39fca01aeae0291811732bb",
+      "158ed97637c3da488117fd1b",
+      "8008bdb4aae8167d23783833",
+      "2f9338540a8c54a8b4feefc0"
+    ],
+    "context_sha256": "65193e01b92991bc20bbf05c791fff2126278e833ee21e8a4f5a5fcd44020024",
+    "response": {
+      "answer": "lemon curd-filled vanilla or lemon sponge cakes",
+      "evidence_ids": [
+        "d33f0fe95850d376d4880a5f"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1593,
+        "completion_tokens": 22,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"lemon curd-filled vanilla or lemon sponge cakes\",\"evidence_ids\":[\"E3\"]}"
+    },
+    "error": null,
+    "latency_ms": 1338.7463999679312,
+    "answer_latency_ms": 1338.7463999679312
+  }
+]

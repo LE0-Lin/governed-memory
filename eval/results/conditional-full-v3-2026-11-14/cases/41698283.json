@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "41698283",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "210ccb1ac9273b9f4c5411b5",
+      "d9bc53d9108d5cbe55e1b418",
+      "240ba96c6adba82dac0b6524",
+      "5dde24257f7abdb04c719c41",
+      "ad3c3853ca986744c638307e",
+      "5176b1354fa61e82b5a310d9",
+      "b132493faca7f3101fd05477",
+      "1d66932d4a60d15084f32e38"
+    ],
+    "context_sha256": "53ba5a9557a1a2385e2a43826c149516a17f9aa56eb8a9a82270a3e67e8f1f83",
+    "response": {
+      "answer": "50mm prime lens",
+      "evidence_ids": [
+        "240ba96c6adba82dac0b6524"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1541,
+        "completion_tokens": 20,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"50mm prime lens\",\"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1044.3382998928428,
+    "answer_latency_ms": 1044.3382998928428
+  }
+]

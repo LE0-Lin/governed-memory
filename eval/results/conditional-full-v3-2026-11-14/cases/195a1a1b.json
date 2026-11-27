@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "195a1a1b",
+    "category": "single-session-preference",
+    "method": "conditional",
+    "chunk_ids": [
+      "7482ec19dc83ca633ab0d23d",
+      "0a9e23f8d7786d7b9898426e",
+      "0f678b374ca3b64207e865bf",
+      "c249ca6180132ad14a0b1f09",
+      "3a0bdfbbf050295df9aa6287",
+      "68eb34c36c1fa7dcb5ecaf6d",
+      "e0ab03aa34c8727dd59d99bc",
+      "820ec9296711e6cd63767efe"
+    ],
+    "context_sha256": "76a030773f9992914ffe47a50b11873a2c8d023497a557eddf600621cfb93ad3",
+    "response": {
+      "answer": "absolutely, I'd be happy to recommend some outdoor activities that are easy on the joints. Since you've already experienced the benefits of yoga, you'll likely enjoy these low-impact activities that can help you maintain or improve your flexibility while minimizing stress on your joints:",
+      "evidence_ids": [
+        "0f678b374ca3b64207e865bf",
+        "c249ca6180132ad14a0b1f09"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1360,
+        "completion_tokens": 74,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"absolutely, I'd be happy to recommend some outdoor activities that are easy on the joints. Since you've already experienced the benefits of yoga, you'll likely enjoy these low-impact activities that can help you maintain or improve your flexibility while minimizing stress on your joints:\" , \"evidence_ids\":[ \"E3\", \"E4\" ] }"
+    },
+    "error": null,
+    "latency_ms": 3730.3232999984175,
+    "answer_latency_ms": 3730.3232999984175
+  }
+]

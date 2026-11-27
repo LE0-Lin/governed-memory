@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "gpt4_2655b836",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "958814197af44076d57def13",
+      "c4644a3c90b05d28f1aa6f99",
+      "f9eb88c7d527c765b29fe75b",
+      "40c566a93d52dd0480cdd426",
+      "482feea7a5a3d917651b6c99",
+      "7bc544e0450018ac2fd4322a",
+      "221672603a39d7614f0a1311",
+      "82e7c07c13135ebb1fef77eb"
+    ],
+    "context_sha256": "cf8d05383713651b4eb03b7441d5ffa1868b63ac88dc13e7f14f80b389eb2de4",
+    "response": {
+      "answer": "The first issue I had with my new car after its first service was a GPS system problem.",
+      "evidence_ids": [
+        "c4644a3c90b05d28f1aa6f99"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1620,
+        "completion_tokens": 35,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The first issue I had with my new car after its first service was a GPS system problem.\" , \"evidence_ids\":[ \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1732.0724000455812,
+    "answer_latency_ms": 1732.0724000455812
+  }
+]

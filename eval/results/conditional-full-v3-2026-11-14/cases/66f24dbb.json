@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "66f24dbb",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "3ecc8f07bfba16c4a8d07c5c",
+      "a6d651e8bb682905ba63c3da",
+      "2b04190e1a6f0423da2cb2fa",
+      "d9fddeea5c466dc989bbc353",
+      "736a898d7d8364bf1d81db4b",
+      "ae27b4d71e19ed2d7c52f74c",
+      "3ec22695a07e11ee1bbfe65c",
+      "2aa19c2bec699afb71a058a6"
+    ],
+    "context_sha256": "04abfd9cf6b778447b8c1bb37c7f803e0c9f1cbcbbbfe318d02201a6488580ec",
+    "response": {
+      "answer": "Yellow dress and a pair of earrings to match the dress",
+      "evidence_ids": [
+        "736a898d7d8364bf1d81db4b",
+        "ae27b4d71e19ed2d7c52f74c"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1562,
+        "completion_tokens": 30,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Yellow dress and a pair of earrings to match the dress\",\"evidence_ids\":[ \"E5\", \"E6\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1463.4665000485256,
+    "answer_latency_ms": 1463.4665000485256
+  }
+]

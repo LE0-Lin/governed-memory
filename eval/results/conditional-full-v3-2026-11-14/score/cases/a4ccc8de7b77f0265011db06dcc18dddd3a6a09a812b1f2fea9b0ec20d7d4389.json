@@ -1,0 +1,1 @@
+{"abstain":false,"answer":"You've made $120 from selling eggs this month.","answer_error":null,"answer_latency_ms":1724.887300049886,"category":"multi-session","exact_match":0.0,"judge_error":null,"judge_label":true,"judge_raw":"yes","lexical_eligible":true,"method":"conditional","question_id":"87f22b4a","token_f1":0.2222222222222222}

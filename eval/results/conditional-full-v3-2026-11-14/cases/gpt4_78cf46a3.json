@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "gpt4_78cf46a3",
+    "category": "temporal-reasoning",
+    "method": "conditional",
+    "chunk_ids": [
+      "d2978a9de26631061544bf2b",
+      "1b32598724ca5098c9353b3b",
+      "c7fcea330577b2d47eff015a",
+      "48182c4675bc1dd98e180089",
+      "3d231abb3c5b3023f320139e",
+      "2af6e7d19373d4acbf72367f",
+      "5b3281678c4f53f05cc7805e",
+      "85d5c40e76214d9cde18458e"
+    ],
+    "context_sha256": "17ecca3b0b9957bff68af7fa98e6a0681152e94eeacfccce6a09ada36a45c84d",
+    "response": {
+      "answer": "The narrator receiving their new phone case happened first",
+      "evidence_ids": [
+        "48182c4675bc1dd98e180089",
+        "85d5c40e76214d9cde18458e"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 745,
+        "completion_tokens": 28,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"The narrator receiving their new phone case happened first\",\"evidence_ids\":[ \"E4\", \"E8\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1424.3731000460684,
+    "answer_latency_ms": 1424.3731000460684
+  }
+]

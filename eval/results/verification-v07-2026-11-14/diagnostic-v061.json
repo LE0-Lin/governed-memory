@@ -1,0 +1,1694 @@
+{
+  "diagnostic_only": true,
+  "baseline_source": "1be5c2d95af251252bb4f164a02be71f3fbd3d7b",
+  "default_unfiltered_document_cache": true,
+  "rows": [
+    {
+      "id": "Atlas.initial",
+      "repeat": 0,
+      "latency_ms": 196.46732100000008,
+      "returned": 5,
+      "authority_ms": 46.51198000003376,
+      "document_encoding_ms": 63.16705600001171,
+      "query_encoding_ms": 11.93521700000133,
+      "reranking_ms": 70.942371000001
+    },
+    {
+      "id": "Atlas.change",
+      "repeat": 0,
+      "latency_ms": 149.43744800000047,
+      "returned": 5,
+      "authority_ms": 48.61545900000408,
+      "document_encoding_ms": 35.831835000010415,
+      "query_encoding_ms": 10.186144999991598,
+      "reranking_ms": 50.52362700000401
+    },
+    {
+      "id": "Atlas.correction",
+      "repeat": 0,
+      "latency_ms": 133.25073199999338,
+      "returned": 5,
+      "authority_ms": 48.7802350000095,
+      "document_encoding_ms": 30.78663300000528,
+      "query_encoding_ms": 11.243788000001587,
+      "reranking_ms": 38.150795000007065
+    },
+    {
+      "id": "Atlas.current",
+      "repeat": 0,
+      "latency_ms": 100.65669200000116,
+      "returned": 5,
+      "authority_ms": 44.52852100000371,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.841618999994807,
+      "reranking_ms": 41.14345500001093
+    },
+    {
+      "id": "Atlas.poison",
+      "repeat": 0,
+      "latency_ms": 110.18835199999444,
+      "returned": 5,
+      "authority_ms": 49.312858999996934,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.25482700000191,
+      "reranking_ms": 46.07125200000439
+    },
+    {
+      "id": "Atlas.derived",
+      "repeat": 0,
+      "latency_ms": 127.75574399999812,
+      "returned": 5,
+      "authority_ms": 48.08629699998335,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 22.12124800000481,
+      "reranking_ms": 54.90427399999476
+    },
+    {
+      "id": "Atlas.withdrawn",
+      "repeat": 0,
+      "latency_ms": 104.4441599999999,
+      "returned": 5,
+      "authority_ms": 44.65511700001912,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 14.029057000001899,
+      "reranking_ms": 42.659607000004485
+    },
+    {
+      "id": "Borealis.initial",
+      "repeat": 0,
+      "latency_ms": 108.00467500000366,
+      "returned": 5,
+      "authority_ms": 42.72851800001831,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.400903999988941,
+      "reranking_ms": 53.147979999991435
+    },
+    {
+      "id": "Borealis.change",
+      "repeat": 0,
+      "latency_ms": 98.40064199998722,
+      "returned": 5,
+      "authority_ms": 42.67020700000046,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.221551000000773,
+      "reranking_ms": 42.82640199998866
+    },
+    {
+      "id": "Borealis.correction",
+      "repeat": 0,
+      "latency_ms": 94.15382899999258,
+      "returned": 5,
+      "authority_ms": 41.50790499998891,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.030091999989054,
+      "reranking_ms": 40.65777200000298
+    },
+    {
+      "id": "Borealis.current",
+      "repeat": 0,
+      "latency_ms": 100.35435000000348,
+      "returned": 5,
+      "authority_ms": 43.71665500001143,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.96664699999883,
+      "reranking_ms": 43.32683900000234
+    },
+    {
+      "id": "Borealis.poison",
+      "repeat": 0,
+      "latency_ms": 104.5543470000041,
+      "returned": 5,
+      "authority_ms": 47.85775700000272,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.061218000004146,
+      "reranking_ms": 43.871597999995515
+    },
+    {
+      "id": "Borealis.derived",
+      "repeat": 0,
+      "latency_ms": 120.97039399999687,
+      "returned": 5,
+      "authority_ms": 49.83493200001021,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.705311000009488,
+      "reranking_ms": 57.501029000007975
+    },
+    {
+      "id": "Borealis.withdrawn",
+      "repeat": 0,
+      "latency_ms": 110.20072600000219,
+      "returned": 5,
+      "authority_ms": 52.58559300001764,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.369537000002538,
+      "reranking_ms": 44.161391000002936
+    },
+    {
+      "id": "Cedar.initial",
+      "repeat": 0,
+      "latency_ms": 102.8299750000059,
+      "returned": 5,
+      "authority_ms": 46.3819610000229,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.300123999996913,
+      "reranking_ms": 43.227950000002124
+    },
+    {
+      "id": "Cedar.change",
+      "repeat": 0,
+      "latency_ms": 107.8505500000091,
+      "returned": 5,
+      "authority_ms": 52.99910300001898,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.650690999990275,
+      "reranking_ms": 41.96060300000681
+    },
+    {
+      "id": "Cedar.correction",
+      "repeat": 0,
+      "latency_ms": 100.08827699999756,
+      "returned": 5,
+      "authority_ms": 47.9619149999877,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.023478999997337,
+      "reranking_ms": 38.49603999999829
+    },
+    {
+      "id": "Cedar.current",
+      "repeat": 0,
+      "latency_ms": 109.7693210000017,
+      "returned": 5,
+      "authority_ms": 49.623769999996625,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 12.984230999990132,
+      "reranking_ms": 43.97634900000469
+    },
+    {
+      "id": "Cedar.poison",
+      "repeat": 0,
+      "latency_ms": 100.28990499999679,
+      "returned": 5,
+      "authority_ms": 48.22931600000402,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.678425000004154,
+      "reranking_ms": 39.3994750000104
+    },
+    {
+      "id": "Cedar.derived",
+      "repeat": 0,
+      "latency_ms": 111.55925100000275,
+      "returned": 5,
+      "authority_ms": 48.14924399998688,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.619621999997776,
+      "reranking_ms": 48.90475299998798
+    },
+    {
+      "id": "Cedar.withdrawn",
+      "repeat": 0,
+      "latency_ms": 116.96854699999903,
+      "returned": 5,
+      "authority_ms": 58.39313600000651,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.680791000012846,
+      "reranking_ms": 44.924272999992354
+    },
+    {
+      "id": "Delta.initial",
+      "repeat": 0,
+      "latency_ms": 100.24257099999545,
+      "returned": 5,
+      "authority_ms": 47.420629000015424,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.532675999996854,
+      "reranking_ms": 39.404122000007646
+    },
+    {
+      "id": "Delta.change",
+      "repeat": 0,
+      "latency_ms": 100.0495969999946,
+      "returned": 5,
+      "authority_ms": 45.04623200000424,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.20766500000525,
+      "reranking_ms": 42.55612400000075
+    },
+    {
+      "id": "Delta.correction",
+      "repeat": 0,
+      "latency_ms": 102.65379000000507,
+      "returned": 5,
+      "authority_ms": 46.86754499999779,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.7943639999869,
+      "reranking_ms": 42.74696400000266
+    },
+    {
+      "id": "Delta.current",
+      "repeat": 0,
+      "latency_ms": 105.76176899999723,
+      "returned": 5,
+      "authority_ms": 48.52879500002416,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.567379999997684,
+      "reranking_ms": 43.63739500000463
+    },
+    {
+      "id": "Delta.poison",
+      "repeat": 0,
+      "latency_ms": 100.49254700000176,
+      "returned": 5,
+      "authority_ms": 48.79116899999758,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.761774000002333,
+      "reranking_ms": 37.8086090000096
+    },
+    {
+      "id": "Delta.derived",
+      "repeat": 0,
+      "latency_ms": 106.2923679999983,
+      "returned": 5,
+      "authority_ms": 48.20636700000591,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.045404999999619,
+      "reranking_ms": 45.15839399999777
+    },
+    {
+      "id": "Delta.withdrawn",
+      "repeat": 0,
+      "latency_ms": 105.87803399999984,
+      "returned": 5,
+      "authority_ms": 50.225155000021005,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.699241999996389,
+      "reranking_ms": 43.05620799999588
+    },
+    {
+      "id": "Ember.initial",
+      "repeat": 0,
+      "latency_ms": 102.7717449999983,
+      "returned": 5,
+      "authority_ms": 46.64634899998532,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.331621999995377,
+      "reranking_ms": 42.86203399999522
+    },
+    {
+      "id": "Ember.change",
+      "repeat": 0,
+      "latency_ms": 111.07556100000693,
+      "returned": 5,
+      "authority_ms": 48.56316699999752,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.376562999994121,
+      "reranking_ms": 49.221337999995285
+    },
+    {
+      "id": "Ember.correction",
+      "repeat": 0,
+      "latency_ms": 100.3795700000012,
+      "returned": 5,
+      "authority_ms": 47.012702000003515,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.59416900001031,
+      "reranking_ms": 40.66192300000182
+    },
+    {
+      "id": "Ember.current",
+      "repeat": 0,
+      "latency_ms": 102.23904700001185,
+      "returned": 5,
+      "authority_ms": 43.91361699998697,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.629845999991062,
+      "reranking_ms": 43.34531899999661
+    },
+    {
+      "id": "Ember.poison",
+      "repeat": 0,
+      "latency_ms": 101.80866499999297,
+      "returned": 5,
+      "authority_ms": 46.74390000000983,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.482390000002283,
+      "reranking_ms": 42.42684799999097
+    },
+    {
+      "id": "Ember.derived",
+      "repeat": 0,
+      "latency_ms": 116.26615800000195,
+      "returned": 5,
+      "authority_ms": 50.416787999978396,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.372134000007804,
+      "reranking_ms": 52.282688999994775
+    },
+    {
+      "id": "Ember.withdrawn",
+      "repeat": 0,
+      "latency_ms": 113.99666700000921,
+      "returned": 5,
+      "authority_ms": 49.82322999998701,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.323707000007175,
+      "reranking_ms": 51.690441000005194
+    },
+    {
+      "id": "Fjord.initial",
+      "repeat": 0,
+      "latency_ms": 94.28529500000593,
+      "returned": 5,
+      "authority_ms": 44.194121999979075,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.455384999995431,
+      "reranking_ms": 37.50153400000045
+    },
+    {
+      "id": "Fjord.change",
+      "repeat": 0,
+      "latency_ms": 94.36383700000306,
+      "returned": 5,
+      "authority_ms": 43.731355999995,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.412147999995568,
+      "reranking_ms": 38.460618000002
+    },
+    {
+      "id": "Fjord.correction",
+      "repeat": 0,
+      "latency_ms": 101.62170499999945,
+      "returned": 5,
+      "authority_ms": 44.5296349999893,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.301390999993941,
+      "reranking_ms": 44.43491099999619
+    },
+    {
+      "id": "Fjord.current",
+      "repeat": 0,
+      "latency_ms": 98.13343999999802,
+      "returned": 5,
+      "authority_ms": 45.39274800001181,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.858809000007795,
+      "reranking_ms": 39.68322500000454
+    },
+    {
+      "id": "Fjord.poison",
+      "repeat": 0,
+      "latency_ms": 97.1455480000003,
+      "returned": 5,
+      "authority_ms": 46.740611999993575,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.296114000008515,
+      "reranking_ms": 38.20905699998889
+    },
+    {
+      "id": "Fjord.derived",
+      "repeat": 0,
+      "latency_ms": 104.77979899999923,
+      "returned": 5,
+      "authority_ms": 46.80949600000872,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.163548000008404,
+      "reranking_ms": 44.70574999999144
+    },
+    {
+      "id": "Fjord.withdrawn",
+      "repeat": 0,
+      "latency_ms": 98.41374900000233,
+      "returned": 5,
+      "authority_ms": 46.76842299998896,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.529467999996655,
+      "reranking_ms": 39.07276799999693
+    },
+    {
+      "id": "Grove.initial",
+      "repeat": 0,
+      "latency_ms": 95.92931800000315,
+      "returned": 5,
+      "authority_ms": 43.38643999999192,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.591829999990864,
+      "reranking_ms": 40.27891399999817
+    },
+    {
+      "id": "Grove.change",
+      "repeat": 0,
+      "latency_ms": 97.19917399999645,
+      "returned": 5,
+      "authority_ms": 43.01519000000553,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.10768700000142,
+      "reranking_ms": 41.255180000007385
+    },
+    {
+      "id": "Grove.correction",
+      "repeat": 0,
+      "latency_ms": 93.63415999999347,
+      "returned": 5,
+      "authority_ms": 42.9695119999991,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.923446999986595,
+      "reranking_ms": 38.776282000000606
+    },
+    {
+      "id": "Grove.current",
+      "repeat": 0,
+      "latency_ms": 99.93308900000386,
+      "returned": 5,
+      "authority_ms": 43.841984000010825,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.317694000003485,
+      "reranking_ms": 43.65783899999087
+    },
+    {
+      "id": "Grove.poison",
+      "repeat": 0,
+      "latency_ms": 101.62949999998716,
+      "returned": 5,
+      "authority_ms": 49.05268699999965,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.590614000003939,
+      "reranking_ms": 40.0300929999986
+    },
+    {
+      "id": "Grove.derived",
+      "repeat": 0,
+      "latency_ms": 103.36100799999315,
+      "returned": 5,
+      "authority_ms": 44.70349200002488,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.074789000000806,
+      "reranking_ms": 45.94684399999949
+    },
+    {
+      "id": "Grove.withdrawn",
+      "repeat": 0,
+      "latency_ms": 99.31583200000205,
+      "returned": 5,
+      "authority_ms": 46.57971000000316,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.915697999995587,
+      "reranking_ms": 40.77160199999241
+    },
+    {
+      "id": "Harbor.initial",
+      "repeat": 0,
+      "latency_ms": 90.25752599998782,
+      "returned": 5,
+      "authority_ms": 41.52440000000013,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.388585000010607,
+      "reranking_ms": 36.493999000001054
+    },
+    {
+      "id": "Harbor.change",
+      "repeat": 0,
+      "latency_ms": 98.17004999999313,
+      "returned": 5,
+      "authority_ms": 42.31785300000013,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.992557999988549,
+      "reranking_ms": 43.90952400000003
+    },
+    {
+      "id": "Harbor.correction",
+      "repeat": 0,
+      "latency_ms": 91.59258499998657,
+      "returned": 5,
+      "authority_ms": 43.1567130000019,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.045204000003082,
+      "reranking_ms": 36.337453000001574
+    },
+    {
+      "id": "Harbor.current",
+      "repeat": 0,
+      "latency_ms": 99.42416399999843,
+      "returned": 5,
+      "authority_ms": 43.68833200001632,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.34840900001177,
+      "reranking_ms": 43.46112300000016
+    },
+    {
+      "id": "Harbor.poison",
+      "repeat": 0,
+      "latency_ms": 95.3379310000031,
+      "returned": 5,
+      "authority_ms": 46.493451999978674,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.372147999997082,
+      "reranking_ms": 36.746601000004375
+    },
+    {
+      "id": "Harbor.derived",
+      "repeat": 0,
+      "latency_ms": 104.11881799998923,
+      "returned": 5,
+      "authority_ms": 45.54580299998179,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.754757000010272,
+      "reranking_ms": 46.09029899999939
+    },
+    {
+      "id": "Harbor.withdrawn",
+      "repeat": 0,
+      "latency_ms": 102.39171100000988,
+      "returned": 5,
+      "authority_ms": 48.979058000000464,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.627584000000411,
+      "reranking_ms": 40.89770099999157
+    },
+    {
+      "id": "Iris.initial",
+      "repeat": 0,
+      "latency_ms": 98.33317300000033,
+      "returned": 5,
+      "authority_ms": 45.55745499999375,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.80882700000052,
+      "reranking_ms": 40.30434899999591
+    },
+    {
+      "id": "Iris.change",
+      "repeat": 0,
+      "latency_ms": 101.34891600000628,
+      "returned": 5,
+      "authority_ms": 44.68469300000777,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.926311999999825,
+      "reranking_ms": 44.577047999993624
+    },
+    {
+      "id": "Iris.correction",
+      "repeat": 0,
+      "latency_ms": 90.4554739999952,
+      "returned": 5,
+      "authority_ms": 42.20031199999141,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.069828000008329,
+      "reranking_ms": 36.48481499999434
+    },
+    {
+      "id": "Iris.current",
+      "repeat": 0,
+      "latency_ms": 96.88574000000472,
+      "returned": 5,
+      "authority_ms": 43.20808600000703,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.149948000001018,
+      "reranking_ms": 41.572856000001934
+    },
+    {
+      "id": "Iris.poison",
+      "repeat": 0,
+      "latency_ms": 107.1698949999984,
+      "returned": 5,
+      "authority_ms": 54.13527400000362,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.625599000007924,
+      "reranking_ms": 39.556907000005026
+    },
+    {
+      "id": "Iris.derived",
+      "repeat": 0,
+      "latency_ms": 126.81421700000328,
+      "returned": 5,
+      "authority_ms": 56.30353899999818,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.99659899999972,
+      "reranking_ms": 55.033045000001835
+    },
+    {
+      "id": "Iris.withdrawn",
+      "repeat": 0,
+      "latency_ms": 112.75734699999873,
+      "returned": 5,
+      "authority_ms": 54.81372700000975,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.594058000009454,
+      "reranking_ms": 44.23726800000338
+    },
+    {
+      "id": "Juniper.initial",
+      "repeat": 0,
+      "latency_ms": 113.41054400000417,
+      "returned": 5,
+      "authority_ms": 56.68055499998559,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.369749999995292,
+      "reranking_ms": 42.86582000000294
+    },
+    {
+      "id": "Juniper.change",
+      "repeat": 0,
+      "latency_ms": 111.07513700000027,
+      "returned": 5,
+      "authority_ms": 48.4310280000102,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 12.062061000008839,
+      "reranking_ms": 47.47726600000135
+    },
+    {
+      "id": "Juniper.correction",
+      "repeat": 0,
+      "latency_ms": 104.20562299999858,
+      "returned": 5,
+      "authority_ms": 48.68626899998674,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.56332999999654,
+      "reranking_ms": 41.54868699998815
+    },
+    {
+      "id": "Juniper.current",
+      "repeat": 0,
+      "latency_ms": 110.34493500000053,
+      "returned": 5,
+      "authority_ms": 50.44427899998993,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.62450400000614,
+      "reranking_ms": 46.125153000005525
+    },
+    {
+      "id": "Juniper.poison",
+      "repeat": 0,
+      "latency_ms": 111.19379999999524,
+      "returned": 5,
+      "authority_ms": 53.59961100000987,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.180925999989654,
+      "reranking_ms": 43.769302000001176
+    },
+    {
+      "id": "Juniper.derived",
+      "repeat": 0,
+      "latency_ms": 120.71298800000818,
+      "returned": 5,
+      "authority_ms": 53.52682699999889,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.145085999999083,
+      "reranking_ms": 52.52499499999885
+    },
+    {
+      "id": "Juniper.withdrawn",
+      "repeat": 0,
+      "latency_ms": 106.94597500000214,
+      "returned": 5,
+      "authority_ms": 51.542593999997166,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.381453000007923,
+      "reranking_ms": 42.04104199999392
+    },
+    {
+      "id": "Kestrel.initial",
+      "repeat": 0,
+      "latency_ms": 107.76432599999453,
+      "returned": 5,
+      "authority_ms": 47.3259080000048,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.962265000008188,
+      "reranking_ms": 45.22446200000729
+    },
+    {
+      "id": "Kestrel.change",
+      "repeat": 0,
+      "latency_ms": 102.34523399999773,
+      "returned": 5,
+      "authority_ms": 47.075239999998075,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.865086999994332,
+      "reranking_ms": 42.59314700000516
+    },
+    {
+      "id": "Kestrel.correction",
+      "repeat": 0,
+      "latency_ms": 102.77261899999246,
+      "returned": 5,
+      "authority_ms": 46.890533999984996,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.695191999995245,
+      "reranking_ms": 43.00144500000158
+    },
+    {
+      "id": "Kestrel.current",
+      "repeat": 0,
+      "latency_ms": 102.2975269999904,
+      "returned": 5,
+      "authority_ms": 45.57505399999684,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.944099000009032,
+      "reranking_ms": 43.70736699999611
+    },
+    {
+      "id": "Kestrel.poison",
+      "repeat": 0,
+      "latency_ms": 118.99149200000636,
+      "returned": 5,
+      "authority_ms": 51.283449999999675,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.17464399999335,
+      "reranking_ms": 53.23199600000805
+    },
+    {
+      "id": "Kestrel.derived",
+      "repeat": 0,
+      "latency_ms": 113.23479099999645,
+      "returned": 5,
+      "authority_ms": 50.27679100000171,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.965401000007091,
+      "reranking_ms": 49.058947000006015
+    },
+    {
+      "id": "Kestrel.withdrawn",
+      "repeat": 0,
+      "latency_ms": 103.42341300000157,
+      "returned": 5,
+      "authority_ms": 47.918020999986766,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.329349000002708,
+      "reranking_ms": 42.43162000000211
+    },
+    {
+      "id": "Linden.initial",
+      "repeat": 0,
+      "latency_ms": 104.38700200000994,
+      "returned": 5,
+      "authority_ms": 47.34454099998686,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.379947000008883,
+      "reranking_ms": 42.652583999995386
+    },
+    {
+      "id": "Linden.change",
+      "repeat": 0,
+      "latency_ms": 99.74576400000501,
+      "returned": 5,
+      "authority_ms": 44.21574699999553,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.371019999998566,
+      "reranking_ms": 41.511663000008525
+    },
+    {
+      "id": "Linden.correction",
+      "repeat": 0,
+      "latency_ms": 96.93381199998896,
+      "returned": 5,
+      "authority_ms": 43.14026900001977,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.876601000006758,
+      "reranking_ms": 40.17598199999384
+    },
+    {
+      "id": "Linden.current",
+      "repeat": 0,
+      "latency_ms": 103.74911099999906,
+      "returned": 5,
+      "authority_ms": 44.18797000002428,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.04534800000556,
+      "reranking_ms": 46.58186100000705
+    },
+    {
+      "id": "Linden.poison",
+      "repeat": 0,
+      "latency_ms": 98.7107900000126,
+      "returned": 5,
+      "authority_ms": 47.08016300001816,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.825992000003225,
+      "reranking_ms": 39.10526600000708
+    },
+    {
+      "id": "Linden.derived",
+      "repeat": 0,
+      "latency_ms": 105.00822000000198,
+      "returned": 5,
+      "authority_ms": 47.6069390000049,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.628928999987352,
+      "reranking_ms": 44.898019000001455
+    },
+    {
+      "id": "Linden.withdrawn",
+      "repeat": 0,
+      "latency_ms": 98.97142699999506,
+      "returned": 5,
+      "authority_ms": 47.190650999979766,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.382079000005206,
+      "reranking_ms": 39.522387999994635
+    },
+    {
+      "id": "Atlas.initial",
+      "repeat": 1,
+      "latency_ms": 101.35951300000556,
+      "returned": 5,
+      "authority_ms": 44.85905300001036,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.91898200000685,
+      "reranking_ms": 42.737308999988954
+    },
+    {
+      "id": "Atlas.change",
+      "repeat": 1,
+      "latency_ms": 105.89680799999712,
+      "returned": 5,
+      "authority_ms": 45.95966300000498,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.208637999999382,
+      "reranking_ms": 45.70138299999371
+    },
+    {
+      "id": "Atlas.correction",
+      "repeat": 1,
+      "latency_ms": 94.57627599999796,
+      "returned": 5,
+      "authority_ms": 43.91572100000474,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.951831999998717,
+      "reranking_ms": 37.99623300000121
+    },
+    {
+      "id": "Atlas.current",
+      "repeat": 1,
+      "latency_ms": 94.82743600000276,
+      "returned": 5,
+      "authority_ms": 43.078716999986,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.539660000001504,
+      "reranking_ms": 39.17765900000347
+    },
+    {
+      "id": "Atlas.poison",
+      "repeat": 1,
+      "latency_ms": 112.9085649999979,
+      "returned": 5,
+      "authority_ms": 46.21654400000352,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.135353000000237,
+      "reranking_ms": 52.54989600000215
+    },
+    {
+      "id": "Atlas.derived",
+      "repeat": 1,
+      "latency_ms": 102.52799799999934,
+      "returned": 5,
+      "authority_ms": 46.67322599999579,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.018833999993149,
+      "reranking_ms": 43.02124699999865
+    },
+    {
+      "id": "Atlas.withdrawn",
+      "repeat": 1,
+      "latency_ms": 100.59014599998761,
+      "returned": 5,
+      "authority_ms": 47.20037100001662,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.200844999995184,
+      "reranking_ms": 40.64897099999598
+    },
+    {
+      "id": "Borealis.initial",
+      "repeat": 1,
+      "latency_ms": 104.2915369999946,
+      "returned": 5,
+      "authority_ms": 44.912174999993226,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.81225199998903,
+      "reranking_ms": 46.58598700000027
+    },
+    {
+      "id": "Borealis.change",
+      "repeat": 1,
+      "latency_ms": 101.39721500000576,
+      "returned": 5,
+      "authority_ms": 42.70906799999352,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.901518000006604,
+      "reranking_ms": 45.976573999993775
+    },
+    {
+      "id": "Borealis.correction",
+      "repeat": 1,
+      "latency_ms": 91.2818089999945,
+      "returned": 5,
+      "authority_ms": 42.54284900000016,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.568060999995964,
+      "reranking_ms": 36.244781999997144
+    },
+    {
+      "id": "Borealis.current",
+      "repeat": 1,
+      "latency_ms": 102.3025790000105,
+      "returned": 5,
+      "authority_ms": 43.036205000007044,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.875171999993881,
+      "reranking_ms": 46.655203000000256
+    },
+    {
+      "id": "Borealis.poison",
+      "repeat": 1,
+      "latency_ms": 95.0286299999874,
+      "returned": 5,
+      "authority_ms": 45.87731800000938,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.505113000003007,
+      "reranking_ms": 36.48182900001018
+    },
+    {
+      "id": "Borealis.derived",
+      "repeat": 1,
+      "latency_ms": 102.28589000000454,
+      "returned": 5,
+      "authority_ms": 45.24102999998547,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.810439000006,
+      "reranking_ms": 44.18285299999525
+    },
+    {
+      "id": "Borealis.withdrawn",
+      "repeat": 1,
+      "latency_ms": 91.75805300000661,
+      "returned": 5,
+      "authority_ms": 43.067738999994276,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.189476000003083,
+      "reranking_ms": 36.806114999990314
+    },
+    {
+      "id": "Cedar.initial",
+      "repeat": 1,
+      "latency_ms": 96.20474700000159,
+      "returned": 5,
+      "authority_ms": 42.70810100001654,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.238650000000348,
+      "reranking_ms": 41.40789100000575
+    },
+    {
+      "id": "Cedar.change",
+      "repeat": 1,
+      "latency_ms": 96.8771099999941,
+      "returned": 5,
+      "authority_ms": 42.686665000005064,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.98020199998939,
+      "reranking_ms": 42.02470600000652
+    },
+    {
+      "id": "Cedar.correction",
+      "repeat": 1,
+      "latency_ms": 92.13496899999996,
+      "returned": 5,
+      "authority_ms": 42.60588699999346,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.361317999989183,
+      "reranking_ms": 37.475018000009186
+    },
+    {
+      "id": "Cedar.current",
+      "repeat": 1,
+      "latency_ms": 92.29482300000313,
+      "returned": 5,
+      "authority_ms": 43.19654699999376,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.023130000002766,
+      "reranking_ms": 37.3166359999999
+    },
+    {
+      "id": "Cedar.poison",
+      "repeat": 1,
+      "latency_ms": 95.00266499999555,
+      "returned": 5,
+      "authority_ms": 45.91798500000266,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.17196000000331,
+      "reranking_ms": 36.816630000004125
+    },
+    {
+      "id": "Cedar.derived",
+      "repeat": 1,
+      "latency_ms": 104.6561249999911,
+      "returned": 5,
+      "authority_ms": 48.34072699999581,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.812659000004942,
+      "reranking_ms": 43.677301000002444
+    },
+    {
+      "id": "Cedar.withdrawn",
+      "repeat": 1,
+      "latency_ms": 99.22714399999677,
+      "returned": 5,
+      "authority_ms": 46.2908339999899,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.448175999992259,
+      "reranking_ms": 40.60655000000679
+    },
+    {
+      "id": "Delta.initial",
+      "repeat": 1,
+      "latency_ms": 92.48391699999559,
+      "returned": 5,
+      "authority_ms": 43.4350449999954,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.039661999996952,
+      "reranking_ms": 36.02469799999142
+    },
+    {
+      "id": "Delta.change",
+      "repeat": 1,
+      "latency_ms": 92.04730899999447,
+      "returned": 5,
+      "authority_ms": 41.65333200000987,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.207996999990087,
+      "reranking_ms": 38.03194099999985
+    },
+    {
+      "id": "Delta.correction",
+      "repeat": 1,
+      "latency_ms": 88.07396900000697,
+      "returned": 5,
+      "authority_ms": 39.460102000006714,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.145869000008133,
+      "reranking_ms": 36.62490100001037
+    },
+    {
+      "id": "Delta.current",
+      "repeat": 1,
+      "latency_ms": 92.58593300000939,
+      "returned": 5,
+      "authority_ms": 41.78213800001629,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.6952579999936,
+      "reranking_ms": 38.153343000004725
+    },
+    {
+      "id": "Delta.poison",
+      "repeat": 1,
+      "latency_ms": 100.7831269999997,
+      "returned": 5,
+      "authority_ms": 47.61845500000561,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.284218000004785,
+      "reranking_ms": 40.95414200000391
+    },
+    {
+      "id": "Delta.derived",
+      "repeat": 1,
+      "latency_ms": 105.94580400000098,
+      "returned": 5,
+      "authority_ms": 46.459519000009664,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.75785400000484,
+      "reranking_ms": 45.887103999987744
+    },
+    {
+      "id": "Delta.withdrawn",
+      "repeat": 1,
+      "latency_ms": 94.02825099999745,
+      "returned": 5,
+      "authority_ms": 45.30598799999552,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.213048999995976,
+      "reranking_ms": 36.845251999992
+    },
+    {
+      "id": "Ember.initial",
+      "repeat": 1,
+      "latency_ms": 93.15873900000327,
+      "returned": 5,
+      "authority_ms": 42.21546399999454,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.09966000000395,
+      "reranking_ms": 38.824793999992835
+    },
+    {
+      "id": "Ember.change",
+      "repeat": 1,
+      "latency_ms": 113.26084499999922,
+      "returned": 5,
+      "authority_ms": 45.33897599999648,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 14.685688999989566,
+      "reranking_ms": 50.04409800000076
+    },
+    {
+      "id": "Ember.correction",
+      "repeat": 1,
+      "latency_ms": 98.04247599998916,
+      "returned": 5,
+      "authority_ms": 44.48119600000666,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.672471999995992,
+      "reranking_ms": 39.842887000006044
+    },
+    {
+      "id": "Ember.current",
+      "repeat": 1,
+      "latency_ms": 105.21819400000254,
+      "returned": 5,
+      "authority_ms": 45.389259999993214,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.152338999996346,
+      "reranking_ms": 47.37273900001071
+    },
+    {
+      "id": "Ember.poison",
+      "repeat": 1,
+      "latency_ms": 103.33006499999442,
+      "returned": 5,
+      "authority_ms": 49.94657100003508,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.284903999992935,
+      "reranking_ms": 39.2581320000005
+    },
+    {
+      "id": "Ember.derived",
+      "repeat": 1,
+      "latency_ms": 105.76460699999757,
+      "returned": 5,
+      "authority_ms": 45.56534499999998,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.878252999996562,
+      "reranking_ms": 47.23896500000535
+    },
+    {
+      "id": "Ember.withdrawn",
+      "repeat": 1,
+      "latency_ms": 100.44958400000326,
+      "returned": 5,
+      "authority_ms": 47.33031600000004,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.600801000004822,
+      "reranking_ms": 40.34612799999593
+    },
+    {
+      "id": "Fjord.initial",
+      "repeat": 1,
+      "latency_ms": 95.22993599999552,
+      "returned": 5,
+      "authority_ms": 42.060311000014394,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.652178999999705,
+      "reranking_ms": 40.17862999999977
+    },
+    {
+      "id": "Fjord.change",
+      "repeat": 1,
+      "latency_ms": 95.38530000000378,
+      "returned": 5,
+      "authority_ms": 45.50904799999955,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.37294000000577,
+      "reranking_ms": 37.7965549999999
+    },
+    {
+      "id": "Fjord.correction",
+      "repeat": 1,
+      "latency_ms": 89.91681499999515,
+      "returned": 5,
+      "authority_ms": 42.77593399999091,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.136780999995153,
+      "reranking_ms": 35.00050599998872
+    },
+    {
+      "id": "Fjord.current",
+      "repeat": 1,
+      "latency_ms": 93.16672199999232,
+      "returned": 5,
+      "authority_ms": 41.00981300000228,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.684368999998583,
+      "reranking_ms": 39.5274390000111
+    },
+    {
+      "id": "Fjord.poison",
+      "repeat": 1,
+      "latency_ms": 96.46473400000843,
+      "returned": 5,
+      "authority_ms": 46.243038999989494,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.973526999994874,
+      "reranking_ms": 37.67641599999649
+    },
+    {
+      "id": "Fjord.derived",
+      "repeat": 1,
+      "latency_ms": 105.2177150000091,
+      "returned": 5,
+      "authority_ms": 46.48294399999031,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.456154999995192,
+      "reranking_ms": 46.658643000000666
+    },
+    {
+      "id": "Fjord.withdrawn",
+      "repeat": 1,
+      "latency_ms": 108.84884400000772,
+      "returned": 5,
+      "authority_ms": 46.49069999999256,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.369293000005996,
+      "reranking_ms": 50.54710100000648
+    },
+    {
+      "id": "Grove.initial",
+      "repeat": 1,
+      "latency_ms": 97.34558600000298,
+      "returned": 5,
+      "authority_ms": 43.49714399999982,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.446929999995746,
+      "reranking_ms": 41.313442999992844
+    },
+    {
+      "id": "Grove.change",
+      "repeat": 1,
+      "latency_ms": 93.28348900000094,
+      "returned": 5,
+      "authority_ms": 44.12467099999162,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.28777000000025,
+      "reranking_ms": 37.289899000001014
+    },
+    {
+      "id": "Grove.correction",
+      "repeat": 1,
+      "latency_ms": 88.6295569999902,
+      "returned": 5,
+      "authority_ms": 41.751899000004755,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.23452099999622,
+      "reranking_ms": 34.9287240000109
+    },
+    {
+      "id": "Grove.current",
+      "repeat": 1,
+      "latency_ms": 95.29349299999978,
+      "returned": 5,
+      "authority_ms": 43.143643000007614,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.897477999994408,
+      "reranking_ms": 40.45735900000125
+    },
+    {
+      "id": "Grove.poison",
+      "repeat": 1,
+      "latency_ms": 96.75450199999602,
+      "returned": 5,
+      "authority_ms": 46.478096999990726,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.698861999993369,
+      "reranking_ms": 37.74860299999716
+    },
+    {
+      "id": "Grove.derived",
+      "repeat": 1,
+      "latency_ms": 111.36472799999808,
+      "returned": 5,
+      "authority_ms": 46.228083000002584,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.68960200000879,
+      "reranking_ms": 52.90249600000152
+    },
+    {
+      "id": "Grove.withdrawn",
+      "repeat": 1,
+      "latency_ms": 94.81603800000471,
+      "returned": 5,
+      "authority_ms": 44.785463999986064,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.557620000004817,
+      "reranking_ms": 38.786426000001484
+    },
+    {
+      "id": "Harbor.initial",
+      "repeat": 1,
+      "latency_ms": 98.158772000005,
+      "returned": 5,
+      "authority_ms": 44.35366200000601,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.850838999994949,
+      "reranking_ms": 41.097045000000776
+    },
+    {
+      "id": "Harbor.change",
+      "repeat": 1,
+      "latency_ms": 102.44629400000349,
+      "returned": 5,
+      "authority_ms": 44.94958499999768,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.633795000003943,
+      "reranking_ms": 44.050362000007226
+    },
+    {
+      "id": "Harbor.correction",
+      "repeat": 1,
+      "latency_ms": 96.13046500000166,
+      "returned": 5,
+      "authority_ms": 44.265784000003805,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.090434000000869,
+      "reranking_ms": 39.788563000001886
+    },
+    {
+      "id": "Harbor.current",
+      "repeat": 1,
+      "latency_ms": 95.49062099999617,
+      "returned": 5,
+      "authority_ms": 43.85293500001808,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.942778999999291,
+      "reranking_ms": 38.30444599999794
+    },
+    {
+      "id": "Harbor.poison",
+      "repeat": 1,
+      "latency_ms": 106.71538200000441,
+      "returned": 5,
+      "authority_ms": 48.127404999988244,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.369151000001352,
+      "reranking_ms": 46.123051999998665
+    },
+    {
+      "id": "Harbor.derived",
+      "repeat": 1,
+      "latency_ms": 109.23704399999679,
+      "returned": 5,
+      "authority_ms": 50.29199899999526,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.23129000000722,
+      "reranking_ms": 45.55817600000012
+    },
+    {
+      "id": "Harbor.withdrawn",
+      "repeat": 1,
+      "latency_ms": 111.13619199998936,
+      "returned": 5,
+      "authority_ms": 52.63163799999404,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.89670300000023,
+      "reranking_ms": 44.88437700000247
+    },
+    {
+      "id": "Iris.initial",
+      "repeat": 1,
+      "latency_ms": 97.98848999999166,
+      "returned": 5,
+      "authority_ms": 44.93046700000036,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.356484000008436,
+      "reranking_ms": 40.64800799999091
+    },
+    {
+      "id": "Iris.change",
+      "repeat": 1,
+      "latency_ms": 108.16276700001026,
+      "returned": 5,
+      "authority_ms": 46.520618999991825,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.359444999991752,
+      "reranking_ms": 48.57671499999583
+    },
+    {
+      "id": "Iris.correction",
+      "repeat": 1,
+      "latency_ms": 94.66451400000153,
+      "returned": 5,
+      "authority_ms": 43.87110199999711,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.697226000000114,
+      "reranking_ms": 38.04482700000733
+    },
+    {
+      "id": "Iris.current",
+      "repeat": 1,
+      "latency_ms": 90.05118700000025,
+      "returned": 5,
+      "authority_ms": 40.92615900000851,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.995923999989941,
+      "reranking_ms": 37.455363000006514
+    },
+    {
+      "id": "Iris.poison",
+      "repeat": 1,
+      "latency_ms": 99.67176299998926,
+      "returned": 5,
+      "authority_ms": 48.54344400000343,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.34730299999842,
+      "reranking_ms": 39.085349000004044
+    },
+    {
+      "id": "Iris.derived",
+      "repeat": 1,
+      "latency_ms": 109.60530799999901,
+      "returned": 5,
+      "authority_ms": 48.706398999982525,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.750121999999806,
+      "reranking_ms": 48.13611099999093
+    },
+    {
+      "id": "Iris.withdrawn",
+      "repeat": 1,
+      "latency_ms": 99.99922100000447,
+      "returned": 5,
+      "authority_ms": 50.64181800003098,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.316596000005006,
+      "reranking_ms": 37.166474000002836
+    },
+    {
+      "id": "Juniper.initial",
+      "repeat": 1,
+      "latency_ms": 92.75050100001181,
+      "returned": 5,
+      "authority_ms": 42.94637599998907,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.406707000010783,
+      "reranking_ms": 37.78445700000077
+    },
+    {
+      "id": "Juniper.change",
+      "repeat": 1,
+      "latency_ms": 97.30369000000394,
+      "returned": 5,
+      "authority_ms": 45.36223000000916,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.048258000011856,
+      "reranking_ms": 38.697796999997536
+    },
+    {
+      "id": "Juniper.correction",
+      "repeat": 1,
+      "latency_ms": 102.75724400000286,
+      "returned": 5,
+      "authority_ms": 46.59204300000397,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 12.776731000002428,
+      "reranking_ms": 40.52739799999472
+    },
+    {
+      "id": "Juniper.current",
+      "repeat": 1,
+      "latency_ms": 95.07920699999772,
+      "returned": 5,
+      "authority_ms": 44.07431299998166,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.840488000008918,
+      "reranking_ms": 38.36352099999374
+    },
+    {
+      "id": "Juniper.poison",
+      "repeat": 1,
+      "latency_ms": 106.7084749999907,
+      "returned": 5,
+      "authority_ms": 49.37704899998607,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.301284999997051,
+      "reranking_ms": 44.22327499999312
+    },
+    {
+      "id": "Juniper.derived",
+      "repeat": 1,
+      "latency_ms": 105.05321000000833,
+      "returned": 5,
+      "authority_ms": 46.81260000000975,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.932821000006697,
+      "reranking_ms": 45.26241900001082
+    },
+    {
+      "id": "Juniper.withdrawn",
+      "repeat": 1,
+      "latency_ms": 101.18526599998745,
+      "returned": 5,
+      "authority_ms": 46.643902999988995,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.26053800000659,
+      "reranking_ms": 42.36303300000088
+    },
+    {
+      "id": "Kestrel.initial",
+      "repeat": 1,
+      "latency_ms": 99.55256700000348,
+      "returned": 5,
+      "authority_ms": 43.62760799999421,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.962166000003435,
+      "reranking_ms": 43.93509399999118
+    },
+    {
+      "id": "Kestrel.change",
+      "repeat": 1,
+      "latency_ms": 93.58070000000396,
+      "returned": 5,
+      "authority_ms": 43.28261899999575,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.195502000011402,
+      "reranking_ms": 38.33651499999746
+    },
+    {
+      "id": "Kestrel.correction",
+      "repeat": 1,
+      "latency_ms": 99.44209500000056,
+      "returned": 5,
+      "authority_ms": 45.356166000019016,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.013925999999174,
+      "reranking_ms": 41.263802000003125
+    },
+    {
+      "id": "Kestrel.current",
+      "repeat": 1,
+      "latency_ms": 96.23376700000108,
+      "returned": 5,
+      "authority_ms": 41.79080099999055,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 10.104875999999763,
+      "reranking_ms": 41.59118100000114
+    },
+    {
+      "id": "Kestrel.poison",
+      "repeat": 1,
+      "latency_ms": 101.50182200000302,
+      "returned": 5,
+      "authority_ms": 47.174218000009205,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 12.620429000008926,
+      "reranking_ms": 38.8508049999956
+    },
+    {
+      "id": "Kestrel.derived",
+      "repeat": 1,
+      "latency_ms": 111.26444399999968,
+      "returned": 5,
+      "authority_ms": 48.71366800000487,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 11.035324000005176,
+      "reranking_ms": 47.688691000004724
+    },
+    {
+      "id": "Kestrel.withdrawn",
+      "repeat": 1,
+      "latency_ms": 102.56976000000861,
+      "returned": 5,
+      "authority_ms": 48.24824199998545,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.41393400000834,
+      "reranking_ms": 41.85981499999514
+    },
+    {
+      "id": "Linden.initial",
+      "repeat": 1,
+      "latency_ms": 89.6255119999978,
+      "returned": 5,
+      "authority_ms": 43.28375400000084,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.059255000011035,
+      "reranking_ms": 34.656953000009594
+    },
+    {
+      "id": "Linden.change",
+      "repeat": 1,
+      "latency_ms": 100.70399900000382,
+      "returned": 5,
+      "authority_ms": 44.65990399999953,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.630536000003076,
+      "reranking_ms": 43.56768699999236
+    },
+    {
+      "id": "Linden.correction",
+      "repeat": 1,
+      "latency_ms": 99.03665000000217,
+      "returned": 5,
+      "authority_ms": 41.61431300001084,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.851509000000647,
+      "reranking_ms": 44.96431499998721
+    },
+    {
+      "id": "Linden.current",
+      "repeat": 1,
+      "latency_ms": 95.794724000001,
+      "returned": 5,
+      "authority_ms": 40.87757400000669,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 8.842122000004338,
+      "reranking_ms": 43.09915700000033
+    },
+    {
+      "id": "Linden.poison",
+      "repeat": 1,
+      "latency_ms": 103.1372019999992,
+      "returned": 5,
+      "authority_ms": 47.09182199998452,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.196576000007894,
+      "reranking_ms": 43.42255100000614
+    },
+    {
+      "id": "Linden.derived",
+      "repeat": 1,
+      "latency_ms": 123.70777199998884,
+      "returned": 5,
+      "authority_ms": 55.62264600000333,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 12.30811900001072,
+      "reranking_ms": 52.8629389999935
+    },
+    {
+      "id": "Linden.withdrawn",
+      "repeat": 1,
+      "latency_ms": 98.40063900000473,
+      "returned": 5,
+      "authority_ms": 47.05996799999923,
+      "document_encoding_ms": 0,
+      "query_encoding_ms": 9.412706999995635,
+      "reranking_ms": 39.019421000006105
+    }
+  ],
+  "means_ms": {
+    "authority_ms": 46.2625382440484,
+    "query_encoding_ms": 10.088903476191039,
+    "document_encoding_ms": 0.7725328809525441,
+    "reranking_ms": 42.66538506547624
+  },
+  "p95_ms": 118.28346125000381
+}

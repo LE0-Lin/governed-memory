@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "bc8a6e93",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "44cf46f35458e851dca536ea",
+      "b467481a42c7023414a493fe",
+      "07d8920b31d17b264e4171fa",
+      "141cfba6597c556609d8b3f1",
+      "f22b47ef4528ceebb98037b8",
+      "d4d19b7b61f2b8e4b657de3e",
+      "1308311a2c4d7296686bf798",
+      "f319531584601a7470ee6999"
+    ],
+    "context_sha256": "4d4b02eaa6c2c9638cd407e6cca8c0c237dd8383928608b789b3534baa58e1b0",
+    "response": {
+      "answer": "A lemon blueberry cake",
+      "evidence_ids": [
+        "44cf46f35458e851dca536ea"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1607,
+        "completion_tokens": 18,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"A lemon blueberry cake\",\"evidence_ids\":[ \"E1\"]}"
+    },
+    "error": null,
+    "latency_ms": 1055.5267999880016,
+    "answer_latency_ms": 1055.5267999880016
+  }
+]

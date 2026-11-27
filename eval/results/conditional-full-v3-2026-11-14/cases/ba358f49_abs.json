@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "ba358f49_abs",
+    "category": "abstention",
+    "method": "conditional",
+    "chunk_ids": [
+      "358b27553ffdfa0e641d9ed6",
+      "2dd854c16a38bbf611a5a1b4",
+      "9e5715e0979bf30df974086c",
+      "c063c0d47304725feb8232fd",
+      "6ef9511db16f7373e6fefe63",
+      "4bb41d6c31031f8aff956ba2",
+      "9a322ca7d3bc60e0503face2",
+      "ddadd7a29569873d3fe37797"
+    ],
+    "context_sha256": "21f1728bd341890e337083f4a5b357b529e63d314b2829dff727dc61e06f570b",
+    "response": {
+      "answer": "Rachel will be 30 years old when you get married next year.",
+      "evidence_ids": [
+        "9e5715e0979bf30df974086c"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Rachel will be 30 years old when you get married next year.\" , \"evidence_ids\":[ \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1682.9501999309286,
+    "answer_latency_ms": 1682.9501999309286
+  }
+]

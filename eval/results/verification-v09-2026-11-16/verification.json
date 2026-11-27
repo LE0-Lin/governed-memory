@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-16",
+  "source_commit": "6ae9e1bab3d38be99f36022c8627a67210cd17b4",
+  "ci_run": 43870896889,
+  "ci_url": "https://github.com/LE0-Lin/governed-memory/actions/runs/43870896889",
+  "all_six_jobs": "success",
+  "wheel_uncompressed_contents_identical_across_platform_builds": true,
+  "receipts": [
+    "install-ubuntu-latest.json",
+    "install-windows-latest.json"
+  ],
+  "local_targeted": {
+    "passed": 10,
+    "skipped": 8,
+    "integration_skips": "PostgreSQL not configured"
+  },
+  "documentation": {
+    "powershell_persistent_walkthrough": "passed on a new synthetic SQLite ledger",
+    "relative_links_and_anchors": "checked",
+    "svg_xml": "parsed",
+    "svg_render": "rendered to PNG and visually inspected"
+  },
+  "last_performance_version": "0.8.1",
+  "new_performance_measurement": false,
+  "scope": "Implementation-source evidence. Final release assets carry their own final-source receipts and checksums.",
+  "files": {
+    ".gitattributes": "cea1a8dd499da2f5cc291931340fb8d48e74a4c29c6eaa24c9892800a6bd2348",
+    "ci-artifacts.json": "c0c5284c5a0829de3a15e5af19df120ac396e2518d3d83d4d0b5a421f4977bf1",
+    "ci-check-summary.txt": "95763e3f1164f33b93e6f950f7c64b85003f8df6b568d8bfbf5983753a38d3e1",
+    "ci-jobs.json": "7ff5dd501fbc66bdaf8320f76272b6fd15f7313007aaf6623d9425c0ab72c542",
+    "install-ubuntu-latest.json": "2e5d190ed34fc38eccb8821214f16ea57b3b286869a6e4ccbf57bc62db8320a9",
+    "install-windows-latest.json": "e35560ed5dcfbac9d48540d0187df6fa877cb4c5dce315c77e71f5a95e7a57e5",
+    "local-targeted-tests.txt": "7bb7f7e3a313823b7955796614b74290f8e3e0e64d1ed03a4bb457927548748c",
+    "README.md": "239ccdcb0ccd8a2bc1f2a3af3d7674ef5b587328b74d97393ad9ccfdf51c34af",
+    "requirements-core.txt": "00b4df8f870003c71214ec770226961bc14d81eccbd767a53c2484be6ea75a7f"
+  }
+}

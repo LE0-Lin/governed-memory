@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "3ba21379",
+    "category": "knowledge-update",
+    "method": "conditional",
+    "chunk_ids": [
+      "f9f6221146f732a740333484",
+      "1ef2d4989718e5c43c870073",
+      "084ff5c02b266d15d39957c1",
+      "712c9edceb2a768715dee201",
+      "37ea1ffeabc77c5feeade75e",
+      "af5749952733d11980bf9eb8",
+      "60b520c180834af43c373b69",
+      "92cb593f1622daba0c3be414"
+    ],
+    "context_sha256": "78a6fb599098764acd741d40d25e8035e6405d1bf39e88223ef2c35d08c617c6",
+    "response": {
+      "answer": "Ford F-150 pickup truck",
+      "evidence_ids": [
+        "712c9edceb2a768715dee201",
+        "37ea1ffeabc77c5feeade75e"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1273,
+        "completion_tokens": 27,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Ford F-150 pickup truck\",\"evidence_ids\":[ \"E4\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1458.2134000957012,
+    "answer_latency_ms": 1458.2134000957012
+  }
+]

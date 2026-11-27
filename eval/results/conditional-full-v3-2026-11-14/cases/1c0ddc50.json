@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "1c0ddc50",
+    "category": "single-session-preference",
+    "method": "conditional",
+    "chunk_ids": [
+      "73b9bba9002b9e7b5a398806",
+      "b279d1350add6248c717ff98",
+      "e53514a05c31797b0c0d51bb",
+      "26e780ed9edcd9cd235a57fb",
+      "0bd65902aa6e67efadede5f2",
+      "7e56d8b19ac4bbbc5f8a89f7",
+      "b47ab04b5b22860070c7e263",
+      "8099eb2992a612f4c95926be"
+    ],
+    "context_sha256": "8a4b2bddfccf04d0652d9e153fe9ed3e409dd94cbf5259c5bdf9b92ee3b93d9d",
+    "response": {
+      "answer": "I'm thinking of buying a new bike to commute to work, but I'm not sure about the logistics. Can you help me figure out the best route from my place to the office? By the way, I've noticed that the bus is always crowded on Mondays, which is the start of the workweek, so I'm hoping to avoid that chaos.",
+      "evidence_ids": [
+        "0bd65902aa6e67efadede5f2"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1439,
+        "completion_tokens": 88,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I'm thinking of buying a new bike to commute to work, but I'm not sure about the logistics. Can you help me figure out the best route from my place to the office? By the way, I've noticed that the bus is always crowded on Mondays, which is the start of the workweek, so I'm hoping to avoid that chaos.\" , \"evidence_ids\":[ \"E5\" ] }"
+    },
+    "error": null,
+    "latency_ms": 4919.6979000698775,
+    "answer_latency_ms": 4919.6979000698775
+  }
+]

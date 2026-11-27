@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "87f22b4a",
+    "category": "multi-session",
+    "method": "conditional",
+    "chunk_ids": [
+      "8c14abd689b5387912659471",
+      "2899196c885e99c35511ea05",
+      "c1d68097df364b1bc00f9358",
+      "fcfc2870d0b667e80cb82391",
+      "44e2966726287bc14dd46b93",
+      "567797cc23a1be46878b68e6",
+      "d12f8960e185c6cf5af8bf06",
+      "fc7ca00df41537e944982e51"
+    ],
+    "context_sha256": "42e054a007f474e17deed03ff6d105a5db1b19ba12b45f8cd8a989f21ca794d5",
+    "response": {
+      "answer": "You've made $120 from selling eggs this month.",
+      "evidence_ids": [
+        "2899196c885e99c35511ea05",
+        "44e2966726287bc14dd46b93"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1583,
+        "completion_tokens": 33,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"You've made $120 from selling eggs this month.\" , \"evidence_ids\":[ \"E2\", \"E5\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1724.887300049886,
+    "answer_latency_ms": 1724.887300049886
+  }
+]

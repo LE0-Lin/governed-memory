@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "dccbc061",
+    "category": "single-session-user",
+    "method": "conditional",
+    "chunk_ids": [
+      "43f049ece187bd9887a9f31f",
+      "483a58b4a4709efdbaa59fa9",
+      "29dfcb3e6e819d09ce39cc47",
+      "e6da61b692dcfd8a3771d1d8",
+      "d168b218ab3b6add2e85ddda",
+      "51f40738d6baf9f125eb840e",
+      "fbb8c2ae20c7ee851476b211",
+      "16356ad3fcfacf877cffa241"
+    ],
+    "context_sha256": "138a5af86d4c0b03978acacbea99964090c3df8b0b552ef0f0cce90e543be5e0",
+    "response": {
+      "answer": "I used to be a staunch atheist, but I've been exploring other possibilities.",
+      "evidence_ids": [
+        "483a58b4a4709efdbaa59fa9",
+        "29dfcb3e6e819d09ce39cc47"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1915,
+        "completion_tokens": 36,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"I used to be a staunch atheist, but I've been exploring other possibilities.\" , \"evidence_ids\":[ \"E2\", \"E3\" ]}"
+    },
+    "error": null,
+    "latency_ms": 2122.729399939999,
+    "answer_latency_ms": 2122.729399939999
+  }
+]

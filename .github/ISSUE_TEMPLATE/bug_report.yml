@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible user-visible problem.
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: "For sensitive findings, read SECURITY.md. Remove tokens, private text and database dumps from logs."
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: "Output of governed-memory --version, or the exact source commit."
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: "OS, Python version, install method, SQLite/PostgreSQL, optional graph/models/policies. No credentials."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: "Commands and synthetic data that reproduce the issue."
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: "Include the user consequence and redacted error output."
+    validations:
+      required: true

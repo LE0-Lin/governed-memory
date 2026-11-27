@@ -1,0 +1,50 @@
+[
+  {
+    "question_id": "6ae235be",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "3f48f8951da34407aeed6ff3",
+      "c911330733eb18ec4f6ad43c",
+      "cfe317cb7b30724b09e43280",
+      "a5479dc48d02f250ec3d72ba",
+      "2ba23000965d6849c529798c",
+      "50a88bc21441e00ab52ceb97",
+      "29af48678390859aa7dee462",
+      "c01a9e3a6d741ece2467a995"
+    ],
+    "context_sha256": "fbd81f9631ff9444bcebe6f155bd0a84e66badd1c6402ff426d0f754a7029d34",
+    "response": {
+      "answer": "at the Lake Charles Refinery,\n* Atmospheric distillation: This is the first step in the refining process, where crude oil is heated and separated into different fractions based on their boiling points.\n* Fluid catalytic cracking (FCC): This process breaks down heavier fractions of crude oil into lighter, more valuable products such as gasoline and diesel fuel.\n* Alkylation: This process combines smaller molecules to form larger ones, creating high-octane gasoline components.\n* Hydrotreating: This process removes impurities from the gasoline and diesel fractions to improve their quality.",
+      "evidence_ids": [
+        "3f48f8951da34407aeed6ff3",
+        "c911330733eb18ec4f6ad43c",
+        "cfe317cb7b30724b09e43280",
+        "a5479dc48d02f250ec3d72ba"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1922,
+        "completion_tokens": 146,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"at the Lake Charles Refinery,\\n* Atmospheric distillation: This is the first step in the refining process, where crude oil is heated and separated into different fractions based on their boiling points.\\n* Fluid catalytic cracking (FCC): This process breaks down heavier fractions of crude oil into lighter, more valuable products such as gasoline and diesel fuel.\\n* Alkylation: This process combines smaller molecules to form larger ones, creating high-octane gasoline components.\\n* Hydrotreating: This process removes impurities from the gasoline and diesel fractions to improve their quality.\" , \"evidence_ids\":[ \"E1\", \"E2\", \"E3\", \"E4\" ]}"
+    },
+    "error": null,
+    "latency_ms": 15417.724199942313,
+    "answer_latency_ms": 15417.724199942313
+  }
+]

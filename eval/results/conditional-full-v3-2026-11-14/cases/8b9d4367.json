@@ -1,0 +1,48 @@
+[
+  {
+    "question_id": "8b9d4367",
+    "category": "single-session-assistant",
+    "method": "conditional",
+    "chunk_ids": [
+      "bd83c17bde33c0213e7b993e",
+      "c9d186601e9d88e9d5cc1037",
+      "04e2a5a7707364b4ac72aecc",
+      "cdc72fba29a5514376097ccf",
+      "5142bb46edf5637c9863b6b5",
+      "c738c1e1b3c7cee5b3df6e29",
+      "f5229e3e65189e515d856f9a",
+      "c590747e6cb8c3edc40e0cd7"
+    ],
+    "context_sha256": "6f62de1a36ce3b917a8c2afe91759af133dd2ef56686e7ad1497a7186178c697",
+    "response": {
+      "answer": "Jaipur Rugs",
+      "evidence_ids": [
+        "bd83c17bde33c0213e7b993e",
+        "c9d186601e9d88e9d5cc1037"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 1554,
+        "completion_tokens": 23,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"Jaipur Rugs\",\"evidence_ids\":[ \"E1\", \"E2\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1220.6829999340698,
+    "answer_latency_ms": 1220.6829999340698
+  }
+]

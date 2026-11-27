@@ -1,0 +1,84 @@
+[
+  {
+    "question_id": "dev-00-q0",
+    "category": "development",
+    "method": "json_schema",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "PostgreSQL",
+      "evidence_ids": [
+        "dev-00-d0"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 202,
+        "completion_tokens": 31,
+        "finish_reason": "stop",
+        "format": "json_schema"
+      },
+      "error": null,
+      "raw_model_text": "{\n  \"answer\": \"PostgreSQL\",\n  \"evidence_ids\": [ \"E1\" ],\n  \"abstain\": false\n}"
+    },
+    "error": null,
+    "latency_ms": 2809.8694001091644,
+    "answer_latency_ms": 2809.8694001091644
+  },
+  {
+    "question_id": "dev-00-q0",
+    "category": "development",
+    "method": "conditional",
+    "chunk_ids": [
+      "dev-00-d0",
+      "dev-00-d1",
+      "dev-00-d2",
+      "dev-00-d3"
+    ],
+    "context_sha256": "26befa7ae0ef5b7ecf3ae706c1d7821dce24e7b484961212577891176a9f27b0",
+    "response": {
+      "answer": "PostgreSQL",
+      "evidence_ids": [
+        "dev-00-d0"
+      ],
+      "abstain": false,
+      "reason": "ok",
+      "generator": {
+        "profile": "standard",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "max_input_tokens": 4096,
+        "decoding": "greedy",
+        "concurrency": 1
+      },
+      "generation": {
+        "prompt_tokens": 171,
+        "completion_tokens": 17,
+        "finish_reason": "stop",
+        "format": "conditional"
+      },
+      "error": null,
+      "raw_model_text": "{\"answer\":\"PostgreSQL\",\"evidence_ids\":[ \"E1\" ]}"
+    },
+    "error": null,
+    "latency_ms": 1434.007800067775,
+    "answer_latency_ms": 1434.007800067775
+  }
+]
